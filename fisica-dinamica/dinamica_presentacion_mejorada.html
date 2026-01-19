@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Clase Maestra de Dinámica - Edición Definitiva</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/sky.css" id="theme">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+
+    <style>
+        :root {
+            --r-main-font-size: 26px; 
+            --r-heading1-size: 2.5em;
+            --r-heading2-size: 1.6em;
+            --r-heading3-size: 1.3em;
+            --r-code-font: 'Fira Code', monospace;
+            --r-background-color: #0c1e35;
+        }
+        
+        .reveal h1, .reveal h2, .reveal h3 { 
+            text-transform: none; 
+            font-family: 'Segoe UI', sans-serif;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .reveal p, .reveal li {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+        }
+
+        /* Corrección crítica para fórmulas en línea */
+        .reveal .MathJax_Display {
+            margin: 0.5em 0 !important;
+        }
+        
+        /* Cajas de conceptos */
+        .concept-box {
+            background: rgba(255, 255, 255, 0.6);
+            border-left: 6px solid #3498db;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .example-box {
+            background: rgba(40, 167, 69, 0.15);
+            border-left: 6px solid #28a745;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+
+        .highlight-text { color: #d35400; font-weight: bold; }
+        .important-text { color: #c0392b; font-weight: bold; }
+        .math-result { color: #2980b9; font-weight: bold; font-size: 1.1em; }
+        
+        .column-container { 
+            display: flex; 
+            gap: 30px; 
+            align-items: center; 
+            justify-content: center;
+        }
+        .column { flex: 1; }
+        
+        .icon { font-size: 1.4em; margin-right: 10px; vertical-align: middle; }
+        .small-math { font-size: 0.85em; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- PORTADA -->
+            <section data-background-image="img/bg_portada.jpg" data-background-opacity="0.3">
+                <h1 style="color: #2c3e50;">🚀 Dinámica: Clase Maestra</h1>
+                <h3 style="color: #34495e;">Los Secretos del Movimiento</h3>
+                <p>Una guía paso a paso para dominar la Física de 4.º ESO</p>
+                <small style="margin-top: 50px; display: block;">Usa las flechas ➡️ para avanzar</small>
+            </section>
+
+            <!-- INDICE -->
+            <section>
+                <h2>🗺️ Hoja de Ruta</h2>
+                <div style="font-size: 1.1em; text-align: left; width: 80%; margin: auto;">
+                    <div class="concept-box"><span class="icon">1️⃣</span> Concepto de Fuerza y 1ª Ley (Inercia)</div>
+                    <div class="concept-box"><span class="icon">🎯</span> La Ecuación Maestra: 2ª Ley de Newton</div>
+                    <div class="concept-box"><span class="icon">⚖️</span> Tipos de Fuerzas: Peso, Normal, Rozamiento</div>
+                    <div class="concept-box"><span class="icon">📐</span> Plano Inclinado (Nuevo)</div>
+                    <div class="concept-box"><span class="icon">🏗️</span> Sistemas: Ascensores, Poleas y Trenes</div>
+                </div>
+            </section>
+
+            <!-- DEFINICION FUERZA -->
+            <section data-background-image="img/bg_fuerza.jpg" data-background-opacity="0.15">
+                <h2><span class="icon">💪</span>¿Qué es una Fuerza?</h2>
+                <div class="column-container">
+                    <div class="column">
+                        <div class="concept-box">
+                            <!-- Usamos \( \) para asegurar que es INLINE y no rompe la línea -->
+                            <p>Una <strong>Fuerza \( \vec{F} \)</strong> es una interacción que, si no se anula, <span class="highlight-text">cambia la velocidad</span> de un objeto.</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><strong>Módulo:</strong> Intensidad (Newtons, N).</li>
+                            <li><strong>Dirección:</strong> La línea de acción.</li>
+                            <li><strong>Sentido:</strong> Hacia dónde apunta.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="fragment check-box">💡 <em>Dato:</em> 1 Newton es aprox. el peso de una manzana pequeña (100g).</p>
+            </section>
+
+            <!-- 1ª LEY -->
+            <section>
+                <h2><span class="icon">🛌</span> 1ª Ley: Inercia</h2>
+                <div class="concept-box">
+                    <p>"Todo cuerpo se resiste a cambiar su estado de movimiento a menos que le obliguen."</p>
+                </div>
+                <div class="column-container">
+                    <div class="column">
+                        <img src="img/inertia.gif" alt="Inercia gif" style="border-radius: 10px; width: 100%;">
+                    </div>
+                    <div class="column">
+                        <p>Si la suma de fuerzas es CERO (\( \sum \vec{F} = 0 \)), solo pueden pasar dos cosas:</p>
+                        <ol>
+                            <li>Está quieto (\( v=0 \)).</li>
+                            <li>Se mueve a <strong>velocidad constante</strong> en línea recta.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EJEMPLO LIBRO -->
+            <section>
+                <h3><span class="icon">📚</span> Ejemplo: Equilibrio</h3>
+                <p>¿Por qué no se cae un libro sobre la mesa?</p>
+                <div class="column-container">
+                    <div class="column">
+                        <img src="img/ej_libro.jpg" style="height: 300px; border-radius: 10px; object-fit: cover;">
+                    </div>
+                    <div class="column">
+                        <p>Actúan dos fuerzas:</p>
+                        <ul>
+                            <li style="color: #c0392b;">⬇️ <strong>Peso \( \vec{P} \):</strong> La Tierra tira hacia abajo.</li>
+                            <li style="color: #2980b9;">⬆️ <strong>Normal \( \vec{N} \):</strong> La mesa empuja hacia arriba.</li>
+                        </ul>
+                        <div class="example-box fragment">
+                            \[ \sum F_y = N - P = 0 \]
+                            \[ N = P \]
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2ª LEY -->
+            <section data-background-image="img/bg_cohete.jpg" data-background-opacity="0.2">
+                <h2><span class="icon">🚀</span> 2ª Ley: La Ecuación</h2>
+                <!-- Fórmula de bloque -->
+                <div class="concept-box" style="text-align: center; font-size: 1.4em; padding: 30px;">
+                    \[ \vec{F}_{neta} = m \cdot \vec{a} \]
+                </div>
+                <div class="column-container">
+                    <div class="column">
+                        <p><strong>Causa:</strong> Fuerza \( \vec{F} \)</p>
+                        <p><strong>Efecto:</strong> Aceleración \( \vec{a} \)</p>
+                    </div>
+                    <div class="column">
+                        <p><strong>Resistencia:</strong> Masa \( m \)</p>
+                        <small>A mayor masa, más difícil es acelerar algo.</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EJEMPLO FUERZAS OPUESTAS -->
+            <section>
+                <h3><span class="icon">🥊</span> Ejemplo: El Tira y Afloja</h3>
+                <div class="example-box">
+                    <p>Ana empuja una caja (50 kg) a la derecha con <strong>150 N</strong>.<br>
+                    Bruno empuja a la izquierda con <strong>100 N</strong>.<br>
+                    ¿Cuánto acelera la caja?</p>
+                </div>
+                <div class="fragment">
+                    <p><strong>1. Fuerza Neta (Gana Ana):</strong></p>
+                    \[ F_{neta} = 150 - 100 = \mathbf{50 \, N} \text{ (Derecha)}
+                    \]
+                </div>
+                <div class="fragment">
+                    <p><strong>2. Aceleración:</strong></p>
+                    \[ a = \frac{F_{neta}}{m} = \frac{50}{50} = \mathbf{1 \, m/s^2}
+                    \]
+                </div>
+            </section>
+
+            <!-- PESO Y NORMAL -->
+            <section>
+                <h2><span class="icon">⚖️</span> Inventario I: Peso vs Masa</h2>
+                <div class="column-container">
+                    <div class="column concept-box">
+                        <h4>Masa (\( m \))</h4>
+                        <p>Cantidad de materia. Se mide en <strong>kg</strong>. Es INVARIABLE.</p>
+                    </div>
+                    <div class="column concept-box">
+                        <h4>Peso (\( P \))</h4>
+                        <p>Fuerza de gravedad. Se mide en <strong>N</strong>.
+                        \[ P = m \cdot g \]
+                        Cambia según el planeta.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EJEMPLO PESO MASA -->
+            <section>
+                <h3><span class="icon">🌍</span> Ejemplo: Viaje Espacial</h3>
+                <div class="example-box">
+                    <p>Astronauta de masa <strong>60 kg</strong>.</p>
+                </div>
+                <div class="column-container">
+                    <div class="column fragment">
+                        <h4 style="color: #27ae60;">En la Tierra</h4>
+                        <small>\( g = 9.8 \, m/s^2 \)</small>
+                        \[ P = 60 \cdot 9.8 \]
+                        <p class="math-result">P = 588 N</p>
+                    </div>
+                    <div class="column fragment">
+                        <h4 style="color: #7f8c8d;">En la Luna</h4>
+                        <small>\( g = 1.62 \, m/s^2 \)</small>
+                        \[ P = 60 \cdot 1.62 \]
+                        <p class="math-result">P = 97.2 N</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EL ASCENSOR -->
+            <section>
+                <h3><span class="icon">↕️</span> El Efecto Ascensor</h3>
+                <p>¿Por qué te sientes más pesado cuando el ascensor arranca hacia arriba?</p>
+                <div class="column-container">
+                    <div class="column">
+                        <div class="concept-box">
+                            <p>El suelo (Normal) te sujeta (\( P \)) Y te empuja para acelerar (\( ma \)).</p>
+                            \[ N - P = m \cdot a \]
+                            \[ N = P + m \cdot a \]
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="example-box fragment">
+                            <p>Si \( m=60kg \) y sube acelerando a \( 2 m/s^2 \):</p>
+                            \[ N = 60(9.8 + 2) \]
+                            \[ N = 708 \, N \]
+                        </div>
+                        <p class="fragment small-math">Pesas "aparentemente" más.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ROZAMIENTO -->
+            <section data-background-image="img/bg_rozamiento.jpg" data-background-opacity="0.2">
+                <h2><span class="icon">🛑</span> Inventario II: Rozamiento</h2>
+                <div class="concept-box">
+                    <p>Siempre se opone al deslizamiento. Depende de:</p>
+                    <ol>
+                        <li>La Normal (\( N \)).</li>
+                        <li>Lo rugoso del suelo (\( \mu \)).</li>
+                    </ol>
+                    <div style="text-align: center; margin-top: 10px;">
+                        \[ F_r = \mu \cdot N \]
+                    </div>
+                </div>
+            </section>
+
+            <!-- EJEMPLO ROZAMIENTO -->
+            <section>
+                <h3><span class="icon">🚗</span> Ejemplo: Frenazo</h3>
+                <div class="example-box">
+                    <p>Coche de 1000 kg. Coeficiente \( \mu = 0.5 \). Fuerza máxima de frenado.</p>
+                </div>
+                <div class="fragment">
+                    <p><strong>1. Calcular la Normal:</strong><br>
+                    En llano, \( N = P = 1000 \cdot 9.8 = 9800 \, N \).</p>
+                </div>
+                <div class="fragment">
+                    <p><strong>2. Calcular Rozamiento:</strong></p>
+                    \[ F_r = \mu \cdot N = 0.5 \cdot 9800 \]
+                    <p class="math-result">F_r = 4900 \, N</p>
+                </div>
+            </section>
+
+            <!-- PLANO INCLINADO (NUEVO) -->
+            <section>
+                <h2><span class="icon">📐</span> El Plano Inclinado</h2>
+                <div class="column-container">
+                    <div class="column">
+                        <p>Cuando algo desliza por una rampa, el Peso no ayuda del todo ni molesta del todo.</p>
+                        <p class="fragment">Hay que <strong>descomponerlo</strong>:</p>
+                        <ul class="fragment">
+                            <li><strong>\( P_x \):</strong> Tira rampa abajo (te hace caer).<br>\( P_x = P \cdot \sin(\alpha) \)</li>
+                            <li><strong>\( P_y \):</strong> Te pega al suelo (genera Normal).<br>\( P_y = P \cdot \cos(\alpha) \)</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <div class="example-box fragment">
+                            <p><strong>Ejemplo Rampa 30º:</strong></p>
+                            <p>Si \( P = 100 N \):</p>
+                            <p>\( P_x = 100 \cdot 0.5 = \mathbf{50 N} \) (Fuerza que cae)</p>
+                            <p>\( P_y = 100 \cdot 0.86 = \mathbf{86 N} \) (Apoyo)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SISTEMAS ENLAZADOS -->
+            <section>
+                <h3><span class="icon">🚂</span> Tren de Bloques</h3>
+                <div class="example-box">
+                    <p>Empujamos dos bloques juntos con 30 N.<br>
+                    Bloque A (10 kg) y Bloque B (5 kg). Sin rozamiento.</p>
+                </div>
+                <div class="column-container">
+                    <div class="column fragment">
+                        <p><strong>Paso 1: Todo junto</strong></p>
+                        <p>Masa total = 15 kg.</p>
+                        \[ a = \frac{30}{15} = \mathbf{2 \, m/s^2}
+                        \]
+                    </div>
+                    <div class="column fragment">
+                        <p><strong>Paso 2: ¿Fuerza entre ellos?</strong></p>
+                        <p>Miramos solo a B (5 kg). Solo le empuja A.</p>
+                        \[ F_{A \to B} = m_B \cdot a = 5 \cdot 2 = \mathbf{10 \, N}
+                        \]
+                    </div>
+                </div>
+            </section>
+
+            <!-- POLEAS / GRUA -->
+            <section data-background-image="img/bg_grua.jpg" data-background-opacity="0.15">
+                <h3><span class="icon">🏗️</span> La Grúa (Tensión)</h3>
+                <div class="example-box">
+                    <p>Subir carga de 500 kg acelerando a \( 0.5 m/s^2 \).</p>
+                </div>
+                <div class="column-container">
+                    <div class="column">
+                        <p>Hay que vencer al peso Y acelerar.</p>
+                        \[ \sum F = T - P = m \cdot a \]
+                    </div>
+                    <div class="column fragment">
+                        \[ T = P + m \cdot a \]
+                        \[ T = 4900 + (500 \cdot 0.5) \]
+                        <p class="math-result">T = 5150 N</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BASKET -->
+            <section>
+                <h3><span class="icon">🏀</span> Desafío Final: El Salto</h3>
+                <div class="example-box" style="border-color: #e67e22; background: rgba(230, 126, 34, 0.1);">
+                    <p>Jugador (80 kg). Impulso 0.3 s hasta 4 m/s.</p>
+                </div>
+                <div class="column-container">
+                    <div class="column fragment">
+                         <p><strong>1. Aceleración:</strong></p>
+                         \[ a = 4 / 0.3 = \mathbf{13.3 \, m/s^2}
+                         \]
+                    </div>
+                    <div class="column fragment">
+                         <p><strong>2. Fuerza (Normal):</strong></p>
+                         \[ N = P + ma \]
+                         \[ N = 784 + (80 \cdot 13.3) \]
+                         <p class="math-result">N = 1850 N</p>
+                    </div>
+                </div>
+                <p class="fragment check-box" style="margin-top:20px">¡Sus piernas soportan más del doble de su peso!</p>
+            </section>
+
+            <!-- FIN -->
+            <section>
+                <h2><span class="icon">🎓</span> ¡Graduado en Dinámica!</h2>
+                <div class="column-container" style="margin-top: 40px;">
+                    <div class="column concept-box">
+                        <strong>Dibuja el DCL</strong><br>
+                        (Diagrama de Cuerpo Libre)
+                    </div>
+                    <div class="column concept-box">
+                        <strong>Plantea Ejes</strong><br>
+                        \[ \sum F = ma \]
+                    </div>
+                    <div class="column concept-box">
+                        <strong>Calcula</strong><br>
+                        Cuidado unidades.
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- CARGAMOS MATHJAX EN LUGAR DE KATEX PARA MEJOR COMPATIBILIDAD CON VECTORES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/math/math.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'slide',
+            margin: 0.1, 
+            width: 1200, 
+            height: 700,
+            // Usamos MathJax por defecto
+            plugins: [ RevealMath, RevealHighlight ] 
+        });
+    </script>
+</body>
+</html>

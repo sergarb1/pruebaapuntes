@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Dinámica Física - Nivel Experto</title>
+    <!-- MathJax Config -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,600;0,800;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Paleta Cyberpunk Dark */
+            --bg-dark: #09090b;
+            --bg-panel: rgba(30, 41, 59, 0.85); /* Más opaco para legibilidad */
+            --text-main: #f0fdf4;
+            --text-muted: #cbd5e1;
+            
+            --neon-blue: #60a5fa;
+            --neon-cyan: #22d3ee;
+            --neon-pink: #f472b6;
+            --neon-purple: #a78bfa;
+            --neon-yellow: #facc15;
+            --neon-green: #4ade80;
+            --neon-red: #f87171;
+
+            --border-glass: 1px solid rgba(255, 255, 255, 0.15);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.2);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 25%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px; /* Reducido padding body */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- ARREGLO MATHJAX --- */
+        /* Forzamos el color blanco en las fórmulas */
+        .MathJax, .mjx-chtml, .mjx-container {
+            color: var(--text-main) !important;
+            font-size: 1.1em !important;
+        }
+
+        .dashboard {
+            width: 100%;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto auto auto;
+            gap: 20px;
+        }
+
+        /* --- ESTILOS DE PANELES --- */
+        .panel {
+            background: var(--bg-panel);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: var(--border-glass);
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            opacity: 0.7;
+        }
+
+        /* --- TIPOGRAFÍA --- */
+        h1, h2, h3, h4 { margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .title-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75em;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.3);
+            color: var(--neon-cyan);
+            margin-bottom: 10px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            align-self: flex-start;
+        }
+
+        .panel-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            width: 100%;
+        }
+
+        p, li { font-size: 1em; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; }
+        strong { color: #fff; font-weight: 700; text-shadow: 0 0 5px rgba(255,255,255,0.2); }
+        
+        /* Colores de Texto */
+        .txt-blue { color: var(--neon-blue); }
+        .txt-pink { color: var(--neon-pink); }
+        .txt-green { color: var(--neon-green); }
+        .txt-yellow { color: var(--neon-yellow); }
+        .txt-red { color: var(--neon-red); }
+        .txt-cyan { color: var(--neon-cyan); }
+        .txt-purple { color: var(--neon-purple); }
+
+        /* --- LAYOUT GRID --- */
+        
+        /* Header */
+        .header {
+            grid-column: span 4;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.15), rgba(0,0,0,0.3));
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-blue);
+            margin-bottom: 5px;
+        }
+
+        /* Fila 1 */
+        .law-card { grid-column: span 1; }
+        .master-formula {
+            grid-column: span 1;
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid var(--neon-cyan);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Fila 2 */
+        .forces-inventory { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .inclined-plane { grid-column: span 2; }
+
+        /* Fila 3 */
+        .kinematics { grid-column: span 1; }
+        .systems { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .danger-zone { grid-column: span 1; border: 2px solid var(--neon-red); }
+
+        /* Fila 4: Algoritmo MEJORADO */
+        .protocol {
+            grid-column: span 4;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--text-muted);
+        }
+        
+        .protocol-container {
+            display: flex;
+            gap: 20px;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        /* --- COMPONENTES --- */
+        
+        /* Fórmulas destacadas */
+        .unit-box {
+            background: rgba(0,0,0,0.4);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'JetBrains Mono';
+            margin-top: 5px;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* SVG Diagram styles */
+        .svg-container { width: 100%; height: 200px; display: flex; justify-content: center; }
+        svg text { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: bold; }
+        .svg-vector { stroke-width: 3; marker-end: url(#arrowhead); }
+
+        /* Pasos del Protocolo REFORZADOS */
+        .step-card {
+            flex: 1;
+            background: #1e293b; /* Fondo sólido oscuro */
+            padding: 20px;
+            border-radius: 12px;
+            border-top: 4px solid var(--text-muted);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .step-card h4 { font-size: 1.4em; margin-bottom: 10px; }
+
+        /* Flechas entre pasos */
+        .step-card:not(:last-child)::after {
+            content: "➜";
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+            z-index: 10;
+        }
+
+        .step-num {
+            font-size: 2.5em;
+            font-weight: 900;
+            opacity: 0.1;
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            color: #fff;
+        }
+
+        /* Danger List */
+        .danger-list { padding-left: 0; }
+        .danger-list li { margin-bottom: 12px; border-left: 3px solid var(--neon-red); padding-left: 12px; list-style: none; background: rgba(248, 113, 113, 0.1); padding: 8px; border-radius: 0 4px 4px 0; }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .dashboard { grid-template-columns: repeat(2, 1fr); }
+            .header, .protocol, .inclined-plane, .forces-inventory, .systems { grid-column: span 2; }
+            .law-card, .master-formula, .kinematics, .danger-zone { grid-column: span 1; }
+            .protocol-container { flex-direction: column; }
+            .step-card:not(:last-child)::after { content: "⬇"; right: 50%; top: 105%; transform: translateX(50%); }
+        }
+        @media (max-width: 700px) {
+            .dashboard { display: flex; flex-direction: column; }
+            .forces-inventory, .systems { display: flex; flex-direction: column; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- HEADER -->
+    <header class="header panel">
+        <h1>DINÁMICA · FÍSICA</h1>
+        <p style="font-size: 1.2em; color: var(--neon-cyan); letter-spacing: 2px;">4º ESO // MANUAL TÁCTICO DE OPERACIONES</p>
+    </header>
+
+    <!-- FILA 1: LEYES Y FÓRMULA MAESTRA -->
+    <div class="panel law-card">
+        <span class="title-badge">PRINCIPIO 01</span>
+        <div class="panel-title txt-blue">INERCIA</div>
+        <p>Si \( \sum F = 0 \), nada cambia:</p>
+        <div class="unit-box">
+             \( v = 0 \) (Reposo)
+        </div>
+        <div class="unit-box">
+             \( v = \text{cte} \) (MRU)
+        </div>
+    </div>
+
+    <div class="panel law-card">
+        <span class="title-badge">PRINCIPIO 03</span>
+        <div class="panel-title txt-yellow">ACCIÓN - REACCIÓN</div>
+        <p>A empuja a B, B empuja a A.</p>
+        <div class="unit-box" style="border-color: var(--neon-yellow);">
+            \( \vec{F}_{AB} = - \vec{F}_{BA} \)
+        </div>
+        <p style="font-size: 0.8em; margin-top: 5px;">⚠️ Cuerpos distintos.</p>
+    </div>
+
+    <div class="panel law-card">
+        <span class="title-badge">CONCEPTOS</span>
+        <div class="panel-title txt-green">MASA vs PESO</div>
+        <p><strong>Masa (\(kg\)):</strong> Materia.</p>
+        <p><strong>Peso (\(N\)):</strong> Gravedad.</p>
+        <div class="unit-box" style="border-color: var(--neon-green);">
+            \( P = m \cdot g \)
+        </div>
+    </div>
+
+    <div class="panel master-formula">
+        <span class="title-badge" style="background: var(--neon-cyan); color: #000; font-weight: bold;">PRINCIPIO 02</span>
+        <div class="panel-title txt-cyan" style="justify-content: center;">LEY FUNDAMENTAL</div>
+        <div style="font-size: 2.2em; color: #fff; text-shadow: 0 0 20px var(--neon-cyan); margin: 20px 0; text-align: center;">
+            \( \sum \vec{F} = m \vec{a} \)
+        </div>
+        <p style="text-align: center; color: var(--text-main);">Causa = Efecto</p>
+    </div>
+
+    <!-- FILA 2: FUERZAS Y PLANO -->
+    <div class="panel forces-inventory">
+        <div style="grid-column: span 2;" class="panel-title">🎒 INVENTARIO DE FUERZAS</div>
+        
+        <!-- Fuerza Item -->
+        <div>
+            <h4 class="txt-pink">NORMAL (\(N\))</h4>
+            <p>Soporte del suelo. Siempre <strong>perpendicular (90º)</strong> a la superficie.</p>
+        </div>
+        <!-- Fuerza Item -->
+        <div>
+            <h4 class="txt-yellow">ROZAMIENTO (\(F_r\))</h4>
+            <p>Se opone al deslizamiento.</p>
+            <div class="unit-box">\( F_r = \mu \cdot N \)</div>
+        </div>
+        <!-- Fuerza Item -->
+        <div>
+            <h4 class="txt-purple">TENSIÓN (\(T\))</h4>
+            <p>Fuerza en cuerdas. Tira hacia adentro.</p>
+        </div>
+        <!-- Fuerza Item -->
+        <div>
+            <h4 class="txt-blue">ELÁSTICA (\(F_e\))</h4>
+            <p>Ley de Hooke (Muelles).</p>
+            <div class="unit-box">\( F = -k \cdot x \)</div>
+        </div>
+    </div>
+
+    <div class="panel inclined-plane">
+        <span class="title-badge">ESCENARIO CRÍTICO</span>
+        <div class="panel-title txt-pink">EL PLANO INCLINADO</div>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <div style="flex: 1;">
+                <p>El Peso (\(P\)) molesta. <strong>DESCOMPONERLO</strong>:</p>
+                <div class="unit-box" style="text-align: left; border-left: 4px solid var(--neon-pink);">
+                    <strong class="txt-pink">\( P_x \) (Tangencial):</strong> Cae por rampa.<br>
+                    \( P_x = P \cdot \sin(\alpha) \)
+                </div>
+                <div class="unit-box" style="text-align: left; border-left: 4px solid var(--neon-cyan); margin-top: 10px;">
+                    <strong class="txt-cyan">\( P_y \) (Normal):</strong> Pega al suelo.<br>
+                    \( P_y = P \cdot \cos(\alpha) \)
+                </div>
+            </div>
+            <div class="svg-container" style="flex: 1;">
+                <!-- SVG Vectorial Preciso -->
+                <svg viewBox="0 0 300 200">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#fff" />
+                        </marker>
+                    </defs>
+                    <!-- Rampa -->
+                    <path d="M 20 180 L 280 180 L 20 50 Z" fill="rgba(255,255,255,0.05)" stroke="#555" stroke-width="2" />
+                    <!-- Ángulo -->
+                    <path d="M 260 180 A 40 40 0 0 0 245 160" fill="none" stroke="#aaa" />
+                    <text x="230" y="170" fill="#aaa">α</text>
+                    <!-- Bloque -->
+                    <rect x="100" y="88" width="50" height="50" transform="rotate(-26.5 125 113)" fill="rgba(236, 72, 153, 0.2)" stroke="#ec4899" stroke-width="2"/>
+                    <!-- Vectores -->
+                    <!-- P -->
+                    <line x1="125" y1="113" x2="125" y2="170" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)" />
+                    <text x="130" y="175" fill="white" style="font-weight:bold;">P</text>
+                    <!-- Px -->
+                    <line x1="125" y1="113" x2="155" y2="128" stroke="#ec4899" stroke-width="3" marker-end="url(#arrowhead)" />
+                    <text x="160" y="125" fill="#ec4899">Px</text>
+                    <!-- Py -->
+                    <line x1="125" y1="113" x2="110" y2="143" stroke="#06b6d4" stroke-width="3" marker-end="url(#arrowhead)" />
+                    <text x="80" y="150" fill="#06b6d4">Py</text>
+                    <!-- Normal -->
+                    <line x1="125" y1="113" x2="140" y2="83" stroke="#06b6d4" stroke-width="2" marker-end="url(#arrowhead)" stroke-dasharray="4" />
+                    <text x="145" y="80" fill="#06b6d4">N</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILA 3: CINEMÁTICA Y SISTEMAS -->
+    <div class="panel kinematics">
+        <span class="title-badge">CONEXIÓN</span>
+        <div class="panel-title txt-purple">CINEMÁTICA (MRUA)</div>
+        <p>¿Tienes \( a \)? Calcula futuro:</p>
+        <div class="unit-box">
+            \( v_f = v_0 + a \cdot t \)
+        </div>
+        <div class="unit-box">
+            \( x = x_0 + v_0 t + \frac{1}{2}at^2 \)
+        </div>
+    </div>
+
+    <div class="panel systems">
+        <div style="grid-column: span 2;" class="panel-title">⚙️ SISTEMAS ACOPLADOS</div>
+        
+        <!-- Poleas -->
+        <div>
+            <h4 class="txt-green">MÁQUINA DE ATWOOD</h4>
+            <p>Trata todo como un solo objeto.</p>
+            <div class="unit-box">
+                \( a = \frac{\text{Fuerzas Favor} - \text{Contra}}{\text{Masa Total}} \)
+            </div>
+        </div>
+
+        <!-- Ascensores -->
+        <div>
+            <h4 class="txt-yellow">ASCENSORES</h4>
+            <p>Peso aparente (\(N\)):</p>
+            <ul>
+                <li><strong>Subiendo (\( \uparrow a \)):</strong> \( N = m(g+a) \) <span class="txt-red">(+ Pesado)</span></li>
+                <li><strong>Bajando (\( \downarrow a \)):</strong> \( N = m(g-a) \) <span class="txt-green">(+ Ligero)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel danger-zone">
+        <span class="title-badge" style="background: var(--neon-red); color:#fff">ALERTA</span>
+        <div class="panel-title txt-red">ZONA DE PELIGRO</div>
+        <ul class="danger-list">
+            <li><strong>Unidades:</strong>
+                <div style="color:#fff; font-family: monospace;">km/h ÷ 3.6 → m/s</div>
+            </li>
+            <li><strong>Signos:</strong> Define tu (+) y respétalo. ¡Frenar es aceleración negativa!</li>
+            <li><strong>Fricción:</strong> Siempre va en contra del movimiento.</li>
+        </ul>
+    </div>
+
+    <!-- FILA 4: PROTOCOLO -->
+    <div class="protocol">
+        <div class="panel-title" style="border:none; margin-bottom: 0;">🚀 PROTOCOLO DE RESOLUCIÓN</div>
+        <div class="protocol-container">
+            
+            <div class="step-card" style="border-top-color: var(--neon-blue);">
+                <span class="step-num">01</span>
+                <h4 class="txt-blue">DIBUJA (DCL)</h4>
+                <p>Aísla el cuerpo. Dibuja <strong>TODAS</strong> las fuerzas desde el centro. No olvides \( F_r \).</p>
+            </div>
+
+            <div class="step-card" style="border-top-color: var(--neon-pink);">
+                <span class="step-num">02</span>
+                <h4 class="txt-pink">EJES</h4>
+                <p>Pon el Eje X en la dirección del movimiento. Descompón fuerzas raras.</p>
+            </div>
+
+            <div class="step-card" style="border-top-color: var(--neon-cyan);">
+                <span class="step-num">03</span>
+                <h4 class="txt-cyan">PLANTEA</h4>
+                <p><strong>Eje Y:</strong> \( \sum F_y = 0 \to N = \dots \)<br>
+                <strong>Eje X:</strong> \( \sum F_x = m \cdot a \)</p>
+            </div>
+
+            <div class="step-card" style="border-top-color: var(--neon-green);">
+                <span class="step-num">04</span>
+                <h4 class="txt-green">RESUELVE</h4>
+                <p>Sustituye datos numéricos al final. ¡Comprueba las unidades!</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

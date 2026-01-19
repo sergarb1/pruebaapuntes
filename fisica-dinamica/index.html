@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMO Dinámica: Central de Mando</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-blue: #0ea5e9;
+            --neon-cyan: #22d3ee;
+            --neon-pink: #ec4899;
+            --neon-green: #22c55e;
+            --neon-yellow: #eab308;
+            --bg-dark: #020617;
+            --panel-bg: rgba(15, 23, 42, 0.8);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)),
+                url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            grid-column: span 3;
+            text-align: center;
+            border-bottom: 2px solid var(--neon-blue);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4em;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 1.2em;
+            color: var(--neon-cyan);
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 350px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
+            border-color: var(--neon-blue);
+        }
+
+        .card-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+
+        .card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8em;
+            margin: 10px 0;
+            color: white;
+        }
+
+        .card p {
+            font-size: 1.1em;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--neon-blue);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        /* COLORES ESPECIFICOS */
+        .card.theory { border-top: 4px solid var(--neon-pink); }
+        .card.theory .btn { border-color: var(--neon-pink); color: var(--neon-pink); }
+        .card.theory .btn:hover { background: var(--neon-pink); color: black; box-shadow: 0 0 20px var(--neon-pink); }
+
+        .card.game { border-top: 4px solid var(--neon-green); }
+        .card.game .btn { border-color: var(--neon-green); color: var(--neon-green); }
+        .card.game .btn:hover { background: var(--neon-green); color: black; box-shadow: 0 0 20px var(--neon-green); }
+
+        .card.info { border-top: 4px solid var(--neon-yellow); }
+        .card.info .btn { border-color: var(--neon-yellow); color: var(--neon-yellow); }
+        .card.info .btn:hover { background: var(--neon-yellow); color: black; box-shadow: 0 0 20px var(--neon-yellow); }
+
+        /* FOOTER */
+        .footer {
+            grid-column: span 3;
+            text-align: center;
+            color: #475569;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2.5em; }
+            .header, .footer, .card { grid-column: span 1; }
+        }
+
+        /* ANIMACION DE CARGA */
+        .loader {
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(to right, transparent, var(--neon-cyan), transparent);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            animation: scan 2s infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <div class="loader"></div>
+            <h1>PLAN MAESTRO: DINÁMICA</h1>
+            <div class="status-bar">
+                <span>ESTADO: ONLINE</span>
+                <span>//</span>
+                <span>NIVEL: 4º ESO</span>
+                <span>//</span>
+                <span>OBJETIVO: DOMINIO TOTAL</span>
+            </div>
+        </div>
+
+        <!-- MÓDULO 1: TEORÍA -->
+        <div class="card theory">
+            <div class="card-icon">📚</div>
+            <h2>BASE TEÓRICA</h2>
+            <p>Accede a la presentación interactiva. Domina las leyes de Newton y los conceptos fundamentales antes de la acción.</p>
+            <a href="dinamica_presentacion_mejorada.html" class="btn">INICIAR CLASE</a>
+        </div>
+
+        <!-- MÓDULO 2: INFOGRAFÍA -->
+        <div class="card info">
+            <div class="card-icon">📊</div>
+            <h2>INTEL TÁCTICA</h2>
+            <p>Hoja de referencia rápida (Cheat Sheet). Todas las fórmulas, diagramas y estrategias en un solo vistazo.</p>
+            <a href="infografia_dinamica_pro.html" class="btn">VER DATOS</a>
+        </div>
+
+        <!-- MÓDULO 3: JUEGO -->
+        <div class="card game">
+            <div class="card-icon">🚀</div>
+            <h2>SIMULADOR</h2>
+            <p>Pon a prueba tus conocimientos. Pilota naves con física real y resuelve el examen táctico definitivo.</p>
+            <a href="newton_academy.html" class="btn">DESPEGAR</a>
+        </div>
+
+        <div class="footer">
+            SYSTEM V3.0 // GENERATED BY GEMINI CLI // PHYSICS DEPT.
+        </div>
+
+    </div>
+
+</body>
+</html>
