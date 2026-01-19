@@ -3,79 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Algebra Hunter PRO - 4º ESO</title>
+    <title>Algebra Hunter PRO v3.2 - 4º ESO</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { margin: 0; background: #020617; color: white; font-family: 'Poppins', sans-serif; overflow: hidden; touch-action: none; }
         #game-container { width: 100vw; height: 100vh; position: relative; }
+        
         .overlay { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.98); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; padding: 20px; text-align: center; }
-        .card { background: #1e293b; padding: 25px; border-radius: 25px; border: 3px solid #38bdf8; width: 95%; max-width: 500px; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); }
-        .btn { background: #38bdf8; color: #020617; border: none; padding: 15px 30px; border-radius: 15px; font-weight: 800; font-size: 18px; cursor: pointer; width: 100%; margin-top: 15px; transition: 0.2s; }
+        .card { background: #1e293b; padding: 25px; border-radius: 25px; border: 3px solid #38bdf8; width: 95%; max-width: 500px; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); overflow-y: auto; max-height: 90vh; }
+        
+        .btn { background: #38bdf8; color: #020617; border: none; padding: 15px 30px; border-radius: 12px; font-weight: 800; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .btn:hover { background: #fff; transform: scale(1.02); }
-        .ui-top { position: absolute; top: 15px; width: 100%; display: flex; justify-content: space-around; z-index: 10; pointer-events: none; }
-        .stat { background: rgba(15, 23, 42, 0.9); padding: 10px 15px; border-radius: 12px; border: 1px solid #38bdf8; font-weight: bold; font-size: 14px; }
-        .explanation { font-size: 13px; line-height: 1.5; margin: 15px 0; padding: 15px; border-radius: 15px; text-align: left; border-left: 6px solid #ef4444; background: rgba(239, 68, 68, 0.1); display: none; }
-        .formula-display { font-family: monospace; font-size: 20px; color: #38bdf8; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin: 10px 0; display: inline-block; }
+        .btn-secondary { background: #a78bfa; }
+        .btn-home { position: absolute; top: 15px; right: 15px; width: 45px; height: 45px; border-radius: 50%; background: rgba(30, 41, 59, 0.8); border: 2px solid #38bdf8; color: #38bdf8; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; }
+
+        .ui-top { position: absolute; top: 15px; left: 15px; z-index: 10; pointer-events: none; }
+        .stat { background: rgba(15, 23, 42, 0.9); padding: 8px 15px; border-radius: 10px; border: 1px solid #38bdf8; font-weight: bold; font-size: 12px; display: inline-block; }
+        
+        .explanation-text { font-size: 13px; line-height: 1.5; margin: 15px 0; padding: 15px; border-radius: 15px; text-align: left; border-left: 6px solid #38bdf8; background: rgba(255, 255, 255, 0.03); }
+        .correct-box { border-color: #10b981; background: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .wrong-box { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); color: #ef4444; }
     </style>
 </head>
 <body>
 
     <div id="game-container">
+        <!-- Botón Home -->
+        <div id="home-btn" class="btn-home" style="display: none;" onclick="location.reload()">
+            <i class="fas fa-home"></i>
+        </div>
+
         <!-- Pantalla de Inicio -->
         <div id="start-screen" class="overlay">
             <div class="card">
-                <i class="fas fa-crosshairs text-blue-400 fa-4x mb-4"></i>
-                <h1 class="header-font text-2xl font-black uppercase">ALGEBRA HUNTER</h1>
-                <p style="font-size: 12px; color: #38bdf8; margin-bottom: 25px;">CACERÍA DE FACTORES • 4º ESO</p>
-                <div style="text-align: left; font-size: 12px; color: #cbd5e1; margin-bottom: 20px; line-height: 1.6;">
-                    <p><i class="fas fa-check text-green-400 mr-2"></i> Toca los factores correctos del polinomio.</p>
-                    <p><i class="fas fa-check text-green-400 mr-2"></i> ¡Cuidado! Si tocas un impostor, perderás vida.</p>
-                    <p><i class="fas fa-lightbulb text-yellow-400 mr-2"></i> Aprende por qué fallas con los consejos.</p>
+                <i class="fas fa-microchip text-blue-400 fa-4x mb-4"></i>
+                <h1 class="header-font text-2xl font-black uppercase">ALGEBRA HUNTER v3.2</h1>
+                <p style="font-size: 11px; color: #94a3b8; margin-bottom: 25px;">DOMINA LA FACTORIZACIÓN • 4º ESO</p>
+                
+                <button class="btn" onclick="startMode('simulation')"><i class="fas fa-crosshairs mr-2"></i> MODO SIMULACIÓN</button>
+                <button class="btn btn-secondary" onclick="startMode('quiz')"><i class="fas fa-graduation-cap mr-2"></i> MODO SOLO QUIZ</button>
+                
+                <div style="margin-top: 25px; font-size: 10px; color: #64748b; line-height: 1.4;">
+                    <p><i class="fas fa-info-circle mr-1"></i> Caza factores reales en el simulador o entrena tu mente con el test de maestría.</p>
                 </div>
-                <button class="btn" onclick="startGame()">INICIAR CACERÍA</button>
             </div>
         </div>
 
-        <!-- Pantalla de Feedback / Quiz -->
-        <div id="feedback-overlay" class="overlay" style="display: none;">
+        <!-- Pantalla de Fin -->
+        <div id="game-over-screen" class="overlay" style="display: none;">
             <div class="card">
-                <i id="fb-icon" class="fas fa-times-circle text-red-500 fa-4x mb-4"></i>
-                <h2 id="fb-title" style="font-size: 20px; margin-bottom: 10px;">¡ERROR!</h2>
-                <div id="fb-explanation" class="explanation"></div>
-                <button id="btn-continue" class="btn">CONTINUAR ENTRENAMIENTO</button>
+                <i class="fas fa-skull-crossbones text-red-500 fa-4x mb-4"></i>
+                <h2 class="header-font text-2xl font-black text-red-500">MISIÓN FALLIDA</h2>
+                <p id="final-score-text" class="text-sm text-slate-400 mt-2">Puntuación: 0</p>
+                <button class="btn" onclick="location.reload()"><i class="fas fa-rotate-left mr-2"></i> REINTENTAR</button>
             </div>
         </div>
 
-        <!-- UI Superior -->
+        <!-- Overlay de Quiz -->
+        <div id="quiz-overlay" class="overlay" style="display: none;">
+            <div class="card">
+                <i id="quiz-icon" class="fas fa-brain text-purple-400 fa-3x mb-4"></i>
+                <h2 id="quiz-question" style="font-size: 17px; margin-bottom: 20px;">Pregunta</h2>
+                <div id="quiz-options" class="grid grid-cols-1 gap-2"></div>
+                <div id="quiz-explanation" class="explanation-text" style="display: none;"></div>
+                <button id="btn-next-quiz" class="btn" style="display: none; background:#10b981; color:white;">CONTINUAR <i class="fas fa-arrow-right ml-2"></i></button>
+            </div>
+        </div>
+
         <div class="ui-top">
             <div class="stat"><i class="fas fa-star text-yellow-400 mr-2"></i> <span id="score">0</span></div>
-            <div class="stat"><i class="fas fa-heart text-red-500 mr-2"></i> <span id="lives">3</span></div>
+            <div class="stat"><i class="fas fa-shield-heart text-red-500 mr-2"></i> <span id="lives">5</span></div>
         </div>
     </div>
 
     <script>
         const levels = [
-            { poly: "x² - 4", correct: ["(x-2)", "(x+2)"], wrong: ["(x+4)", "(x-1)", "x"], e: "Es una diferencia de cuadrados: a² - b² = (a+b)(a-b). Las raíces son 2 y -2." },
-            { poly: "x² - 5x + 6", correct: ["(x-2)", "(x-3)"], wrong: ["(x+2)", "(x+3)", "(x-1)"], e: "Las raíces son 2 y 3 (suman 5 y multiplican 6). El factor lleva el signo opuesto: (x-2)(x-3)." },
-            { poly: "x³ - x", correct: ["x", "(x-1)", "(x+1)"], wrong: ["(x-2)", "x²", "(x+5)"], e: "Paso 1: Factor común 'x'. Paso 2: Diferencia de cuadrados (x²-1). Resultado: x(x-1)(x+1)." }
+            { poly: "x² - 9", correct: ["(x-3)", "(x+3)"], wrong: ["(x+9)", "(x-1)", "x"], e: "Es una diferencia de cuadrados: x² - 3². Recuerda: a² - b² = (a+b)(a-b)." },
+            { poly: "x² + 6x + 9", correct: ["(x+3)", "(x+3)"], wrong: ["(x-3)", "x", "(x+6)"], e: "Es una identidad notable: el cuadrado de una suma (x+3)²." },
+            { poly: "x² - 5x + 6", correct: ["(x-2)", "(x-3)"], wrong: ["(x+2)", "(x+3)", "(x-1)"], e: "Buscamos dos números que sumen 5 y multipliquen 6. Son 2 y 3. Factores: (x-2)(x-3)." },
+            { poly: "x³ - x", correct: ["x", "(x-1)", "(x+1)"], wrong: ["(x-2)", "x²", "(x+5)"], e: "Primero sacamos factor común 'x'. Luego queda (x²-1), que es una identidad notable." },
+            { poly: "3x² - 12", correct: ["3", "(x-2)", "(x+2)"], wrong: ["(x-4)", "x", "(x+4)"], e: "Paso 1: Factor común 3. Paso 2: Diferencia de cuadrados (x²-4)." }
         ];
 
-        let currentLevel = 0;
-        let score = 0;
-        let lives = 3;
-        let isPaused = true;
+        const questions = [
+            { q: "¿Cuál es el primer paso para factorizar un polinomio?", a: ["Sacar Factor Común", "Hacer Ruffini", "Identidades Notables"], c: 0, e: "¡Brillante! El factor común simplifica los números y reduce el grado, facilitando todo lo demás." },
+            { q: "Si en Ruffini la raíz es 3, ¿cuál es el factor?", a: ["(x - 3)", "(x + 3)", "3x"], c: 0, e: "¡Perfecto! Al pasar de raíz a factor siempre se cambia el signo del número." },
+            { q: "¿Se pueden tachar sumas en una fracción algebraica?", a: ["No, jamás", "Sí, si son iguales", "Solo si el profesor deja"], c: 0, e: "¡Exacto! Solo se pueden simplificar bloques que estén MULTIPLICANDO a todo el numerador/denominador." },
+            { q: "¿Qué indica el Teorema del Resto?", a: ["Que P(a) es el resto de P(x):(x-a)", "Que el resto siempre es cero", "Que hay que usar Ruffini"], c: 0, e: "¡Muy bien! Evaluar el polinomio en 'a' es una forma rápida de saber el resto sin dividir." },
+            { q: "¿Cómo se factoriza una diferencia de cuadrados a² - b²?", a: ["(a+b)(a-b)", "(a-b)²", "(a+b)²"], c: 0, e: "¡Genial! Es la identidad notable más útil para simplificar fracciones." },
+            { q: "¿Qué es un polinomio irreducible?", a: ["Que no tiene raíces reales", "Que tiene muchas letras", "Que es muy largo"], c: 0, e: "¡Excelente! Como x²+1, no existe ningún número real que lo haga cero." },
+            { q: "Para sumar fracciones algebraicas necesito...", a: ["El m.c.m. de denominadores", "Multiplicar en cruz", "Sumar los numeradores"], c: 0, e: "¡Correcto! Igual que con las fracciones numéricas, necesitamos un denominador común." },
+            { q: "En el m.c.m. de polinomios elegimos...", a: ["Comunes y no comunes al mayor exponente", "Solo los comunes", "Los más pequeños"], c: 0, e: "¡Dominas el álgebra! Esa es la regla para asegurar que todos los denominadores quepan." },
+            { q: "Si un polinomio es de grado 3, ¿cuántas raíces tiene?", a: ["Como máximo 3", "Exactamente 3", "Mínimo 3"], c: 0, e: "¡Nivel experto! El grado marca el límite superior de soluciones reales que podemos encontrar." },
+            { q: "¿Cuál es el factor de la raíz x = -5?", a: ["(x + 5)", "(x - 5)", "x/5"], c: 0, e: "¡Así se hace! El signo cambia: si la raíz es negativa, el factor es una suma." }
+        ];
 
-        const config = {
-            type: Phaser.AUTO,
-            parent: 'game-container',
-            width: window.innerWidth,
-            height: window.innerHeight,
-            transparent: true,
-            physics: { default: 'arcade', arcade: { gravity: { y: 0 } } },
-            scene: { preload: preload, create: create, update: update }
-        };
-
+        let gameMode = 'simulation', score = 0, lives = 5, currentLevel = 0, isPaused = true;
+        const config = { type: Phaser.AUTO, parent: 'game-container', width: window.innerWidth, height: window.innerHeight, transparent: true, physics: { default: 'arcade', arcade: { gravity: { y: 0 } } }, scene: { preload: preload, create: create, update: update } };
         const game = new Phaser.Game(config);
         let items, polyText;
 
@@ -83,90 +108,126 @@
 
         function create() {
             const cx = window.innerWidth / 2;
-            polyText = this.add.text(cx, 100, '', { fontSize: '32px', fontStyle: 'bold', fill: '#38bdf8' }).setOrigin(0.5);
+            polyText = this.add.text(cx, 100, '', { fontSize: '28px', fontStyle: 'bold', fill: '#38bdf8', align: 'center', wordWrap: { width: window.innerWidth - 40 } }).setOrigin(0.5);
             items = this.physics.add.group();
             this.scene.pause();
         }
 
-        function startGame() {
-            document.getElementById('start-screen').style.display = 'none';
+        function startMode(mode) {
+            gameMode = mode;
             isPaused = false;
-            game.scene.resume('default');
-            loadLevel();
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('home-btn').style.display = 'flex';
+            if (mode === 'simulation') {
+                game.scene.resume('default');
+                loadLevel();
+            } else {
+                startQuiz();
+            }
         }
 
         function loadLevel() {
             if (currentLevel >= levels.length) {
-                alert("¡Felicidades! Has completado el entrenamiento algebraico.");
+                alert("¡MAESTRÍA ALGEBRAICA ALCANZADA!");
                 location.reload();
                 return;
             }
             const lvl = levels[currentLevel];
-            polyText.setText("Factoriza: " + lvl.poly);
-            
-            // Spawn items
-            const allOptions = [...lvl.correct, ...lvl.wrong].sort(() => Math.random() - 0.5);
-            const scene = game.scene.getAt(0);
-            
-            allOptions.forEach((txt, i) => {
-                scene.time.addEvent({
-                    delay: i * 1500,
-                    callback: () => spawnItem(txt, lvl.correct.includes(txt)),
-                    callbackScope: scene
-                });
+            polyText.setText("Factoriza:\n" + lvl.poly);
+            const options = [...lvl.correct, ...lvl.wrong].sort(() => Math.random() - 0.5);
+            options.forEach((txt, i) => {
+                game.scene.getAt(0).time.addEvent({ delay: i * 1800, callback: () => spawnItem(txt, lvl.correct.includes(txt)), callbackScope: game.scene.getAt(0) });
             });
         }
 
         function spawnItem(txt, isCorrect) {
-            if (isPaused) return;
+            if (isPaused || gameMode !== 'simulation') return;
             const x = Math.random() * (window.innerWidth - 100) + 50;
             const container = game.scene.getAt(0).add.container(x, -50);
-            
-            const bg = game.scene.getAt(0).add.circle(0, 0, 45, 0x1e293b).setStrokeStyle(2, 0x38bdf8);
-            const label = game.scene.getAt(0).add.text(0, 0, txt, { fontSize: '18px', fontStyle: 'bold' }).setOrigin(0.5);
-            
+            const bg = game.scene.getAt(0).add.circle(0, 0, 40, 0x1e293b).setStrokeStyle(2, 0x38bdf8);
+            const label = game.scene.getAt(0).add.text(0, 0, txt, { fontSize: '16px', fontStyle: 'bold' }).setOrigin(0.5);
             container.add([bg, label]);
             game.scene.getAt(0).physics.add.existing(container);
-            container.body.setVelocityY(150 + Math.random() * 100);
-            
-            bg.setInteractive(new Phaser.Geom.Circle(0, 0, 45), Phaser.Geom.Circle.Contains);
+            container.body.setVelocityY(120 + Math.random() * 80);
+            bg.setInteractive(new Phaser.Geom.Circle(0, 0, 40), Phaser.Geom.Circle.Contains);
             bg.on('pointerdown', () => {
                 if (isCorrect) {
-                    score += 100;
-                    updateUI();
-                    container.destroy();
-                    checkLevelWin();
+                    score += 100; updateUI(); container.destroy();
+                    if(score % 200 === 0) { currentLevel++; items.clear(true, true); loadLevel(); }
                 } else {
-                    handleError(levels[currentLevel].e);
+                    showQuizFeedback("¡FALLO!", levels[currentLevel].e, false);
                     container.destroy();
                 }
             });
         }
 
-        function handleError(msg) {
-            isPaused = true;
-            lives--;
-            updateUI();
-            const overlay = document.getElementById('feedback-overlay');
-            const exp = document.getElementById('fb-explanation');
-            exp.innerText = msg;
-            exp.style.display = 'block';
+        function startQuiz() {
+            const quiz = questions[Math.floor(Math.random() * questions.length)];
+            const overlay = document.getElementById('quiz-overlay');
+            const expEl = document.getElementById('quiz-explanation');
+            const nextBtn = document.getElementById('btn-next-quiz');
+            const optsEl = document.getElementById('quiz-options');
+            const qIcon = document.getElementById('quiz-icon');
+
             overlay.style.display = 'flex';
-            
-            document.getElementById('btn-continue').onclick = () => {
-                overlay.style.display = 'none';
-                isPaused = false;
-                if (lives <= 0) location.reload();
-            };
+            expEl.style.display = 'none';
+            nextBtn.style.display = 'none';
+            qIcon.className = "fas fa-brain text-purple-400 fa-3x mb-4";
+            document.getElementById('quiz-question').innerText = quiz.q;
+            optsEl.innerHTML = "";
+
+            quiz.a.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    optsEl.querySelectorAll('button').forEach(b => b.disabled = true);
+                    expEl.style.display = 'block';
+                    expEl.innerText = quiz.e;
+                    nextBtn.style.display = 'block';
+                    if (idx === quiz.c) {
+                        score += 150; btn.style.background = "#10b981";
+                        expEl.className = "explanation-text correct-box";
+                        qIcon.className = "fas fa-medal text-yellow-400 fa-4x mb-4";
+                    } else {
+                        lives--; btn.style.background = "#ef4444";
+                        expEl.className = "explanation-text wrong-box";
+                        qIcon.className = "fas fa-circle-exclamation text-red-500 fa-4x mb-4";
+                    }
+                    updateUI();
+                    if (lives <= 0) { nextBtn.innerText = "FINALIZAR"; nextBtn.onclick = checkGameOver; }
+                    else { nextBtn.onclick = () => { overlay.style.display = 'none'; if(gameMode === 'quiz') startQuiz(); else game.scene.resume('default'); }; }
+                };
+                optsEl.appendChild(btn);
+            });
         }
 
-        function checkLevelWin() {
-            // Lógica simple: si score aumenta lo suficiente, siguiente nivel
-            if (score > (currentLevel + 1) * 200) {
-                currentLevel++;
-                items.clear(true, true);
-                loadLevel();
+        function showQuizFeedback(title, msg, isCorrect) {
+            if(gameMode === 'simulation') game.scene.pause('default');
+            const overlay = document.getElementById('quiz-overlay');
+            const expEl = document.getElementById('quiz-explanation');
+            const nextBtn = document.getElementById('btn-next-quiz');
+            const optsEl = document.getElementById('quiz-options');
+            const qIcon = document.getElementById('quiz-icon');
+
+            overlay.style.display = 'flex';
+            optsEl.innerHTML = "";
+            document.getElementById('quiz-question').innerText = title;
+            expEl.style.display = 'block';
+            expEl.innerText = msg;
+            nextBtn.style.display = 'block';
+            
+            if(!isCorrect) {
+                lives--; updateUI();
+                qIcon.className = "fas fa-times-circle text-red-500 fa-4x mb-4";
+                expEl.className = "explanation-text wrong-box";
             }
+            
+            nextBtn.onclick = () => {
+                overlay.style.display = 'none';
+                if (lives <= 0) checkGameOver();
+                else game.scene.resume('default');
+            };
         }
 
         function updateUI() {
@@ -174,8 +235,15 @@
             document.getElementById('lives').innerText = lives;
         }
 
-        function update() {}
+        function checkGameOver() {
+            if (lives <= 0) {
+                document.getElementById('quiz-overlay').style.display = 'none';
+                document.getElementById('game-over-screen').style.display = 'flex';
+                document.getElementById('final-score-text').innerText = "Puntuación Final: " + score;
+            }
+        }
 
+        function update() {}
         window.addEventListener('resize', () => game.scale.resize(window.innerWidth, window.innerHeight));
     </script>
 </body>
