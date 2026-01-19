@@ -1,186 +1,158 @@
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Plan: English Modal Verbs Mastery v3.0</title>
+    <title>Mastering Modals: Study Lab v5.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { background-color: #020617; font-family: 'Inter', sans-serif; color: #f1f5f9; }
         .header-font { font-family: 'Montserrat', sans-serif; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.05); }
-        .accent-gold { color: #fbbf24; }
-        .step-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .step-card:hover { transform: scale(1.02) translateY(-5px); border-color: #3b82f6; background: rgba(30, 41, 59, 0.9); }
-        .checklist-item { @apply flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors; }
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
+        .mission-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
+        .mission-card:hover { transform: translateY(-8px); border-color: #3b82f6; background: rgba(30, 41, 59, 0.8); }
+        .glow-dot { position: absolute; top: -10px; right: -10px; width: 40px; height: 40px; filter: blur(20px); opacity: 0.3; border-radius: 50%; }
     </style>
 </head>
-<body class="p-4 md:p-12">
+<body class="p-4 md:p-16">
     <div class="max-w-6xl mx-auto">
         
         <!-- HEADER -->
-        <header class="text-center mb-16 relative">
-            <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-64 h-64 bg-blue-600/20 blur-[100px] rounded-full"></div>
-            <h1 class="header-font text-5xl md:text-7xl font-black mb-6 tracking-tighter">
-                STUDY <span class="text-blue-500">ROADMAP</span>
+        <header class="text-center mb-20 relative">
+            <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full"></div>
+            <div class="inline-block px-4 py-1 mb-6 border border-blue-500/30 rounded-full bg-blue-500/5 text-blue-400 text-[10px] font-black tracking-[0.3em] uppercase animate-pulse">
+                Global Learning Command
+            </div>
+            <h1 class="header-font text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase">
+                STUDY <span class="text-blue-500">LAB</span>
             </h1>
-            <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-                Tu ecosistema digital de aprendizaje para dominar los verbos modales de forma definitiva. 
-                <span class="text-blue-400 font-bold block mt-2 tracking-widest uppercase text-xs">A1 to C1 • Interactive • Audio-Visual</span>
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                Welcome to your training station. Follow the mission order to become a professional in English logic and attitude.
             </p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <!-- MISSION GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             
-            <!-- LEFT COLUMN: TIPS & PROGRESS -->
-            <div class="lg:col-span-1 space-y-8">
-                
-                <!-- PROGRESS CHECKLIST -->
-                <section class="glass rounded-3xl p-8 border-t-4 border-blue-500">
-                    <h2 class="header-font text-xl font-bold mb-6 flex items-center gap-3">
-                        <i class="fas fa-tasks text-blue-500"></i> Mi Progreso
-                    </h2>
-                    <div class="space-y-4 text-sm text-slate-300">
-                        <label class="checklist-item">
-                            <input type="checkbox" class="w-5 h-5 rounded border-slate-700 bg-slate-800 text-blue-500 focus:ring-blue-500">
-                            <span>Ver Masterclass (Teoría)</span>
-                        </label>
-                        <label class="checklist-item">
-                            <input type="checkbox" class="w-5 h-5 rounded border-slate-700 bg-slate-800 text-blue-500 focus:ring-blue-500">
-                            <span>Escuchar Podcast (Inmersión)</span>
-                        </label>
-                        <label class="checklist-item">
-                            <input type="checkbox" class="w-5 h-5 rounded border-slate-700 bg-slate-800 text-blue-500 focus:ring-blue-500">
-                            <span>Jugar Modal Quest (Práctica)</span>
-                        </label>
-                        <label class="checklist-item">
-                            <input type="checkbox" class="w-5 h-5 rounded border-slate-700 bg-slate-800 text-blue-500 focus:ring-blue-500">
-                            <span>Descargar Infografía (Repaso)</span>
-                        </label>
+            <!-- MISSION 1: THEORY -->
+            <div class="mission-card glass rounded-[2.5rem] p-10 border border-white/5">
+                <div class="glow-dot bg-blue-500"></div>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="bg-blue-600/20 p-4 rounded-2xl">
+                        <i class="fas fa-book-open text-blue-500 text-2xl"></i>
                     </div>
-                </section>
-
-                <!-- STRATEGIC TIPS -->
-                <section class="glass rounded-3xl p-8 border-l-8 border-yellow-500">
-                    <h2 class="header-font text-xl font-bold mb-6 flex items-center gap-3">
-                        <i class="fas fa-lightbulb accent-gold"></i> Consejos de Oro
-                    </h2>
-                    <ul class="space-y-6 text-xs leading-relaxed text-slate-400">
-                        <li class="flex gap-4">
-                            <div class="bg-yellow-500/20 text-yellow-500 w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold">1</div>
-                            <p><strong>Escucha Activa:</strong> No pongas el podcast de fondo. Trata de repetir las frases que dice Sarah en voz alta para mejorar tu <em>pronunciación</em>.</p>
-                        </li>
-                        <li class="flex gap-4">
-                            <div class="bg-yellow-500/20 text-yellow-500 w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold">2</div>
-                            <p><strong>Aprende del Error:</strong> En el juego, cuando falles, tómate 5 segundos para leer el cuadro de feedback. Ahí es donde ocurre el aprendizaje real.</p>
-                        </li>
-                        <li class="flex gap-4">
-                            <div class="bg-yellow-500/20 text-yellow-500 w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold">3</div>
-                            <p><strong>Referencia Rápida:</strong> Ten la infografía abierta en una pestaña secundaria o en tu móvil mientras ves la presentación lineal.</p>
-                        </li>
-                    </ul>
-                </section>
+                    <div>
+                        <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest">Mission 01</span>
+                        <h3 class="header-font text-2xl font-bold">Visual Encyclopedia</h3>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-400 mb-8 leading-relaxed">
+                    Master the theoretical foundation with our linear masterclass. No distractions, just pure knowledge and expert-level examples.
+                </p>
+                <div class="bg-blue-500/5 p-4 rounded-2xl mb-8 border border-blue-500/10">
+                    <h4 class="text-[10px] font-black text-yellow-500 uppercase mb-2 flex items-center gap-2">
+                        <i class="fas fa-bolt"></i> Truco Pro (Spanish)
+                    </h4>
+                    <p class="text-[11px] text-slate-300 italic">"No pases de diapositiva hasta que puedas explicar el ejemplo en voz alta. Si lo dices, se te queda grabado."</p>
+                </div>
+                <a href="english_modal_verbs_linear.html" target="_blank" class="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white w-full py-4 rounded-2xl text-sm font-black transition-all group shadow-lg shadow-blue-600/20">
+                    START THEORY <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                </a>
             </div>
 
-            <!-- RIGHT COLUMN: RESOURCES FLOW -->
-            <div class="lg:col-span-2 space-y-6">
-                
-                <!-- PHASE 1 -->
-                <div class="step-card glass rounded-3xl p-8 border border-white/5">
-                    <div class="flex flex-col md:flex-row gap-8 items-start">
-                        <div class="bg-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shadow-blue-600/20 shrink-0">01</div>
-                        <div class="flex-grow">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="header-font text-2xl font-bold tracking-tight">Enciclopedia de Modales</h3>
-                                <span class="text-[10px] bg-blue-500/10 text-blue-400 px-2 py-1 rounded font-bold uppercase">Teoría Master</span>
-                            </div>
-                            <p class="text-sm text-slate-400 mb-6 leading-relaxed">
-                                Una masterclass lineal interactiva que desglosa cada regla, excepción y matiz regional (UK vs US). 28 diapositivas de profundidad técnica.
-                            </p>
-                            <a href="english_modal_verbs_linear.html" target="_blank" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-xl text-sm font-bold transition-all group">
-                                Abrir Enciclopedia <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                            </a>
-                        </div>
+            <!-- MISSION 2: IMMERSION -->
+            <div class="mission-card glass rounded-[2.5rem] p-10 border border-white/5">
+                <div class="glow-dot bg-purple-500"></div>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="bg-purple-600/20 p-4 rounded-2xl">
+                        <i class="fas fa-headphones-simple text-purple-500 text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black text-purple-500 uppercase tracking-widest">Mission 02</span>
+                        <h3 class="header-font text-2xl font-bold">Neural Immersion</h3>
                     </div>
                 </div>
-
-                <!-- PHASE 2 -->
-                <div class="step-card glass rounded-3xl p-8 border border-white/5 border-l-4 border-purple-500">
-                    <div class="flex flex-col md:flex-row gap-8 items-start">
-                        <div class="bg-purple-600 w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shadow-purple-600/20 shrink-0">02</div>
-                        <div class="flex-grow">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="header-font text-2xl font-bold tracking-tight">Podcast: Modal Mastery</h3>
-                                <span class="text-[10px] bg-purple-500/10 text-purple-400 px-2 py-1 rounded font-bold uppercase">Audio Inmersivo</span>
-                            </div>
-                            <p class="text-sm text-slate-400 mb-6 leading-relaxed">
-                                Escucha a Sarah y Mark en una conversación real de 10 minutos. Aprende a detectar las "contractions" y el tono sarcástico en los modales de pasado.
-                            </p>
-                            <a href="modal_verbs_kokoro_podcast_long.mp3" download class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white px-8 py-3 rounded-xl text-sm font-bold transition-all group">
-                                Escuchar / Descargar <i class="fas fa-headphones group-hover:scale-110 transition-transform"></i>
-                            </a>
-                        </div>
-                    </div>
+                <p class="text-sm text-slate-400 mb-8 leading-relaxed">
+                    Listen to the AI-generated podcast with ultra-natural voices. Learn to distinguish nuances of irony and regret in real speech.
+                </p>
+                <div class="bg-purple-500/5 p-4 rounded-2xl mb-8 border border-purple-500/10">
+                    <h4 class="text-[10px] font-black text-yellow-500 uppercase mb-2 flex items-center gap-2">
+                        <i class="fas fa-ear-listen"></i> Truco del Oído
+                    </h4>
+                    <p class="text-[11px] text-slate-300 italic">"Escúchalo 2 veces: la primera para pillar el contexto, la segunda para fijarte solo en las contracciones (must've, should've)."</p>
                 </div>
-
-                <!-- PHASE 3 -->
-                <div class="step-card glass rounded-3xl p-8 border border-white/5 border-l-4 border-green-500">
-                    <div class="flex flex-col md:flex-row gap-8 items-start">
-                        <div class="bg-green-600 w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shadow-green-600/20 shrink-0">03</div>
-                        <div class="flex-grow">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="header-font text-2xl font-bold tracking-tight">Juego: Modal Quest</h3>
-                                <span class="text-[10px] bg-green-500/10 text-green-400 px-2 py-1 rounded font-bold uppercase">Reto Gamificado</span>
-                            </div>
-                            <p class="text-sm text-slate-400 mb-6 leading-relaxed">
-                                Optimizado para móviles en modo apaisado. 30 niveles de dificultad progresiva. ¿Serás capaz de llegar al nivel de 'Modal Expert'?
-                            </p>
-                            <a href="modal_quest.html" target="_blank" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded-xl text-sm font-bold transition-all group">
-                                ¡Aceptar el Reto! <i class="fas fa-gamepad group-hover:rotate-12 transition-transform"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PHASE 4 -->
-                <div class="step-card glass rounded-3xl p-8 border border-white/5 border-l-4 border-yellow-500">
-                    <div class="flex flex-col md:flex-row gap-8 items-start">
-                        <div class="bg-yellow-600 w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black shadow-lg shadow-yellow-600/20 shrink-0">04</div>
-                        <div class="flex-grow">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="header-font text-2xl font-bold tracking-tight">Visual Mastery Cheat Sheet</h3>
-                                <span class="text-[10px] bg-yellow-500/10 text-yellow-400 px-2 py-1 rounded font-bold uppercase">Repaso Visual</span>
-                            </div>
-                            <p class="text-sm text-slate-400 mb-6 leading-relaxed">
-                                Nuestra infografía premium v3.0 con escalas de certeza, el muro de errores para hispanohablantes y glosario bilingüe.
-                            </p>
-                            <div class="flex gap-4">
-                                <a href="infografia_modal_verbs.html" target="_blank" class="inline-flex items-center gap-2 bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-xl text-sm font-bold transition-all group">
-                                    Ver Versión Web <i class="fas fa-image"></i>
-                                </a>
-                                <a href="english_modal_verbs_marp.html" target="_blank" class="inline-flex items-center gap-2 border border-white/10 hover:bg-white/5 text-slate-300 px-6 py-3 rounded-xl text-sm font-bold transition-all">
-                                    Versión Imprimible <i class="fas fa-print"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <a href="modal_verbs_kokoro_podcast_long.mp3" download class="flex items-center justify-center gap-3 bg-purple-600 hover:bg-purple-500 text-white w-full py-4 rounded-2xl text-sm font-black transition-all group shadow-lg shadow-purple-600/20">
+                    LISTEN PODCAST <i class="fas fa-play group-hover:scale-110 transition-transform"></i>
+                </a>
             </div>
+
+            <!-- MISSION 3: PRACTICE -->
+            <div class="mission-card glass rounded-[2.5rem] p-10 border border-white/5">
+                <div class="glow-dot bg-green-500"></div>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="bg-green-600/20 p-4 rounded-2xl">
+                        <i class="fas fa-gamepad text-green-500 text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black text-green-500 uppercase tracking-widest">Mission 03</span>
+                        <h3 class="header-font text-2xl font-bold">Modal Quest Challenge</h3>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-400 mb-8 leading-relaxed">
+                    Test your grammar reflexes in our simulator. Designed for you to learn from every mistake with instant feedback.
+                </p>
+                <div class="bg-green-500/5 p-4 rounded-2xl mb-8 border border-green-500/10">
+                    <h4 class="text-[10px] font-black text-yellow-500 uppercase mb-2 flex items-center gap-2">
+                        <i class="fas fa-brain"></i> Hack de Maestría
+                    </h4>
+                    <p class="text-[11px] text-slate-300 italic">"Si fallas, no te frustres. Repite la frase correcta en voz alta 3 veces. El cerebro aprende más corrigiendo el error."</p>
+                </div>
+                <a href="modal_quest.html" target="_blank" class="flex items-center justify-center gap-3 bg-green-600 hover:bg-green-500 text-white w-full py-4 rounded-2xl text-sm font-black transition-all group shadow-lg shadow-green-600/20">
+                    ACCEPT CHALLENGE <i class="fas fa-fire group-hover:rotate-12 transition-transform"></i>
+                </a>
+            </div>
+
+            <!-- MISSION 4: REVIEW -->
+            <div class="mission-card glass rounded-[2.5rem] p-10 border border-white/5">
+                <div class="glow-dot bg-yellow-500"></div>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="bg-yellow-600/20 p-4 rounded-2xl">
+                        <i class="fas fa-shield-halved text-yellow-500 text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-black text-yellow-500 uppercase tracking-widest">Mission 04</span>
+                        <h3 class="header-font text-2xl font-bold">Cheat Sheet Hacks</h3>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-400 mb-8 leading-relaxed">
+                    Your legal "cheat sheet". A premium infographic with all the visual tricks to never doubt between Must and Have To again.
+                </p>
+                <div class="bg-yellow-500/5 p-4 rounded-2xl mb-8 border border-yellow-500/10">
+                    <h4 class="text-[10px] font-black text-yellow-500 uppercase mb-2 flex items-center gap-2">
+                        <i class="fas fa-image"></i> Tip de Memoria
+                    </h4>
+                    <p class="text-[11px] text-slate-300 italic">"Pon la sección de 'Common Mistakes' de fondo de pantalla un par de días. Es memorización pasiva pura."</p>
+                </div>
+                <a href="infografia_modal_verbs.html" target="_blank" class="flex items-center justify-center gap-3 bg-yellow-600 hover:bg-yellow-500 text-white w-full py-4 rounded-2xl text-sm font-black transition-all group shadow-lg shadow-yellow-600/20">
+                    VIEW INFOGRAPHIC <i class="fas fa-eye group-hover:scale-110 transition-transform"></i>
+                </a>
+            </div>
+
         </div>
 
         <!-- FOOTER -->
-        <footer class="mt-20 py-10 border-t border-white/5 text-center">
-            <div class="flex justify-center gap-6 mb-6 opacity-40">
-                <i class="fab fa-apple text-2xl"></i>
-                <i class="fab fa-google text-2xl"></i>
-                <i class="fab fa-microsoft text-2xl"></i>
-            </div>
-            <p class="text-slate-500 text-[10px] uppercase tracking-[0.2em]">
-                © 2026 AI Educational Solutions | Entorno de Aprendizaje Personalizado para Alumnos de Español.
+        <footer class="mt-24 py-12 border-t border-white/5 text-center">
+            <p class="text-slate-500 text-[10px] uppercase tracking-[0.4em] mb-4">
+                Powered by AI English Solutions
             </p>
+            <div class="flex justify-center gap-8 opacity-20">
+                <i class="fab fa-apple text-xl"></i>
+                <i class="fab fa-google text-xl"></i>
+                <i class="fab fa-microsoft text-xl"></i>
+            </div>
         </footer>
     </div>
 </body>
