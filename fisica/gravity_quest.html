@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Simulador y Quiz Gravitación - Física 4º ESO</title>
+    <title>Gravity Master v4.2 - Deep Space Edition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { margin: 0; background: #020617; color: white; font-family: 'Poppins', sans-serif; overflow: hidden; touch-action: none; }
         #game-container { width: 100vw; height: 100vh; position: relative; }
         
-        .overlay { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; padding: 20px; text-align: center; }
+        .overlay { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.96); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; padding: 20px; text-align: center; }
         .card { background: #1e293b; padding: 25px; border-radius: 25px; border: 3px solid #38bdf8; width: 95%; max-width: 500px; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); overflow-y: auto; max-height: 90vh; }
         
-        .btn { background: #38bdf8; color: #020617; border: none; padding: 15px 30px; border-radius: 15px; font-weight: 800; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.2s; }
+        .btn { background: #38bdf8; color: #020617; border: none; padding: 15px 30px; border-radius: 15px; font-weight: 800; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .btn:hover { background: #fff; transform: scale(1.02); }
         .btn-secondary { background: #a78bfa; }
-        .btn-next { background: #10b981; color: white; margin-top: 20px; }
+        .btn-home { position: absolute; top: 15px; right: 15px; width: 45px; height: 45px; border-radius: 50%; background: rgba(30, 41, 59, 0.8); border: 2px solid #38bdf8; color: #38bdf8; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; }
 
         .planet-name { font-size: 24px; font-weight: 900; color: #38bdf8; margin-bottom: 5px; text-transform: uppercase; }
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; text-align: left; }
         .stat-item { background: rgba(0,0,0,0.2); padding: 8px; border-radius: 10px; font-size: 11px; }
         .stat-label { color: #94a3b8; font-weight: bold; font-size: 9px; display: block; }
 
-        .mission-box { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.9); padding: 10px 20px; border-radius: 50px; border: 2px solid #a78bfa; font-size: 13px; font-weight: bold; z-index: 10; text-align: center; width: 85%; max-width: 500px; }
+        .mission-box { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.9); padding: 10px 20px; border-radius: 50px; border: 2px solid #a78bfa; font-size: 13px; font-weight: bold; z-index: 10; text-align: center; width: 80%; max-width: 450px; box-shadow: 0 0 20px rgba(167, 139, 250, 0.3); }
         
-        .explanation-text { font-size: 13px; line-height: 1.4; margin: 15px 0; padding: 12px; border-radius: 10px; text-align: left; border-left: 5px solid #38bdf8; background: rgba(56, 189, 248, 0.05); }
-        .correct { color: #10b981; border-color: #10b981; }
-        .wrong { color: #ef4444; border-color: #ef4444; }
+        .explanation-text { font-size: 13px; line-height: 1.5; margin: 15px 0; padding: 15px; border-radius: 15px; text-align: left; border-left: 6px solid #38bdf8; background: rgba(255, 255, 255, 0.03); }
+        .correct-box { border-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+        .wrong-box { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 
         .ui-top { position: absolute; top: 15px; left: 15px; z-index: 10; pointer-events: none; }
         .stat { background: rgba(15, 23, 42, 0.9); padding: 8px 15px; border-radius: 10px; border: 1px solid #38bdf8; font-weight: bold; font-size: 12px; display: inline-block; }
@@ -36,17 +36,24 @@
 <body>
 
     <div id="game-container">
+        <!-- Botón Home -->
+        <div id="home-btn" class="btn-home" style="display: none;" onclick="location.reload()">
+            <i class="fas fa-home"></i>
+        </div>
+
         <!-- Pantalla de Inicio -->
         <div id="start-screen" class="overlay">
             <div class="card">
-                <i class="fas fa-sun text-yellow-400 fa-4x mb-4"></i>
-                <h1 class="header-font text-2xl font-black">ÓRBITAS COSMOS v4.0</h1>
-                <p style="font-size: 12px; color: #38bdf8; margin-bottom: 20px;">EXPLORACIÓN Y QUIZ DE GRAVITACIÓN</p>
+                <i class="fas fa-shuttle-space text-blue-400 fa-4x mb-4"></i>
+                <h1 class="header-font text-2xl font-black uppercase tracking-tighter">Gravity Master <span style="color:#38bdf8">4.2</span></h1>
+                <p style="font-size: 11px; color: #94a3b8; margin-bottom: 25px;">SISTEMA SOLAR & ACADEMIA DE FÍSICA</p>
                 
-                <button class="btn" onclick="startMode('explore')"><i class="fas fa-satellite mr-2"></i> MODO EXPLORACIÓN</button>
-                <button class="btn btn-secondary" onclick="startMode('quiz')"><i class="fas fa-brain mr-2"></i> MODO SOLO QUIZ</button>
+                <button class="btn" onclick="startMode('explore')"><i class="fas fa-galaxy mr-2"></i> SIMULADOR SOLAR</button>
+                <button class="btn btn-secondary" onclick="startMode('quiz')"><i class="fas fa-graduation-cap mr-2"></i> ENTRENAMIENTO QUIZ</button>
                 
-                <p style="font-size: 10px; color: #94a3b8; margin-top: 20px;">Toca planetas para aprender sus datos reales o pon a prueba tu conocimiento con el test masivo.</p>
+                <div style="margin-top: 25px; font-size: 10px; color: #64748b; line-height: 1.4;">
+                    <p><i class="fas fa-info-circle mr-1"></i> Explora el sistema, detecta cometas y lunas, o pon a prueba tu cerebro para ganar medallas.</p>
+                </div>
             </div>
         </div>
 
@@ -58,10 +65,10 @@
                     <div class="stat-item"><span class="stat-label">MASA (M)</span><span id="p-mass">1.0</span></div>
                     <div class="stat-item"><span class="stat-label">GRAVEDAD (g)</span><span id="p-gravity">9.8 m/s²</span></div>
                     <div class="stat-item"><span class="stat-label">DISTANCIA</span><span id="p-dist">1 AU</span></div>
-                    <div class="stat-item"><span class="stat-label">PESO 1KG</span><span id="p-weight">9.8 N</span></div>
+                    <div class="stat-item"><span class="stat-label">TIPO</span><span id="p-type">Rocoso</span></div>
                 </div>
                 <p id="p-info" style="font-size: 12px; color: #cbd5e1; margin-bottom: 15px; text-align: left;"></p>
-                <button class="btn" onclick="closeModal()">CERRAR</button>
+                <button class="btn" onclick="closeModal()">VOLVER AL ESPACIO</button>
             </div>
         </div>
 
@@ -72,115 +79,127 @@
                 <h2 id="quiz-question" style="font-size: 17px; margin-bottom: 20px;">Pregunta</h2>
                 <div id="quiz-options" class="grid grid-cols-1 gap-2"></div>
                 <div id="quiz-explanation" class="explanation-text" style="display: none;"></div>
-                <button id="btn-next-quiz" class="btn btn-next" style="display: none;">SIGUIENTE PREGUNTA <i class="fas fa-arrow-right ml-2"></i></button>
+                <button id="btn-next-quiz" class="btn" style="display: none; background:#10b981; color:white;">SIGUIENTE RETO <i class="fas fa-arrow-right ml-2"></i></button>
             </div>
         </div>
 
-        <!-- UI Superior -->
         <div id="mission-ui" class="mission-box" style="display: none;">
-            <span id="mission-text">Analiza el planeta más grande</span>
+            <i class="fas fa-satellite mr-2 text-blue-400 animate-pulse"></i> <span id="mission-text">Analizando...</span>
         </div>
 
         <div class="ui-top">
-            <div class="stat"><i class="fas fa-star text-yellow-400 mr-2"></i> <span id="score">0</span></div>
+            <div class="stat"><i class="fas fa-award text-yellow-400 mr-2"></i> <span id="score">0</span></div>
         </div>
     </div>
 
     <script>
         const planetData = [
-            { name: "Mercurio", dist: 65, speed: 0.04, size: 7, color: 0xa5a5a5, mass: "0.05 Tierra", g: 3.7, info: "Es el más cercano al Sol. Cumple la 2ª Ley de Kepler: es el que orbita a mayor velocidad." },
-            { name: "Venus", dist: 95, speed: 0.015, size: 11, color: 0xffd700, mass: "0.81 Tierra", g: 8.8, info: "El gemelo de la Tierra. Su gravedad es un poco menor debido a su menor densidad." },
-            { name: "Tierra", dist: 135, speed: 0.01, size: 12, color: 0x38bdf8, mass: "1.00 Tierra", g: 9.8, info: "Nuestra referencia. El peso de un objeto es m·g (60kg = 588N)." },
-            { name: "Marte", dist: 175, speed: 0.008, size: 9, color: 0xf87171, mass: "0.11 Tierra", g: 3.7, info: "Posee la misma gravedad que Mercurio a pesar de ser más grande, debido a su estructura." },
-            { name: "Júpiter", dist: 240, speed: 0.004, size: 24, color: 0xfb923c, mass: "318 Tierra", g: 24.8, info: "El coloso. Su masa es tan grande que su gravedad es casi 2.5 veces la nuestra." },
-            { name: "Saturno", dist: 300, speed: 0.003, size: 20, color: 0xe9d5a1, mass: "95 Tierra", g: 10.4, info: "Menos denso que el agua. Si pudieras ponerlo en una piscina enorme, ¡flotaría!" }
+            { name: "Mercurio", dist: 70, speed: 0.04, size: 6, color: 0xa5a5a5, mass: "0.05 T", g: 3.7, info: "Es el más pequeño y rápido. Debido a su cercanía al Sol, su velocidad orbital es frenética." },
+            { name: "Venus", dist: 100, speed: 0.015, size: 10, color: 0xffd700, mass: "0.81 T", g: 8.8, info: "El gemelo de la Tierra. Posee un efecto invernadero desbocado que lo hace el más caliente." },
+            { name: "Tierra", dist: 140, speed: 0.01, size: 11, color: 0x38bdf8, mass: "1.00 T", g: 9.8, info: "Nuestra base. Tiene una luna que orbita siguiendo la misma ley de Newton.", hasMoon: true },
+            { name: "Marte", dist: 185, speed: 0.008, size: 8, color: 0xf87171, mass: "0.11 T", g: 3.7, info: "El planeta rojo. Es el destino principal de las misiones espaciales actuales." },
+            { name: "Júpiter", dist: 250, speed: 0.004, size: 24, color: 0xfb923c, mass: "318 T", g: 24.8, info: "El gigante protector. Su masa es tan grande que desvía cometas peligrosos fuera de la Tierra.", hasMoons: true },
+            { name: "Saturno", dist: 320, speed: 0.003, size: 20, color: 0xe9d5a1, mass: "95 T", g: 10.4, info: "Famoso por sus anillos de hielo y roca. Es el planeta menos denso de todos.", hasRings: true }
         ];
 
         const questions = [
-            { q: "¿Si duplicas la distancia r, la Fuerza F se...?", a: ["Divide por 4", "Divide por 2", "Duplica"], c: 0, e: "Ley del cuadrado inverso: F ∝ 1/r². (2² = 4)." },
-            { q: "¿Qué unidad mide el PESO en el S.I.?", a: ["Newton (N)", "Kilogramo (kg)", "Gramo (g)"], c: 0, e: "El peso es una FUERZA, por lo que se mide en Newtons." },
-            { q: "¿Qué ley dice que las órbitas son elipses?", a: ["1ª de Kepler", "3ª de Kepler", "Ley de Newton"], c: 0, e: "Kepler descubrió que los círculos perfectos no existían en el cielo." },
-            { q: "¿Tu MASA cambia si vas a la Luna?", a: ["No, nunca", "Sí, disminuye", "Sí, aumenta"], c: 0, e: "La masa es la cantidad de materia. Eres el mismo aquí que allí." },
-            { q: "A mayor distancia del Sol, un planeta va...", a: ["Más lento", "Más rápido", "Igual"], c: 0, e: "3ª Ley de Kepler: Planetas lejanos tienen periodos más largos." },
-            { q: "¿Quién midió por primera vez la constante G?", a: ["Cavendish", "Newton", "Kepler"], c: 0, e: "Cavendish 'pesó' la Tierra con su balanza de torsión." },
-            { q: "¿Qué atrae más, el Sol a la Tierra o viceversa?", a: ["Atraen igual", "El Sol más", "La Tierra más"], c: 0, e: "3ª Ley de Newton: Acción y reacción son siempre iguales." },
-            { q: "La gravedad g en la Tierra vale...", a: ["9,8 m/s²", "1,6 m/s²", "24,8 m/s²"], c: 0, e: "Es la aceleración estándar de caída en nuestro planeta." },
-            { q: "Si r se triplica, la fuerza F se divide por...", a: ["9", "3", "6"], c: 0, e: "3 al cuadrado es 9. La distancia castiga mucho a la fuerza." },
-            { q: "En el Perihelio (punto cercano), el planeta va...", a: ["Más rápido", "Más lento", "Se para"], c: 0, e: "2ª Ley de Kepler: Áreas iguales en tiempos iguales." },
-            { q: "¿Qué es G?", a: ["Constante Universal", "Gravedad local", "Una masa"], c: 0, e: "G es igual en todo el universo conocidos: 6,67e-11." },
-            { q: "¿Qué pesa más, 1kg de hierro o 1kg de paja?", a: ["Pesan igual", "Hierro", "Paja"], c: 0, e: "Ambos tienen 1kg de masa, por lo tanto el mismo peso (m·g)." },
-            { q: "¿Por qué flotan los astronautas en la ISS?", a: ["Caída libre perpetua", "No hay gravedad", "Flotan por aire"], c: 0, e: "Están cayendo, pero fallan el suelo por su velocidad lateral." },
-            { q: "¿Cómo se llama el punto más lejano al Sol?", a: ["Afelio", "Perihelio", "Zenit"], c: 0, e: "Afelio (lejos) vs Perihelio (cerca)." },
-            { q: "Si un planeta tiene el doble de MASA, su g es...", a: ["El doble", "La mitad", "Cuatro veces más"], c: 0, e: "g es directamente proporcional a la Masa del planeta." },
-            { q: "Los satélites de TV suelen ser...", a: ["Geoestacionarios", "Polares", "Móviles"], c: 0, e: "Deben estar fijos sobre un punto para que la antena no se mueva." },
-            { q: "¿Qué ley relaciona T² con r³?", a: ["3ª de Kepler", "1ª de Kepler", "Newton"], c: 0, e: "Es la Ley Armónica que permite calcular distancias celestes." },
-            { q: "¿Dónde pesarías MENOS del Sistema Solar?", a: ["Luna", "Marte", "Tierra"], c: 0, e: "De los tres, la Luna tiene la menor masa y radio." },
-            { q: "La constante G es un número...", a: ["Muy pequeño", "Muy grande", "Cercano a 10"], c: 0, e: "Es 0,0000000000667. ¡Casi nada!" },
-            { q: "Un satélite en órbita tiene...", a: ["Velocidad orbital", "Motores siempre on", "Cuerdas"], c: 0, e: "Su velocidad le permite compensar la atracción gravitatoria." }
+            { q: "¿Si duplicas la distancia r, la Fuerza F se...?", a: ["Divide por 4", "Divide por 2", "Duplica"], c: 0, e: "¡Brillante! Ley del cuadrado inverso: F ∝ 1/r². (2² = 4)." },
+            { q: "¿Qué unidad mide el PESO en el S.I.?", a: ["Newton (N)", "Kilogramo (kg)", "Gramo (g)"], c: 0, e: "¡Genial! El peso es una FUERZA de atracción, por eso se mide en Newtons." },
+            { q: "¿Qué ley dice que las órbitas son elipses?", a: ["1ª de Kepler", "3ª de Kepler", "Ley de Newton"], c: 0, e: "¡Correcto! Kepler demostró que el cielo no es de círculos perfectos." },
+            { q: "¿Tu MASA cambia si vas a la Luna?", a: ["No, nunca", "Sí, disminuye", "Sí, aumenta"], c: 0, e: "¡Perfecto! Eres el mismo aquí que en Marte. La masa es invariable." },
+            { q: "A mayor distancia del Sol, un planeta va...", a: ["Más lento", "Más rápido", "Igual"], c: 0, e: "¡Exacto! Según la 3ª Ley de Kepler, los planetas lejanos tienen menos velocidad." },
+            { q: "¿Quién midió por primera vez la constante G?", a: ["Cavendish", "Newton", "Kepler"], c: 0, e: "¡Muy bien! Cavendish 'pesó' la Tierra en su famoso experimento." },
+            { q: "¿Qué atrae más, el Sol a la Tierra o la Tierra al Sol?", a: ["Atraen igual", "El Sol más", "La Tierra más"], c: 0, e: "¡Nivel experto! 3ª Ley de Newton: Acción y reacción. Fuerzas iguales." },
+            { q: "En el Perihelio (punto cercano), el planeta va...", a: ["Más rápido", "Más lento", "Se para"], c: 0, e: "¡Así se hace! La mayor atracción solar le obliga a correr más." },
+            { q: "¿Dónde pesarías MENOS del Sistema Solar?", a: ["Luna", "Marte", "Tierra"], c: 0, e: "¡Correcto! La Luna tiene la menor intensidad de gravedad (1.6)." },
+            { q: "Si r se triplica, la fuerza F se divide por...", a: ["9", "3", "6"], c: 0, e: "¡Matemático! 3 al cuadrado es 9. La distancia es letal para la gravedad." }
         ];
 
-        let gameMode = 'explore';
-        let score = 0;
-        let isModalOpen = false;
-        let currentMission = null;
-
-        const config = {
-            type: Phaser.AUTO,
-            parent: 'game-container',
-            width: window.innerWidth,
-            height: window.innerHeight,
-            transparent: true,
-            scene: { preload: preload, create: create, update: update }
-        };
-
+        let gameMode = 'explore', score = 0, isModalOpen = false, currentMission = null;
+        const config = { type: Phaser.AUTO, parent: 'game-container', width: window.innerWidth, height: window.innerHeight, transparent: true, scene: { preload: preload, create: create, update: update } };
         const game = new Phaser.Game(config);
-        let planets = [];
+        let planets = [], comet = null;
 
         function preload() {}
 
         function create() {
             const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-            this.add.circle(cx, cy, 30, 0xffcc00); // Sol
-
+            
+            // Sol con efecto de partículas
+            this.add.circle(cx, cy, 35, 0xffcc00);
+            
             planetData.forEach((data) => {
-                const orbit = this.add.graphics();
-                orbit.lineStyle(1, 0xffffff, 0.1);
-                orbit.strokeCircle(cx, cy, data.dist);
+                // Dibujar órbita
+                this.add.graphics().lineStyle(1, 0xffffff, 0.05).strokeCircle(cx, cy, data.dist);
 
                 const container = this.add.container(cx, cy);
-                const planet = this.add.circle(data.dist, 0, data.size, data.color);
-                planet.setStrokeStyle(2, 0xffffff, 0.3);
-                planet.setInteractive(new Phaser.Geom.Circle(0, 0, data.size + 15), Phaser.Geom.Circle.Contains);
                 
-                planet.on('pointerdown', () => {
-                    if(!isModalOpen && gameMode === 'explore') showPlanetInfo(data);
-                });
+                // Anillos de Saturno
+                if(data.hasRings) {
+                    const rings = this.add.graphics();
+                    rings.lineStyle(4, 0xe9d5a1, 0.4);
+                    rings.strokeEllipse(data.dist, 0, 50, 15);
+                    container.add(rings);
+                }
 
+                const planet = this.add.circle(data.dist, 0, data.size, data.color).setStrokeStyle(2, 0xffffff, 0.3).setInteractive(new Phaser.Geom.Circle(0, 0, data.size + 15), Phaser.Geom.Circle.Contains);
+                
+                // Lunas
+                if(data.hasMoon) {
+                    const moon = this.add.circle(data.dist + 18, 0, 3, 0xdddddd);
+                    container.add(moon);
+                }
+
+                planet.on('pointerdown', () => { if(!isModalOpen && gameMode === 'explore') showPlanetInfo(data); });
                 container.add(planet);
+                
                 planets.push({ container, angle: Math.random() * 10, speed: data.speed, name: data.name });
             });
 
             this.scene.pause();
         }
 
+        function spawnComet() {
+            if (comet || gameMode !== 'explore') return;
+            const scene = game.scene.getAt(0);
+            const side = Math.random() > 0.5 ? -100 : window.innerWidth + 100;
+            comet = scene.add.circle(side, Math.random() * window.innerHeight, 4, 0xffffff);
+            comet.setStrokeStyle(10, 0x38bdf8, 0.2);
+            comet.setInteractive();
+            comet.on('pointerdown', () => {
+                score += 500;
+                updateUI();
+                comet.destroy();
+                comet = null;
+                showFeedback("¡COMETA DETECTADO!", "Bonus de +500 puntos de investigación.", "#10b981");
+            });
+            scene.tweens.add({
+                targets: comet,
+                x: side < 0 ? window.innerWidth + 200 : -200,
+                y: comet.y + (Math.random() - 0.5) * 400,
+                duration: 3000,
+                onComplete: () => { if(comet) comet.destroy(); comet = null; }
+            });
+        }
+
         function update() {
             if (isModalOpen || gameMode === 'quiz') return;
-            planets.forEach(p => {
-                p.angle += p.speed;
-                p.container.rotation = p.angle;
+            planets.forEach(p => { 
+                p.angle += p.speed; 
+                p.container.rotation = p.angle; 
             });
+            if (Math.random() < 0.005) spawnComet();
         }
 
         function startMode(mode) {
             gameMode = mode;
             document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('home-btn').style.display = 'flex';
             if (mode === 'explore') {
                 document.getElementById('mission-ui').style.display = 'block';
                 game.scene.resume('default');
                 nextMission();
-            } else {
-                startQuiz();
-            }
+            } else { startQuiz(); }
         }
 
         function showPlanetInfo(data) {
@@ -189,21 +208,18 @@
             document.getElementById('p-name').innerText = data.name;
             document.getElementById('p-mass').innerText = data.mass;
             document.getElementById('p-gravity').innerText = data.g + " m/s²";
-            document.getElementById('p-dist').innerText = (data.dist/135).toFixed(2) + " UA";
-            document.getElementById('p-weight').innerText = data.g + " N";
+            document.getElementById('p-dist').innerText = (data.dist/140).toFixed(2) + " UA";
+            document.getElementById('p-type').innerText = data.g > 10 ? "Gaseoso" : "Rocoso";
             document.getElementById('p-info').innerText = data.info;
 
             if (currentMission && currentMission.target === data.name) {
-                score += 20;
+                score += 150;
                 updateUI();
                 nextMission();
             }
         }
 
-        function closeModal() {
-            isModalOpen = false;
-            document.getElementById('planet-modal').style.display = 'none';
-        }
+        function closeModal() { isModalOpen = false; document.getElementById('planet-modal').style.display = 'none'; }
 
         function startQuiz() {
             const quiz = questions[Math.floor(Math.random() * questions.length)];
@@ -211,10 +227,12 @@
             const expEl = document.getElementById('quiz-explanation');
             const nextBtn = document.getElementById('btn-next-quiz');
             const optsEl = document.getElementById('quiz-options');
+            const qIcon = document.getElementById('quiz-icon');
 
             overlay.style.display = 'flex';
             expEl.style.display = 'none';
             nextBtn.style.display = 'none';
+            qIcon.className = "fas fa-brain text-purple-400 fa-3x mb-4";
             document.getElementById('quiz-question').innerText = quiz.q;
             optsEl.innerHTML = "";
 
@@ -226,29 +244,31 @@
                     const allBtns = optsEl.querySelectorAll('button');
                     allBtns.forEach(b => b.disabled = true);
                     expEl.style.display = 'block';
-                    expEl.innerText = quiz.e;
-                    nextBtn.style.display = 'block';
                     if (idx === quiz.c) {
-                        score += 30;
+                        score += 100;
                         btn.style.background = "#10b981";
-                        expEl.classList.add('correct');
+                        expEl.innerText = "¡SÍ! " + quiz.e;
+                        expEl.className = "explanation-text correct-box";
+                        qIcon.className = "fas fa-medal text-yellow-400 fa-4x mb-4";
                     } else {
                         btn.style.background = "#ef4444";
-                        expEl.classList.add('wrong');
+                        expEl.innerText = "¡Casi! La respuesta era: " + quiz.a[quiz.c] + ". " + quiz.e;
+                        expEl.className = "explanation-text wrong-box";
+                        qIcon.className = "fas fa-circle-exclamation text-red-500 fa-4x mb-4";
                     }
+                    nextBtn.style.display = 'block';
                     updateUI();
                 };
                 optsEl.appendChild(btn);
             });
-
             nextBtn.onclick = startQuiz;
         }
 
         const missions = [
             { t: "Busca el planeta con g = 3.7 m/s²", target: "Marte" },
-            { t: "Analiza al Gigante Gaseoso (g = 24.8)", target: "Júpiter" },
-            { t: "Localiza al planeta más rápido", target: "Mercurio" },
-            { t: "Encuentra el planeta con g ≈ 10.4", target: "Saturno" }
+            { t: "Analiza el coloso gaseoso (g=24.8)", target: "Júpiter" },
+            { t: "Busca el planeta más rápido (Perihelio)", target: "Mercurio" },
+            { t: "Encuentra al planeta de los anillos", target: "Saturno" }
         ];
 
         function nextMission() {
@@ -256,10 +276,16 @@
             document.getElementById('mission-text').innerText = "MISIÓN: " + currentMission.t;
         }
 
-        function updateUI() {
-            document.getElementById('score').innerText = score;
+        function showFeedback(t, d, c) {
+            // Reutilizamos el modal de misiones temporalmente o un toast
+            const mText = document.getElementById('mission-text');
+            const original = mText.innerText;
+            mText.style.color = c;
+            mText.innerText = t;
+            setTimeout(() => { mText.style.color = 'white'; mText.innerText = original; }, 3000);
         }
 
+        function updateUI() { document.getElementById('score').innerText = score; }
         window.addEventListener('resize', () => game.scale.resize(window.innerWidth, window.innerHeight));
     </script>
 </body>
