@@ -3,132 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PMO: Álgebra Maestra - 4º ESO</title>
+    <title>Algebra Hub: Protocolo de Maestría 4º ESO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'JetBrains Mono', monospace; background-color: #0f172a; color: #e2e8f0; scroll-behavior: smooth; }
-        .header-font { font-family: 'Montserrat', sans-serif; }
-        .mission-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 24px; margin-bottom: 20px; transition: transform 0.2s; }
-        .mission-card:hover { transform: translateY(-2px); border-color: #38bdf8; }
-        .step-number { background: #38bdf8; color: #0f172a; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold; margin-right: 15px; flex-shrink: 0; }
-        .formula { background: #020617; border-left: 4px solid #38bdf8; padding: 15px; font-size: 1.1rem; margin: 10px 0; color: #38bdf8; }
-        .nav-link { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; color: #94a3b8; transition: all 0.2s; }
-        .nav-link:hover { color: #38bdf8; }
-        .btn-action { display: inline-flex; align-items: center; gap: 8px; background: #38bdf8; color: #0f172a; font-weight: 800; font-size: 0.75rem; padding: 10px 20px; border-radius: 10px; transition: 0.2s; }
-        .btn-action:hover { background: #fff; }
+        :root {
+            --bg: #020617; --blue: #38bdf8; --purple: #a78bfa; --emerald: #10b981; --red: #fb7185; --slate: #0f172a;
+        }
+        body { background-color: var(--bg); font-family: 'Space Grotesk', sans-serif; color: #f1f5f9; overflow-x: hidden; }
+        .orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 2.5rem; transition: 0.4s; }
+        .glass:hover { border-color: var(--blue); background: rgba(15, 23, 42, 0.8); }
+
+        .resource-card { position: relative; overflow: hidden; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+        .resource-card i { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
+        
+        .step-node { width: 40px; height: 40px; border-radius: 50%; background: var(--slate); border: 2px solid var(--blue); display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Orbitron'; position: relative; z-index: 10; }
+        .step-line { position: absolute; left: 20px; top: 40px; bottom: -20px; width: 2px; background: linear-gradient(to bottom, var(--blue), transparent); }
+
+        .btn-action { background: var(--blue); color: var(--bg); padding: 12px 25px; border-radius: 12px; font-weight: 900; font-family: 'Orbitron'; font-size: 0.75rem; text-transform: uppercase; transition: 0.3s; display: inline-block; text-align: center; }
+        .btn-action:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); background: white; }
+
+        @keyframes scan { 0% { top: -10%; } 100% { top: 110%; } }
+        .scanner { position: absolute; height: 10%; width: 100%; background: linear-gradient(to bottom, transparent, rgba(56, 189, 248, 0.2), transparent); animation: scan 3s linear infinite; pointer-events: none; }
     </style>
 </head>
-<body class="p-6 md:p-12">
+<body class="p-6 md:p-12 lg:p-20">
 
-    <div class="max-w-5xl mx-auto">
-        <!-- HEADER -->
-        <header class="mb-12 border-b-2 border-slate-700 pb-8 text-center md:text-left">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div>
-                    <h1 class="header-font text-5xl font-black uppercase tracking-tighter text-white">ÁLGEBRA <span class="text-blue-400">MAESTRA</span></h1>
-                    <p class="text-slate-400 font-bold mt-2 tracking-widest">PLAN DE MISIÓN OPERATIVA • MATEMÁTICAS 4º ESO</p>
-                </div>
-                <div class="bg-blue-500/10 border border-blue-500/30 text-blue-400 p-4 rounded-xl text-center px-8">
-                    <p class="text-[10px] font-bold uppercase tracking-widest mb-1">Misión</p>
-                    <p class="text-xl font-black text-green-400 uppercase">Factorización</p>
-                </div>
+    <!-- TOP HEADER -->
+    <header class="max-w-7xl mx-auto mb-20 flex flex-col lg:flex-row justify-between items-center gap-10">
+        <div class="text-center lg:text-left">
+            <div class="flex items-center gap-3 mb-4 justify-center lg:justify-start">
+                <span class="badge px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-lg text-[10px] font-black orbitron uppercase tracking-widest">Master Protocol v6.0</span>
             </div>
-        </header>
-
-        <!-- NAVEGACIÓN RÁPIDA -->
-        <nav class="mb-16 flex flex-wrap justify-center md:justify-start gap-8 border-b border-slate-800 pb-6">
-            <a href="#hoja-ruta" class="nav-link"><i class="fas fa-map mr-2 text-blue-500"></i> Hoja de Ruta</a>
-            <a href="#podcast" class="nav-link"><i class="fas fa-microphone mr-2 text-purple-500"></i> Podcast</a>
-            <a href="#herramientas" class="nav-link"><i class="fas fa-tools mr-2 text-green-500"></i> Fórmulas</a>
-        </nav>
-
-        <!-- HOJA DE RUTA -->
-        <h2 id="hoja-ruta" class="header-font text-2xl mb-8 uppercase border-l-8 border-blue-500 pl-4 text-white">Fases de Entrenamiento</h2>
-        
-        <div class="grid md:grid-cols-1 gap-6">
-            <!-- FASE 1 -->
-            <div class="mission-card flex flex-col md:flex-row items-start gap-6">
-                <div class="step-number">01</div>
-                <div class="flex-1">
-                    <h3 class="font-bold text-xl mb-2 text-white">Briefing Teórico</h3>
-                    <p class="text-sm text-slate-400 mb-6">Masterclass lineal con las claves de Ruffini y las trampas de las fracciones algebraicas.</p>
-                    <a href="presentacion_algebra_4eso.html" target="_blank" class="btn-action">
-                        <i class="fas fa-desktop"></i> LANZAR PRESENTACIÓN
-                    </a>
-                </div>
-            </div>
-
-            <!-- FASE 2 -->
-            <div class="mission-card flex flex-col md:flex-row items-start gap-6">
-                <div class="step-number">02</div>
-                <div class="flex-1">
-                    <h3 class="font-bold text-xl mb-2 text-white">Mapa Mental Bento-Pro</h3>
-                    <p class="text-sm text-slate-400 mb-6">Guía visual con iconografía de alta fidelidad y el protocolo anti-errores para el examen.</p>
-                    <a href="infografia_algebra_4eso.html" target="_blank" class="btn-action" style="background:#a78bfa">
-                        <i class="fas fa-file-invoice"></i> VER INFOGRAFÍA
-                    </a>
-                </div>
-            </div>
-
-            <!-- FASE 3 -->
-            <div class="mission-card flex flex-col md:flex-row items-start gap-6">
-                <div class="step-number">03</div>
-                <div class="flex-1">
-                    <h3 class="font-bold text-xl mb-2 text-white">Simulación: Algebra Hunter</h3>
-                    <p class="text-sm text-slate-400 mb-6">Entrenamiento táctico móvil. Caza factores, evita impostores y aprende de tus fallos.</p>
-                    <a href="juego_algebra_4eso.html" target="_blank" class="btn-action" style="background:#10b981">
-                        <i class="fas fa-gamepad"></i> JUGAR AHORA
-                    </a>
+            <h1 class="orbitron text-5xl md:text-7xl font-black tracking-tighter leading-none mb-4">ALGEBRA <span class="text-blue-500">HUB</span></h1>
+            <p class="text-slate-400 text-lg max-w-xl">Centro de mando para la dominación total de polinomios y fracciones. Sigue el protocolo para alcanzar el rango de Maestro.</p>
+        </div>
+        <div class="flex gap-6">
+            <div class="glass p-8 px-12 text-center border-emerald-500/20 relative overflow-hidden">
+                <div class="scanner"></div>
+                <p class="text-[10px] text-slate-500 uppercase font-black mb-2">Sync_Status</p>
+                <div class="flex items-center gap-3 text-emerald-400 font-bold orbitron text-2xl">
+                    <i class="fas fa-brain animate-pulse"></i> 100% READY
                 </div>
             </div>
         </div>
+    </header>
 
-        <!-- PODCAST -->
-        <h2 id="podcast" class="header-font text-2xl mb-8 uppercase border-l-8 border-purple-500 pl-4 mt-16 text-white text-white">Masterclass en Audio (Mega Edition)</h2>
-        <div class="mission-card bg-purple-900/10 border-purple-500/30">
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="text-purple-500 text-6xl">
-                    <i class="fas fa-microphone-lines"></i>
+    <main class="max-w-7xl mx-auto grid grid-cols-12 gap-8">
+
+        <!-- IZQUIERDA: PROTOCOLO DE ESTUDIO -->
+        <section class="col-span-12 lg:col-span-4 space-y-8">
+            <h2 class="orbitron text-sm font-black text-slate-500 tracking-widest uppercase mb-10">Study Action Protocol</h2>
+            
+            <div class="relative pl-12">
+                <div class="step-line"></div>
+                <!-- Paso 1 -->
+                <div class="mb-12 relative">
+                    <div class="step-node absolute -left-12">1</div>
+                    <h3 class="font-bold text-blue-400 uppercase text-xs mb-2 orbitron">Fase Conceptual</h3>
+                    <p class="text-sm text-slate-300">Explora la <b>Presentación Masterclass</b>. No pases de slide hasta que entiendas cada "Por qué". Anota los errores de la "Galería de los Horrores".</p>
                 </div>
-                <div class="flex-1">
-                    <h3 class="font-bold text-xl mb-2 text-purple-300 uppercase tracking-tighter">Podcast: Desmontando el Polinomio</h3>
-                    <p class="text-xs text-purple-400/80 mb-6 italic leading-relaxed">Diálogo entre Álvaro y Elvira. La guía auditiva definitiva para dominar el álgebra de 4º ESO.</p>
-                    <div class="flex flex-col gap-4">
-                        <audio controls class="w-full h-10 mb-2">
-                            <source src="podcast_algebra_4eso.mp3" type="audio/mpeg">
-                        </audio>
-                        <div class="flex gap-4">
-                            <a href="podcast_algebra_4eso.mp3" target="_blank" class="text-[10px] font-bold text-white bg-purple-600 px-4 py-2 rounded-lg uppercase tracking-widest hover:bg-white hover:text-purple-600 transition-colors">
-                                <i class="fas fa-play-circle mr-1"></i> Escuchar en otra pestaña
-                            </a>
-                            <a href="podcast_algebra_4eso.mp3" download class="text-[10px] font-bold text-purple-400 px-4 py-2 border border-purple-500/30 rounded-lg uppercase tracking-widest hover:text-white transition-colors">
-                                <i class="fas fa-download mr-1"></i> Descargar MP3
-                            </a>
-                        </div>
+                <!-- Paso 2 -->
+                <div class="mb-12 relative">
+                    <div class="step-node absolute -left-12">2</div>
+                    <h3 class="font-bold text-purple-400 uppercase text-xs mb-2 orbitron">Mapeo Visual</h3>
+                    <p class="text-sm text-slate-300">Estudia la <b>Infografía Command</b>. Úsala como mapa de referencia rápida mientras haces ejercicios. Memoriza el "Radar Notable".</p>
+                </div>
+                <!-- Paso 3 -->
+                <div class="mb-12 relative">
+                    <div class="step-node absolute -left-12">3</div>
+                    <h3 class="font-bold text-emerald-400 uppercase text-xs mb-2 orbitron">Simulación Táctica</h3>
+                    <p class="text-sm text-slate-300">Inicia el <b>Algebra Master Game</b>. Primero el Lab para mecánica y luego el Test para teoría. ¡No dejes que el núcleo colapse!</p>
+                </div>
+                <!-- Paso 4 -->
+                <div class="relative">
+                    <div class="step-node absolute -left-12"><i class="fas fa-check"></i></div>
+                    <h3 class="font-bold text-white uppercase text-xs mb-2 orbitron">Refuerzo Pasivo</h3>
+                    <p class="text-sm text-slate-300">Escucha el <b>Podcast Algebra</b> en tus tiempos muertos. Ayuda a consolidar conceptos clave sin esfuerzo.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DERECHA: RECURSOS Y DASHBOARD -->
+        <section class="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Presentación -->
+            <div class="glass p-8 resource-card border-blue-500/20">
+                <div>
+                    <i class="fas fa-desktop text-blue-400"></i>
+                    <h3 class="orbitron text-lg font-black mb-2">Masterclass</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-6">Presentación interactiva con teoría profunda y ejemplos paso a paso.</p>
+                </div>
+                <a href="presentacion_algebra_4eso.html" class="btn-action">Iniciar Módulo</a>
+            </div>
+
+            <!-- Infografía -->
+            <div class="glass p-8 resource-card border-purple-500/20">
+                <div>
+                    <i class="fas fa-map-location-dot text-purple-400"></i>
+                    <h3 class="orbitron text-lg font-black mb-2">Infografía Command</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-6">Protocolo visual completo. El mapa definitivo para no perderte.</p>
+                </div>
+                <a href="infografia_algebra_4eso.html" class="btn-action">Abrir Mapa</a>
+            </div>
+
+            <!-- Juego -->
+            <div class="glass p-8 resource-card border-emerald-500/20">
+                <div>
+                    <i class="fas fa-gamepad text-emerald-400"></i>
+                    <h3 class="orbitron text-lg font-black mb-2">Tactical Simulator</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-6">Entrenamiento gamificado. Domina la factorización bajo presión.</p>
+                </div>
+                <a href="juego_algebra_4eso.html" class="btn-action">Desplegar Lab</a>
+            </div>
+
+            <!-- Podcast -->
+            <div class="glass p-8 resource-card border-orange-500/20">
+                <div>
+                    <i class="fas fa-headphones text-orange-400"></i>
+                    <h3 class="orbitron text-lg font-black mb-2">Audio Briefing</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-6">Resumen en audio de los conceptos más importantes del tema.</p>
+                </div>
+                <audio id="audio-player" class="hidden" src="podcast_algebra_4eso.mp3"></audio>
+                <button onclick="document.getElementById('audio-player').play()" class="btn-action">Reproducir Audio</button>
+            </div>
+
+            <!-- ZONA DE CONSEJOS (ANCHO COMPLETO) -->
+            <div class="col-span-1 md:col-span-2 glass p-10 mt-4 border-yellow-500/20">
+                <h3 class="orbitron text-sm font-black text-yellow-500 mb-6 uppercase tracking-[0.3em]">Consejos de Supervivencia Algebraica</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="space-y-2">
+                        <h4 class="text-white font-bold text-xs uppercase">1. El Menos Traidor</h4>
+                        <p class="text-[11px] text-slate-400 italic">"Un signo menos delante de una fracción es una mina terrestre. Cambia TODO el numerador que sigue."</p>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 class="text-white font-bold text-xs uppercase">2. No Taches Sumas</h4>
+                        <p class="text-[11px] text-slate-400 italic">"Simplificar términos que están sumando es el error nº1. Solo se tachan bloques que MULTIPLICAN."</p>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 class="text-white font-bold text-xs uppercase">3. Factorizar es Libertad</h4>
+                        <p class="text-[11px] text-slate-400 italic">"Si no sabes por dónde empezar, factoriza. Siempre es el primer paso para simplificar tu vida."</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- FORMULARIO -->
-        <h2 id="herramientas" class="header-font text-2xl mb-8 uppercase border-l-8 border-green-500 pl-4 mt-16 text-white">Arsenal de Combate</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="mission-card">
-                <p class="text-[10px] font-bold text-blue-400 uppercase mb-2 tracking-widest">Identidad Notable 1</p>
-                <div class="formula">(a + b)² = a² + 2ab + b²</div>
-            </div>
-            <div class="mission-card">
-                <p class="text-[10px] font-bold text-red-400 uppercase mb-2 tracking-widest">Identidad Notable 3</p>
-                <div class="formula">a² - b² = (a + b)(a - b)</div>
-            </div>
-        </div>
+        </section>
 
-        <footer class="text-center text-slate-600 text-[10px] mt-24 mb-12 uppercase tracking-[0.5em]">
-            © 2026 AI Math Academy • Misión Factorización • index.html ready for GitHub Pages
-        </footer>
-    </div>
+    </main>
+
+    <footer class="max-w-7xl mx-auto mt-20 text-center py-10 opacity-30 border-t border-white/5">
+        <p class="orbitron text-[9px] uppercase tracking-[1.5em] mb-4">Algebra Command Hub • AI Education Systems 2026</p>
+        <div class="flex justify-center gap-8 text-xs">
+            <i class="fas fa-shield-alt"></i>
+            <i class="fas fa-network-wired"></i>
+            <i class="fas fa-microchip"></i>
+        </div>
+    </footer>
 
 </body>
 </html>

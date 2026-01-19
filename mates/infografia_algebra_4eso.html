@@ -3,113 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Dive Algebra: Factorización Máxima</title>
+    <title>Mastering Algebra: Protocolo Definitivo 4º ESO</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\]']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
         :root {
-            --glass: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --blue: #60a5fa; --purple: #c084fc; --green: #34d399; --orange: #fb923c; --red: #fb7185;
+            --bg: #020617; --card-bg: #0f172a; --accent-blue: #38bdf8; --accent-purple: #a78bfa;
+            --accent-emerald: #10b981; --accent-orange: #fb923c; --accent-pink: #f472b6;
+            --accent-red: #fb7185; --accent-yellow: #f59e0b;
         }
-        body { background: #020617; font-family: 'Poppins', sans-serif; color: #f1f5f9; }
-        .header-font { font-family: 'Montserrat', sans-serif; }
-        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 24px; transition: 0.3s; }
-        .glass-card:hover { border-color: var(--blue); background: rgba(255,255,255,0.04); }
-        .gradient-text { background: linear-gradient(to right, var(--blue), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
-        .formula-box { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.05); }
-        .highlight-orange { color: var(--orange); font-weight: bold; }
+        body { background-color: var(--bg); font-family: 'Space Grotesk', sans-serif; color: #f1f5f9; scroll-behavior: smooth; overflow-x: hidden; }
+        .outfit { font-family: 'Outfit', sans-serif; }
+        
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+        .glass:hover { border-color: var(--accent-blue); box-shadow: 0 0 30px rgba(56, 189, 248, 0.1); }
+        
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+        
+        .formula-card { background: rgba(0,0,0,0.4); padding: 1.5rem; border-radius: 1.5rem; border: 1px dashed rgba(255,255,255,0.1); font-family: 'JetBrains Mono', monospace; position: relative; }
+        .formula-card::before { content: "FORMULA"; position: absolute; top: -10px; right: 20px; background: var(--accent-blue); color: #020617; font-size: 10px; font-weight: 900; padding: 2px 10px; border-radius: 5px; }
+
+        .step-pill { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 900; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        .badge { font-size: 11px; font-weight: 900; padding: 5px 12px; border-radius: 8px; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid currentColor; }
+        
+        @keyframes glow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } } 
+        .animate-glow { animation: glow 2s infinite; }
+
+        /* Responsive Fixes */
+        @media (max-width: 1024px) { .bento-grid { grid-template-columns: 1fr; } .col-span-4, .col-span-8, .col-span-6, .col-span-12 { grid-column: span 1 / span 1; } }
     </style>
 </head>
-<body class="p-4 lg:p-8">
+<body class="p-6 md:p-12 lg:p-24">
 
-    <header class="max-w-7xl mx-auto mb-12 text-center">
-        <h1 class="header-font text-5xl lg:text-7xl font-black mb-4 uppercase tracking-tighter">
-            ÁLGEBRA <span class="gradient-text">DEEP DIVE</span>
-        </h1>
-        <p class="text-slate-500 uppercase tracking-[0.4em] text-xs font-bold">Nivel 4º ESO • Protocolo de Ingeniería Matemática</p>
+    <!-- HEADER FUTURISTA -->
+    <header class="max-w-7xl mx-auto mb-20 relative text-center md:text-left">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-10 border-b border-white/10 pb-16">
+            <div class="animate__animated animate__fadeInLeft">
+                <div class="flex gap-3 mb-6 justify-center md:justify-start">
+                    <span class="badge text-accent-blue">PROTOCOL V6.0</span>
+                    <span class="badge text-accent-purple">ALGEBRA SUPREMA</span>
+                </div>
+                <h1 class="outfit text-6xl lg:text-9xl font-black tracking-tighter uppercase leading-[0.8] mb-6">
+                    ALGEBRA<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400">COMMAND</span>
+                </h1>
+                <p class="text-slate-400 text-xl max-w-2xl font-light">El sistema operativo definitivo para dominar polinomios y fracciones algebraicas en 4º ESO.</p>
+            </div>
+            <div class="hidden lg:block text-right animate__animated animate__fadeInRight">
+                <div class="p-6 glass rounded-[2.5rem] border-l-4 border-accent-blue inline-block text-left">
+                    <p class="text-[10px] text-slate-500 uppercase font-black mb-1">BRAIN_SYNC</p>
+                    <div class="flex items-center gap-2 text-emerald-400 font-bold">
+                        <i class="fas fa-brain animate-pulse"></i> CONEXIÓN ESTABLE
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main class="max-w-7xl mx-auto bento-grid">
 
-        <!-- BLOQUE RUFFINI AVANZADO -->
-        <section class="col-span-12 lg:col-span-7 glass-card p-8 border-l-4 border-orange-500">
-            <h2 class="header-font text-2xl font-bold mb-6 flex items-center gap-3">
-                <i class="fas fa-microchip text-orange-500"></i> Ruffini y el Teorema del Factor
+        <!-- I. ALGORITMO DE DESCOMPOSICIÓN -->
+        <section class="col-span-12 lg:col-span-8 glass p-10 rounded-[3.5rem] relative overflow-hidden">
+            <h2 class="outfit text-4xl font-black mb-12 flex items-center gap-4">
+                <i class="fas fa-microchip text-accent-blue"></i> I. Algoritmo Maestro
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-4 text-xs leading-relaxed text-slate-400">
-                    <p><span class="highlight-orange">Teorema del Resto:</span> Para saber si un número es raíz, evalúa \( P(a) \). Si sale 0, ¡ahórrate el Ruffini!</p>
-                    <p><span class="highlight-orange">Multiplicidad:</span> Una raíz puede repetirse. \( (x-2)^2 \) significa que la raíz 2 tiene multiplicidad 2.</p>
-                    <div class="p-4 bg-orange-500/5 rounded-xl border border-orange-500/20">
-                        <i class="fas fa-info-circle mr-2"></i> Un polinomio de grado 4 siempre se puede descomponer en al menos dos de grado 2.
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="space-y-4">
+                    <div class="step-pill">01</div>
+                    <h3 class="font-bold text-white uppercase tracking-tighter">Factor Común</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">¿Hay algo en todos los términos? Extrae el M.C.D. y la letra de menor exponente.</p>
+                    <div class="formula-card text-xs">
+                        $ 4x^5 - 12x^3 = $ <br>
+                        <span class="text-accent-blue">$ 4x^3(x^2 - 3) $</span>
                     </div>
                 </div>
-                <div class="bg-black/40 p-4 rounded-2xl border border-white/5 font-mono text-sm">
-                    &nbsp;&nbsp; | 1&nbsp; -3&nbsp; -1&nbsp; 3<br>
-                    <span class="text-blue-400">1</span> |&nbsp;&nbsp;&nbsp; 1&nbsp; -2&nbsp; -3<br>
-                    --|--------------<br>
-                    &nbsp;&nbsp; | 1&nbsp; -2&nbsp; -3&nbsp; | <span class="text-green-400">0</span>
+                <div class="space-y-4">
+                    <div class="step-pill">02</div>
+                    <h3 class="font-bold text-white uppercase tracking-tighter">Identidades</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Busca patrones de cuadrados perfectos o diferencias. ¡Es el camino más rápido!</p>
+                    <div class="formula-card text-xs">
+                        $ x^2 - 25 = $ <br>
+                        <span class="text-accent-purple">$ (x+5)(x-5) $</span>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="step-pill">03</div>
+                    <h3 class="font-bold text-white uppercase tracking-tighter">Ruffini</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Para grado > 2. Prueba los divisores del término independiente con el esquema.</p>
+                    <div class="formula-card text-xs">
+                        $ P(a) = 0 \iff $ <br>
+                        $ \text{Raíz detectada} $
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- BLOQUE IRREDUCIBLES -->
-        <section class="col-span-12 lg:col-span-5 glass-card p-8 border-t-4 border-red-500 bg-red-500/5">
-            <h2 class="header-font text-xl font-bold mb-4">Polinomios Irreducibles</h2>
-            <p class="text-xs text-slate-400 mb-6">Son los "números primos" del álgebra. No se pueden trocear más en el campo de los números reales.</p>
-            <div class="space-y-3">
-                <div class="formula-box text-red-400">\( x^2 + 1 \to \text{Irreducible} \)</div>
-                <div class="formula-box text-red-400">\( x^2 + x + 1 \to \text{Irreducible} \)</div>
+        <!-- II. RADAR DE IDENTIDADES -->
+        <section class="col-span-12 lg:col-span-4 glass p-10 rounded-[3.5rem] border-t-8 border-accent-purple">
+            <h2 class="outfit text-3xl font-bold mb-10 flex items-center gap-4">
+                <i class="fas fa-bolt text-accent-purple"></i> II. Radar Notable
+            </h2>
+            <div class="space-y-6">
+                <div class="p-5 bg-white/5 rounded-3xl border border-white/10 hover:bg-white/10 transition">
+                    <p class="text-[10px] text-purple-400 font-black mb-1">CUADRADO SUMA</p>
+                    <p class="text-lg">$(a+b)^2 = a^2 + 2ab + b^2$</p>
+                </div>
+                <div class="p-5 bg-white/5 rounded-3xl border border-white/10 hover:bg-white/10 transition">
+                    <p class="text-[10px] text-blue-400 font-black mb-1">CUADRADO RESTA</p>
+                    <p class="text-lg">$(a-b)^2 = a^2 - 2ab + b^2$</p>
+                </div>
+                <div class="p-5 bg-white/5 rounded-3xl border border-accent-red/30 hover:border-accent-red transition">
+                    <p class="text-[10px] text-accent-red font-black mb-1">SUMA POR DIFERENCIA</p>
+                    <p class="text-lg text-accent-red">$a^2 - b^2 = (a+b)(a-b)$</p>
+                </div>
             </div>
-            <p class="text-[10px] text-slate-500 mt-4 italic">Truco: Si el discriminante \( b^2-4ac \) es negativo, es irreducible.</p>
         </section>
 
-        <!-- BLOQUE MCM POLINOMIOS -->
-        <section class="col-span-12 lg:col-span-6 glass-card p-8 border-b-4 border-blue-500">
-            <h2 class="header-font text-xl font-bold mb-6 flex items-center gap-3">
-                <i class="fas fa-layer-group text-blue-500"></i> m.c.m. de Polinomios
+        <!-- III. VÍNCULO RAÍZ-FACTOR & MULTIPLICIDAD -->
+        <section class="col-span-12 lg:col-span-5 glass p-10 rounded-[3.5rem] border-l-8 border-accent-pink">
+            <h2 class="outfit text-2xl font-bold mb-6 text-accent-pink flex items-center gap-3">
+                <i class="fas fa-link"></i> III. Raíz vs Factor
+            </h2>
+            <div class="space-y-6">
+                <p class="text-sm text-slate-400 italic">"La raíz es la solución de x; el factor es el bloque que multiplica".</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-black/40 p-5 rounded-2xl text-center">
+                        <p class="text-[10px] text-slate-500 mb-1 uppercase font-bold">Raíz</p>
+                        <p class="text-2xl font-black text-accent-pink">x = -2</p>
+                    </div>
+                    <div class="bg-black/40 p-5 rounded-2xl text-center border border-accent-pink/20">
+                        <p class="text-[10px] text-slate-500 mb-1 uppercase font-bold">Factor</p>
+                        <p class="text-2xl font-black text-accent-pink">(x + 2)</p>
+                    </div>
+                </div>
+                <div class="p-6 bg-pink-500/5 rounded-3xl border border-pink-500/10">
+                    <h4 class="text-xs font-black text-white uppercase mb-2">Multiplicidad</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Si un factor aparece varias veces, su exponente indica la multiplicidad. <br> Ej: $(x-1)^2$ es una raíz <strong>doble</strong> en $x=1$.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IV. TEOREMA DEL RESTO AVANZADO -->
+        <section class="col-span-12 lg:col-span-7 glass p-10 rounded-[3.5rem] border-l-8 border-accent-orange">
+            <h2 class="outfit text-2xl font-bold mb-6 text-accent-orange flex items-center gap-3">
+                <i class="fas fa-key"></i> IV. Teorema del Resto
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-4 text-sm text-slate-400">
+                    <p>Evaluar el polinomio en $a$ te da el resto de dividir por $(x-a)$ sin hacer la división.</p>
+                    <div class="formula-card text-xs">
+                        $ \text{Resto} = P(a) $
+                    </div>
+                </div>
+                <div class="bg-orange-500/10 p-6 rounded-3xl border border-orange-500/20">
+                    <h4 class="text-xs font-black text-orange-400 uppercase mb-3">Aplicación de Examen</h4>
+                    <p class="text-[11px] text-slate-300">"Halla $k$ para que $x^3 - kx + 2$ sea divisible por $(x-1)$".</p>
+                    <p class="text-[11px] font-bold text-white mt-2">$ P(1) = 0 \implies 1 - k + 2 = 0 \implies k = 3 $</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- V. PROTOCOLO FRACCIONES & m.c.m. -->
+        <section class="col-span-12 glass p-10 rounded-[3.5rem] border-b-8 border-accent-emerald">
+            <h2 class="outfit text-4xl font-black mb-10 text-accent-emerald flex items-center gap-4">
+                <i class="fas fa-layer-group"></i> V. Fracciones Algebraicas
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 bg-white/5 rounded-[2.5rem] border border-white/10">
+                    <h4 class="text-accent-blue font-black text-xs uppercase mb-4 tracking-widest">Simplificación</h4>
+                    <p class="text-xs text-slate-400 mb-4">Factoriza y tacha. Solo puedes eliminar factores idénticos.</p>
+                    <div class="formula-card text-[10px]">
+                        $ \frac{x(x+1)}{x} = x+1 $
+                    </div>
+                </div>
+                <div class="p-8 bg-white/5 rounded-[2.5rem] border border-white/10">
+                    <h4 class="text-accent-yellow font-black text-xs uppercase mb-4 tracking-widest">Suma/Resta (m.c.m.)</h4>
+                    <p class="text-xs text-slate-400 mb-4">m.c.m. = comunes y no comunes al mayor exponente.</p>
+                    <div class="formula-card text-[10px]">
+                        $ \frac{1}{x} + \frac{1}{x^2} = \frac{x+1}{x^2} $
+                    </div>
+                </div>
+                <div class="p-8 bg-white/5 rounded-[2.5rem] border border-white/10">
+                    <h4 class="text-accent-pink font-black text-xs uppercase mb-4 tracking-widest">Multip./Divis.</h4>
+                    <p class="text-xs text-slate-400 mb-4">Multiplica en línea (·) o en cruz (:). Factoriza antes.</p>
+                    <div class="formula-card text-[10px]">
+                        $ \frac{A}{B} \div \frac{C}{D} = \frac{A \cdot D}{B \cdot C} $
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VI. DIVISIÓN EUCLÍDEA: EL ALGORITMO -->
+        <section class="col-span-12 lg:col-span-6 glass p-10 rounded-[3.5rem] border-t-8 border-accent-red">
+            <h2 class="outfit text-2xl font-bold mb-6 text-accent-red flex items-center gap-3">
+                <i class="fas fa-divide"></i> VI. División Tradicional
+            </h2>
+            <p class="text-xs text-slate-400 mb-6">Cuando el divisor es de grado > 1 y no es del tipo $(x-a)$.</p>
+            <div class="bg-black/40 p-8 rounded-[2.5rem] border border-red-500/10 font-mono text-xs leading-relaxed">
+                <p class="text-accent-red mb-2">PROTOCOLO:</p>
+                <ol class="list-decimal ml-5 space-y-2 text-slate-400">
+                    <li>Ordena por grados descendentes.</li>
+                    <li>Rellena huecos con <span class="text-white">$0x^n$</span>.</li>
+                    <li>Divide el primer término entre el primero.</li>
+                    <li>Resta el producto y repite.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- VII. DANGER ZONE: ERRORES CRÍTICOS -->
+        <section class="col-span-12 lg:col-span-6 glass p-10 rounded-[3.5rem] bg-red-500/10 border border-red-500/20">
+            <h2 class="outfit text-2xl font-black text-accent-red mb-8 flex items-center gap-4">
+                <i class="fas fa-radiation fa-spin"></i> VII. ZONA DE PELIGRO
             </h2>
             <div class="space-y-4">
-                <p class="text-xs text-slate-400">Esencial para sumar fracciones algebraicas.</p>
-                <div class="p-4 bg-blue-500/5 rounded-xl border border-blue-500/20 text-xs">
-                    <span class="font-bold text-blue-400 uppercase">Regla:</span> Factores comunes y no comunes al <span class="text-white font-bold">mayor exponente</span>.
+                <div class="flex items-center gap-4 p-4 bg-black/40 rounded-2xl border border-red-500/30">
+                    <span class="text-2xl">❌</span>
+                    <p class="text-xs text-slate-300">Tachar en sumas: $ \frac{x+1}{x} \neq 1 $. ¡Error fatal!</p>
                 </div>
-                <div class="formula-box text-[11px]">
-                    \( P(x) = (x-1)^2(x+2) \)
-                    \( Q(x) = (x-1)(x+2)^3 \)
-                    <span class="text-blue-400">m.c.m. = (x-1)^2(x+2)^3</span>
+                <div class="flex items-center gap-4 p-4 bg-black/40 rounded-2xl border border-red-500/30">
+                    <span class="text-2xl">❌</span>
+                    <p class="text-xs text-slate-300">Olvidar el doble producto: $ (x+1)^2 \neq x^2 + 1 $. ¡Falta $2x$!</p>
+                </div>
+                <div class="flex items-center gap-4 p-4 bg-black/40 rounded-2xl border border-red-500/30">
+                    <span class="text-2xl">❌</span>
+                    <p class="text-xs text-slate-300">Signo menos en Ruffini: Si la raíz es $3$, el factor es $(x-3)$.</p>
                 </div>
             </div>
         </section>
 
-        <!-- BLOQUE FRACCIONES ADV -->
-        <section class="col-span-12 lg:col-span-6 glass-card p-8 border-r-4 border-purple-500">
-            <h2 class="header-font text-xl font-bold mb-6 flex items-center gap-3">
-                <i class="fas fa-vials text-purple-500"></i> Operaciones Complejas
-            </h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="p-4 bg-white/5 rounded-2xl border border-white/10">
-                    <h4 class="text-[9px] font-black uppercase text-purple-400 mb-2">Multiplicación</h4>
-                    <p class="text-[10px] text-slate-500">Factoriza → Junta → Tacha.</p>
+        <!-- VIII. CASO DE ÉXITO TOTAL -->
+        <section class="col-span-12 glass p-12 rounded-[4rem] border-t-8 border-accent-yellow">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <h2 class="outfit text-5xl font-black mb-6 text-accent-yellow leading-tight">Protocolo de<br>Misión Final</h2>
+                    <p class="text-slate-400 mb-8">Simplifica esta expresión combinando todas tus habilidades algebraicas.</p>
+                    <div class="bg-yellow-500/10 p-6 rounded-3xl border border-yellow-500/20">
+                        <p class="text-lg font-mono text-accent-yellow text-center"> $ \frac{x^3 - x}{x^2 + x} \cdot \frac{x+1}{x-1} $ </p>
+                    </div>
                 </div>
-                <div class="p-4 bg-white/5 rounded-2xl border border-white/10">
-                    <h4 class="text-[9px] font-black uppercase text-purple-400 mb-2">División</h4>
-                    <p class="text-[10px] text-slate-500">Invierte la 2ª → Multiplica.</p>
+                <div class="lg:w-1/2 w-full bg-black/40 p-10 rounded-[3rem] border border-white/5 font-mono text-sm shadow-2xl space-y-3">
+                    <p class="text-accent-yellow font-bold uppercase text-[10px]">Paso 1: Factorización</p>
+                    <p>$ \frac{x(x+1)(x-1)}{x(x+1)} \cdot \frac{x+1}{x-1} $</p>
+                    <p class="text-accent-yellow font-bold uppercase text-[10px] mt-4">Paso 2: Gran Simplificación</p>
+                    <p>Tachamos $x$, $(x+1)$ y $(x-1)$.</p>
+                    <div class="h-px bg-white/10 my-4"></div>
+                    <p class="text-emerald-400 font-bold text-3xl text-center">RESULTADO = $x + 1$</p>
                 </div>
-            </div>
-            <div class="mt-6 p-4 bg-red-500/10 rounded-xl border border-red-500/20 text-center">
-                <p class="text-[10px] font-bold text-red-400 uppercase tracking-widest animate-pulse">¡CUIDADO CON EL SIGNO MENOS DELANTE DE UNA FRACCIÓN!</p>
             </div>
         </section>
 
-        <!-- FOOTER -->
-        <footer class="col-span-12 glass-card p-6 text-center">
-            <p class="text-[10px] text-slate-600 font-black tracking-[0.5em] uppercase">© 2026 AI Math Academy • Factorization Deep Dive Edition</p>
+        <footer class="col-span-12 text-center py-24 border-t border-white/5 mt-10">
+            <p class="text-slate-600 text-[10px] uppercase tracking-[2em] mb-10">AI MATH COMMAND • V6.0 • 2026</p>
+            <div class="flex justify-center gap-12 grayscale opacity-20">
+                <i class="fas fa-microchip fa-3x"></i>
+                <i class="fas fa-brain fa-3x"></i>
+                <i class="fas fa-terminal fa-3x"></i>
+            </div>
         </footer>
 
     </main>

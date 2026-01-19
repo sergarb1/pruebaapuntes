@@ -2,249 +2,467 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Algebra Hunter PRO v3.2 - 4º ESO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Algebra Master 4º ESO - Ultimate Edition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; background: #020617; color: white; font-family: 'Poppins', sans-serif; overflow: hidden; touch-action: none; }
-        #game-container { width: 100vw; height: 100vh; position: relative; }
+        :root {
+            --blue: #38bdf8; --purple: #a78bfa; --emerald: #10b981; --red: #fb7185; --bg: #020617; --slate: #0f172a;
+        }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Space Grotesk', sans-serif; overflow: hidden; touch-action: none; }
+        #game-container { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
         
-        .overlay { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.98); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; padding: 20px; text-align: center; }
-        .card { background: #1e293b; padding: 25px; border-radius: 25px; border: 3px solid #38bdf8; width: 95%; max-width: 500px; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); overflow-y: auto; max-height: 90vh; }
-        
-        .btn { background: #38bdf8; color: #020617; border: none; padding: 15px 30px; border-radius: 12px; font-weight: 800; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn:hover { background: #fff; transform: scale(1.02); }
-        .btn-secondary { background: #a78bfa; }
-        .btn-home { position: absolute; top: 15px; right: 15px; width: 45px; height: 45px; border-radius: 50%; background: rgba(30, 41, 59, 0.8); border: 2px solid #38bdf8; color: #38bdf8; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 150; }
+        #orientation-warning {
+            display: none; position: fixed; inset: 0; background: var(--bg); z-index: 3000;
+            flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;
+        }
+        @media (orientation: portrait) { #orientation-warning { display: flex; } }
 
-        .ui-top { position: absolute; top: 15px; left: 15px; z-index: 10; pointer-events: none; }
-        .stat { background: rgba(15, 23, 42, 0.9); padding: 8px 15px; border-radius: 10px; border: 1px solid #38bdf8; font-weight: bold; font-size: 12px; display: inline-block; }
+        #universal-home {
+            position: absolute; top: 20px; right: 20px; width: 50px; height: 50px;
+            background: rgba(30, 41, 59, 0.7); border: 2px solid var(--blue); border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; color: var(--blue);
+            cursor: pointer; z-index: 2500; transition: 0.3s; backdrop-filter: blur(10px);
+        }
+        #universal-home:hover { transform: scale(1.1); background: var(--blue); color: var(--bg); }
+
+        .overlay-screen {
+            position: absolute; inset: 0; background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 1000; padding: 20px; text-align: center; transition: opacity 0.5s ease;
+        }
+        .card {
+            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.2); padding: 40px;
+            border-radius: 40px; backdrop-filter: blur(20px); max-width: 900px; width: 85%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
         
-        .explanation-text { font-size: 13px; line-height: 1.5; margin: 15px 0; padding: 15px; border-radius: 15px; text-align: left; border-left: 6px solid #38bdf8; background: rgba(255, 255, 255, 0.03); }
-        .correct-box { border-color: #10b981; background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .wrong-box { border-color: #ef4444; background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 30px; }
+        .mode-btn {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 2px solid var(--blue); color: white;
+            padding: 25px; border-radius: 25px; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+        }
+        .mode-btn:hover { border-color: white; transform: scale(1.05) translateY(-10px); box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); }
+        .mode-btn i { font-size: 3em; margin-bottom: 10px; }
+        .mode-btn h2 { margin: 0; font-family: 'Orbitron'; font-size: 1.2rem; letter-spacing: 1px; }
+
+        .hud { position: absolute; top: 25px; left: 25px; display: none; gap: 15px; z-index: 500; pointer-events: none; }
+        .stat { background: rgba(15, 23, 42, 0.85); padding: 12px 20px; border-radius: 15px; border: 1px solid var(--blue); font-weight: bold; font-family: 'Orbitron'; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+
+        #polynomial-area {
+            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+            display: none; flex-direction: column; align-items: center; width: 90%; z-index: 100;
+        }
+        .poly-display { font-size: 4vw; font-family: 'JetBrains Mono'; color: var(--blue); text-shadow: 0 0 30px rgba(56, 189, 248, 0.5); font-weight: 700; margin-bottom: 15px; }
+        .feedback-msg { font-size: 1.3rem; min-height: 2em; text-align: center; max-width: 700px; color: #94a3b8; }
+
+        .controls { 
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); 
+            display: none; gap: 20px; width: 90%; max-width: 900px; z-index: 500;
+        }
+        .tool {
+            flex: 1; background: rgba(30, 41, 59, 0.9); border: 2px solid var(--blue); color: var(--blue);
+            padding: 18px; border-radius: 20px; cursor: pointer; transition: 0.2s;
+            display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: 'Orbitron'; font-weight: 900; font-size: 0.8rem;
+        }
+        .tool:hover { background: var(--blue); color: var(--bg); }
+        .tool:active { transform: scale(0.95); }
+
+        #quiz-view { display: none; z-index: 1000; }
+        .quiz-card { background: rgba(15, 23, 42, 0.9); border: 2px solid var(--purple); padding: 35px; border-radius: 35px; width: 85%; max-width: 800px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        .q-text { font-size: 1.5rem; font-weight: 700; margin-bottom: 25px; }
+        .expl-box { margin-top: 20px; padding: 20px; border-radius: 18px; display: none; text-align: left; border-left: 8px solid; }
+
+        .modal { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.9); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(10px); }
+        .modal-body { background: #1e293b; border: 2px solid var(--blue); padding: 40px; border-radius: 40px; max-width: 700px; width: 90%; text-align: center; }
+        .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 25px 0; }
+        .opt-btn { background: #0f172a; border: 1px solid #334155; color: white; padding: 18px; border-radius: 15px; cursor: pointer; font-family: 'JetBrains Mono'; font-size: 1rem; transition: 0.2s; }
+        .opt-btn:hover { border-color: var(--blue); transform: translateY(-3px); }
+
+        .btn-main { background: var(--emerald); color: var(--bg); border: none; padding: 15px 40px; border-radius: 15px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; font-size: 1rem; margin-top: 15px; }
     </style>
 </head>
 <body>
 
+    <div id="orientation-warning">
+        <i class="fas fa-mobile-alt fa-4x mb-4 text-blue-400 animate-bounce"></i>
+        <h2 class="font-bold">MODO LANDSCAPE</h2>
+        <p class="text-slate-400">Gira tu dispositivo para operar el laboratorio</p>
+    </div>
+
     <div id="game-container">
-        <!-- Botón Home -->
-        <div id="home-btn" class="btn-home" style="display: none;" onclick="location.reload()">
-            <i class="fas fa-home"></i>
+        <div id="universal-home" onclick="location.reload()" title="Volver al Inicio">
+            <i class="fas fa-home fa-lg"></i>
         </div>
 
-        <!-- Pantalla de Inicio -->
-        <div id="start-screen" class="overlay">
-            <div class="card">
-                <i class="fas fa-microchip text-blue-400 fa-4x mb-4"></i>
-                <h1 class="header-font text-2xl font-black uppercase">ALGEBRA HUNTER v3.2</h1>
-                <p style="font-size: 11px; color: #94a3b8; margin-bottom: 25px;">DOMINA LA FACTORIZACIÓN • 4º ESO</p>
+        <div id="start-screen" class="overlay-screen">
+            <div class="card animate__animated animate__fadeIn">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 mr-4">
+                        <i class="fas fa-atom fa-2x"></i>
+                    </div>
+                    <div class="text-left">
+                        <h1 style="margin:0; line-height:1;">ALGEBRA<br><span style="color:var(--blue)">MASTER</span></h1>
+                    </div>
+                </div>
+                <p class="text-slate-400 font-bold tracking-widest text-xs mb-8 uppercase">Entorno de Simulación Factorial v5.2</p>
                 
-                <button class="btn" onclick="startMode('simulation')"><i class="fas fa-crosshairs mr-2"></i> MODO SIMULACIÓN</button>
-                <button class="btn btn-secondary" onclick="startMode('quiz')"><i class="fas fa-graduation-cap mr-2"></i> MODO SOLO QUIZ</button>
-                
-                <div style="margin-top: 25px; font-size: 10px; color: #64748b; line-height: 1.4;">
-                    <p><i class="fas fa-info-circle mr-1"></i> Caza factores reales en el simulador o entrena tu mente con el test de maestría.</p>
+                <div class="mode-grid">
+                    <button class="mode-btn" onclick="initMode('lab')">
+                        <i class="fas fa-flask-vial text-emerald-400"></i>
+                        <h2>LAB FACTORIAL</h2>
+                        <span style="font-size:0.7rem; opacity:0.6;">Estabiliza polinomios complejos</span>
+                    </button>
+                    <button class="mode-btn" onclick="initMode('quiz')" style="border-color: var(--purple);">
+                        <i class="fas fa-brain text-purple-400"></i>
+                        <h2>DESAFÍO TEÓRICO</h2>
+                        <span style="font-size:0.7rem; opacity:0.6;">Test de maestría avanzada</span>
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- Pantalla de Fin -->
-        <div id="game-over-screen" class="overlay" style="display: none;">
+        <div id="instruction-overlay" class="overlay-screen" style="display: none;">
             <div class="card">
-                <i class="fas fa-skull-crossbones text-red-500 fa-4x mb-4"></i>
-                <h2 class="header-font text-2xl font-black text-red-500">MISIÓN FALLIDA</h2>
-                <p id="final-score-text" class="text-sm text-slate-400 mt-2">Puntuación: 0</p>
-                <button class="btn" onclick="location.reload()"><i class="fas fa-rotate-left mr-2"></i> REINTENTAR</button>
+                <h2 id="ins-title" class="font-orbitron text-2xl mb-6 text-blue-400"></h2>
+                <div id="ins-body" class="text-left text-slate-300 leading-relaxed mb-8 space-y-3"></div>
+                <button class="btn-main w-full" id="btn-begin">SISTEMA LISTO: INICIAR</button>
             </div>
         </div>
 
-        <!-- Overlay de Quiz -->
-        <div id="quiz-overlay" class="overlay" style="display: none;">
-            <div class="card">
-                <i id="quiz-icon" class="fas fa-brain text-purple-400 fa-3x mb-4"></i>
-                <h2 id="quiz-question" style="font-size: 17px; margin-bottom: 20px;">Pregunta</h2>
-                <div id="quiz-options" class="grid grid-cols-1 gap-2"></div>
-                <div id="quiz-explanation" class="explanation-text" style="display: none;"></div>
-                <button id="btn-next-quiz" class="btn" style="display: none; background:#10b981; color:white;">CONTINUAR <i class="fas fa-arrow-right ml-2"></i></button>
+        <div id="lab-hud" class="hud">
+            <div class="stat"><i class="fas fa-heart text-red-500 mr-2"></i> ESTABILIDAD: <span id="stability-text">100</span>%</div>
+            <div class="stat"><i class="fas fa-microchip text-blue-400 mr-2"></i> NIVEL: <span id="level-text">1</span>/5</div>
+        </div>
+
+        <div id="polynomial-area">
+            <div id="poly-val" class="poly-display"></div>
+            <div id="poly-hint" class="feedback-msg"></div>
+        </div>
+
+        <div id="lab-controls" class="controls">
+            <button class="tool" onclick="selectTool('common')"><i class="fas fa-compress-alt"></i><span>F. COMÚN</span></button>
+            <button class="tool" onclick="selectTool('identity')"><i class="fas fa-dna"></i><span>I. NOTABLE</span></button>
+            <button class="tool" onclick="selectTool('ruffini')"><i class="fas fa-table-list"></i><span>RUFFINI</span></button>
+        </div>
+
+        <div id="quiz-view" class="overlay-screen">
+            <div class="quiz-card">
+                <div class="flex justify-between mb-6">
+                    <span class="stat" style="border-color:var(--purple); color:var(--purple)">PREGUNTA <span id="q-count">1</span></span>
+                    <span class="stat">SCORE: <span id="quiz-score-val">0</span></span>
+                </div>
+                <div id="q-question" class="q-text"></div>
+                <div id="q-options" class="opt-grid"></div>
+                <div id="q-expl" class="expl-box"></div>
+                <button id="btn-next" class="btn-main" style="display:none">CONTINUAR PROTOCOLO <i class="fas fa-arrow-right ml-2"></i></button>
             </div>
         </div>
 
-        <div class="ui-top">
-            <div class="stat"><i class="fas fa-star text-yellow-400 mr-2"></i> <span id="score">0</span></div>
-            <div class="stat"><i class="fas fa-shield-heart text-red-500 mr-2"></i> <span id="lives">5</span></div>
+        <div id="tool-modal" class="modal">
+            <div class="modal-body">
+                <h3 id="tool-title" class="font-orbitron text-xl mb-4">SELECCIONAR FACTOR</h3>
+                <div id="opt-container" class="opt-grid"></div>
+                <button class="opt-btn w-full mt-4 border-red-500 text-red-400" onclick="closeToolModal()">CANCELAR</button>
+            </div>
+        </div>
+
+        <div id="end-modal" class="modal">
+            <div class="modal-body">
+                <i id="end-icon" class="fas fa-trophy fa-4x mb-6 text-yellow-400"></i>
+                <h2 id="end-title" class="font-orbitron text-3xl mb-4">MISIÓN COMPLETADA</h2>
+                <p id="end-message" class="text-slate-400 mb-8 text-lg"></p>
+                <button class="btn-main w-full" onclick="location.reload()">REINICIAR SISTEMA</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const levels = [
-            { poly: "x² - 9", correct: ["(x-3)", "(x+3)"], wrong: ["(x+9)", "(x-1)", "x"], e: "Es una diferencia de cuadrados: x² - 3². Recuerda: a² - b² = (a+b)(a-b)." },
-            { poly: "x² + 6x + 9", correct: ["(x+3)", "(x+3)"], wrong: ["(x-3)", "x", "(x+6)"], e: "Es una identidad notable: el cuadrado de una suma (x+3)²." },
-            { poly: "x² - 5x + 6", correct: ["(x-2)", "(x-3)"], wrong: ["(x+2)", "(x+3)", "(x-1)"], e: "Buscamos dos números que sumen 5 y multipliquen 6. Son 2 y 3. Factores: (x-2)(x-3)." },
-            { poly: "x³ - x", correct: ["x", "(x-1)", "(x+1)"], wrong: ["(x-2)", "x²", "(x+5)"], e: "Primero sacamos factor común 'x'. Luego queda (x²-1), que es una identidad notable." },
-            { poly: "3x² - 12", correct: ["3", "(x-2)", "(x+2)"], wrong: ["(x-4)", "x", "(x+4)"], e: "Paso 1: Factor común 3. Paso 2: Diferencia de cuadrados (x²-4)." }
-        ];
-
-        const questions = [
-            { q: "¿Cuál es el primer paso para factorizar un polinomio?", a: ["Sacar Factor Común", "Hacer Ruffini", "Identidades Notables"], c: 0, e: "¡Brillante! El factor común simplifica los números y reduce el grado, facilitando todo lo demás." },
-            { q: "Si en Ruffini la raíz es 3, ¿cuál es el factor?", a: ["(x - 3)", "(x + 3)", "3x"], c: 0, e: "¡Perfecto! Al pasar de raíz a factor siempre se cambia el signo del número." },
-            { q: "¿Se pueden tachar sumas en una fracción algebraica?", a: ["No, jamás", "Sí, si son iguales", "Solo si el profesor deja"], c: 0, e: "¡Exacto! Solo se pueden simplificar bloques que estén MULTIPLICANDO a todo el numerador/denominador." },
-            { q: "¿Qué indica el Teorema del Resto?", a: ["Que P(a) es el resto de P(x):(x-a)", "Que el resto siempre es cero", "Que hay que usar Ruffini"], c: 0, e: "¡Muy bien! Evaluar el polinomio en 'a' es una forma rápida de saber el resto sin dividir." },
-            { q: "¿Cómo se factoriza una diferencia de cuadrados a² - b²?", a: ["(a+b)(a-b)", "(a-b)²", "(a+b)²"], c: 0, e: "¡Genial! Es la identidad notable más útil para simplificar fracciones." },
-            { q: "¿Qué es un polinomio irreducible?", a: ["Que no tiene raíces reales", "Que tiene muchas letras", "Que es muy largo"], c: 0, e: "¡Excelente! Como x²+1, no existe ningún número real que lo haga cero." },
-            { q: "Para sumar fracciones algebraicas necesito...", a: ["El m.c.m. de denominadores", "Multiplicar en cruz", "Sumar los numeradores"], c: 0, e: "¡Correcto! Igual que con las fracciones numéricas, necesitamos un denominador común." },
-            { q: "En el m.c.m. de polinomios elegimos...", a: ["Comunes y no comunes al mayor exponente", "Solo los comunes", "Los más pequeños"], c: 0, e: "¡Dominas el álgebra! Esa es la regla para asegurar que todos los denominadores quepan." },
-            { q: "Si un polinomio es de grado 3, ¿cuántas raíces tiene?", a: ["Como máximo 3", "Exactamente 3", "Mínimo 3"], c: 0, e: "¡Nivel experto! El grado marca el límite superior de soluciones reales que podemos encontrar." },
-            { q: "¿Cuál es el factor de la raíz x = -5?", a: ["(x + 5)", "(x - 5)", "x/5"], c: 0, e: "¡Así se hace! El signo cambia: si la raíz es negativa, el factor es una suma." }
-        ];
-
-        let gameMode = 'simulation', score = 0, lives = 5, currentLevel = 0, isPaused = true;
-        const config = { type: Phaser.AUTO, parent: 'game-container', width: window.innerWidth, height: window.innerHeight, transparent: true, physics: { default: 'arcade', arcade: { gravity: { y: 0 } } }, scene: { preload: preload, create: create, update: update } };
-        const game = new Phaser.Game(config);
-        let items, polyText;
-
-        function preload() {}
-
-        function create() {
-            const cx = window.innerWidth / 2;
-            polyText = this.add.text(cx, 100, '', { fontSize: '28px', fontStyle: 'bold', fill: '#38bdf8', align: 'center', wordWrap: { width: window.innerWidth - 40 } }).setOrigin(0.5);
-            items = this.physics.add.group();
-            this.scene.pause();
-        }
-
-        function startMode(mode) {
-            gameMode = mode;
-            isPaused = false;
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('home-btn').style.display = 'flex';
-            if (mode === 'simulation') {
-                game.scene.resume('default');
-                loadLevel();
-            } else {
-                startQuiz();
-            }
-        }
-
-        function loadLevel() {
-            if (currentLevel >= levels.length) {
-                alert("¡MAESTRÍA ALGEBRAICA ALCANZADA!");
-                location.reload();
-                return;
-            }
-            const lvl = levels[currentLevel];
-            polyText.setText("Factoriza:\n" + lvl.poly);
-            const options = [...lvl.correct, ...lvl.wrong].sort(() => Math.random() - 0.5);
-            options.forEach((txt, i) => {
-                game.scene.getAt(0).time.addEvent({ delay: i * 1800, callback: () => spawnItem(txt, lvl.correct.includes(txt)), callbackScope: game.scene.getAt(0) });
-            });
-        }
-
-        function spawnItem(txt, isCorrect) {
-            if (isPaused || gameMode !== 'simulation') return;
-            const x = Math.random() * (window.innerWidth - 100) + 50;
-            const container = game.scene.getAt(0).add.container(x, -50);
-            const bg = game.scene.getAt(0).add.circle(0, 0, 40, 0x1e293b).setStrokeStyle(2, 0x38bdf8);
-            const label = game.scene.getAt(0).add.text(0, 0, txt, { fontSize: '16px', fontStyle: 'bold' }).setOrigin(0.5);
-            container.add([bg, label]);
-            game.scene.getAt(0).physics.add.existing(container);
-            container.body.setVelocityY(120 + Math.random() * 80);
-            bg.setInteractive(new Phaser.Geom.Circle(0, 0, 40), Phaser.Geom.Circle.Contains);
-            bg.on('pointerdown', () => {
-                if (isCorrect) {
-                    score += 100; updateUI(); container.destroy();
-                    if(score % 200 === 0) { currentLevel++; items.clear(true, true); loadLevel(); }
-                } else {
-                    showQuizFeedback("¡FALLO!", levels[currentLevel].e, false);
-                    container.destroy();
+        const LAB_DATA = [
+            { 
+                start: "x² - 36", 
+                steps: [{ type: 'identity', choice: "(x+6)(x-6)", next: "(x+6)(x-6)" }],
+                hints: { 
+                    common: "No hay letras ni números comunes a ambos términos.", 
+                    ruffini: "Ruffini funcionaría, pero hay un camino mucho más rápido: busca cuadrados.", 
+                    identity: "¡Correcto! Es una diferencia de cuadrados: x² - 6².",
+                    wrong_choice: "Esa no es la raíz correcta de 36. Busca un número que al cuadrado sea 36."
                 }
-            });
-        }
-
-        function startQuiz() {
-            const quiz = questions[Math.floor(Math.random() * questions.length)];
-            const overlay = document.getElementById('quiz-overlay');
-            const expEl = document.getElementById('quiz-explanation');
-            const nextBtn = document.getElementById('btn-next-quiz');
-            const optsEl = document.getElementById('quiz-options');
-            const qIcon = document.getElementById('quiz-icon');
-
-            overlay.style.display = 'flex';
-            expEl.style.display = 'none';
-            nextBtn.style.display = 'none';
-            qIcon.className = "fas fa-brain text-purple-400 fa-3x mb-4";
-            document.getElementById('quiz-question').innerText = quiz.q;
-            optsEl.innerHTML = "";
-
-            quiz.a.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = "btn";
-                btn.innerText = opt;
-                btn.onclick = () => {
-                    optsEl.querySelectorAll('button').forEach(b => b.disabled = true);
-                    expEl.style.display = 'block';
-                    expEl.innerText = quiz.e;
-                    nextBtn.style.display = 'block';
-                    if (idx === quiz.c) {
-                        score += 150; btn.style.background = "#10b981";
-                        expEl.className = "explanation-text correct-box";
-                        qIcon.className = "fas fa-medal text-yellow-400 fa-4x mb-4";
-                    } else {
-                        lives--; btn.style.background = "#ef4444";
-                        expEl.className = "explanation-text wrong-box";
-                        qIcon.className = "fas fa-circle-exclamation text-red-500 fa-4x mb-4";
-                    }
-                    updateUI();
-                    if (lives <= 0) { nextBtn.innerText = "FINALIZAR"; nextBtn.onclick = checkGameOver; }
-                    else { nextBtn.onclick = () => { overlay.style.display = 'none'; if(gameMode === 'quiz') startQuiz(); else game.scene.resume('default'); }; }
-                };
-                optsEl.appendChild(btn);
-            });
-        }
-
-        function showQuizFeedback(title, msg, isCorrect) {
-            if(gameMode === 'simulation') game.scene.pause('default');
-            const overlay = document.getElementById('quiz-overlay');
-            const expEl = document.getElementById('quiz-explanation');
-            const nextBtn = document.getElementById('btn-next-quiz');
-            const optsEl = document.getElementById('quiz-options');
-            const qIcon = document.getElementById('quiz-icon');
-
-            overlay.style.display = 'flex';
-            optsEl.innerHTML = "";
-            document.getElementById('quiz-question').innerText = title;
-            expEl.style.display = 'block';
-            expEl.innerText = msg;
-            nextBtn.style.display = 'block';
-            
-            if(!isCorrect) {
-                lives--; updateUI();
-                qIcon.className = "fas fa-times-circle text-red-500 fa-4x mb-4";
-                expEl.className = "explanation-text wrong-box";
+            },
+            { 
+                start: "x³ - 25x", 
+                steps: [
+                    { type: 'common', choice: "x", next: "x(x² - 25)" },
+                    { type: 'identity', choice: "(x+5)(x-5)", next: "x(x+5)(x-5)" }
+                ],
+                hints: { 
+                    common: "¡Bien! Siempre saca factor común 'x' si todos los términos la tienen.", 
+                    identity: "Ahora el paréntesis es una diferencia de cuadrados.", 
+                    ruffini: "Primero simplifica con factor común antes de usar Ruffini.",
+                    wrong_choice_common: "Busca la x con el menor exponente para extraerla.",
+                    wrong_choice_identity: "Recuerda que 25 es el cuadrado de 5."
+                }
+            },
+            { 
+                start: "x² + 8x + 16", 
+                steps: [{ type: 'identity', choice: "(x+4)²", next: "(x+4)²" }],
+                hints: { 
+                    identity: "¡Brillante! Es el cuadrado de una suma: (x+4)².", 
+                    common: "No hay un factor común numérico ni de letra aquí.",
+                    wrong_choice: "Comprueba el doble producto: 2 * x * 4 = 8x. ¡Ahí está la clave!"
+                }
+            },
+            { 
+                start: "x² - 5x + 6", 
+                steps: [{ type: 'ruffini', choice: "Raíz: 2", next: "(x-2)(x-3)" }],
+                hints: { 
+                    ruffini: "Probamos divisores de 6 (1, 2, 3...). El 2 hace que el resto sea 0.", 
+                    identity: "No es una identidad perfecta porque el medio no es el doble producto.",
+                    wrong_choice: "Ese divisor no da resto 0 en la regla de Ruffini. Prueba con otro divisor de 6."
+                }
+            },
+            { 
+                start: "4x³ - 16x", 
+                steps: [
+                    { type: 'common', choice: "4x", next: "4x(x² - 4)" },
+                    { type: 'identity', choice: "(x+2)(x-2)", next: "4x(x+2)(x-2)" }
+                ],
+                hints: { 
+                    common: "Extraemos el 4 y la x como factores comunes máximos.", 
+                    identity: "Diferencia de cuadrados en el paréntesis: x² - 2².",
+                    wrong_choice_common: "Ambos términos son divisibles por 4 y por x.",
+                    wrong_choice_identity: "Recuerda: a² - b² = (a+b)(a-b)."
+                }
             }
+        ];
+
+        const QUIZ_DATA = [
+            {
+                q: "Si la raíz de un polinomio es x = -7, ¿cuál es el factor?",
+                o: ["(x - 7)", "(x + 7)", "x - 0", "7x"],
+                c: 1,
+                e: "¡Correcto! El factor es siempre (x - raíz). Si la raíz es negativa, el factor se convierte en una suma.",
+                w: "Error. El factor cambia el signo de la raíz. Si la raíz es -7, el factor es (x + 7)."
+            },
+            {
+                q: "¿Qué se puede simplificar en una fracción algebraica?",
+                o: ["Términos que suman", "Cualquier número", "Factores que multiplican", "Nada"],
+                c: 2,
+                e: "¡Exacto! Solo podemos tachar bloques que estén multiplicando a TODO el numerador y denominador.",
+                w: "¡Cuidado! Nunca simplifiques sumas o restas directamente. Primero debes factorizar."
+            },
+            {
+                q: "Para el m.c.m. de polinomios elegimos...",
+                o: ["Solo comunes", "No comunes", "Comunes y no comunes al mayor exponente", "Al menor exponente"],
+                c: 2,
+                e: "¡Dominado! Esa es la regla para asegurar que todos los denominadores estén contenidos.",
+                w: "Fallo. Esa es la regla del m.c.d. Para el m.c.m. necesitamos todo al exponente más alto."
+            }
+        ];
+
+        let mode = '', level = 0, stability = 100, score = 0, step = 0;
+
+        function initMode(m) {
+            mode = m;
+            document.getElementById('start-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('start-screen').style.display = 'none';
+                showInstructions();
+            }, 500);
+        }
+
+        function showInstructions() {
+            const overlay = document.getElementById('instruction-overlay');
+            const title = document.getElementById('ins-title');
+            const body = document.getElementById('ins-body');
+            overlay.style.display = 'flex';
+
+            if (mode === 'lab') {
+                title.innerHTML = "<i class='fas fa-flask-vial mr-2'></i> LAB DE ESTABILIZACIÓN";
+                body.innerHTML = `
+                    <p><i class='fas fa-check text-emerald-400 mr-2'></i> <b>MISIÓN:</b> Descomponer polinomios inestables.</p>
+                    <p><i class='fas fa-check text-emerald-400 mr-2'></i> <b>ORDEN:</b> 1º Factor Común, 2º Identidades, 3º Ruffini.</p>
+                    <p><i class='fas fa-check text-emerald-400 mr-2'></i> <b>AYUDA:</b> Si fallas, lee la pista del sistema para corregir el rumbo.</p>
+                `;
+            } else {
+                title.innerHTML = "<i class='fas fa-brain mr-2'></i> DESAFÍO DE MAESTRÍA";
+                body.innerHTML = `
+                    <p><i class='fas fa-check text-purple-400 mr-2'></i> <b>MISIÓN:</b> Superar el test teórico de alto nivel.</p>
+                    <p><i class='fas fa-check text-purple-400 mr-2'></i> <b>LOGROS:</b> 100 puntos por cada acierto matemático.</p>
+                `;
+            }
+            document.getElementById('btn-begin').onclick = startActualGame;
+        }
+
+        function startActualGame() {
+            document.getElementById('instruction-overlay').style.display = 'none';
+            if (mode === 'lab') {
+                document.getElementById('lab-hud').style.display = 'flex';
+                document.getElementById('polynomial-area').style.display = 'flex';
+                document.getElementById('lab-controls').style.display = 'flex';
+                loadLabLevel();
+            } else {
+                document.getElementById('quiz-view').style.display = 'flex';
+                loadQuizQuestion();
+            }
+        }
+
+        function loadLabLevel() {
+            const data = LAB_DATA[level];
+            document.getElementById('poly-val').innerText = data.start;
+            document.getElementById('poly-hint').innerText = "Analizando estructura... Sistema estable.";
+            document.getElementById('poly-hint').style.color = "#94a3b8";
+            document.getElementById('level-text').innerText = level + 1;
+            step = 0;
+        }
+
+        function selectTool(t) {
+            const modal = document.getElementById('tool-modal');
+            const container = document.getElementById('opt-container');
+            const title = document.getElementById('tool-title');
+            modal.style.display = 'flex';
+            container.innerHTML = "";
+
+            let opts = [];
+            if (t === 'common') {
+                title.innerText = "EXTRAER COMPONENTE";
+                opts = ["x", "2x", "4x", "4", "x²"].sort(() => Math.random() - 0.5);
+            } else if (t === 'identity') {
+                title.innerText = "IDENTIDAD DETECTADA";
+                opts = ["(x+6)(x-6)", "(x+5)(x-5)", "(x+4)²", "(x+3)²", "(x+2)(x-2)"].sort(() => Math.random() - 0.5);
+            } else if (t === 'ruffini') {
+                title.innerText = "BUSCAR RAÍZ";
+                opts = ["Raíz: 1", "Raíz: 2", "Raíz: 3", "Raíz: -1", "Raíz: -2"].sort(() => Math.random() - 0.5);
+            }
+
+            opts.forEach(o => {
+                const btn = document.createElement('button');
+                btn.className = "opt-btn";
+                btn.innerText = o;
+                btn.onclick = () => processChoice(t, o);
+                container.appendChild(btn);
+            });
+        }
+
+        function processChoice(t, o) {
+            const data = LAB_DATA[level];
+            const currentStep = data.steps[step];
+            closeToolModal();
+
+            if (currentStep.type === t && currentStep.choice === o) {
+                step++;
+                document.getElementById('poly-val').innerText = currentStep.next;
+                document.getElementById('poly-hint').innerText = data.hints[t];
+                document.getElementById('poly-hint').style.color = "var(--emerald)";
+                
+                if (step >= data.steps.length) {
+                    setTimeout(() => {
+                        level++;
+                        if (level >= LAB_DATA.length) finishGame(true, "¡MAESTRÍA ALGEBRAICA! Has estabilizado todos los sectores.");
+                        else loadLabLevel();
+                    }, 1500);
+                }
+            } else {
+                stability -= 20;
+                document.getElementById('stability-text').innerText = stability;
+                
+                let failureMsg = "";
+                if (t !== currentStep.type) {
+                    failureMsg = data.hints[t] || "Esa herramienta no es la adecuada para este paso.";
+                } else {
+                    failureMsg = data.hints[`wrong_choice${step > 0 ? '_' + currentStep.type : ''}`] || "Opción incorrecta. Revisa los cálculos.";
+                }
+
+                document.getElementById('poly-hint').innerText = failureMsg;
+                document.getElementById('poly-hint').style.color = "var(--red)";
+                if (stability <= 0) finishGame(false, "SISTEMA COLAPSADO. La inestabilidad ha destruido el laboratorio.");
+            }
+        }
+
+        function loadQuizQuestion() {
+            const q = QUIZ_DATA[level];
+            document.getElementById('q-count').innerText = level + 1;
+            document.getElementById('quiz-score-val').innerText = score;
+            document.getElementById('q-question').innerText = q.q;
+            document.getElementById('q-expl').style.display = 'none';
+            document.getElementById('btn-next').style.display = 'none';
             
-            nextBtn.onclick = () => {
-                overlay.style.display = 'none';
-                if (lives <= 0) checkGameOver();
-                else game.scene.resume('default');
+            const opts = document.getElementById('q-options');
+            opts.innerHTML = "";
+            q.o.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "opt-btn";
+                btn.innerText = opt;
+                btn.onclick = () => answerQuiz(idx);
+                opts.appendChild(btn);
+            });
+        }
+
+        function answerQuiz(idx) {
+            const q = QUIZ_DATA[level];
+            const btns = document.querySelectorAll('#q-options .opt-btn');
+            btns.forEach(b => b.disabled = true);
+            const expl = document.getElementById('q-expl');
+            const next = document.getElementById('btn-next');
+            expl.style.display = 'block';
+            next.style.display = 'inline-block';
+
+            if (idx === q.c) {
+                score += 100;
+                expl.innerHTML = `<b>¡CORRECTO!</b><br>${q.e}`;
+                expl.style.borderColor = "var(--emerald)";
+                expl.style.color = "var(--emerald)";
+                btns[idx].style.background = "var(--emerald)";
+            } else {
+                expl.innerHTML = `<b>INCORRECTO</b><br>${q.w}`;
+                expl.style.borderColor = "var(--red)";
+                expl.style.color = "var(--red)";
+                btns[idx].style.background = "var(--red)";
+                btns[q.c].style.border = "3px solid var(--emerald)";
+            }
+
+            next.onclick = () => {
+                level++;
+                if (level >= QUIZ_DATA.length) finishGame(true, `Test finalizado. Tu puntuación de maestría es ${score}.`);
+                else loadQuizQuestion();
             };
         }
 
-        function updateUI() {
-            document.getElementById('score').innerText = score;
-            document.getElementById('lives').innerText = lives;
-        }
+        function closeToolModal() { document.getElementById('tool-modal').style.display = 'none'; }
 
-        function checkGameOver() {
-            if (lives <= 0) {
-                document.getElementById('quiz-overlay').style.display = 'none';
-                document.getElementById('game-over-screen').style.display = 'flex';
-                document.getElementById('final-score-text').innerText = "Puntuación Final: " + score;
+        function finishGame(win, msg) {
+            const modal = document.getElementById('end-modal');
+            modal.style.display = 'flex';
+            document.getElementById('end-message').innerText = msg;
+            const icon = document.getElementById('end-icon');
+            if (win) {
+                icon.className = "fas fa-medal fa-4x mb-6 text-yellow-400";
+                document.getElementById('end-title').innerText = "MISIÓN COMPLETADA";
+            } else {
+                icon.className = "fas fa-radiation fa-4x mb-6 text-red-500";
+                document.getElementById('end-title').innerText = "SISTEMA CAÍDO";
             }
         }
 
-        function update() {}
-        window.addEventListener('resize', () => game.scale.resize(window.innerWidth, window.innerHeight));
+        new Phaser.Game({
+            type: Phaser.AUTO, parent: 'game-container', width: window.innerWidth, height: window.innerHeight, transparent: true,
+            scene: {
+                create() {
+                    this.add.particles(0, 0, 'dot', {
+                        x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight },
+                        speed: 15, scale: { start: 0.2, end: 0 }, alpha: { start: 0.2, end: 0 },
+                        lifespan: 5000, frequency: 200, blendMode: 'ADD'
+                    });
+                }
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > window.innerHeight) location.reload();
+        });
     </script>
 </body>
 </html>
