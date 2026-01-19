@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Algebra Hunter PRO - 4º ESO</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { margin: 0; background: #020617; color: white; font-family: 'Poppins', sans-serif; overflow: hidden; touch-action: none; }
+        #game-container { width: 100vw; height: 100vh; position: relative; }
+        .overlay { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.98); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; padding: 20px; text-align: center; }
+        .card { background: #1e293b; padding: 25px; border-radius: 25px; border: 3px solid #38bdf8; width: 95%; max-width: 500px; box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); }
+        .btn { background: #38bdf8; color: #020617; border: none; padding: 15px 30px; border-radius: 15px; font-weight: 800; font-size: 18px; cursor: pointer; width: 100%; margin-top: 15px; transition: 0.2s; }
+        .btn:hover { background: #fff; transform: scale(1.02); }
+        .ui-top { position: absolute; top: 15px; width: 100%; display: flex; justify-content: space-around; z-index: 10; pointer-events: none; }
+        .stat { background: rgba(15, 23, 42, 0.9); padding: 10px 15px; border-radius: 12px; border: 1px solid #38bdf8; font-weight: bold; font-size: 14px; }
+        .explanation { font-size: 13px; line-height: 1.5; margin: 15px 0; padding: 15px; border-radius: 15px; text-align: left; border-left: 6px solid #ef4444; background: rgba(239, 68, 68, 0.1); display: none; }
+        .formula-display { font-family: monospace; font-size: 20px; color: #38bdf8; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin: 10px 0; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <!-- Pantalla de Inicio -->
+        <div id="start-screen" class="overlay">
+            <div class="card">
+                <i class="fas fa-crosshairs text-blue-400 fa-4x mb-4"></i>
+                <h1 class="header-font text-2xl font-black uppercase">ALGEBRA HUNTER</h1>
+                <p style="font-size: 12px; color: #38bdf8; margin-bottom: 25px;">CACERÍA DE FACTORES • 4º ESO</p>
+                <div style="text-align: left; font-size: 12px; color: #cbd5e1; margin-bottom: 20px; line-height: 1.6;">
+                    <p><i class="fas fa-check text-green-400 mr-2"></i> Toca los factores correctos del polinomio.</p>
+                    <p><i class="fas fa-check text-green-400 mr-2"></i> ¡Cuidado! Si tocas un impostor, perderás vida.</p>
+                    <p><i class="fas fa-lightbulb text-yellow-400 mr-2"></i> Aprende por qué fallas con los consejos.</p>
+                </div>
+                <button class="btn" onclick="startGame()">INICIAR CACERÍA</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de Feedback / Quiz -->
+        <div id="feedback-overlay" class="overlay" style="display: none;">
+            <div class="card">
+                <i id="fb-icon" class="fas fa-times-circle text-red-500 fa-4x mb-4"></i>
+                <h2 id="fb-title" style="font-size: 20px; margin-bottom: 10px;">¡ERROR!</h2>
+                <div id="fb-explanation" class="explanation"></div>
+                <button id="btn-continue" class="btn">CONTINUAR ENTRENAMIENTO</button>
+            </div>
+        </div>
+
+        <!-- UI Superior -->
+        <div class="ui-top">
+            <div class="stat"><i class="fas fa-star text-yellow-400 mr-2"></i> <span id="score">0</span></div>
+            <div class="stat"><i class="fas fa-heart text-red-500 mr-2"></i> <span id="lives">3</span></div>
+        </div>
+    </div>
+
+    <script>
+        const levels = [
+            { poly: "x² - 4", correct: ["(x-2)", "(x+2)"], wrong: ["(x+4)", "(x-1)", "x"], e: "Es una diferencia de cuadrados: a² - b² = (a+b)(a-b). Las raíces son 2 y -2." },
+            { poly: "x² - 5x + 6", correct: ["(x-2)", "(x-3)"], wrong: ["(x+2)", "(x+3)", "(x-1)"], e: "Las raíces son 2 y 3 (suman 5 y multiplican 6). El factor lleva el signo opuesto: (x-2)(x-3)." },
+            { poly: "x³ - x", correct: ["x", "(x-1)", "(x+1)"], wrong: ["(x-2)", "x²", "(x+5)"], e: "Paso 1: Factor común 'x'. Paso 2: Diferencia de cuadrados (x²-1). Resultado: x(x-1)(x+1)." }
+        ];
+
+        let currentLevel = 0;
+        let score = 0;
+        let lives = 3;
+        let isPaused = true;
+
+        const config = {
+            type: Phaser.AUTO,
+            parent: 'game-container',
+            width: window.innerWidth,
+            height: window.innerHeight,
+            transparent: true,
+            physics: { default: 'arcade', arcade: { gravity: { y: 0 } } },
+            scene: { preload: preload, create: create, update: update }
+        };
+
+        const game = new Phaser.Game(config);
+        let items, polyText;
+
+        function preload() {}
+
+        function create() {
+            const cx = window.innerWidth / 2;
+            polyText = this.add.text(cx, 100, '', { fontSize: '32px', fontStyle: 'bold', fill: '#38bdf8' }).setOrigin(0.5);
+            items = this.physics.add.group();
+            this.scene.pause();
+        }
+
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            isPaused = false;
+            game.scene.resume('default');
+            loadLevel();
+        }
+
+        function loadLevel() {
+            if (currentLevel >= levels.length) {
+                alert("¡Felicidades! Has completado el entrenamiento algebraico.");
+                location.reload();
+                return;
+            }
+            const lvl = levels[currentLevel];
+            polyText.setText("Factoriza: " + lvl.poly);
+            
+            // Spawn items
+            const allOptions = [...lvl.correct, ...lvl.wrong].sort(() => Math.random() - 0.5);
+            const scene = game.scene.getAt(0);
+            
+            allOptions.forEach((txt, i) => {
+                scene.time.addEvent({
+                    delay: i * 1500,
+                    callback: () => spawnItem(txt, lvl.correct.includes(txt)),
+                    callbackScope: scene
+                });
+            });
+        }
+
+        function spawnItem(txt, isCorrect) {
+            if (isPaused) return;
+            const x = Math.random() * (window.innerWidth - 100) + 50;
+            const container = game.scene.getAt(0).add.container(x, -50);
+            
+            const bg = game.scene.getAt(0).add.circle(0, 0, 45, 0x1e293b).setStrokeStyle(2, 0x38bdf8);
+            const label = game.scene.getAt(0).add.text(0, 0, txt, { fontSize: '18px', fontStyle: 'bold' }).setOrigin(0.5);
+            
+            container.add([bg, label]);
+            game.scene.getAt(0).physics.add.existing(container);
+            container.body.setVelocityY(150 + Math.random() * 100);
+            
+            bg.setInteractive(new Phaser.Geom.Circle(0, 0, 45), Phaser.Geom.Circle.Contains);
+            bg.on('pointerdown', () => {
+                if (isCorrect) {
+                    score += 100;
+                    updateUI();
+                    container.destroy();
+                    checkLevelWin();
+                } else {
+                    handleError(levels[currentLevel].e);
+                    container.destroy();
+                }
+            });
+        }
+
+        function handleError(msg) {
+            isPaused = true;
+            lives--;
+            updateUI();
+            const overlay = document.getElementById('feedback-overlay');
+            const exp = document.getElementById('fb-explanation');
+            exp.innerText = msg;
+            exp.style.display = 'block';
+            overlay.style.display = 'flex';
+            
+            document.getElementById('btn-continue').onclick = () => {
+                overlay.style.display = 'none';
+                isPaused = false;
+                if (lives <= 0) location.reload();
+            };
+        }
+
+        function checkLevelWin() {
+            // Lógica simple: si score aumenta lo suficiente, siguiente nivel
+            if (score > (currentLevel + 1) * 200) {
+                currentLevel++;
+                items.clear(true, true);
+                loadLevel();
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('score').innerText = score;
+            document.getElementById('lives').innerText = lives;
+        }
+
+        function update() {}
+
+        window.addEventListener('resize', () => game.scale.resize(window.innerWidth, window.innerHeight));
+    </script>
+</body>
+</html>

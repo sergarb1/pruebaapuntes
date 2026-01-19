@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Masterclass Álgebra: Factorización y Fracciones - 4º ESO</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- MathJax for LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root { 
+            --blue: #60a5fa; --red: #fb7185; --green: #34d399; --purple: #c084fc; --orange: #fb923c;
+            --text: #e2e8f0; --bg: #0f172a; --card-bg: #1e293b;
+        }
+        .reveal { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Tipografía Gigante para Legibilidad */
+        .reveal h1 { font-size: 2.8em; font-weight: 900; color: #fff; text-shadow: 0 0 25px rgba(96, 165, 250, 0.5); margin-bottom: 0.5em; }
+        .reveal h2 { font-size: 2.2em; color: var(--purple); }
+        .reveal h3 { font-size: 1.8em; color: var(--blue); margin-bottom: 30px; }
+        .reveal p, .reveal li { font-size: 1.2em; line-height: 1.4; }
+
+        /* Tarjetas de Contenido */
+        .card { 
+            background: var(--card-bg); border-radius: 20px; padding: 35px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+            text-align: left; margin: 15px auto; width: 95%;
+        }
+        
+        /* Fórmulas Destacadas */
+        .formula-box {
+            font-size: 2.4em; color: var(--blue); text-align: center;
+            padding: 25px; background: #020617; border-radius: 15px;
+            margin: 25px 0; border-left: 12px solid var(--blue);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        /* Bloques de Ejemplo Paso a Paso */
+        .example-header { 
+            background: var(--green); color: #064e3b; padding: 10px 30px;
+            border-radius: 10px 10px 0 0; font-weight: bold; font-size: 1.3em;
+            display: inline-block;
+        }
+        .example-body { 
+            border: 3px solid var(--green); padding: 30px; border-radius: 0 20px 20px 20px;
+            background: rgba(52, 211, 153, 0.05); margin-bottom: 20px;
+        }
+
+        .step-pill {
+            background: var(--blue); color: #fff; padding: 5px 15px;
+            border-radius: 20px; font-size: 0.8em; font-weight: bold;
+            margin-right: 10px; vertical-align: middle;
+        }
+
+        .highlight { color: var(--orange); font-weight: bold; }
+        .icon-lg { font-size: 3.5em; color: var(--orange); margin-bottom: 20px; display: block; }
+        
+        /* Ajuste de Grillas */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
+
+        .pro-tip { 
+            background: rgba(251, 146, 60, 0.1); border-left: 8px solid var(--orange);
+            padding: 20px; border-radius: 10px; font-size: 1em;
+            color: var(--orange); margin-top: 20px;
+        }
+
+        .tag { 
+            font-size: 0.6em; padding: 8px 20px; border-radius: 50px; background: var(--purple); 
+            color: #fff; font-weight: bold; display: inline-block; margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- 1. PORTADA -->
+            <section data-background-color="#020617">
+                <i class="fas fa-layer-group icon-lg animate__animated animate__pulse animate__infinite"></i>
+                <h1>Factorización y<br>Fracciones Algebraicas</h1>
+                <p>El arte de descomponer polinomios</p>
+                <div class="tag">Matemáticas 4º ESO • Masterclass</div>
+            </section>
+
+            <!-- 2. FILOSOFÍA DE LA FACTORIZACIÓN -->
+            <section>
+                <h3>1. ¿Por qué factorizamos?</h3>
+                <div class="card">
+                    <p>Factorizar es como desmontar un mueble de IKEA: queremos ver las <span class="highlight">piezas fundamentales</span> que forman el todo.</p>
+                    <div class="grid-2" style="margin-top: 30px;">
+                        <div style="text-align: center;">
+                            <i class="fas fa-plus-circle fa-3x" style="color: var(--red);"></i>
+                            <p>De Sumas...</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-arrow-right fa-2x"></i>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-times-circle fa-3x" style="color: var(--green);"></i>
+                            <p>...a Productos</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. EL ARSENAL COMPLETO -->
+            <section>
+                <h3>2. Tu Caja de Herramientas</h3>
+                <div class="card">
+                    <ol style="font-size: 0.9em; line-height: 2;">
+                        <li><span class="step-pill">1</span> <strong>Factor Común:</strong> Lo primero, siempre.</li>
+                        <li><span class="step-pill">2</span> <strong>Identidades Notables:</strong> Atajos visuales.</li>
+                        <li><span class="step-pill">3</span> <strong>Ecuación 2º Grado:</strong> Para trinomios.</li>
+                        <li><span class="step-pill">4</span> <strong>Regla de Ruffini:</strong> El método universal.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 4. FACTOR COMÚN (PROFUNDIZACIÓN) -->
+            <section>
+                <h3>3. Factor Común: El imán</h3>
+                <div class="card">
+                    <p>Buscamos la letra con el <span class="highlight">menor exponente</span> y el máximo común divisor de los números.</p>
+                    <div class="example-header">EJEMPLO</div>
+                    <div class="example-body">
+                        \[ 12x^5 - 8x^3 + 4x^2 \]
+                        <p style="margin-top: 15px;"><span class="step-pill">Pieza</span> El factor es \( 4x^2 \)</p>
+                        <p><span class="step-pill">Final</span> \( 4x^2(3x^3 - 2x + 1) \)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. IDENTIDADES NOTABLES 1 -->
+            <section>
+                <h3>4. El Cuadrado de una Suma</h3>
+                <div class="formula-box">
+                    \[ (a+b)^2 = a^2 + 2ab + b^2 \]
+                </div>
+                <div class="card">
+                    <p><i class="fas fa-eye"></i> Reconoce el patrón: Tres términos, dos son cuadrados perfectos y el medio es el doble producto.</p>
+                    <p class="highlight" style="margin-top: 10px;">\( x^2 + 10x + 25 = (x+5)^2 \)</p>
+                </div>
+            </section>
+
+            <!-- 6. IDENTIDADES NOTABLES 2 -->
+            <section>
+                <h3>5. Diferencia de Cuadrados</h3>
+                <div class="formula-box" style="color: var(--red);">
+                    \[ a^2 - b^2 = (a+b)(a-b) \]
+                </div>
+                <div class="card">
+                    <p>Es el más común en exámenes. ¡Busca el signo menos y dos piezas que tengan raíz cuadrada!</p>
+                    <div class="example-body" style="border-color: var(--red); background: rgba(251, 113, 133, 0.05);">
+                        \( 9x^2 - 16 = (3x+4)(3x-4) \)
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. ECUACIÓN DE SEGUNDO GRADO -->
+            <section>
+                <h3>6. El método de las Raíces</h3>
+                <div class="card">
+                    <p>Si tienes un polinomio de grado 2 y no es notable, resuelve la ecuación \( ax^2+bx+c=0 \).</p>
+                    <p style="margin-top: 20px;">Si las soluciones son \( x_1 \) y \( x_2 \), el polinomio es:</p>
+                    <div class="formula-box">
+                        \[ a(x - x_1)(x - x_2) \]
+                    </div>
+                    <p class="pro-tip"><i class="fas fa-exclamation-triangle"></i> ¡No olvides multiplicar por la \( a \) si no es 1!</p>
+                </div>
+            </section>
+
+            <!-- 8. RUFFINI: CUÁNDO USARLO -->
+            <section>
+                <h3>7. El Poder de Ruffini</h3>
+                <div class="card">
+                    <p>Ideal para polinomios de <span class="highlight">grado 3 o superior</span>.</p>
+                    <p style="margin-top: 15px;">¿Qué números probamos? Solo los <span class="highlight">divisores del término independiente</span>.</p>
+                    <div class="example-block" style="font-size: 1em;">
+                        Si el polinomio acaba en \( 6 \), probamos:<br>
+                        \( \pm 1, \pm 2, \pm 3, \pm 6 \)
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. RUFFINI: PASO A PASO -->
+            <section>
+                <h3>8. Técnica de Ruffini</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <p><span class="step-pill">1</span> Coloca los coeficientes.</p>
+                        <p><span class="step-pill">2</span> Baja el primero.</p>
+                        <p><span class="step-pill">3</span> Multiplica y suma.</p>
+                        <p><span class="step-pill">4</span> ¡Busca el CERO!</p>
+                    </div>
+                    <div style="background: white; color: black; border-radius: 15px; padding: 20px; font-family: 'Courier New', Courier, monospace; font-size: 1.2em; border: 5px solid var(--blue);">
+                        &nbsp;&nbsp; | 1&nbsp; -4&nbsp;&nbsp; 3<br>
+                        1 |&nbsp;&nbsp;&nbsp; 1&nbsp; -3<br>
+                        --|---------<br>
+                        &nbsp;&nbsp; | 1&nbsp; -3&nbsp; | <span style="color: var(--green); font-weight: bold;">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10. RAÍZ VS FACTOR -->
+            <section>
+                <h3>9. ¡No líes el signo!</h3>
+                <div class="card">
+                    <p>Hay una diferencia vital que hunden notas en los exámenes:</p>
+                    <div class="grid-2" style="margin-top: 20px;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                            <h4 style="color: var(--green);">Raíz</h4>
+                            <p style="font-size: 1.5em;">\( x = 2 \)</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                            <h4 style="color: var(--red);">Factor</h4>
+                            <p style="font-size: 1.5em;">\( (x - 2) \)</p>
+                        </div>
+                    </div>
+                    <p class="pro-tip" style="text-align: center;">Si la raíz es positiva, el factor lleva un <span class="highlight">MENOS</span>.</p>
+                </div>
+            </section>
+
+            <!-- 11. FRACCIONES ALGEBRAICAS -->
+            <section data-background-color="#0f172a">
+                <i class="fas fa-percentage icon-lg" style="font-size: 4em; color: var(--purple);"></i>
+                <h1>Fracciones Algebraicas</h1>
+                <p>Nivel Experto: Operar con Polinomios</p>
+            </section>
+
+            <!-- 12. EL ARTE DE SIMPLIFICAR -->
+            <section>
+                <h3>10. El Gran Tachado</h3>
+                <div class="card">
+                    <p>Para simplificar, el numerador y denominador deben estar <span class="highlight">factorizados</span>.</p>
+                    <div class="example-header" style="background: var(--blue);">PROCESO</div>
+                    <div class="example-body" style="border-color: var(--blue);">
+                        \[ \frac{x^2 - 9}{x^2 - 3x} = \frac{(x+3)(x-3)}{x(x-3)} \]
+                        <p style="text-align: center; color: var(--green); font-size: 1.5em; margin-top: 10px;">
+                            \( = \frac{x+3}{x} \)
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 13. LA TRAMPA MORTAL -->
+            <section>
+                <h3>⚠️ Error de Suspenso</h3>
+                <div class="card" style="border: 4px solid var(--red);">
+                    <p style="color: var(--red); font-weight: bold; font-size: 1.5em; text-align: center;">
+                        ¡NO TACHES SUMAS!
+                    </p>
+                    <div class="grid-2" style="margin-top: 20px;">
+                        <div style="text-align: center;">
+                            <p style="text-decoration: line-through; color: var(--red); font-size: 1.2em;">
+                                \( \frac{x+2}{x} = 2 \)
+                            </p>
+                            <p style="font-size: 0.6em;">ERROR FATAL</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="color: var(--green); font-size: 1.2em;">
+                                \( \frac{x \cdot 2}{x} = 2 \)
+                            </p>
+                            <p style="font-size: 0.6em;">SOLO SI MULTIPLICAN</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 14. SUMA Y RESTA (PASO 1) -->
+            <section>
+                <h3>11. Sumar Fracciones: El m.c.m.</h3>
+                <div class="card">
+                    <p>Como con los números, necesitamos el mismo denominador.</p>
+                    <p><span class="step-pill">1</span> Factoriza los denominadores.</p>
+                    <p><span class="step-pill">2</span> Elige comunes y no comunes al mayor exponente.</p>
+                    <div class="example-block">Si los denominadores son \( x \) y \( (x+1) \), el m.c.m. es \( x(x+1) \).</div>
+                </div>
+            </section>
+
+            <!-- 15. SUMA Y RESTA (PASO 2) -->
+            <section>
+                <h3>12. Ajustar el Numerador</h3>
+                <div class="card">
+                    <p>Lo que le haces al denominador, se lo haces al numerador.</p>
+                    <div class="example-body" style="border-color: var(--purple);">
+                        \[ \frac{2}{x} + \frac{1}{x+1} = \frac{2(x+1)}{x(x+1)} + \frac{x}{x(x+1)} \]
+                        \[ = \frac{2x + 2 + x}{x(x+1)} = \frac{3x+2}{x^2+x} \]
+                    </div>
+                </div>
+            </section>
+
+            <!-- 16. MULTIPLICACIÓN -->
+            <section>
+                <h3>13. Multiplicar: ¡No operes!</h3>
+                <div class="card">
+                    <p>En las multiplicaciones, el truco es <span class="highlight">factorizar antes</span> de multiplicar.</p>
+                    <div class="example-block">
+                        \[ \frac{x+1}{x-2} \cdot \frac{x^2-4}{x^2+x} = \frac{(x+1) \cdot (x+2)(x-2)}{(x-2) \cdot x(x+1)} \]
+                        <p style="text-align: center; color: var(--green); font-size: 1.5em;">
+                            \( = \frac{x+2}{x} \)
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 17. DIVISIÓN -->
+            <section>
+                <h3>14. División en Cruz</h3>
+                <div class="card">
+                    <p>Recuerda el "caramelo" o multiplicar en cruz.</p>
+                    <div class="formula-box" style="font-size: 1.5em;">
+                        \[ \frac{A}{B} : \frac{C}{D} = \frac{A \cdot D}{B \cdot C} \]
+                    </div>
+                    <p class="pro-tip">Al igual que en la multiplicación, ¡factoriza y tacha antes de operar el resultado final!</p>
+                </div>
+            </section>
+
+            <!-- 18. TALLER DE EXAMEN 1 -->
+            <section data-background-color="#26a269">
+                <i class="fas fa-pencil-alt icon-lg" style="color: white;"></i>
+                <h1 style="color: white;">Taller Práctico</h1>
+                <p>Resolución paso a paso</p>
+            </section>
+
+            <!-- 19. EJERCICIO COMPLETO 1 -->
+            <section>
+                <h3>Ejercicio: Factorización Total</h3>
+                <div class="example-header">ENUNCIADO</div>
+                <div class="example-body">
+                    <p>"Factoriza \( P(x) = x^4 - 5x^2 + 4 \)"</p>
+                    <div style="font-size: 0.9em; margin-top: 15px;">
+                        <p><span class="step-pill">1</span> Es bicuadrada. Hacemos \( z = x^2 \).</p>
+                        <p><span class="step-pill">2</span> Resolvemos \( z^2 - 5z + 4 = 0 \). Raíces: \( z=1, z=4 \).</p>
+                        <p><span class="step-pill">3</span> Deshacemos: \( x^2=1 \to x=\pm 1 \); \( x^2=4 \to x=\pm 2 \).</p>
+                        <p class="highlight" style="font-size: 1.2em; text-align: center;">\( (x-1)(x+1)(x-2)(x+2) \)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 20. EJERCICIO COMPLETO 2 -->
+            <section>
+                <h3>Ejercicio: Simplificación</h3>
+                <div class="example-header" style="background: var(--purple);">ENUNCIADO</div>
+                <div class="example-body" style="border-color: var(--purple);">
+                    <p>"Simplifica \( \frac{x^3 - x}{x^2 + x} \)"</p>
+                    <div style="font-size: 0.9em; margin-top: 15px;">
+                        <p><span class="step-pill">1</span> Sacar factor común: \( \frac{x(x^2 - 1)}{x(x + 1)} \).</p>
+                        <p><span class="step-pill">2</span> Identidad notable arriba: \( \frac{x(x+1)(x-1)}{x(x+1)} \).</p>
+                        <p><span class="step-pill">3</span> Tachamos \( x \) y \( (x+1) \).</p>
+                        <p class="highlight" style="font-size: 1.5em; text-align: center;">\( x - 1 \)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 21. RESUMEN FINAL -->
+            <section>
+                <h3>¡Recuerda siempre!</h3>
+                <div class="card">
+                    <ul style="line-height: 2;">
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> <strong>Factor común</strong> siempre es el paso 0.</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> <strong>Ruffini</strong> es tu mejor amigo para el grado 3.</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> En fracciones, <strong>factorizar es libertad</strong> para simplificar.</li>
+                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> El signo del factor es el <strong>opuesto</strong> de la raíz.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 22. CIERRE -->
+            <section data-background-gradient="linear-gradient(to right, #020617, #1e293b)">
+                <i class="fas fa-graduation-cap icon-lg" style="font-size: 5em; color: var(--green);"></i>
+                <h1>Álgebra Dominada</h1>
+                <p>Estás listo para cualquier polinomio.</p>
+                <div class="tag" style="background: var(--blue); margin-top: 40px;">FISI-QUI & MATES 4º ESO</div>
+                <p style="font-size: 0.5em; margin-top: 50px; opacity: 0.5;">Cierra esta ventana y procede a la Infografía de Repaso.</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            slideNumber: 'h/v',
+            center: true,
+            width: 1200,
+            height: 800,
+            margin: 0.05,
+            minScale: 0.2,
+            maxScale: 2.0
+        });
+    </script>
+</body>
+</html>
