@@ -3,166 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Infographic: English Modal Verbs</title>
+    <title>Ultimate Infographic: English Modal Verbs Mastery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2563eb;
             --secondary: #0f172a;
             --accent: #fbbf24;
-            --success: #22c55e;
+            --success: #10b981;
             --danger: #ef4444;
-            --purple: #a855f7;
+            --purple: #8b5cf6;
             --light: #f8fafc;
             --dark: #1e293b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f1f5f9;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #e2e8f0;
             color: var(--secondary);
-            line-height: 1.6;
             padding: 20px;
         }
 
         .infographic {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.1);
-            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border-radius: 30px;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* Header */
+        /* HEADER */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e1e2e 100%);
             color: white;
-            padding: 60px 40px;
+            padding: 80px 40px;
             text-align: center;
             position: relative;
         }
-        header h1 { font-size: 3.5rem; margin-bottom: 10px; letter-spacing: -1px; }
-        header p { font-size: 1.2rem; opacity: 0.9; font-weight: 300; }
-        header .badge {
+        header h1 { font-size: 4rem; font-weight: 900; letter-spacing: -2px; }
+        header p { font-size: 1.4rem; opacity: 0.8; font-weight: 300; margin-top: 10px; }
+        
+        /* RULES RIBBON */
+        .rules-bar {
             background: var(--accent);
-            color: var(--secondary);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        /* Golden Rules Section */
-        .golden-rules {
             display: flex;
             justify-content: space-around;
-            background: var(--accent);
-            padding: 20px;
+            padding: 25px;
+            font-weight: 700;
             color: var(--secondary);
-            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
             flex-wrap: wrap;
         }
-        .rule { display: flex; align-items: center; gap: 10px; padding: 10px; }
-        .rule i { font-size: 1.2rem; }
+        .rule-item { display: flex; align-items: center; gap: 10px; }
 
-        /* Main Grid */
-        .content {
-            padding: 40px;
+        /* GRID CONTENT */
+        .main-grid {
+            padding: 50px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
         }
 
-        /* Card Style */
-        .card {
+        .section-box {
             background: var(--light);
-            border-radius: 15px;
-            padding: 25px;
-            border-top: 6px solid var(--primary);
-            transition: transform 0.3s ease;
+            border-radius: 25px;
+            padding: 35px;
+            position: relative;
+            border-left: 10px solid var(--primary);
         }
-        .card:hover { transform: translateY(-5px); }
-        .card h2 { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-            margin-bottom: 15px; 
-            font-size: 1.4rem; 
-            color: var(--primary);
+        .section-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--secondary);
         }
-        .card i { font-size: 1.8rem; }
+        .section-box i { font-size: 2rem; color: var(--primary); }
 
-        .modal-item {
+        .modal-card {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border-left: 4px solid #cbd5e1;
-        }
-        .modal-item strong { color: var(--secondary); font-size: 1.1rem; }
-        .example { font-style: italic; color: #64748b; font-size: 0.9rem; margin-top: 5px; }
-        
-        /* Color Overrides */
-        .ability { border-top-color: var(--primary); }
-        .ability h2 { color: var(--primary); }
-        .advice { border-top-color: var(--success); }
-        .advice h2 { color: var(--success); }
-        .obligation { border-top-color: var(--danger); }
-        .obligation h2 { color: var(--danger); }
-        .deduction { border-top-color: var(--purple); }
-        .deduction h2 { color: var(--purple); }
-
-        /* Deduction Scale */
-        .scale {
-            grid-column: 1 / -1;
-            background: var(--secondary);
-            color: white;
-            padding: 30px;
             border-radius: 15px;
-            margin-top: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .modal-name { font-weight: 900; font-size: 1.2rem; color: var(--primary); display: block; margin-bottom: 5px; }
+        .modal-use { font-size: 0.85rem; color: #64748b; font-weight: 700; text-transform: uppercase; }
+        .example-list { list-style: none; margin-top: 10px; }
+        .example-list li { font-style: italic; font-size: 0.95rem; padding: 5px 0; color: #334155; border-bottom: 1px solid #f1f5f9; }
+        .example-list li:last-child { border: none; }
+
+        /* DEDUCTION SCALE */
+        .scale-section {
+            grid-column: 1 / -1;
+            background: var(--dark);
+            color: white;
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
         }
         .scale-bar {
-            height: 10px;
+            height: 15px;
             background: linear-gradient(to right, var(--danger) 0%, var(--accent) 50%, var(--success) 100%);
-            border-radius: 5px;
-            margin: 20px 0;
+            border-radius: 10px;
+            margin: 40px 0;
             position: relative;
         }
-        .scale-labels { display: flex; justify-content: space-between; font-size: 0.8rem; }
-
-        /* Past Modals */
-        .past-modals {
-            grid-column: 1 / -1;
-            background: #fdf2f2;
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px dashed var(--danger);
-        }
-        .past-grid {
+        .scale-bar::before { content: 'IMPOSSIBLE'; position: absolute; left: 0; top: -30px; font-size: 0.7rem; font-weight: 700; color: var(--danger); }
+        .scale-bar::after { content: 'CERTAIN'; position: absolute; right: 0; top: -30px; font-size: 0.7rem; font-weight: 700; color: var(--success); }
+        
+        .scale-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin-top: 15px;
         }
+        .scale-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        .scale-card strong { color: var(--accent); display: block; margin-bottom: 10px; }
 
+        /* PAST MODALS (EXTENDED) */
+        .past-section {
+            grid-column: 1 / -1;
+            background: #fff1f2;
+            padding: 50px;
+            border-radius: 25px;
+            border: 3px dashed var(--danger);
+        }
+        .past-title { color: var(--danger); font-size: 2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        .past-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        
+        /* FOOTER */
         footer {
             background: var(--secondary);
             color: white;
+            padding: 50px;
             text-align: center;
-            padding: 30px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
-        @media (max-width: 600px) {
-            header h1 { font-size: 2rem; }
-            .content { padding: 20px; }
+        /* COLORS */
+        .c-ability { border-color: var(--primary); }
+        .c-advice { border-color: var(--success); }
+        .c-obligation { border-color: var(--danger); }
+        .c-permission { border-color: var(--purple); }
+
+        @media (max-width: 900px) {
+            .main-grid, .past-grid, .scale-cards { grid-template-columns: 1fr; }
+            header h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -170,148 +161,173 @@
 
     <div class="infographic">
         <header>
-            <span class="badge">Master Class 2026</span>
             <h1>MODAL VERBS</h1>
-            <p>The Complete Visual Guide to Mastering English Auxiliaries</p>
+            <p>The Comprehensive Visual Toolkit for Language Mastery</p>
         </header>
 
-        <div class="golden-rules">
-            <div class="rule"><i class="fas fa-user-slash"></i> NO "-S" (He can)</div>
-            <div class="rule"><i class="fas fa-ban"></i> NO "TO" (Must go)</div>
-            <div class="rule"><i class="fas fa-question"></i> NO AUXILIARIES (Can you?)</div>
-            <div class="rule"><i class="fas fa-dna"></i> NO TENSE CHANGES</div>
+        <div class="rules-bar">
+            <div class="rule-item"><i class="fas fa-user-slash"></i> No -S for 3rd Person</div>
+            <div class="rule-item"><i class="fas fa-ban"></i> No "to" after (Bare Inf.)</div>
+            <div class="rule-item"><i class="fas fa-question"></i> No Auxiliaries (do/does)</div>
+            <div class="rule-item"><i class="fas fa-dna"></i> Forms never change</div>
         </div>
 
-        <div class="content">
+        <div class="main-grid">
             
-            <!-- Ability -->
-            <div class="card ability">
-                <h2><i class="fas fa-dumbbell"></i> Ability</h2>
-                <div class="modal-item">
-                    <strong>CAN</strong>
-                    <div class="example">"I can speak English fluently."</div>
+            <!-- Ability & Possibility -->
+            <div class="section-box c-ability">
+                <h2><i class="fas fa-bolt"></i> Ability & Skills</h2>
+                <div class="modal-card">
+                    <span class="modal-name">CAN / CAN'T</span>
+                    <span class="modal-use">Present General Ability</span>
+                    <ul class="example-list">
+                        <li>I <strong>can</strong> play the violin.</li>
+                        <li>She <strong>can't</strong> speak German.</li>
+                    </ul>
                 </div>
-                <div class="modal-item">
-                    <strong>COULD</strong>
-                    <div class="example">"I could swim when I was 5 years old."</div>
+                <div class="modal-card">
+                    <span class="modal-name">COULD / COULDN'T</span>
+                    <span class="modal-use">Past General Ability</span>
+                    <ul class="example-list">
+                        <li>I <strong>could</strong> run faster when I was 10.</li>
+                        <li>We <strong>couldn't</strong> find the exit.</li>
+                    </ul>
                 </div>
-                <div class="modal-item">
-                    <strong>BE ABLE TO</strong>
-                    <div class="example">"I will be able to help you tomorrow."</div>
-                </div>
-            </div>
-
-            <!-- Advice -->
-            <div class="card advice">
-                <h2><i class="fas fa-lightbulb"></i> Advice</h2>
-                <div class="modal-item">
-                    <strong>SHOULD</strong>
-                    <div class="example">"You should sleep 8 hours a day."</div>
-                </div>
-                <div class="modal-item">
-                    <strong>OUGHT TO</strong>
-                    <div class="example">"We ought to respect the environment."</div>
-                </div>
-                <div class="modal-item" style="border-left-color: var(--danger);">
-                    <strong>HAD BETTER</strong>
-                    <div class="example">"You'd better study or you'll fail!"</div>
+                <div class="modal-card">
+                    <span class="modal-name">BE ABLE TO</span>
+                    <span class="modal-use">Specific Success / Future / Perfect</span>
+                    <ul class="example-list">
+                        <li>I <strong>will be able to</strong> finish this.</li>
+                        <li>They <strong>have been able to</strong> win.</li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Obligation -->
-            <div class="card obligation">
-                <h2><i class="fas fa-exclamation-circle"></i> Obligation</h2>
-                <div class="modal-item">
-                    <strong>MUST</strong> (Internal)
-                    <div class="example">"I must stop smoking now."</div>
+            <!-- Advice & Warning -->
+            <div class="section-box c-advice">
+                <h2><i class="fas fa-lightbulb"></i> Advice & Suggestions</h2>
+                <div class="modal-card">
+                    <span class="modal-name">SHOULD / OUGHT TO</span>
+                    <span class="modal-use">Recommendation / Opinion</span>
+                    <ul class="example-list">
+                        <li>You <strong>should</strong> try the local food.</li>
+                        <li>We <strong>ought to</strong> recycle more.</li>
+                    </ul>
                 </div>
-                <div class="modal-item">
-                    <strong>HAVE TO</strong> (External)
-                    <div class="example">"We have to wear a seatbelt."</div>
-                </div>
-                <div class="modal-item" style="border-left-color: var(--danger);">
-                    <strong>MUSTN'T</strong> (Prohibition)
-                    <div class="example">"You mustn't smoke in here."</div>
-                </div>
-            </div>
-
-            <!-- Permission & Requests -->
-            <div class="card">
-                <h2><i class="fas fa-hands-helping"></i> Social</h2>
-                <div class="modal-item">
-                    <strong>MAY / MIGHT</strong> (Permission)
-                    <div class="example">"May I use your phone, please?"</div>
-                </div>
-                <div class="modal-item">
-                    <strong>WOULD</strong> (Polite Request)
-                    <div class="example">"Would you mind helping me?"</div>
-                </div>
-                <div class="modal-item">
-                    <strong>SHALL</strong> (Offer/Suggest)
-                    <div class="example">"Shall we go for a walk?"</div>
+                <div class="modal-card" style="border: 2px solid var(--danger);">
+                    <span class="modal-name" style="color:var(--danger)">HAD BETTER</span>
+                    <span class="modal-use">Strong Warning + Consequence</span>
+                    <ul class="example-list">
+                        <li>You <strong>had better</strong> study, or you will fail!</li>
+                        <li>I <strong>had better</strong> go now or I'll be late.</li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Deduction Scale -->
-            <div class="scale">
-                <h3><i class="fas fa-search"></i> Logical Deduction Scale</h3>
-                <p style="font-size: 0.8rem; opacity: 0.7;">How sure are you about something?</p>
+            <!-- Obligation & Prohibition -->
+            <div class="section-box c-obligation">
+                <h2><i class="fas fa-exclamation-triangle"></i> Obligation</h2>
+                <div class="modal-card">
+                    <span class="modal-name">MUST</span>
+                    <span class="modal-use">Internal (I decide) / Very Strong</span>
+                    <ul class="example-list">
+                        <li>I <strong>must</strong> call my parents.</li>
+                        <li>Visitors <strong>must</strong> sign in.</li>
+                    </ul>
+                </div>
+                <div class="modal-card">
+                    <span class="modal-name">HAVE TO</span>
+                    <span class="modal-use">External (Rules/Laws)</span>
+                    <ul class="example-list">
+                        <li>I <strong>have to</strong> wear a uniform at school.</li>
+                        <li>She <strong>has to</strong> work on Saturdays.</li>
+                    </ul>
+                </div>
+                <div class="modal-card" style="background: #fef2f2;">
+                    <span class="modal-name" style="color:var(--danger)">MUSTN'T</span>
+                    <span class="modal-use">Prohibition (Forbidden!)</span>
+                    <ul class="example-list">
+                        <li>You <strong>mustn't</strong> smoke in the hospital.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Social & Polite -->
+            <div class="section-box c-permission">
+                <h2><i class="fas fa-hands-helping"></i> Social Interaction</h2>
+                <div class="modal-card">
+                    <span class="modal-name">MAY / COULD / CAN</span>
+                    <span class="modal-use">Permission (Formal → Informal)</span>
+                    <ul class="example-list">
+                        <li><strong>May</strong> I come in? (Formal)</li>
+                        <li><strong>Could</strong> I use your phone? (Polite)</li>
+                    </ul>
+                </div>
+                <div class="modal-card">
+                    <span class="modal-name">WOULD YOU MIND...?</span>
+                    <span class="modal-use">Ultimate Polite Request (+ ING)</span>
+                    <ul class="example-list">
+                        <li><strong>Would you mind</strong> opening the door?</li>
+                    </ul>
+                </div>
+                <div class="modal-card">
+                    <span class="modal-name">SHALL I / WE...?</span>
+                    <span class="modal-use">Offers & Suggestions</span>
+                    <ul class="example-list">
+                        <li><strong>Shall</strong> I carry your bag?</li>
+                        <li><strong>Shall</strong> we dance?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DEDUCTION SCALE -->
+            <div class="scale-section">
+                <h2><i class="fas fa-search"></i> Logical Deduction Scale</h2>
                 <div class="scale-bar"></div>
-                <div class="scale-labels">
-                    <span><strong>CAN'T</strong> (0% No)</span>
-                    <span><strong>MIGHT/MAY</strong> (50%)</span>
-                    <span><strong>MUST</strong> (100% Yes)</span>
-                </div>
-                <div class="past-grid" style="margin-top: 20px;">
-                    <div style="font-size: 0.8rem;">"It's 40°C. It <strong>can't</strong> be snowing."</div>
-                    <div style="font-size: 0.8rem;">"The phone is ringing. It <strong>might</strong> be John."</div>
-                    <div style="font-size: 0.8rem;">"He has 10 cars. He <strong>must</strong> be rich."</div>
+                <div class="scale-cards">
+                    <div class="scale-card">
+                        <strong>CAN'T</strong>
+                        <p style="font-size: 0.8rem;">99% Sure NO.<br>"It <strong>can't</strong> be him; he is in Tokyo."</p>
+                    </div>
+                    <div class="scale-card">
+                        <strong>MAY / MIGHT / COULD</strong>
+                        <p style="font-size: 0.8rem;">50% Possibility.<br>"It <strong>might</strong> rain later today."</p>
+                    </div>
+                    <div class="scale-card">
+                        <strong>MUST</strong>
+                        <p style="font-size: 0.8rem;">99% Sure YES.<br>"He has a Ferrari; he <strong>must</strong> be rich."</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Past Modals -->
-            <div class="past-modals">
-                <h3><i class="fas fa-clock-rotate-left"></i> Past Modals (Modal + Have + V3)</h3>
-                <p style="font-size: 0.85rem; color: #b91c1c;">Used for regrets, deductions, or criticisms about the past.</p>
+            <!-- PAST MODALS -->
+            <div class="past-section">
+                <div class="past-title"><i class="fas fa-clock-rotate-left"></i> Past Modals (Modal + Have + V3)</div>
                 <div class="past-grid">
-                    <div class="modal-item">
+                    <div class="modal-card">
                         <strong>SHOULD HAVE</strong>
-                        <div class="example">"I should have studied more." (Regret)</div>
+                        <p style="font-size: 0.75rem;">Regret or criticism.<br>"I <strong>should have</strong> studied."</p>
                     </div>
-                    <div class="modal-item">
+                    <div class="modal-card">
                         <strong>MUST HAVE</strong>
-                        <div class="example">"He must have forgotten." (Logic)</div>
+                        <p style="font-size: 0.75rem;">Past Logic.<br>"He <strong>must have</strong> forgotten."</p>
                     </div>
-                    <div class="modal-item">
+                    <div class="modal-card">
                         <strong>COULD HAVE</strong>
-                        <div class="example">"You could have won!" (Possibility)</div>
+                        <p style="font-size: 0.75rem;">Possible but not done.<br>"I <strong>could have</strong> won."</p>
                     </div>
-                    <div class="modal-item">
+                    <div class="modal-card">
                         <strong>NEEDN'T HAVE</strong>
-                        <div class="example">"You needn't have cooked." (Wasted effort)</div>
+                        <p style="font-size: 0.75rem;">Unnecessary action.<br>"You <strong>needn't have</strong> cooked."</p>
                     </div>
-                </div>
-            </div>
-
-            <!-- Necessity -->
-            <div class="card" style="border-top-color: var(--purple);">
-                <h2><i class="fas fa-shuffle"></i> The Necessity Swap</h2>
-                <div class="modal-item">
-                    <strong>DON'T HAVE TO</strong>
-                    <div class="example">"It's free. You don't have to pay." (Optional)</div>
-                </div>
-                <div class="modal-item">
-                    <strong>USED TO vs WOULD</strong>
-                    <div class="example">"I <strong>used to</strong> live here." (Habit/State)</div>
-                    <div class="example">"We <strong>would</strong> play every day." (Action)</div>
                 </div>
             </div>
 
         </div>
 
         <footer>
-            <p>&copy; 2026 English Grammar Masterclass - Educational Material</p>
-            <p style="font-size: 0.7rem; opacity: 0.5; margin-top: 10px;">Created for English Language Learners</p>
+            <p>English Grammar Masterclass &copy; 2026</p>
+            <p style="opacity: 0.5; margin-top: 10px;">The definitive visual guide for students and educators.</p>
         </footer>
     </div>
 

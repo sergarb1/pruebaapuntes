@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMO: Modal Verbs Mastery - Spanish Student Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e293b;
+            --accent: #fbbf24;
+            --success: #22c55e;
+            --bg: #f1f5f9;
+            --card-bg: #ffffff;
+        }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--secondary); margin: 0; padding: 0; }
+        .hero { 
+            background: linear-gradient(135deg, var(--secondary) 0%, #0f172a 100%);
+            color: white; padding: 60px 20px; text-align: center; border-bottom: 8px solid var(--accent);
+        }
+        .hero h1 { font-size: 3rem; margin: 0; font-weight: 800; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 20px auto; }
+        
+        .container { max-width: 1000px; margin: -40px auto 40px; padding: 0 20px; }
+        
+        .pmo-card { 
+            background: var(--card-bg); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            padding: 40px; margin-bottom: 30px;
+        }
+
+        .lang-switch { 
+            background: #fef3c7; border: 1px solid #fcd34d; padding: 15px; border-radius: 12px; 
+            margin-bottom: 30px; display: flex; align-items: center; gap: 15px; color: #92400e; font-size: 0.9rem;
+        }
+
+        .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; }
+        
+        .phase-box { 
+            border: 2px solid #e2e8f0; border-radius: 20px; padding: 25px; position: relative;
+            transition: all 0.3s ease;
+        }
+        .phase-box:hover { border-color: var(--primary); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1); }
+        .phase-num { 
+            position: absolute; top: -15px; left: 20px; background: var(--primary); color: white;
+            width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 0.8rem;
+        }
+
+        .phase-title { font-size: 1.4rem; font-weight: 600; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .phase-title i { color: var(--primary); }
+
+        .es-note { font-size: 0.8rem; color: #64748b; font-style: italic; margin-bottom: 15px; display: block; }
+        .es-note b { color: var(--primary); }
+
+        .resource-btn {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 20px; border-radius: 12px;
+            text-decoration: none; color: var(--secondary); font-weight: 600; margin-top: 10px;
+            transition: all 0.2s;
+        }
+        .resource-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .checkpoint { 
+            margin-top: 20px; padding: 15px; background: #f0fdf4; border-radius: 10px; 
+            border-left: 5px solid var(--success); font-size: 0.85rem;
+        }
+
+        footer { text-align: center; padding: 40px; color: #94a3b8; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Mastering Modal Verbs</h1>
+    <p>La hoja de ruta definitiva para que los estudiantes españoles dominen los verbos modales de una vez por todas.</p>
+</div>
+
+<div class="container">
+    <div class="pmo-card">
+        <div class="lang-switch">
+            <i class="fas fa-language" style="font-size: 1.5rem;"></i>
+            <div>
+                <strong>Guía para el Alumno:</strong> Sigue este orden para aprender. Hemos incluido pequeñas notas en castellano para que no te pierdas en los conceptos más complejos.
+            </div>
+        </div>
+
+        <div class="phase-grid">
+            
+            <!-- STEP 1 -->
+            <div class="phase-box">
+                <div class="phase-num">1</div>
+                <div class="phase-title"><i class="fas fa-book-open"></i> Concept & Rules</div>
+                <span class="es-note"><b>Español:</b> Empieza aquí para entender las 4 reglas de oro (No llevan -s, no llevan "to", etc.)</span>
+                <p style="font-size: 0.9rem;">Watch the presentation and focus on the visual icons.</p>
+                <a href="english_modal_verbs_linear.html" class="resource-btn">
+                    <span>Interactive Slides</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <div class="checkpoint">
+                    <strong>Reto:</strong> ¿Puedes decir las 4 reglas de oro sin mirar?
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="phase-box">
+                <div class="phase-num">2</div>
+                <div class="phase-title"><i class="fas fa-map"></i> Visual Mapping</div>
+                <span class="es-note"><b>Español:</b> Usa la infografía para ver la "escala de certeza" (de Can't a Must).</span>
+                <p style="font-size: 0.9rem;">Study the relationships between obligation and advice.</p>
+                <a href="infografia_modal_verbs.html" class="resource-btn">
+                    <span>Expert Infographic</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="phase-box">
+                <div class="phase-num">3</div>
+                <div class="phase-title"><i class="fas fa-headphones"></i> Listen & Learn</div>
+                <span class="es-note"><b>Español:</b> Escucha el podcast (5 min). Sarah y Mark explican matices como "Must" vs "Have to".</span>
+                <p style="font-size: 0.9rem;">The best way to understand natural rhythm and intonation.</p>
+                <a href="modal_verbs_kokoro_podcast_long.mp3" class="resource-btn">
+                    <span>Listen Pro Podcast (MP3)</span>
+                    <i class="fas fa-play-circle"></i>
+                </a>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="phase-box">
+                <div class="phase-num">4</div>
+                <div class="phase-title"><i class="fas fa-gamepad"></i> Practice Mode</div>
+                <span class="es-note"><b>Español:</b> Ponte a prueba con el juego. ¡Ahora con 60+ frases diferentes!</span>
+                <p style="font-size: 0.9rem;">Test your speed. If you fail, the game tells you the correct answer.</p>
+                <a href="modal_quest.html" class="resource-btn">
+                    <span>Launch Game Challenge</span>
+                    <i class="fas fa-rocket"></i>
+                </a>
+                <div class="checkpoint" style="background: #fef2f2; border-left-color: #ef4444; color: #991b1b;">
+                    <strong>Meta:</strong> Consigue 5.000 puntos para ser un "Modal Expert".
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    Project Management Office for English Learners &copy; 2026<br>
+    Designed for professional classroom environments.
+</footer>
+
+</body>
+</html>
