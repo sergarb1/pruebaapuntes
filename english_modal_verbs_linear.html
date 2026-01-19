@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Mastering Modal Verbs - The Masterclass Edition</title>
+    <title>Mastering Modal Verbs - The Ultimate Masterclass</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
@@ -23,356 +23,523 @@
             --glass: rgba(255, 255, 255, 0.08);
         }
         .reveal { background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); }
-        .reveal h1 { font-weight: 900; letter-spacing: -3px; color: var(--gold); text-shadow: 0 0 40px rgba(255, 204, 0, 0.4); font-size: 3.5em; }
+        .reveal h1 { font-weight: 900; letter-spacing: -3px; color: var(--gold); text-shadow: 0 0 40px rgba(255, 204, 0, 0.4); font-size: 3.2em; }
         .reveal h2 { color: var(--blue); }
-        .reveal h3 { color: var(--gold); text-transform: none; font-size: 1.8em; margin-bottom: 30px; }
+        .reveal h3 { color: var(--gold); text-transform: none; font-size: 1.6em; margin-bottom: 20px; }
         
         .card {
             background: var(--glass);
             backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 18px;
             border: 1px solid rgba(255,255,255,0.1);
             margin: 5px;
             text-align: left;
             transition: transform 0.3s ease;
         }
         .card:hover { transform: translateY(-5px); border-color: var(--blue); }
+        .card h4 { font-size: 0.9em; margin-bottom: 8px; color: var(--blue); text-transform: uppercase; }
+        .card p { font-size: 0.65em; margin-bottom: 8px; line-height: 1.4; }
         
-        .card h4 { font-size: 1em; margin-bottom: 10px; color: var(--blue); }
-        .card p { font-size: 0.7em; margin-bottom: 10px; line-height: 1.4; }
-        
-        .icon-box {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-            display: inline-block;
-            color: var(--gold);
-        }
+        .icon-box { font-size: 1.6em; margin-bottom: 8px; display: inline-block; color: var(--gold); }
         
         .example-block {
-            margin-top: 10px;
-            font-size: 0.65em;
+            margin-top: 8px;
+            font-size: 0.6em;
             border-left: 3px solid var(--green);
             padding-left: 10px;
             background: rgba(255,255,255,0.03);
             border-radius: 0 8px 8px 0;
-            padding: 8px 12px;
+            padding: 6px 10px;
             font-style: italic;
         }
         .example-block strong { color: var(--gold); }
         
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 1000px; margin: 0 auto; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; max-width: 1050px; margin: 0 auto; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 1000px; margin: 0 auto; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; max-width: 1050px; margin: 0 auto; }
 
         .tag {
-            font-size: 0.5em;
-            padding: 4px 10px;
-            border-radius: 6px;
+            font-size: 0.45em;
+            padding: 3px 8px;
+            border-radius: 5px;
             background: var(--blue);
             color: #000;
             font-weight: bold;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: inline-block;
         }
 
         .mistake { color: var(--red); text-decoration: line-through; opacity: 0.7; }
         .correct { color: var(--green); font-weight: bold; }
 
-        /* Deduction Bar Style */
-        .bar-container { display: flex; align-items: flex-end; justify-content: center; gap: 40px; height: 250px; margin-top: 20px; }
-        .bar { width: 60px; border-radius: 8px 8px 0 0; position: relative; }
-        .bar::after { content: attr(data-label); position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 0.5em; white-space: nowrap; color: #fff; }
+        .bar-container { display: flex; align-items: flex-end; justify-content: center; gap: 40px; height: 200px; margin-top: 15px; }
+        .bar { width: 50px; border-radius: 6px 6px 0 0; position: relative; }
+        .bar::after { content: attr(data-label); position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 0.45em; white-space: nowrap; color: #fff; }
 
-        /* Custom Table */
-        table { font-size: 0.6em; width: 100%; border-collapse: collapse; }
-        th, td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        table { font-size: 0.55em; width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
         th { color: var(--gold); font-weight: 800; }
+
+        .scenario { background: rgba(77, 166, 255, 0.1); padding: 15px; border-radius: 12px; border-left: 5px solid var(--blue); margin: 10px 0; font-size: 0.7em; text-align: left; }
+        
+        .quiz-option {
+            padding: 10px;
+            margin: 5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 0.8em;
+            text-align: left;
+        }
+        .quiz-option:hover { background: var(--blue); }
     </style>
 </head>
 <body>
     <div class="reveal">
         <div class="slides">
 
-            <!-- 1. TITLE SLIDE -->
+            <!-- SLIDE 1: INTRO -->
             <section data-background-color="#020617">
-                <div class="animate__animated animate__zoomIn">
-                    <i class="fas fa-graduation-cap" style="font-size: 4em; color: var(--gold); margin-bottom: 20px;"></i>
-                    <h1>The Mastery of<br>Modal Verbs</h1>
-                    <p style="opacity: 0.8; font-size: 1.2em;">The Definitive Masterclass 2026</p>
-                    <div style="margin-top: 50px;">
-                        <span class="tag" style="background:var(--blue)">Essential</span>
-                        <span class="tag" style="background:var(--purple)">Advanced</span>
-                        <span class="tag" style="background:var(--orange)">Past Modals</span>
+                <div class="animate__animated animate__fadeIn">
+                    <i class="fas fa-crown" style="font-size: 3.5em; color: var(--gold); margin-bottom: 20px;"></i>
+                    <h1>The Ultimate<br>Modal Masterclass</h1>
+                    <p style="opacity: 0.8; font-size: 1.1em;">Everything from "Can" to "Needn't have"</p>
+                    <div style="margin-top: 40px;">
+                        <span class="tag">Basic</span>
+                        <span class="tag" style="background:var(--purple)">Intermediate</span>
+                        <span class="tag" style="background:var(--orange)">Expert</span>
                     </div>
                 </div>
             </section>
 
-            <!-- 2. INTRODUCTION: WHAT ARE THEY? -->
+            <!-- SECTION 1: FOUNDATIONS -->
             <section>
-                <h3><i class="fas fa-circle-question"></i> What are Modal Verbs?</h3>
-                <div class="card fragment">
-                    <p style="font-size: 1em;">Modal verbs are "helper" verbs that express <strong>modality</strong>. They don't describe a physical action, but the <strong>attitude</strong> or <strong>condition</strong> of that action.</p>
-                </div>
-                <div class="grid-3" style="margin-top: 30px;">
-                    <div class="card fragment" style="border-top: 4px solid var(--green);">
-                        <i class="fas fa-brain icon-box"></i>
-                        <h4>Logic</h4>
-                        <p>Deduction & Certainty</p>
+                <section>
+                    <h2>Part 1: The Foundations</h2>
+                    <p>Understanding what makes Modal Verbs unique.</p>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-question-circle"></i> Defining Modals</h3>
+                    <div class="card">
+                        <p style="font-size: 0.9em;">Modals don't describe <strong>what</strong> happens, but <strong>how</strong> the speaker feels about it.</p>
                     </div>
-                    <div class="card fragment" style="border-top: 4px solid var(--blue);">
-                        <i class="fas fa-hand-holding icon-box"></i>
-                        <h4>Social</h4>
-                        <p>Permission & Requests</p>
+                    <div class="grid-2" style="margin-top: 20px;">
+                        <div class="card fragment">
+                            <h4>Subjective Mood</h4>
+                            <p>They express possibility, obligation, permission, or ability.</p>
+                        </div>
+                        <div class="card fragment">
+                            <h4>Action vs. Attitude</h4>
+                            <p>"I walk" (Fact) vs. "I <strong>should</strong> walk" (Advice/Attitude).</p>
+                        </div>
                     </div>
-                    <div class="card fragment" style="border-top: 4px solid var(--red);">
-                        <i class="fas fa-shield icon-box"></i>
-                        <h4>Control</h4>
-                        <p>Obligation & Advice</p>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-star"></i> The 4 Golden Rules</h3>
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <i class="fas fa-user-slash icon-box"></i>
+                            <h4>1. No -S for He/She</h4>
+                            <div class="example-block">
+                                She <del>musts</del> → <strong>She must</strong><br>
+                                He <del>cans</del> → <strong>He can</strong>
+                            </div>
+                        </div>
+                        <div class="card fragment">
+                            <i class="fas fa-link-slash icon-box"></i>
+                            <h4>2. No "TO" after</h4>
+                            <div class="example-block">
+                                I must <del>to</del> study → <strong>I must study</strong><br>
+                                <span style="font-size: 0.8em;">(Except 'ought to')</span>
+                            </div>
+                        </div>
+                        <div class="card fragment">
+                            <i class="fas fa-rotate icon-box"></i>
+                            <h4>3. Inversion for Questions</h4>
+                            <div class="example-block">
+                                <del>Do you can?</del> → <strong>Can you?</strong><br>
+                                <del>Does he must?</del> → <strong>Must he?</strong>
+                            </div>
+                        </div>
+                        <div class="card fragment">
+                            <i class="fas fa-dna icon-box"></i>
+                            <h4>4. No Continuous/Perfect</h4>
+                            <div class="example-block">
+                                <del>I am musting</del> ❌<br>
+                                <del>I have could</del> ❌
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </section>
             </section>
 
-            <!-- 3. THE 4 GOLDEN RULES -->
+            <!-- SECTION 2: ABILITY -->
             <section>
-                <h3><i class="fas fa-crown"></i> The 4 Golden Rules</h3>
-                <div class="grid-2">
-                    <div class="card fragment">
-                        <i class="fas fa-user-times icon-box" style="color:var(--red)"></i>
-                        <h4>Immutable Forms</h4>
-                        <p>They never change. No -s, -ed, or -ing.</p>
-                        <div class="example-block"><span class="mistake">He cans</span> → <span class="correct">He can</span></div>
+                <section>
+                    <h2>Part 2: Ability & Possibility</h2>
+                    <p>Can, Could, and Be able to.</p>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-bolt"></i> Present Ability: CAN</h3>
+                    <div class="card">
+                        <p>Use <strong>CAN</strong> for general skills and abilities in the present.</p>
                     </div>
-                    <div class="card fragment">
-                        <i class="fas fa-link-slash icon-box" style="color:var(--blue)"></i>
-                        <h4>The Bare Infinitive</h4>
-                        <p>No "to" (except <em>ought to</em>).</p>
-                        <div class="example-block"><span class="mistake">I must to study</span> → <span class="correct">I must study</span></div>
+                    <div class="grid-2 fragment">
+                        <div class="example-block">
+                            - I <strong>can</strong> speak English fluently.<br>
+                            - My sister <strong>can</strong> play the piano.
+                        </div>
+                        <div class="example-block">
+                            - <strong>Can</strong> you swim 100 meters?<br>
+                            - They <strong>can't</strong> hear you.
+                        </div>
                     </div>
-                    <div class="card fragment">
-                        <i class="fas fa-shuffle icon-box" style="color:var(--gold)"></i>
-                        <h4>Direct Questions</h4>
-                        <p>No 'do' or 'does'. Just swap.</p>
-                        <div class="example-block"><span class="mistake">Do you can?</span> → <span class="correct">Can you?</span></div>
+                    <div class="scenario fragment">
+                        <i class="fas fa-lightbulb"></i> <strong>Note:</strong> We also use CAN for informal requests.
                     </div>
-                    <div class="card fragment">
-                        <i class="fas fa-minus-circle icon-box" style="color:var(--purple)"></i>
-                        <h4>Direct Negatives</h4>
-                        <p>Just add 'not' after the modal.</p>
-                        <div class="example-block"><span class="correct">I cannot (can't) go.</span></div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-history"></i> Past Ability: COULD</h3>
+                    <div class="card">
+                        <p>Use <strong>COULD</strong> for general skills in the past.</p>
                     </div>
-                </div>
+                    <div class="grid-2 fragment">
+                        <div class="example-block">
+                            - I <strong>could</strong> run fast when I was 10.<br>
+                            - My grandfather <strong>could</strong> speak 5 languages.
+                        </div>
+                        <div class="example-block">
+                            - <strong>Could</strong> you walk when you were one?<br>
+                            - We <strong>couldn't</strong> find the keys.
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-trophy"></i> The "Specific Success"</h3>
+                    <div class="card">
+                        <p>For a <strong>specific occasion</strong> in the past where you succeeded, use <strong>"was/were able to"</strong> instead of <em>could</em>.</p>
+                    </div>
+                    <div class="grid-2 fragment">
+                        <div class="card" style="border-top: 4px solid var(--red);">
+                            <h4>General (Could)</h4>
+                            <div class="example-block">"I <strong>could</strong> swim." (I had the skill in my childhood).</div>
+                        </div>
+                        <div class="card" style="border-top: 4px solid var(--green);">
+                            <h4>Specific (Able to)</h4>
+                            <div class="example-block">"The car broke down, but I <strong>was able to</strong> fix it." (One-time success).</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-vial"></i> Quick Check: Ability</h3>
+                    <p>Which is correct?</p>
+                    <div class="quiz-option fragment">A. I could win the race yesterday although I was tired.</div>
+                    <div class="quiz-option fragment">B. I was able to win the race yesterday although I was tired. ✅</div>
+                    <div class="scenario fragment">
+                        <strong>Explanation:</strong> Winning a specific race is a one-time success, so "was able to" is better than "could".
+                    </div>
+                </section>
             </section>
 
-            <!-- 4. ABILITY & POSSIBILITY -->
+            <!-- SECTION 3: PERMISSION & SOCIAL -->
             <section>
-                <h3><i class="fas fa-bolt"></i> Ability & Possibility</h3>
-                <div class="grid-3">
-                    <div class="card fragment">
-                        <span class="tag">General</span>
-                        <h4>Can</h4>
-                        <div class="example-block">"I <strong>can</strong> swim."</div>
+                <section>
+                    <h2>Part 3: Social English</h2>
+                    <p>Permission, Requests, and Suggestions.</p>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-hand-holding-hand"></i> The Permission Scale</h3>
+                    <div class="premium-card card">
+                        <div class="grid-3">
+                            <div style="text-align: center;">
+                                <i class="fas fa-comments" style="color:var(--green); font-size: 2em;"></i>
+                                <p style="font-size: 0.6em;"><strong>Can I?</strong><br>Informal<br>(Friends)</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <i class="fas fa-user-group" style="color:var(--blue); font-size: 2em;"></i>
+                                <p style="font-size: 0.6em;"><strong>Could I?</strong><br>Polite<br>(Strangers)</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <i class="fas fa-user-tie" style="color:var(--gold); font-size: 2em;"></i>
+                                <p style="font-size: 0.6em;"><strong>May I?</strong><br>Formal<br>(Authority)</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card fragment">
-                        <span class="tag">Past</span>
-                        <h4>Could</h4>
-                        <div class="example-block">"I <strong>could</strong> run fast."</div>
+                    <div class="example-block fragment" style="margin-top: 20px;">
+                        - "<strong>Can</strong> I use your charger, mate?"<br>
+                        - "<strong>Could</strong> I borrow your umbrella for a second?"<br>
+                        - "<strong>May</strong> I see your passport, please?"
                     </div>
-                    <div class="card fragment">
-                        <span class="tag">Specific</span>
-                        <h4>Be able to</h4>
-                        <div class="example-block">"I <strong>will be able to</strong> fix it."</div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-star"></i> Very Polite Requests</h3>
+                    <div class="card">
+                        <p><strong>Would you mind...?</strong> is the ultimate weapon of politeness.</p>
                     </div>
-                </div>
-                <div class="card fragment" style="margin-top: 20px; font-size: 0.6em; border-left: 5px solid var(--orange);">
-                    <i class="fas fa-triangle-exclamation" style="color:var(--orange)"></i> <strong>Key Nuance:</strong> Use "was able to" for specific past achievements. "I was able to find the keys" (not <em>could</em>).
-                </div>
+                    <div class="example-block fragment">
+                        - "<strong>Would you mind</strong> closing the window?"<br>
+                        - "<strong>Would you mind</strong> helping me with these bags?"
+                    </div>
+                    <div class="scenario fragment" style="background: rgba(255, 121, 198, 0.1); border-left-color: var(--purple);">
+                        <i class="fas fa-circle-info"></i> <strong>Grammar Alert:</strong> Always use <strong>-ING</strong> after "Would you mind".
+                    </div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-wine-glass"></i> Shall I / We...?</h3>
+                    <div class="card">
+                        <p>Use <strong>SHALL</strong> for offers and suggestions (only with <em>I</em> and <em>We</em>).</p>
+                    </div>
+                    <div class="grid-2 fragment">
+                        <div class="card">
+                            <h4>Offers</h4>
+                            <div class="example-block">"<strong>Shall</strong> I carry your suitcase?"</div>
+                        </div>
+                        <div class="card">
+                            <h4>Suggestions</h4>
+                            <div class="example-block">"<strong>Shall</strong> we dance?"</div>
+                        </div>
+                    </div>
+                </section>
             </section>
 
-            <!-- 5. ADVICE & RECOMMENDATION -->
+            <!-- SECTION 4: ADVICE & OBLIGATION -->
             <section>
-                <h3><i class="fas fa-lightbulb"></i> Advice & Suggestions</h3>
-                <div class="grid-3">
-                    <div class="card fragment">
-                        <h4>Should</h4>
-                        <p>Opinion / General recommendation.</p>
-                        <div class="example-block">"You <strong>should</strong> study."</div>
+                <section>
+                    <h2>Part 4: Advice & Obligation</h2>
+                    <p>Should, Must, Have to, and Need to.</p>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-lightbulb"></i> Giving Advice</h3>
+                    <div class="grid-3">
+                        <div class="card fragment">
+                            <h4>Should</h4>
+                            <p>Opinion / Recommendation.</p>
+                            <div class="example-block">"You <strong>should</strong> study more."</div>
+                        </div>
+                        <div class="card fragment">
+                            <h4>Ought to</h4>
+                            <p>Moral duty / Formal.</p>
+                            <div class="example-block">"We <strong>ought to</strong> help the poor."</div>
+                        </div>
+                        <div class="card fragment" style="border: 2px solid var(--red);">
+                            <h4>Had Better</h4>
+                            <p>Strong warning.</p>
+                            <div class="example-block">"You <strong>had better</strong> stop that!"</div>
+                        </div>
                     </div>
-                    <div class="card fragment">
-                        <h4>Ought to</h4>
-                        <p>Moral duty / Formal advice.</p>
-                        <div class="example-block">"We <strong>ought to</strong> help."</div>
+                    <div class="scenario fragment">
+                        - "You <strong>should</strong> wear a coat." (Suggestion)<br>
+                        - "You <strong>had better</strong> wear a coat, or you'll get sick." (Warning)
                     </div>
-                    <div class="card fragment" style="border: 2px solid var(--red);">
-                        <h4>Had Better</h4>
-                        <p>Strong warning with consequences.</p>
-                        <div class="example-block">"You <strong>had better</strong> stop!"</div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-gavel"></i> Obligation Scenarios</h3>
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h4 style="color:var(--gold)">Must (Internal)</h4>
+                            <p>Personal decision / Authority.</p>
+                            <div class="example-block">"I <strong>must</strong> stop smoking." (I feel it's right).</div>
+                        </div>
+                        <div class="card fragment">
+                            <h4 style="color:var(--blue)">Have to (External)</h4>
+                            <p>Rules / Laws / Jobs.</p>
+                            <div class="example-block">"I <strong>have to</strong> wear a tie." (The company rules).</div>
+                        </div>
                     </div>
-                </div>
+                    <div class="scenario fragment">
+                        <i class="fas fa-circle-question"></i> <strong>Tip:</strong> In everyday English, people often use "have to" for both.
+                    </div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-ban"></i> The Danger Zone</h3>
+                    <div class="grid-2">
+                        <div class="card fragment" style="border-top: 5px solid var(--red);">
+                            <h4 style="color:var(--red)">Mustn't</h4>
+                            <p><strong>Forbidden.</strong> Prohibition.</p>
+                            <div class="example-block">
+                                - You <strong>mustn't</strong> park here.<br>
+                                - You <strong>mustn't</strong> tell anyone!
+                            </div>
+                        </div>
+                        <div class="card fragment" style="border-top: 5px solid var(--green);">
+                            <h4 style="color:var(--green)">Don't have to</h4>
+                            <p><strong>Optional.</strong> No necessity.</p>
+                            <div class="example-block">
+                                - You <strong>don't have to</strong> pay now.<br>
+                                - You <strong>don't have to</strong> come.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scenario fragment" style="background: rgba(239, 68, 68, 0.1); border-left-color: var(--red);">
+                        <strong>CRITICAL:</strong> "Mustn't" means NO. "Don't have to" means MAYBE.
+                    </div>
+                </section>
             </section>
 
-            <!-- 6. OBLIGATION: MUST VS HAVE TO -->
+            <!-- SECTION 5: DEDUCTION -->
             <section>
-                <h3><i class="fas fa-handcuffs"></i> Obligation</h3>
-                <div class="grid-2">
-                    <div class="card fragment">
-                        <i class="fas fa-heart-pulse icon-box" style="color:var(--red)"></i>
-                        <h4>Must (Internal)</h4>
-                        <p>The speaker feels it's necessary.</p>
-                        <div class="example-block">"I <strong>must</strong> call my mom."</div>
+                <section>
+                    <h2>Part 5: Logic & Deduction</h2>
+                    <p>Must, Can't, and Might.</p>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-magnifying-glass"></i> Logical Deduction</h3>
+                    <div class="bar-container">
+                        <div class="bar fragment" style="height: 180px; background: var(--green);" data-label="MUST (95%)"></div>
+                        <div class="bar fragment" style="height: 100px; background: var(--gold);" data-label="MIGHT (50%)"></div>
+                        <div class="bar fragment" style="height: 180px; background: var(--red);" data-label="CAN'T (0%)"></div>
                     </div>
-                    <div class="card fragment">
-                        <i class="fas fa-scale-balanced icon-box" style="color:var(--blue)"></i>
-                        <h4>Have to (External)</h4>
-                        <p>Rules, laws, or circumstances.</p>
-                        <div class="example-block">"I <strong>have to</strong> wear a uniform."</div>
+                    <div class="grid-3" style="margin-top: 30px; font-size: 0.5em;">
+                        <div class="card">"He has 10 cars. He <strong>must</strong> be rich."</div>
+                        <div class="card">"The phone is ringing. It <strong>might</strong> be John."</div>
+                        <div class="card">"It's 40°C. It <strong>can't</strong> be snowing."</div>
                     </div>
-                </div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-vial"></i> Quick Check: Deduction</h3>
+                    <p>"Look at those dark clouds. It ________ rain."</p>
+                    <div class="quiz-option fragment">A. must</div>
+                    <div class="quiz-option fragment">B. might ✅</div>
+                    <div class="quiz-option fragment">C. can't</div>
+                    <div class="scenario fragment">
+                        <strong>Explanation:</strong> Clouds make it possible/likely, but not 100% certain.
+                    </div>
+                </section>
             </section>
 
-            <!-- 7. THE BIG CONFUSION: MUSTN'T VS DON'T HAVE TO -->
-            <section data-background-color="#1e1e2e">
-                <h3><i class="fas fa-ban"></i> Prohibition vs Optional</h3>
-                <div class="grid-2">
-                    <div class="card fragment" style="border-top: 6px solid var(--red);">
-                        <h4 style="color:var(--red)">Mustn't</h4>
-                        <span class="tag" style="background:var(--red)">Prohibition</span>
-                        <p>It's forbidden. Illegal. Don't do it!</p>
-                        <div class="example-block">"You <strong>mustn't</strong> smoke here."</div>
-                    </div>
-                    <div class="card fragment" style="border-top: 6px solid var(--green);">
-                        <h4 style="color:var(--green)">Don't have to</h4>
-                        <span class="tag" style="background:var(--green)">Lack of Necessity</span>
-                        <p>It's not necessary. You can if you want.</p>
-                        <div class="example-block">"You <strong>don't have to</strong> pay now."</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 8. LOGICAL DEDUCTION SCALE -->
+            <!-- SECTION 6: ADVANCED (PAST MODALS) -->
             <section>
-                <h3><i class="fas fa-magnifying-glass"></i> Logical Deduction</h3>
-                <div class="bar-container">
-                    <div class="bar fragment" style="height: 250px; background: var(--green);" data-label="MUST (99%)"></div>
-                    <div class="bar fragment" style="height: 120px; background: var(--gold);" data-label="MIGHT (50%)"></div>
-                    <div class="bar fragment" style="height: 250px; background: var(--red);" data-label="CAN'T (0%)"></div>
-                </div>
-                <div class="grid-3" style="margin-top: 50px; font-size: 0.5em;">
-                    <div class="card">"He has 5 cars. He <strong>must</strong> be rich."</div>
-                    <div class="card">"The phone is ringing. It <strong>might</strong> be John."</div>
-                    <div class="card">"It's 40°C. It <strong>can't</strong> be snowing."</div>
-                </div>
+                <section>
+                    <h2>Part 6: Expert Modals</h2>
+                    <p>Past Modals and Nuances.</p>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-clock-rotate-left"></i> The Past Modals</h3>
+                    <p style="font-size: 0.8em; color:var(--gold);">Structure: Modal + Have + Past Participle (V3)</p>
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h4>Should have + V3</h4>
+                            <p>Regret or past criticism.</p>
+                            <div class="example-block">"I <strong>should have</strong> studied!"</div>
+                        </div>
+                        <div class="card fragment">
+                            <h4>Must have + V3</h4>
+                            <p>Logic about the past.</p>
+                            <div class="example-block">"He <strong>must have</strong> forgotten."</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-clock-rotate-left"></i> The Past Modals (Cont.)</h3>
+                    <div class="grid-2">
+                        <div class="card fragment">
+                            <h4>Could have + V3</h4>
+                            <p>Opportunity not taken.</p>
+                            <div class="example-block">"I <strong>could have</strong> won the race."</div>
+                        </div>
+                        <div class="card fragment">
+                            <h4>Needn't have + V3</h4>
+                            <p>Useless action done in past.</p>
+                            <div class="example-block">"You <strong>needn't have</strong> cooked."</div>
+                        </div>
+                    </div>
+                    <div class="scenario fragment" style="background: rgba(255, 77, 77, 0.1); border-left-color: var(--red);">
+                        <i class="fas fa-lightbulb"></i> <strong>Needn't have</strong> means you DID it, but it was a waste of time.
+                    </div>
+                </section>
+
+                <section>
+                    <h3><i class="fas fa-history"></i> Used To vs. Would</h3>
+                    <div class="card fragment">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Used to</th>
+                                    <th>Would</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Repeated Actions</td>
+                                    <td style="color:var(--green)">✅ YES</td>
+                                    <td style="color:var(--green)">✅ YES</td>
+                                </tr>
+                                <tr>
+                                    <td>States (Be, Live, Have)</td>
+                                    <td style="color:var(--green)">✅ YES</td>
+                                    <td style="color:var(--red)">❌ NO</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="grid-2 fragment" style="margin-top: 15px;">
+                        <div class="example-block">"I <strong>used to</strong> live in Paris." (OK)</div>
+                        <div class="example-block"><del>"I would live in Paris."</del> (WRONG)</div>
+                    </div>
+                </section>
             </section>
 
-            <!-- 9. PERMISSION & REQUESTS -->
+            <!-- SECTION 7: PRACTICE CHALLENGE -->
             <section>
-                <h3><i class="fas fa-comments"></i> Social English</h3>
-                <div class="premium-card card fragment" style="font-size: 0.8em;">
-                    <ul class="example-list" style="list-style: none;">
-                        <li><i class="fas fa-coffee" style="color:var(--green)"></i> <strong>Can I...?</strong> (Informal)</li>
-                        <li><i class="fas fa-user-group" style="color:var(--blue)"></i> <strong>Could I...?</strong> (Polite)</li>
-                        <li><i class="fas fa-user-tie" style="color:var(--gold)"></i> <strong>May I...?</strong> (Formal)</li>
-                        <li><i class="fas fa-star" style="color:var(--purple)"></i> <strong>Would you mind...?</strong> (Very Polite)</li>
-                        <li><i class="fas fa-wine-glass" style="color:var(--orange)"></i> <strong>Shall we...?</strong> (Offer/Suggestion)</li>
-                    </ul>
-                </div>
+                <section data-background-color="#2ecc71">
+                    <h1 style="color:white;">FINAL CHALLENGE!</h1>
+                    <p style="color:white; font-size: 1.2em;">Are you ready to test your knowledge?</p>
+                </section>
+
+                <section>
+                    <h3>Scenario 1</h3>
+                    <p>"It's a secret. You ________ tell anyone!"</p>
+                    <div class="quiz-option fragment">A. don't have to</div>
+                    <div class="quiz-option fragment">B. mustn't ✅</div>
+                    <div class="quiz-option fragment">C. shouldn't have</div>
+                </section>
+
+                <section>
+                    <h3>Scenario 2</h3>
+                    <p>"I'm not sure where my keys are. I ________ them at home."</p>
+                    <div class="quiz-option fragment">A. must leave</div>
+                    <div class="quiz-option fragment">B. might have left ✅</div>
+                    <div class="quiz-option fragment">C. should have left</div>
+                </section>
+
+                <section>
+                    <h3>Scenario 3</h3>
+                    <p>"You _______ brought a present! It was not necessary."</p>
+                    <div class="quiz-option fragment">A. shouldn't have</div>
+                    <div class="quiz-option fragment">B. needn't have ✅</div>
+                    <div class="quiz-option fragment">C. mustn't have</div>
+                </section>
             </section>
 
-            <!-- 10. ADVANCED: PAST MODALS -->
-            <section data-background-color="#2d3436">
-                <h3><i class="fas fa-clock-rotate-left"></i> Past Modals</h3>
-                <p style="color:var(--gold); font-size: 0.8em;">Structure: Modal + Have + Past Participle (V3)</p>
-                <div class="grid-2">
-                    <div class="card fragment">
-                        <h4>Should have + V3</h4>
-                        <p>Regret or past criticism.</p>
-                        <div class="example-block">"I <strong>should have</strong> studied!"</div>
-                    </div>
-                    <div class="card fragment">
-                        <h4>Must have + V3</h4>
-                        <p>Logic about the past.</p>
-                        <div class="example-block">"He <strong>must have</strong> forgotten."</div>
-                    </div>
-                    <div class="card fragment">
-                        <h4>Could have + V3</h4>
-                        <p>Past opportunity not used.</p>
-                        <div class="example-block">"I <strong>could have</strong> won."</div>
-                    </div>
-                    <div class="card fragment">
-                        <h4>Needn't have + V3</h4>
-                        <p>Useless action done in the past.</p>
-                        <div class="example-block">"You <strong>needn't have</strong> cleaned."</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 11. USED TO VS WOULD -->
-            <section>
-                <h3><i class="fas fa-history"></i> Past Habits</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th>Used To</th>
-                            <th>Would</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Repeated Actions</td>
-                            <td class="correct">YES</td>
-                            <td class="correct">YES</td>
-                        </tr>
-                        <tr>
-                            <td>Past States (Life, Be, Live)</td>
-                            <td class="correct">YES</td>
-                            <td class="mistake">NO</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="grid-2" style="margin-top: 20px;">
-                    <div class="card fragment">
-                        <div class="example-block">"I <strong>used to</strong> live in Paris." (Correct)</div>
-                    </div>
-                    <div class="card fragment">
-                        <div class="example-block">"I <del>would live</del> in Paris." (Incorrect)</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 12. SPECIAL CASE: SHALL & NEEDN'T -->
-            <section>
-                <h3><i class="fas fa-star"></i> The "British" Modals</h3>
-                <div class="grid-2">
-                    <div class="card fragment">
-                        <h4>Shall</h4>
-                        <p>Used for offers and suggestions (mainly with I/We).</p>
-                        <div class="example-block">"<strong>Shall</strong> I open the window?"</div>
-                    </div>
-                    <div class="card fragment">
-                        <h4>Needn't</h4>
-                        <p>The formal way to say 'don't need to'.</p>
-                        <div class="example-block">"You <strong>needn't</strong> worry about the cost."</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 13. QUICK PRACTICE -->
-            <section data-background-color="#2ecc71">
-                <h1 style="color:white">CHALLENGE!</h1>
-                <p style="color:white">Guess the missing modal verb.</p>
-                <div class="card fragment" style="background:white; color:black; margin-top: 30px;">
-                    <p style="font-size: 1.2em;">"It was a secret! You _________ have told anyone!"</p>
-                    <p class="fragment correct" style="font-size: 1.5em; text-align: center;">SHOULDN'T</p>
-                </div>
-            </section>
-
-            <!-- 14. FINAL SUMMARY -->
+            <!-- FINAL SLIDE -->
             <section data-background-gradient="linear-gradient(to right, #1e293b, #0f172a)">
-                <i class="fas fa-trophy" style="font-size: 4em; color: var(--gold); margin-bottom: 30px;"></i>
+                <i class="fas fa-graduation-cap" style="font-size: 4em; color: var(--gold); margin-bottom: 20px;"></i>
                 <h1>Mastery Achieved!</h1>
                 <p>You now possess the tools to express possibility, obligation, and logic in English like a professional.</p>
-                <p style="font-size: 0.6em; opacity: 0.6; margin-top: 40px;">Check the Infographic & Podcast to continue your journey.</p>
+                <div style="margin-top: 50px;">
+                    <i class="fab fa-apple" style="margin: 0 15px;"></i>
+                    <i class="fab fa-google" style="margin: 0 15px;"></i>
+                    <i class="fab fa-microsoft" style="margin: 0 15px;"></i>
+                </div>
             </section>
 
         </div>
