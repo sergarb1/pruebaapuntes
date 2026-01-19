@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Newton's Academy: Aero-Physics Lab</title>
+    <title>Newton's Academy: Ultra-Lab</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.70.0/phaser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { margin: 0; background: #020617; overflow: hidden; touch-action: none; user-select: none; }
         #game-div { width: 100vw; height: 100vh; }
@@ -15,74 +15,68 @@
 <div id="game-div"></div>
 <script>
 
-// --- CONSTANTES DE DISEÑO ---
+// --- CONSTANTES ---
 const C = {
     BG: 0x020617,
-    SHIP: 0x22d3ee,   // Cyan
-    VEL: 0x4ade80,    // Verde
-    FORCE: 0xf43f5e,  // Rojo
+    SHIP: 0x22d3ee,
+    VEL: 0x4ade80,
+    FORCE: 0xf43f5e,
+    ACC: 0xfacc15,
     GRID: 0x1e293b,
-    WHITE: 0xffffff
+    PANEL: 0x0f172a,
+    BLUE_GLOW: '#22d3ee'
 };
 
-// --- PREGUNTAS DIDÁCTICAS ---
+// --- BANCO DE PREGUNTAS AMPLIADO (15 ITEMS) ---
 const QUESTIONS = [
-    { q: "1ª LEY (INERCIA): ¿Qué le ocurre a un objeto en movimiento si la fuerza neta es CERO?", options: ["Se para inmediatamente", "Mantiene su velocidad y dirección", "Acelera"], ok: 1, expl: "Sin fuerzas externas, el objeto mantiene su estado actual por inercia.", tip: "⚠️ CUIDADO: En la Tierra el rozamiento es la fuerza que suele parar las cosas.", gold: "REGLA: F=0 => a=0." },
-    { q: "2ª LEY: Si aplicas la misma fuerza a una pelota de tenis y a una de bolos...", options: ["La de tenis acelera más", "La de bolos acelera más", "Aceleran igual"], ok: 0, expl: "A menor masa, mayor aceleración para una misma fuerza aplicada.", tip: "⚠️ CUIDADO: Masa y aceleración son inversamente proporcionales.", gold: "REGLA: a = F / m." },
-    { q: "3ª LEY: Si un nadador empuja el agua hacia atrás con sus manos...", options: ["El agua se mueve y ya está", "El agua empuja al nadador adelante", "El nadador se hunde"], ok: 1, expl: "Toda acción genera una reacción de igual magnitud y sentido opuesto.", tip: "⚠️ CUIDADO: Las fuerzas actúan en cuerpos diferentes (manos y agua).", gold: "REGLA: Acción y Reacción." },
-    { q: "PESO: ¿Cuál es el peso de un objeto de 10kg en la Tierra (g=9.8)?", options: ["10 N", "98 N", "1 kg"], ok: 1, expl: "Peso = Masa x Gravedad. P = 10 * 9.8 = 98 N.", tip: "⚠️ CUIDADO: El peso es una fuerza (Newtons), la masa es materia (kg).", gold: "REGLA: P = m · g." },
-    { q: "ROZAMIENTO: ¿Hacia dónde apunta la fuerza de fricción?", options: ["Hacia el centro de la Tierra", "En sentido opuesto al deslizamiento", "Hacia donde nos movemos"], ok: 1, expl: "El rozamiento siempre intenta frenar el movimiento entre superficies.", tip: "⚠️ CUIDADO: Depende de la rugosidad y del peso, no del área.", gold: "REGLA: Fr = μ · N." }
+    { q: "¿Qué sucede con la velocidad si la fuerza neta es CERO?", options: ["Se detiene al instante", "Permanece constante", "Aumenta poco a poco"], ok: 1, expl: "1ª Ley: Sin fuerzas externas, no hay cambio de velocidad.", tip: "En la Tierra, el rozamiento es el que frena las cosas.", gold: "EQUILIBRIO = VELOCIDAD CONSTANTE." },
+    { q: "Si aplicas la misma fuerza a un objeto de 2kg y a uno de 20kg...", options: ["El de 2kg acelera 10 veces más", "El de 20kg acelera más", "Ambos aceleran igual"], ok: 0, expl: "2ª Ley: a = F/m. A menos masa, más aceleración.", tip: "La masa es la resistencia al movimiento (Inercia).", gold: "MÁS MASA = MÁS DIFÍCIL DE MOVER." },
+    { q: "Al saltar de una barca al muelle, la barca se aleja. ¿Por qué?", options: ["Por el viento del salto", "Por la 3ª Ley: Acción y Reacción", "Por el peso de la barca"], ok: 1, expl: "Tú empujas la barca atrás para impulsarte adelante.", tip: "Las fuerzas de acción-reacción actúan en cuerpos distintos.", gold: "ACCIÓN = REACCIÓN (SENTIDO OPUESTO)." },
+    { q: "¿Cuál es la unidad de FUERZA en el Sistema Internacional?", options: ["Julios (J)", "Kilogramos (kg)", "Newtons (N)"], ok: 2, expl: "1 Newton es la fuerza que acelera 1kg a 1m/s².", tip: "Cuidado: el peso también se mide en Newtons.", gold: "1 N = 1 kg·m/s²." },
+    { q: "¿De qué depende principalmente la fuerza de ROZAMIENTO?", options: ["De las superficies y el peso", "Solo de la velocidad", "Del tamaño del objeto"], ok: 0, expl: "Fr = μ · N. Depende de la rugosidad y de la Normal.", tip: "No depende de la superficie de contacto (área).", gold: "ROZAMIENTO SIEMPRE SE OPONE AL GIRO." },
+    { q: "Un cohete en el espacio apaga motores. ¿Cómo se mueve?", options: ["Se para en seco", "Sigue en línea recta a v cte", "Empieza a dar vueltas"], ok: 1, expl: "En el vacío no hay aire que ejerza fricción.", tip: "La inercia mantiene el movimiento infinitamente.", gold: "INERCIA: TENDENCIA A NO CAMBIAR." },
+    { q: "Peso de una masa de 5kg en la Tierra (g=9.8):", options: ["5 Newtons", "49 Newtons", "50 Kilogramos"], ok: 1, expl: "Peso = Masa x Gravedad. P = 5 * 9.8 = 49N.", tip: "No confundas peso (fuerza) con masa (materia).", gold: "P = m · g." },
+    { q: "Si duplicas la fuerza neta sobre un cuerpo, su aceleración...", options: ["Se duplica", "Se reduce a la mitad", "Se queda igual"], ok: 0, expl: "Fuerza y aceleración son directamente proporcionales.", tip: "Si empujas el doble de fuerte, aceleras el doble.", gold: "F ∝ a." },
+    { q: "En un plano inclinado, ¿qué componente del peso nos hace caer?", options: ["La Normal (Py)", "La tangencial (Px)", "El peso total (P)"], ok: 1, expl: "Px es la fuerza paralela a la superficie de la rampa.", tip: "Px = P · seno(ángulo).", gold: "Px TRACCIONA, Py APOYA." },
+    { q: "Un ascensor sube frenando. ¿Cómo te sientes?", options: ["Más ligero", "Más pesado", "Igual"], ok: 0, expl: "Al frenar subiendo, la aceleración va hacia abajo.", tip: "Tu cuerpo 'quiere' seguir subiendo por inercia.", gold: "ACELERACIÓN ABAJO = PESO APARENTE MENOR." },
+    { q: "¿Qué fuerza nos permite tomar una curva sin salimos?", options: ["La fuerza Normal", "La fuerza Centrípeta", "La fuerza Centrífuga"], ok: 1, expl: "Es la fuerza (normalmente rozamiento) que apunta al centro.", tip: "Sin ella, seguirías recto por la tangente.", gold: "GIRAR REQUIERE FUERZA HACIA EL CENTRO." },
+    { q: "Ley de Hooke: Un muelle se estira 2cm con 10N. Con 20N...", options: ["Se estira 2cm", "Se estira 4cm", "Se rompe"], ok: 1, expl: "F = k·x. La deformación es proporcional a la fuerza.", tip: "Si doblas la fuerza, doblas el estiramiento.", gold: "ELASTICIDAD = PROPORCIONALIDAD." },
+    { q: "Si un cuerpo está en reposo, ¿qué podemos asegurar?", options: ["No actúan fuerzas", "La fuerza resultante es CERO", "Solo actúa la gravedad"], ok: 1, expl: "Puede haber mil fuerzas, pero si se anulan, no hay movimiento.", tip: "Estar quieto es un caso particular de equilibrio.", gold: "SUMA DE FUERZAS = 0." },
+    { q: "Diferencia entre Masa y Peso:", options: ["La masa cambia con el planeta", "El peso cambia con el planeta", "Son la misma cosa"], ok: 1, expl: "La masa es invariable; el peso depende de la gravedad.", tip: "En la Luna pesas menos, pero tienes la misma masa.", gold: "MASA ES MATERIA, PESO ES ATRACCIÓN." },
+    { q: "Unidad de masa en el Sistema Internacional:", options: ["Gramo (g)", "Kilogramo (kg)", "Newton (N)"], ok: 1, expl: "El kg es la unidad fundamental para F=ma.", tip: "Si te dan gramos, ¡divide siempre por 1000!", gold: "SIEMPRE USA kg EN FÍSICA." }
 ];
 
-// --- ESCENA DE INICIO ---
+// --- ESCENA DE CARGA ---
 class BootScene extends Phaser.Scene {
     constructor() { super('BootScene'); }
     create() {
-        // DISEÑO DE COHETE (Puntero al Eje X / Derecha)
         let g = this.make.graphics({x:0, y:0, add:false});
-        
-        // Cuerpo Cono Sólido
+        // Cohete
         g.fillStyle(C.SHIP);
-        g.beginPath();
-        g.moveTo(40, 0);    // Punta (Derecha)
-        g.lineTo(-20, -15); // Base Arriba
-        g.lineTo(-12, 0);   // Hendidura estética
-        g.lineTo(-20, 15);  // Base Abajo
-        g.closePath();
-        g.fillPath();
-        
-        // Detalle de cabina
-        g.fillStyle(0xffffff, 0.5);
-        g.fillCircle(5, 0, 5);
-
-        g.generateTexture('ship', 60, 40);
-
-        // LLAMA
-        g.clear();
-        g.fillStyle(0xfacc15);
-        g.beginPath();
-        g.moveTo(-12, 0);
-        g.lineTo(-35, -8);
-        g.lineTo(-30, 0);
-        g.lineTo(-35, 8);
-        g.closePath();
-        g.fillPath();
-        g.generateTexture('flame', 35, 20);
-
-        // BOTÓN Y PANEL
+        g.beginPath(); g.moveTo(45, 0); g.lineTo(-25, -20); g.lineTo(-15, 0); g.lineTo(-25, 20); g.closePath(); g.fillPath();
+        g.generateTexture('ship', 70, 45);
+        // Llama
+        g.clear(); g.fillStyle(0xfacc15);
+        g.beginPath(); g.moveTo(-15, 0); g.lineTo(-45, -12); g.lineTo(-35, 0); g.lineTo(-45, 12); g.closePath(); g.fillPath();
+        g.generateTexture('flame', 45, 25);
+        // Botones Quiz (ANCHOS)
+        g.clear(); g.fillStyle(0x1e293b, 0.9); g.lineStyle(3, C.SHIP);
+        g.fillRoundedRect(0,0,700,90,15); g.strokeRoundedRect(0,0,700,90,15);
+        g.generateTexture('btnWide', 700, 90);
+        // Botones Menú
         g.clear(); g.fillStyle(0x1e293b); g.lineStyle(2, C.SHIP);
-        g.fillRoundedRect(0,0,320,70,10); g.strokeRoundedRect(0,0,320,70,10);
-        g.generateTexture('btn', 320, 70);
-
-        g.clear(); g.fillStyle(0x020617, 0.95); g.lineStyle(2, C.SHIP);
-        g.fillRoundedRect(0,0,650,450,15); g.strokeRoundedRect(0,0,650,450,15);
-        g.generateTexture('panel', 650, 450);
+        g.fillRoundedRect(0,0,400,80,10); g.strokeRoundedRect(0,0,400,80,10);
+        g.generateTexture('btn', 400, 80);
+        // Panel Feedback (GIGANTE)
+        g.clear(); g.fillStyle(C.PANEL, 0.98); g.lineStyle(4, C.SHIP);
+        g.fillRoundedRect(0,0,1000,600,25); g.strokeRoundedRect(0,0,1000,600,25);
+        g.generateTexture('panel', 1000, 600);
 
         this.scene.start('MenuScene');
     }
 }
 
-// --- MENÚ ---
+// --- MENÚ PRINCIPAL ---
 class MenuScene extends Phaser.Scene {
     constructor() { super('MenuScene'); }
     create() {
@@ -90,28 +84,45 @@ class MenuScene extends Phaser.Scene {
         this.add.rectangle(0,0,w,h,C.BG).setOrigin(0);
         this.add.grid(w/2, h/2, w, h, 80, 80, C.GRID).setAlpha(0.2);
 
-        this.add.text(w/2, h*0.25, "NEWTON'S LAB", { fontFamily: 'Orbitron', fontSize: '60px', color: '#fff' }).setOrigin(0.5);
-        this.createBtn(w/2, h*0.55, "🚀 SIMULADOR", C.VEL, () => this.scene.start('SimScene'));
-        this.createBtn(w/2, h*0.72, "🧠 EXAMEN", C.ACC, () => this.scene.start('QuizScene'));
+        let title = this.add.text(w/2, h*0.2, "NEWTON'S ACADEMY", { 
+            fontFamily: 'Orbitron', fontSize: '70px', fontWeight: '900', color: '#fff' 
+        }).setOrigin(0.5);
+        title.setStroke(C.BLUE_GLOW, 4).setShadow(0,0,C.BLUE_GLOW, 20, true, true);
+        
+        this.createBtn(w/2, h*0.45, "🚀 INICIAR SIMULADOR", C.VEL, () => this.scene.start('SimScene'));
+        this.createBtn(w/2, h*0.60, "🧠 EXAMEN TÁCTICO", C.ACC, () => this.scene.start('QuizScene'));
+        this.createBtn(w/2, h*0.75, "📖 INSTRUCCIONES", C.SHIP, () => this.showInstructions());
     }
+
     createBtn(x, y, txt, color, cb) {
         let con = this.add.container(x, y);
-        let img = this.add.image(0,0,'btn').setTint(color);
-        let t = this.add.text(0,0,txt, { fontFamily:'Rajdhani', fontSize:'28px', color:'#fff' }).setOrigin(0.5);
-        img.setInteractive({useHandCursor:true}).on('pointerdown', ()=>this.scene.start(this.scene.key === 'SimScene' ? 'MenuScene' : 'SimScene')); // Reset hack
-        hit(img, con, cb);
+        let img = this.add.image(0,0,'btn').setTint(color).setInteractive({useHandCursor:true});
+        let t = this.add.text(0,0,txt, { fontFamily:'Orbitron', fontSize:'26px', fontWeight:'700', color:'#fff' }).setOrigin(0.5);
+        img.on('pointerdown', () => { con.setScale(0.9); this.time.delayedCall(100, () => { con.setScale(1); cb(); }); });
         con.add([img, t]);
+    }
+
+    showInstructions() {
+        let con = this.add.container(this.scale.width/2, this.scale.height/2).setDepth(100);
+        let bg = this.add.image(0,0,'panel').setScale(0.85);
+        let title = this.add.text(0, -200, "MANUAL DE OPERACIONES", { fontFamily:'Orbitron', fontSize:'36px', color: '#22d3ee' }).setOrigin(0.5);
+        title.setStroke('#000', 4).setShadow(0,0,C.BLUE_GLOW, 10);
+        
+        let text = this.add.text(0, 0, 
+            "• CONTROL: Toca la pantalla para activar motores.\n  El cohete acelerará siempre hacia tu dedo.\n\n" +
+            "• VECTORES: Flecha VERDE = Velocidad (m/s).\n  Flecha ROJA = Fuerza aplicada (Newtons).\n\n" +
+            "• INERCIA: Al soltar, la fuerza cae a 0N,\n  pero mantendrás la velocidad que llevabas.\n\n" +
+            "• META: Aparca en la zona verde a menos de 1 m/s.", 
+            { fontFamily:'Rajdhani', fontSize:'26px', color:'#fff', align:'left', lineSpacing: 12, fontWeight: '600' }
+        ).setOrigin(0.5);
+        
+        let btn = this.add.text(0, 210, "[ ENTENDIDO ]", { fontFamily:'Orbitron', fontSize:'30px', color: '#4ade80' })
+            .setOrigin(0.5).setInteractive().on('pointerdown', () => con.destroy());
+        con.add([bg, title, text, btn]);
     }
 }
 
-function hit(obj, con, cb) {
-    obj.on('pointerdown', () => {
-        con.setScale(0.9);
-        setTimeout(() => { con.setScale(1); cb(); }, 100);
-    });
-}
-
-// --- SIMULADOR (EL NÚCLEO ARREGLADO) ---
+// --- SIMULADOR ---
 class SimScene extends Phaser.Scene {
     constructor() { super('SimScene'); }
     create() {
@@ -119,25 +130,16 @@ class SimScene extends Phaser.Scene {
         this.add.rectangle(0,0,this.w,this.h,C.BG).setOrigin(0);
         this.add.grid(this.w/2,this.h/2,this.w,this.h,60,60,C.GRID).setAlpha(0.3);
 
-        // Telemetría
-        this.txtStats = this.add.text(this.w-20, 20, "", { fontFamily:'monospace', fontSize:'18px', color:'#22d3ee', align:'right' }).setOrigin(1,0);
-        this.add.text(20, 20, "🏠 MENÚ", { fontFamily:'Orbitron', fontSize:'16px' }).setInteractive().on('pointerdown', () => this.scene.start('MenuScene'));
+        this.txtStats = this.add.text(this.w-30, 30, "", { fontFamily:'Orbitron', fontSize:'22px', color:'#22d3ee', align:'right' }).setOrigin(1,0);
+        this.add.text(30, 30, "🏠 MENÚ", { fontFamily:'Orbitron', fontSize:'18px', color:'#fff' }).setInteractive().on('pointerdown', () => this.scene.start('MenuScene'));
 
-        // Meta
-        this.target = this.add.circle(this.w*0.8, this.h/2, 80).setStrokeStyle(2, C.VEL);
+        this.target = this.add.circle(this.w*0.8, this.h/2, 90).setStrokeStyle(3, C.VEL);
         this.physics.add.existing(this.target, true);
-        this.targetTxt = this.add.text(this.target.x, this.target.y, "ZONA DE EQUILIBRIO", { fontFamily:'Orbitron', fontSize:'12px', color:'#4ade80' }).setOrigin(0.5);
+        this.targetTxt = this.add.text(this.target.x, this.target.y, "ZONA DE EQUILIBRIO", { fontFamily:'Orbitron', fontSize:'14px', color:'#4ade80' }).setOrigin(0.5);
 
-        // COHETE (Sprite Físico)
         this.ship = this.physics.add.image(100, this.h/2, 'ship');
-        this.ship.setDrag(0); 
-        this.ship.setCollideWorldBounds(true);
-        this.ship.setBounce(0.3);
-
-        // Llama (Hija del cohete)
+        this.ship.setDrag(0); this.ship.setCollideWorldBounds(true); this.ship.setBounce(0.3);
         this.flame = this.add.image(0, 0, 'flame').setVisible(false);
-
-        // CAPA DE VECTORES (Dibuja todo alineado)
         this.vGfx = this.add.graphics().setDepth(10);
 
         this.input.on('pointerdown', () => this.thrust = true);
@@ -148,113 +150,96 @@ class SimScene extends Phaser.Scene {
     update() {
         const body = this.ship.body;
         this.vGfx.clear();
-
-        // 1. Manejo de Rotación y Empuje
         if(this.thrust) {
             let ptr = this.input.activePointer;
-            if(ptr.y > 60) {
+            if(ptr.y > 80) {
                 let angle = Phaser.Math.Angle.Between(this.ship.x, this.ship.y, ptr.x, ptr.y);
-                this.ship.setRotation(angle); // Apunta directo al ratón
-                
-                // Fuerza Alineada
-                this.physics.velocityFromRotation(angle, 60, body.acceleration);
-                
-                // Llama Alineada
-                this.flame.setVisible(true);
-                this.flame.setPosition(this.ship.x, this.ship.y);
-                this.flame.setRotation(angle);
+                this.ship.setRotation(angle);
+                this.physics.velocityFromRotation(angle, 65, body.acceleration);
+                this.flame.setVisible(true).setPosition(this.ship.x, this.ship.y).setRotation(angle);
             }
-        } else {
-            body.setAcceleration(0);
-            this.flame.setVisible(false);
-        }
+        } else { body.setAcceleration(0); this.flame.setVisible(false); }
 
-        // 2. Fricción en Meta
-        let drag = 0;
         if(Phaser.Geom.Intersects.RectangleToRectangle(this.ship.getBounds(), this.target.getBounds())) {
-            drag = 3.0;
+            this.ship.setDrag(3.5);
             if(body.velocity.length() < 12) this.win();
-        }
-        this.ship.setDrag(drag);
+        } else { this.ship.setDrag(0); }
 
-        // 3. DIBUJAR VECTORES (Mecánica de precisión)
-        this.renderVector(body.velocity, C.VEL, 0.6, "v");
-        this.renderVector(body.acceleration, C.FORCE, 2.0, "F");
-
-        // Telemetría Real
-        let v = (body.velocity.length() * 0.1).toFixed(1);
-        let f = (body.acceleration.length() * 10).toFixed(0);
-        this.txtStats.setText(`VELOCIDAD: ${v} m/s\nFUERZA: ${f} N`);
+        this.renderVector(body.velocity, C.VEL, 0.7);
+        this.renderVector(body.acceleration, C.FORCE, 3.0);
+        this.txtStats.setText(`VEL: ${(body.velocity.length()*0.1).toFixed(1)} m/s\nF_NETA: ${(body.acceleration.length()*10).toFixed(0)} N`);
     }
 
-    renderVector(vec, color, scale, label) {
+    renderVector(vec, color, scale) {
         if(vec.length() < 2) return;
-        
-        const angle = Math.atan2(vec.y, vec.x);
-        const startX = this.ship.x;
-        const startY = this.ship.y;
-        const endX = startX + vec.x * scale;
-        const endY = startY + vec.y * scale;
-
-        this.vGfx.lineStyle(3, color, 0.8);
-        this.vGfx.beginPath();
-        this.vGfx.moveTo(startX, startY);
-        this.vGfx.lineTo(endX, endY);
-        this.vGfx.strokePath();
-
-        // Cabeza de flecha
-        this.vGfx.fillStyle(color, 1);
-        this.vGfx.fillTriangle(
-            endX, endY,
-            endX - 10 * Math.cos(angle - 0.5), endY - 10 * Math.sin(angle - 0.5),
-            endX - 10 * Math.cos(angle + 0.5), endY - 10 * Math.sin(angle + 0.5)
-        );
+        const ang = Math.atan2(vec.y, vec.x);
+        const ex = this.ship.x + vec.x*scale; const ey = this.ship.y + vec.y*scale;
+        this.vGfx.lineStyle(5, color, 0.9).beginPath().moveTo(this.ship.x, this.ship.y).lineTo(ex, ey).strokePath();
+        this.vGfx.fillStyle(color, 1).fillTriangle(ex, ey, ex-15*Math.cos(ang-0.5), ey-15*Math.sin(ang-0.5), ex-15*Math.cos(ang+0.5), ey-15*Math.sin(ang+0.5));
     }
 
     win() {
         this.ship.body.reset(100, this.h/2);
-        let nx = Phaser.Math.Between(this.w*0.5, this.w*0.9);
-        let ny = Phaser.Math.Between(100, this.h-100);
-        this.target.setPosition(nx, ny);
-        this.target.body.updateFromGameObject();
-        this.targetTxt.setPosition(nx, ny);
+        let nx = Phaser.Math.Between(this.w*0.4, this.w*0.9); let ny = Phaser.Math.Between(150, this.h-150);
+        this.target.setPosition(nx, ny); this.target.body.updateFromGameObject(); this.targetTxt.setPosition(nx, ny);
     }
 }
 
-// --- QUIZ (DIDÁCTICO) ---
+// --- QUIZ ESCENA ---
 class QuizScene extends Phaser.Scene {
     constructor() { super('QuizScene'); }
     create() {
         this.w = this.scale.width; this.h = this.scale.height;
         this.qIdx = 0; this.score = 0;
-        this.qs = QUESTIONS.sort(()=>0.5-Math.random()).slice(0,5);
-        this.add.rectangle(0,0,this.w,this.h,0x020617).setOrigin(0);
-        this.qText = this.add.text(this.w/2, 120, "", { fontFamily:'Rajdhani', fontSize:'26px', align:'center', wordWrap:{width:this.w*0.8} }).setOrigin(0.5,0);
+        this.qs = QUESTIONS.sort(()=>0.5-Math.random()).slice(0,10);
+        
+        this.add.rectangle(0,0,this.w,this.h,C.BG).setOrigin(0);
+        this.add.text(30, 30, "🏠 SALIR", { fontFamily:'Orbitron', fontSize:'20px' }).setInteractive().on('pointerdown', () => this.scene.start('MenuScene'));
+        
+        this.qText = this.add.text(this.w/2, 100, "", { 
+            fontFamily:'Rajdhani', fontSize:'42px', fontWeight:'700', color:'#fff', align:'center', wordWrap:{width:this.w*0.8} 
+        }).setOrigin(0.5, 0);
+        this.qText.setShadow(0,0,C.BLUE_GLOW, 10);
+
         this.btns = [];
         for(let i=0; i<3; i++) {
-            let b = this.add.image(this.w/2, 300+i*90, 'btn').setInteractive();
-            let t = this.add.text(this.w/2, 300+i*90, "", { fontFamily:'Rajdhani', fontSize:'20px' }).setOrigin(0.5);
+            let con = this.add.container(this.w/2, 350 + i*115);
+            let b = this.add.image(0,0,'btnWide').setInteractive({useHandCursor:true});
+            let t = this.add.text(0,0,"", { fontFamily:'Rajdhani', fontSize:'28px', fontWeight:'600', align:'center', wordWrap:{width:650} }).setOrigin(0.5);
             b.on('pointerdown', () => this.check(i));
-            this.btns.push({b, t});
+            con.add([b, t]); this.btns.push({b, t, con});
         }
         this.loadQ();
     }
+
     loadQ() {
         if(this.qIdx >= this.qs.length) { this.scene.start('MenuScene'); return; }
         let d = this.qs[this.qIdx];
         this.qText.setText(d.q);
-        this.btns.forEach((btn, i) => btn.t.setText(d.options[i]));
+        this.btns.forEach((btn, i) => { btn.t.setText(d.options[i]); btn.b.setTint(0xffffff); });
     }
-    check(i) {
+
+    check(idx) {
         let d = this.qs[this.qIdx];
-        let ok = (i === d.ok);
+        let ok = (idx === d.ok);
         if(ok) this.score++;
         
-        let p = this.add.image(this.w/2, this.h/2, 'panel').setDepth(20);
-        let t = this.add.text(this.w/2, this.h/2 - 140, ok?"✓ CORRECTO":"✗ ERROR", { fontSize:'40px', color:ok?'#4ade80':'#f43f5e' }).setOrigin(0.5).setDepth(21);
-        let dsc = this.add.text(this.w/2, this.h/2, `${d.expl}\n\n${d.tip}`, { fontFamily:'Rajdhani', fontSize:'20px', align:'center', wordWrap:{width:550} }).setOrigin(0.5).setDepth(21);
-        let b = this.add.text(this.w/2, this.h/2 + 160, "CONTINUAR", { backgroundColor:'#3b82f6', padding:{x:20,y:10} }).setOrigin(0.5).setInteractive().setDepth(21)
-            .on('pointerdown', () => { p.destroy(); t.destroy(); dsc.destroy(); b.destroy(); this.qIdx++; this.loadQ(); });
+        let con = this.add.container(this.w/2, this.h/2).setDepth(100);
+        let panel = this.add.image(0,0,'panel');
+        let title = this.add.text(0, -240, ok ? "✓ EXCELENTE" : "✗ REVISIÓN NECESARIA", { fontFamily:'Orbitron', fontSize:'40px', color: ok ? '#4ade80' : '#f43f5e' }).setOrigin(0.5);
+        title.setStroke('#000', 6).setShadow(0,0, ok ? '#4ade80':'#f43f5e', 15);
+        
+        let content = this.add.text(0, 0, 
+            "🔬 ANÁLISIS CIENTÍFICO:\n" + d.expl + "\n\n" +
+            "💡 CONSEJO DE EXAMEN:\n" + d.tip + "\n\n" +
+            "🏆 REGLA DE ORO:\n" + d.gold, 
+            { fontFamily:'Rajdhani', fontSize:'26px', color:'#fff', align:'center', wordWrap:{width:850}, lineSpacing: 10, fontWeight: '600' }
+        ).setOrigin(0.5);
+
+        let btn = this.add.text(0, 240, "[ SIGUIENTE EVALUACIÓN ]", { fontFamily:'Orbitron', fontSize:'28px', backgroundColor:'#3b82f6', padding:{x:30,y:15} })
+            .setOrigin(0.5).setInteractive().on('pointerdown', () => { con.destroy(); this.qIdx++; this.loadQ(); });
+        
+        con.add([panel, title, content, btn]);
     }
 }
 
@@ -266,7 +251,6 @@ const config = {
     scene: [BootScene, MenuScene, SimScene, QuizScene]
 };
 new Phaser.Game(config);
-
 </script>
 </body>
 </html>
