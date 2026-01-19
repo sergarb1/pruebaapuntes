@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Algebra Master 4º ESO - Ultimate Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Algebra Master 4º ESO - Mobile Adaptive Edition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
@@ -11,8 +11,21 @@
         :root {
             --blue: #38bdf8; --purple: #a78bfa; --emerald: #10b981; --red: #fb7185; --bg: #020617; --slate: #0f172a;
         }
-        body { margin: 0; background: var(--bg); color: white; font-family: 'Space Grotesk', sans-serif; overflow: hidden; touch-action: none; }
-        #game-container { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+        
+        /* Reset y Adaptación Mobile */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            background: var(--bg); color: white; font-family: 'Space Grotesk', sans-serif; 
+            overflow: hidden; position: fixed; touch-action: none;
+        }
+
+        /* Contenedor principal con dvh (Dynamic Viewport Height) */
+        #game-container { 
+            width: 100%; height: 100dvh; 
+            position: relative; overflow: hidden; 
+            display: flex; flex-direction: column;
+        }
         
         #orientation-warning {
             display: none; position: fixed; inset: 0; background: var(--bg); z-index: 3000;
@@ -20,77 +33,81 @@
         }
         @media (orientation: portrait) { #orientation-warning { display: flex; } }
 
+        /* Botón Home - Adaptado para Safe Areas */
         #universal-home {
-            position: absolute; top: 20px; right: 20px; width: 50px; height: 50px;
-            background: rgba(30, 41, 59, 0.7); border: 2px solid var(--blue); border-radius: 15px;
+            position: absolute; top: env(safe-area-inset-top, 20px); right: env(safe-area-inset-right, 20px); 
+            width: 45px; height: 45px;
+            background: rgba(30, 41, 59, 0.8); border: 2px solid var(--blue); border-radius: 12px;
             display: flex; align-items: center; justify-content: center; color: var(--blue);
             cursor: pointer; z-index: 2500; transition: 0.3s; backdrop-filter: blur(10px);
         }
-        #universal-home:hover { transform: scale(1.1); background: var(--blue); color: var(--bg); }
 
+        /* Pantallas Overlays */
         .overlay-screen {
             position: absolute; inset: 0; background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1000; padding: 20px; text-align: center; transition: opacity 0.5s ease;
-        }
-        .card {
-            background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.2); padding: 40px;
-            border-radius: 40px; backdrop-filter: blur(20px); max-width: 900px; width: 85%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            z-index: 1000; padding: 20px; text-align: center;
         }
         
-        .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 30px; }
-        .mode-btn {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 2px solid var(--blue); color: white;
-            padding: 25px; border-radius: 25px; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; flex-direction: column; align-items: center; gap: 12px;
+        .card {
+            background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.2); 
+            padding: 30px; border-radius: 30px; backdrop-filter: blur(20px); 
+            max-width: 800px; width: 95%; max-height: 90%; overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
-        .mode-btn:hover { border-color: white; transform: scale(1.05) translateY(-10px); box-shadow: 0 0 30px rgba(56, 189, 248, 0.3); }
-        .mode-btn i { font-size: 3em; margin-bottom: 10px; }
-        .mode-btn h2 { margin: 0; font-family: 'Orbitron'; font-size: 1.2rem; letter-spacing: 1px; }
+        
+        .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .mode-btn {
+            background: #1e293b; border: 2px solid var(--blue); color: white;
+            padding: 20px 10px; border-radius: 20px; cursor: pointer; transition: 0.3s;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .mode-btn i { font-size: 2.2em; }
+        .mode-btn h2 { margin: 0; font-family: 'Orbitron'; font-size: 0.9rem; }
 
-        .hud { position: absolute; top: 25px; left: 25px; display: none; gap: 15px; z-index: 500; pointer-events: none; }
-        .stat { background: rgba(15, 23, 42, 0.85); padding: 12px 20px; border-radius: 15px; border: 1px solid var(--blue); font-weight: bold; font-family: 'Orbitron'; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        /* HUD - Safe Areas */
+        .hud { 
+            position: absolute; top: env(safe-area-inset-top, 20px); left: env(safe-area-inset-left, 20px); 
+            display: none; gap: 10px; z-index: 500; pointer-events: none; 
+        }
+        .stat { background: rgba(15, 23, 42, 0.9); padding: 8px 15px; border-radius: 10px; border: 1px solid var(--blue); font-weight: bold; font-family: 'Orbitron'; font-size: 0.75rem; }
 
+        /* Game Elements */
         #polynomial-area {
-            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
             display: none; flex-direction: column; align-items: center; width: 90%; z-index: 100;
         }
-        .poly-display { font-size: 4vw; font-family: 'JetBrains Mono'; color: var(--blue); text-shadow: 0 0 30px rgba(56, 189, 248, 0.5); font-weight: 700; margin-bottom: 15px; }
-        .feedback-msg { font-size: 1.3rem; min-height: 2em; text-align: center; max-width: 700px; color: #94a3b8; }
+        .poly-display { font-size: 5vw; font-family: 'JetBrains Mono'; color: var(--blue); text-shadow: 0 0 20px rgba(56, 189, 248, 0.5); font-weight: 700; margin-bottom: 10px; text-align: center; }
+        .feedback-msg { font-size: 1.1rem; min-height: 2.5em; text-align: center; max-width: 600px; color: #94a3b8; padding: 0 10px; }
 
+        /* Controles - Fondo de pantalla */
         .controls { 
-            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); 
-            display: none; gap: 20px; width: 90%; max-width: 900px; z-index: 500;
+            position: absolute; bottom: env(safe-area-inset-bottom, 25px); left: 50%; transform: translateX(-50%); 
+            display: none; gap: 15px; width: 90%; max-width: 800px; z-index: 500;
         }
         .tool {
-            flex: 1; background: rgba(30, 41, 59, 0.9); border: 2px solid var(--blue); color: var(--blue);
-            padding: 18px; border-radius: 20px; cursor: pointer; transition: 0.2s;
-            display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: 'Orbitron'; font-weight: 900; font-size: 0.8rem;
+            flex: 1; background: rgba(30, 41, 59, 0.95); border: 2px solid var(--blue); color: var(--blue);
+            padding: 15px 5px; border-radius: 15px; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; gap: 5px; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem;
         }
-        .tool:hover { background: var(--blue); color: var(--bg); }
-        .tool:active { transform: scale(0.95); }
 
-        #quiz-view { display: none; z-index: 1000; }
+        /* Quiz View con scroll si es necesario */
+        #quiz-view { display: none; z-index: 1000; overflow-y: auto; padding: 20px 0; }
         .quiz-card { 
-            background: rgba(15, 23, 42, 0.95); border: 2px solid var(--purple); padding: 35px; 
-            border-radius: 35px; width: 90%; max-width: 850px; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            display: flex; flex-direction: column;
+            background: rgba(15, 23, 42, 0.95); border: 2px solid var(--purple); padding: 25px; 
+            border-radius: 25px; width: 95%; max-width: 750px; margin: auto;
         }
-        .quiz-header {
-            display: flex; justify-content: space-between; align-items: center;
-            width: 100%; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid rgba(167, 139, 250, 0.2);
-        }
-        .q-text { font-size: 1.4rem; font-weight: 700; margin-bottom: 25px; color: white; line-height: 1.4; }
-        .expl-box { margin-top: 20px; padding: 20px; border-radius: 18px; display: none; text-align: left; border-left: 8px solid; font-size: 0.9rem; }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid rgba(167, 139, 250, 0.2); }
+        .q-text { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
+        .expl-box { margin-top: 15px; padding: 15px; border-radius: 15px; display: none; text-align: left; border-left: 6px solid; font-size: 0.85rem; }
 
+        /* Modales */
         .modal { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.9); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(10px); }
-        .modal-body { background: #1e293b; border: 2px solid var(--blue); padding: 40px; border-radius: 40px; max-width: 700px; width: 90%; text-align: center; }
-        .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 25px 0; }
-        .opt-btn { background: #0f172a; border: 1px solid #334155; color: white; padding: 18px; border-radius: 15px; cursor: pointer; font-family: 'JetBrains Mono'; font-size: 1rem; transition: 0.2s; }
-        .opt-btn:hover { border-color: var(--blue); transform: translateY(-3px); }
+        .modal-body { background: #1e293b; border: 2px solid var(--blue); padding: 30px; border-radius: 30px; max-width: 600px; width: 95%; text-align: center; }
+        .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
+        .opt-btn { background: #0f172a; border: 1px solid #334155; color: white; padding: 15px 5px; border-radius: 12px; cursor: pointer; font-family: 'JetBrains Mono'; font-size: 0.9rem; }
 
-        .btn-main { background: var(--emerald); color: var(--bg); border: none; padding: 15px 40px; border-radius: 15px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; font-size: 1rem; margin-top: 15px; }
+        .btn-main { background: var(--emerald); color: var(--bg); border: none; padding: 12px 30px; border-radius: 12px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -103,145 +120,145 @@
 
     <div id="game-container">
         <div id="universal-home" onclick="location.reload()" title="Volver al Inicio">
-            <i class="fas fa-home fa-lg"></i>
+            <i class="fas fa-home"></i>
         </div>
 
+        <!-- Pantalla Inicio -->
         <div id="start-screen" class="overlay-screen">
-            <div class="card animate__animated animate__fadeIn">
-                <div class="flex items-center justify-center mb-6">
-                    <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 mr-4">
-                        <i class="fas fa-atom fa-2x"></i>
-                    </div>
-                    <div class="text-left">
-                        <h1 style="margin:0; line-height:1;">ALGEBRA<br><span style="color:var(--blue)">MASTER</span></h1>
-                    </div>
-                </div>
-                <p class="text-slate-400 font-bold tracking-widest text-xs mb-8 uppercase">Entorno de Simulación Factorial v5.2</p>
-                
+            <div class="card">
+                <h1 class="orbitron text-2xl md:text-4xl font-black mb-2">ALGEBRA <span style="color:var(--blue)">MASTER</span></h1>
+                <p class="text-slate-400 font-bold tracking-widest text-[10px] mb-6 uppercase">Simulación Factorial v5.5</p>
                 <div class="mode-grid">
                     <button class="mode-btn" onclick="initMode('lab')">
                         <i class="fas fa-flask-vial text-emerald-400"></i>
-                        <h2>LAB FACTORIAL</h2>
-                        <span style="font-size:0.7rem; opacity:0.6;">Estabiliza polinomios complejos</span>
+                        <h2>LABORATORIO</h2>
                     </button>
                     <button class="mode-btn" onclick="initMode('quiz')" style="border-color: var(--purple);">
                         <i class="fas fa-brain text-purple-400"></i>
-                        <h2>DESAFÍO TEÓRICO</h2>
-                        <span style="font-size:0.7rem; opacity:0.6;">Test de maestría avanzada</span>
+                        <h2>QUIZ TEÓRICO</h2>
                     </button>
                 </div>
             </div>
         </div>
 
+        <!-- Instrucciones -->
         <div id="instruction-overlay" class="overlay-screen" style="display: none;">
             <div class="card">
-                <h2 id="ins-title" class="font-orbitron text-2xl mb-6 text-blue-400"></h2>
-                <div id="ins-body" class="text-left text-slate-300 leading-relaxed mb-8 space-y-3"></div>
-                <button class="btn-main w-full" id="btn-begin">SISTEMA LISTO: INICIAR</button>
+                <h2 id="ins-title" class="font-orbitron text-xl mb-4 text-blue-400"></h2>
+                <div id="ins-body" class="text-left text-slate-300 leading-relaxed mb-6 space-y-2 text-sm"></div>
+                <button class="btn-main w-full" id="btn-begin">INICIAR PROTOCOLO</button>
             </div>
         </div>
 
+        <!-- Lab HUD -->
         <div id="lab-hud" class="hud">
-            <div class="stat"><i class="fas fa-heart text-red-500 mr-2"></i> ESTABILIDAD: <span id="stability-text">100</span>%</div>
-            <div class="stat"><i class="fas fa-microchip text-blue-400 mr-2"></i> NIVEL: <span id="level-text">1</span>/5</div>
+            <div class="stat"><i class="fas fa-heart text-red-500 mr-1"></i> <span id="stability-text">100</span>%</div>
+            <div class="stat"><i class="fas fa-layer-group text-blue-400 mr-1"></i> <span id="level-text">1</span>/5</div>
         </div>
 
+        <!-- Lab Area -->
         <div id="polynomial-area">
             <div id="poly-val" class="poly-display"></div>
             <div id="poly-hint" class="feedback-msg"></div>
         </div>
 
+        <!-- Lab Controles -->
         <div id="lab-controls" class="controls">
-            <button class="tool" onclick="selectTool('common')"><i class="fas fa-compress-alt"></i><span>F. COMÚN</span></button>
-            <button class="tool" onclick="selectTool('identity')"><i class="fas fa-dna"></i><span>I. NOTABLE</span></button>
+            <button class="tool" onclick="selectTool('common')"><i class="fas fa-compress-alt"></i><span>COMÚN</span></button>
+            <button class="tool" onclick="selectTool('identity')"><i class="fas fa-dna"></i><span>NOTABLE</span></button>
             <button class="tool" onclick="selectTool('ruffini')"><i class="fas fa-table-list"></i><span>RUFFINI</span></button>
         </div>
 
+        <!-- Quiz Area -->
         <div id="quiz-view" class="overlay-screen">
             <div class="quiz-card">
                 <div class="quiz-header">
-                    <span class="stat" style="border-color:var(--purple); color:var(--purple)">PREGUNTA <span id="q-count">1</span></span>
+                    <span class="stat" style="border-color:var(--purple); color:var(--purple)">Q: <span id="q-count">1</span></span>
                     <span class="stat">SCORE: <span id="quiz-score-val">0</span></span>
                 </div>
                 <div id="q-question" class="q-text"></div>
                 <div id="q-options" class="opt-grid"></div>
                 <div id="q-expl" class="expl-box"></div>
-                <button id="btn-next" class="btn-main" style="display:none">CONTINUAR PROTOCOLO <i class="fas fa-arrow-right ml-2"></i></button>
+                <button id="btn-next" class="btn-main mt-4" style="display:none">CONTINUAR <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
 
+        <!-- Modales -->
         <div id="tool-modal" class="modal">
             <div class="modal-body">
-                <h3 id="tool-title" class="font-orbitron text-xl mb-4">SELECCIONAR FACTOR</h3>
+                <h3 id="tool-title" class="font-orbitron text-lg mb-2">SELECCIONAR FACTOR</h3>
                 <div id="opt-container" class="opt-grid"></div>
-                <button class="opt-btn w-full mt-4 border-red-500 text-red-400" onclick="closeToolModal()">CANCELAR</button>
+                <button class="opt-btn w-full mt-2 border-red-500 text-red-400" onclick="closeToolModal()">CANCELAR</button>
             </div>
         </div>
 
         <div id="end-modal" class="modal">
             <div class="modal-body">
-                <i id="end-icon" class="fas fa-trophy fa-4x mb-6 text-yellow-400"></i>
-                <h2 id="end-title" class="font-orbitron text-3xl mb-4">MISIÓN COMPLETADA</h2>
-                <p id="end-message" class="text-slate-400 mb-8 text-lg"></p>
-                <button class="btn-main w-full" onclick="location.reload()">REINICIAR SISTEMA</button>
+                <i id="end-icon" class="fas fa-trophy fa-3x mb-4 text-yellow-400"></i>
+                <h2 id="end-title" class="font-orbitron text-2xl mb-2">MISIÓN COMPLETADA</h2>
+                <p id="end-message" class="text-slate-400 mb-6 text-sm"></p>
+                <button class="btn-main w-full" onclick="location.reload()">REINICIAR</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Forzar scroll arriba para ocultar barras de navegación en algunos navegadores
+        window.scrollTo(0, 1);
+
         const LAB_DATA = [
             { 
-                start: "x² - 36", 
-                steps: [{ type: 'identity', choice: "(x+6)(x-6)", next: "(x+6)(x-6)" }],
+                start: "x² - 49", 
+                steps: [{ type: 'identity', choice: "(x+7)(x-7)", next: "(x+7)(x-7)" }],
                 hints: { 
-                    common: "No hay letras ni números comunes a ambos términos.", 
-                    ruffini: "Ruffini funcionaría, pero hay un camino mucho más rápido: busca cuadrados.", 
-                    identity: "¡Correcto! Es una diferencia de cuadrados: x² - 6².",
-                    wrong_choice: "Esa no es la raíz correcta de 36. Busca un número que al cuadrado sea 36."
+                    common: "No hay letras ni números repetidos en ambos términos.", 
+                    ruffini: "Demasiado complejo. Busca una identidad notable rápida.", 
+                    identity: "¡Correcto! Diferencia de cuadrados: x² - 7².",
+                    wrong_choice: "Busca la raíz cuadrada de 49 para formar los factores."
                 }
             },
             { 
-                start: "x³ - 25x", 
+                start: "x³ - 9x", 
                 steps: [
-                    { type: 'common', choice: "x", next: "x(x² - 25)" },
-                    { type: 'identity', choice: "(x+5)(x-5)", next: "x(x+5)(x-5)" }
+                    { type: 'common', choice: "x", next: "x(x² - 9)" },
+                    { type: 'identity', choice: "(x+3)(x-3)", next: "x(x+3)(x-3)" }
                 ],
                 hints: { 
-                    common: "¡Bien! Siempre saca factor común 'x' si todos los términos la tienen.", 
-                    identity: "Ahora el paréntesis es una diferencia de cuadrados.", 
-                    ruffini: "Primero simplifica con factor común antes de usar Ruffini.",
-                    wrong_choice_common: "Busca la x con el menor exponente para extraerla.",
-                    wrong_choice_identity: "Recuerda que 25 es el cuadrado de 5."
+                    common: "¡Excelente! Extraer la 'x' simplifica el grado del polinomio.", 
+                    identity: "Diferencia de cuadrados en el paréntesis: (x² - 3²).", 
+                    ruffini: "Prueba primero con factor común para reducir el grado.",
+                    wrong_choice_common: "Extrae la x con el exponente más pequeño.",
+                    wrong_choice_identity: "9 es el cuadrado de 3. Usa (a+b)(a-b)."
                 }
             },
             { 
-                start: "x² + 8x + 16", 
-                steps: [{ type: 'identity', choice: "(x+4)²", next: "(x+4)²" }],
+                start: "x² + 12x + 36", 
+                steps: [{ type: 'identity', choice: "(x+6)²", next: "(x+6)²" }],
                 hints: { 
-                    identity: "¡Brillante! Es el cuadrado de una suma: (x+4)².", 
-                    common: "No hay un factor común numérico ni de letra aquí.",
-                    wrong_choice: "Comprueba el doble producto: 2 * x * 4 = 8x. ¡Ahí está la clave!"
+                    identity: "¡Perfecto! Es el cuadrado de una suma: (x+6)².", 
+                    common: "No hay elementos comunes para extraer aquí.",
+                    wrong_choice: "Comprueba: el doble de 6 es 12. ¡Esa es la identidad!"
                 }
             },
             { 
-                start: "x² - 5x + 6", 
-                steps: [{ type: 'ruffini', choice: "Raíz: 2", next: "(x-2)(x-3)" }],
+                start: "x² - 7x + 10", 
+                steps: [{ type: 'ruffini', choice: "Raíz: 2", next: "(x-2)(x-5)" }],
                 hints: { 
-                    ruffini: "Probamos divisores de 6 (1, 2, 3...). El 2 hace que el resto sea 0.", 
-                    identity: "No es una identidad perfecta porque el medio no es el doble producto.",
-                    wrong_choice: "Ese divisor no da resto 0 en la regla de Ruffini. Prueba con otro divisor de 6."
+                    ruffini: "Probamos divisores de 10. El 2 funciona perfectamente.", 
+                    identity: "No encaja con cuadrado perfecto (falta el doble producto).",
+                    wrong_choice: "Esa raíz no da resto 0. Prueba con otro divisor de 10."
                 }
             },
             { 
-                start: "4x³ - 16x", 
+                start: "2x³ - 18x", 
                 steps: [
-                    { type: 'common', choice: "4x", next: "4x(x² - 4)" },
-                    { type: 'identity', choice: "(x+2)(x-2)", next: "4x(x+2)(x-2)" }
+                    { type: 'common', choice: "2x", next: "2x(x² - 9)" },
+                    { type: 'identity', choice: "(x+3)(x-3)", next: "2x(x+3)(x-3)" }
                 ],
                 hints: { 
-                    common: "Extraemos el 4 y la x como factores comunes máximos.", 
-                    identity: "Diferencia de cuadrados en el paréntesis: x² - 2².",
-                    wrong_choice_common: "Ambos términos son divisibles por 4 y por x.",
+                    common: "Saca el 2 y la x como factores comunes.", 
+                    identity: "Identidad notable: resta de cuadrados en el paréntesis.",
+                    wrong_choice_common: "Divide ambos términos por 2 y por x.",
                     wrong_choice_identity: "Recuerda: a² - b² = (a+b)(a-b)."
                 }
             }
@@ -249,25 +266,25 @@
 
         const QUIZ_DATA = [
             {
-                q: "Si la raíz de un polinomio es x = -7, ¿cuál es el factor?",
-                o: ["(x - 7)", "(x + 7)", "x - 0", "7x"],
+                q: "Si la raíz de un polinomio es x = -3, ¿cuál es el factor?",
+                o: ["(x - 3)", "(x + 3)", "x + 0", "3x"],
                 c: 1,
-                e: "¡Correcto! El factor es siempre (x - raíz). Si la raíz es negativa, el factor se convierte en una suma.",
-                w: "Error. El factor cambia el signo de la raíz. Si la raíz es -7, el factor es (x + 7)."
+                e: "¡Correcto! El factor es (x - raíz). Si x = -3, entonces x - (-3) = x + 3.",
+                w: "Incorrecto. Siempre se cambia el signo de la raíz al escribir el factor."
             },
             {
                 q: "¿Qué se puede simplificar en una fracción algebraica?",
-                o: ["Términos que suman", "Cualquier número", "Factores que multiplican", "Nada"],
+                o: ["Términos sumando", "Solo números", "Factores multiplicando", "Todo"],
                 c: 2,
-                e: "¡Exacto! Solo podemos tachar bloques que estén multiplicando a TODO el numerador y denominador.",
-                w: "¡Cuidado! Nunca simplifiques sumas o restas directamente. Primero debes factorizar."
+                e: "¡Exacto! Solo puedes tachar bloques que estén MULTIPLICANDO a todo el nivel.",
+                w: "¡Error fatal! Jamás simplifiques sumas o restas directamente."
             },
             {
-                q: "Para el m.c.m. de polinomios elegimos...",
-                o: ["Solo comunes", "No comunes", "Comunes y no comunes al mayor exponente", "Al menor exponente"],
-                c: 2,
-                e: "¡Dominado! Esa es la regla para asegurar que todos los denominadores estén contenidos.",
-                w: "Fallo. Esa es la regla del m.c.d. Para el m.c.m. necesitamos todo al exponente más alto."
+                q: "El m.c.m. de polinomios se forma con:",
+                o: ["Solo comunes", "Comunes y no comunes al mayor exponente", "Solo no comunes", "Al menor exponente"],
+                c: 1,
+                e: "¡Dominado! Esa es la regla para asegurar que todos los factores están incluidos.",
+                w: "Fallo. Esa es la definición del m.c.d. El m.c.m. necesita TODO al máximo exponente."
             }
         ];
 
@@ -275,11 +292,8 @@
 
         function initMode(m) {
             mode = m;
-            document.getElementById('start-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('start-screen').style.display = 'none';
-                showInstructions();
-            }, 500);
+            document.getElementById('start-screen').style.display = 'none';
+            showInstructions();
         }
 
         function showInstructions() {
@@ -289,17 +303,18 @@
             overlay.style.display = 'flex';
 
             if (mode === 'lab') {
-                title.innerHTML = "<i class='fas fa-flask-vial mr-2'></i> LAB DE ESTABILIZACIÓN";
+                title.innerHTML = "ESTABILIZACIÓN";
                 body.innerHTML = `
-                    <p><i class='fas fa-check text-emerald-400 mr-2'></i> <b>MISIÓN:</b> Descomponer polinomios inestables.</p>
-                    <p><i class='fas fa-check text-emerald-400 mr-2'></i> <b>ORDEN:</b> 1º Factor Común, 2º Identidades, 3º Ruffini.</p>
-                    <p><i class='fas fa-check text-emerald-400 mr-2'></i> <b>AYUDA:</b> Si fallas, lee la pista del sistema para corregir el rumbo.</p>
+                    <p>• <b>MISIÓN:</b> Descomponer polinomios.</p>
+                    <p>• <b>ORDEN:</b> 1º Común, 2º Notable, 3º Ruffini.</p>
+                    <p>• <b>PISTAS:</b> Si fallas, lee el mensaje del sistema.</p>
                 `;
             } else {
-                title.innerHTML = "<i class='fas fa-brain mr-2'></i> DESAFÍO DE MAESTRÍA";
+                title.innerHTML = "DESAFÍO TEÓRICO";
                 body.innerHTML = `
-                    <p><i class='fas fa-check text-purple-400 mr-2'></i> <b>MISIÓN:</b> Superar el test teórico de alto nivel.</p>
-                    <p><i class='fas fa-check text-purple-400 mr-2'></i> <b>LOGROS:</b> 100 puntos por cada acierto matemático.</p>
+                    <p>• Supera el test de maestría.</p>
+                    <p>• +100 puntos por cada acierto.</p>
+                    <p>• Lee las explicaciones finales.</p>
                 `;
             }
             document.getElementById('btn-begin').onclick = startActualGame;
@@ -321,7 +336,7 @@
         function loadLabLevel() {
             const data = LAB_DATA[level];
             document.getElementById('poly-val').innerText = data.start;
-            document.getElementById('poly-hint').innerText = "Analizando estructura... Sistema estable.";
+            document.getElementById('poly-hint').innerText = "Analizando estructura...";
             document.getElementById('poly-hint').style.color = "#94a3b8";
             document.getElementById('level-text').innerText = level + 1;
             step = 0;
@@ -336,14 +351,14 @@
 
             let opts = [];
             if (t === 'common') {
-                title.innerText = "EXTRAER COMPONENTE";
-                opts = ["x", "2x", "4x", "4", "x²"].sort(() => Math.random() - 0.5);
+                title.innerText = "EXTRACTOR";
+                opts = ["x", "2x", "4x", "7", "x²"].sort(() => Math.random() - 0.5);
             } else if (t === 'identity') {
-                title.innerText = "IDENTIDAD DETECTADA";
-                opts = ["(x+6)(x-6)", "(x+5)(x-5)", "(x+4)²", "(x+3)²", "(x+2)(x-2)"].sort(() => Math.random() - 0.5);
+                title.innerText = "NOTABLE";
+                opts = ["(x+7)(x-7)", "(x+6)²", "(x-6)²", "(x+3)(x-3)", "(x-3)²"].sort(() => Math.random() - 0.5);
             } else if (t === 'ruffini') {
-                title.innerText = "BUSCAR RAÍZ";
-                opts = ["Raíz: 1", "Raíz: 2", "Raíz: 3", "Raíz: -1", "Raíz: -2"].sort(() => Math.random() - 0.5);
+                title.innerText = "RAÍZ";
+                opts = ["Raíz: 1", "Raíz: 2", "Raíz: 5", "Raíz: -1", "Raíz: -2"].sort(() => Math.random() - 0.5);
             }
 
             opts.forEach(o => {
@@ -369,24 +384,17 @@
                 if (step >= data.steps.length) {
                     setTimeout(() => {
                         level++;
-                        if (level >= LAB_DATA.length) finishGame(true, "¡MAESTRÍA ALGEBRAICA! Has estabilizado todos los sectores.");
+                        if (level >= LAB_DATA.length) finishGame(true, "¡MAESTRÍA! Polinomios estabilizados.");
                         else loadLabLevel();
-                    }, 1500);
+                    }, 1200);
                 }
             } else {
                 stability -= 20;
                 document.getElementById('stability-text').innerText = stability;
-                
-                let failureMsg = "";
-                if (t !== currentStep.type) {
-                    failureMsg = data.hints[t] || "Esa herramienta no es la adecuada para este paso.";
-                } else {
-                    failureMsg = data.hints[`wrong_choice${step > 0 ? '_' + currentStep.type : ''}`] || "Opción incorrecta. Revisa los cálculos.";
-                }
-
-                document.getElementById('poly-hint').innerText = failureMsg;
+                let failureMsg = (t !== currentStep.type) ? data.hints[t] : data.hints[`wrong_choice${step > 0 ? '_' + currentStep.type : ''}`];
+                document.getElementById('poly-hint').innerText = failureMsg || "Error técnico detectado.";
                 document.getElementById('poly-hint').style.color = "var(--red)";
-                if (stability <= 0) finishGame(false, "SISTEMA COLAPSADO. La inestabilidad ha destruido el laboratorio.");
+                if (stability <= 0) finishGame(false, "SISTEMA CAÍDO. Núcleo destruido.");
             }
         }
 
@@ -429,12 +437,12 @@
                 expl.style.borderColor = "var(--red)";
                 expl.style.color = "var(--red)";
                 btns[idx].style.background = "var(--red)";
-                btns[q.c].style.border = "3px solid var(--emerald)";
+                btns[q.c].style.border = "2px solid var(--emerald)";
             }
 
             next.onclick = () => {
                 level++;
-                if (level >= QUIZ_DATA.length) finishGame(true, `Test finalizado. Tu puntuación de maestría es ${score}.`);
+                if (level >= QUIZ_DATA.length) finishGame(true, `Test finalizado. Score: ${score}.`);
                 else loadQuizQuestion();
             };
         }
@@ -447,29 +455,33 @@
             document.getElementById('end-message').innerText = msg;
             const icon = document.getElementById('end-icon');
             if (win) {
-                icon.className = "fas fa-medal fa-4x mb-6 text-yellow-400";
-                document.getElementById('end-title').innerText = "MISIÓN COMPLETADA";
+                icon.className = "fas fa-medal fa-3x mb-4 text-yellow-400";
+                document.getElementById('end-title').innerText = "SISTEMA ESTABLE";
             } else {
-                icon.className = "fas fa-radiation fa-4x mb-6 text-red-500";
-                document.getElementById('end-title').innerText = "SISTEMA CAÍDO";
+                icon.className = "fas fa-radiation fa-3x mb-4 text-red-500";
+                document.getElementById('end-title').innerText = "COLAPSO TOTAL";
             }
         }
 
+        // Fondo Decorativo Phaser
         new Phaser.Game({
             type: Phaser.AUTO, parent: 'game-container', width: window.innerWidth, height: window.innerHeight, transparent: true,
             scene: {
                 create() {
                     this.add.particles(0, 0, 'dot', {
                         x: { min: 0, max: window.innerWidth }, y: { min: 0, max: window.innerHeight },
-                        speed: 15, scale: { start: 0.2, end: 0 }, alpha: { start: 0.2, end: 0 },
-                        lifespan: 5000, frequency: 200, blendMode: 'ADD'
+                        speed: 10, scale: { start: 0.15, end: 0 }, alpha: { start: 0.2, end: 0 },
+                        lifespan: 6000, frequency: 250, blendMode: 'ADD'
                     });
                 }
             }
         });
 
         window.addEventListener('resize', () => {
-            if (window.innerWidth > window.innerHeight) location.reload();
+            if (window.innerWidth > window.innerHeight) {
+                // Pequeño retardo para asegurar que el navegador ha terminado de redimensionar
+                setTimeout(() => location.reload(), 100);
+            }
         });
     </script>
 </body>
