@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Modal Quest - Mobile Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.min.js"></script>
+    <style>
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: 'Segoe UI', sans-serif; overflow: hidden; touch-action: none; }
+        #game-container { width: 100%; height: 100%; max-width: 800px; max-height: 600px; }
+    </style>
+</head>
+<body>
+    <div id="game-container"></div>
+
+    <script>
+        class MainScene extends Phaser.Scene {
+            constructor() {
+                super('MainScene');
+                this.score = 0;
+                this.lives = 3;
+                this.level = 1;
+                this.questionsPool = [];
+                this.currentQuestion = null;
+                this.options = [];
+            }
+
+            init() {
+                this.score = 0;
+                this.lives = 3;
+                this.level = 1;
+                this.questionsPool = this.getQuestions();
+                Phaser.Utils.Array.Shuffle(this.questionsPool);
+            }
+
+            preload() {}
+
+            create() {
+                const { width, height } = this.scale;
+
+                // Background Gradient simulation
+                let bg = this.add.graphics();
+                bg.fillGradientStyle(0x0f172a, 0x0f172a, 0x1e293b, 0x1e293b, 1);
+                bg.fillRect(0, 0, width, height);
+
+                // UI Header
+                this.uiHeader = this.add.graphics();
+                this.uiHeader.fillStyle(0x1e293b, 0.9);
+                this.uiHeader.fillRect(0, 0, width, 80);
+                this.uiHeader.lineStyle(2, 0x3b82f6);
+                this.uiHeader.strokeLineShape(new Phaser.Geom.Line(0, 80, width, 80));
+
+                this.scoreText = this.add.text(20, 25, 'SCORE: 0', { fontSize: '24px', color: '#fbbf24', fontStyle: 'bold' });
+                this.livesText = this.add.text(width / 2, 25, '❤️❤️❤️', { fontSize: '24px' }).setOrigin(0.5);
+                this.levelText = this.add.text(width - 20, 25, 'LVL 1', { fontSize: '24px', color: '#89b4fa' }).setOrigin(1, 0);
+
+                // Sentence Area (Middle)
+                this.sentenceBox = this.add.graphics();
+                this.sentenceBox.fillStyle(0xffffff, 0.05);
+                this.sentenceBox.fillRoundedRect(50, 120, width - 100, 120, 15);
+                
+                this.sentenceText = this.add.text(width / 2, 180, '', { 
+                    fontSize: '28px', color: '#fff', align: 'center', wordWrap: { width: width - 140 }, fontStyle: 'bold' 
+                }).setOrigin(0.5);
+
+                this.categoryLabel = this.add.text(width / 2, 260, '', { 
+                    fontSize: '18px', color: '#94a3b8', fontStyle: 'italic' 
+                }).setOrigin(0.5);
+
+                this.nextQuestion();
+            }
+
+            update() {
+                const { height } = this.scale;
+                this.options.forEach(opt => {
+                    opt.y += 1.0 + (this.level * 0.4);
+                    
+                    if (opt.y > height + 50) {
+                        this.destroyOption(opt);
+                        if (this.options.length === 0) {
+                            this.handleFailure(true); // Missed
+                        }
+                    }
+                });
+            }
+
+            getQuestions() {
+                return [
+                    // A huge pool of 40+ questions
+                    { s: "I ____ play the piano when I was 5.", a: "could", o: ["can", "could", "must"], cat: "Ability (Past)" },
+                    { s: "Birds ____ fly, but dogs can't.", a: "can", o: ["can", "should", "might"], cat: "Ability (General)" },
+                    { s: "____ I go to the bathroom, please?", a: "May", o: ["Will", "May", "Must"], cat: "Permission (Formal)" },
+                    { s: "You ____ eat more vegetables.", a: "should", o: ["mustn't", "should", "could"], cat: "Advice" },
+                    { s: "You ____ see a doctor. You look ill!", a: "had better", o: ["can", "may", "had better"], cat: "Strong Advice" },
+                    { s: "I ____ wear a uniform at work.", a: "have to", o: ["can", "have to", "might"], cat: "Obligation (External)" },
+                    { s: "You ____ touch that! It's dangerous.", a: "mustn't", o: ["don't have to", "mustn't", "should"], cat: "Prohibition" },
+                    { s: "He has a Ferrari. He ____ be rich.", a: "must", o: ["can", "must", "should"], cat: "Deduction (Certainty)" },
+                    { s: "It's 40°C. It ____ be snowing.", a: "can't", o: ["might", "must", "can't"], cat: "Deduction (Negative)" },
+                    { s: "Tomorrow is Sunday. I ____ work.", a: "don't have to", o: ["mustn't", "don't have to", "can't"], cat: "Lack of Necessity" },
+                    { s: "You ____ bring a gift, it's optional.", a: "needn't", o: ["mustn't", "needn't", "should"], cat: "Lack of Necessity (Formal)" },
+                    { s: "I ____ live in London years ago.", a: "used to", o: ["used to", "would", "shall"], cat: "Past State" },
+                    { s: "Every summer we ____ play football.", a: "would", o: ["should", "must", "would"], cat: "Past Repeated Action" },
+                    { s: "You ______ driven so fast! It was wet.", a: "shouldn't have", o: ["shouldn't have", "mustn't", "couldn't"], cat: "Past Criticism" },
+                    { s: "He ______ forgotten the keys at home.", a: "must have", o: ["must have", "should have", "might"], cat: "Past Deduction" },
+                    { s: "I ______ bought milk. We already had some.", a: "needn't have", o: ["mustn't have", "needn't have", "couldn't have"], cat: "Past Lack of Necessity" },
+                    { s: "____ we dance, my lady?", a: "Shall", o: ["Shall", "Will", "Would"], cat: "Formal Suggestion" },
+                    { s: "I ____ to work harder next year.", a: "will have", o: ["must", "will have", "can"], cat: "Future Obligation" },
+                    { s: "She ____ have been at home yesterday.", a: "might", o: ["might", "must", "can"], cat: "Past Possibility" },
+                    { s: "You ____ better hurry up!", a: "had", o: ["must", "had", "should"], cat: "Structure" },
+                    { s: "We ____ to arrive at 8 AM sharp.", a: "ought", o: ["should", "must", "ought"], cat: "Moral Advice" },
+                    { s: "I ____ not speak French very well.", a: "can", o: ["can", "must", "should"], cat: "Ability (Negative)" },
+                    { s: "They ____ be exhausted after the hike.", a: "must", o: ["can", "must", "should"], cat: "Deduction" },
+                    { s: "____ you like some tea?", a: "Would", o: ["Will", "Would", "Shall"], cat: "Offer" },
+                    { s: "I ____ help you with your homework.", a: "can", o: ["can", "must", "might"], cat: "Offer" },
+                    { s: "You ____ not smoke here.", a: "must", o: ["must", "don't have to", "can"], cat: "Prohibition" },
+                    { s: "I ____ walk when I was 1 year old.", a: "could", o: ["can", "could", "might"], cat: "Ability (Past)" },
+                    { s: "We ____ go to the beach tomorrow.", a: "might", o: ["might", "must", "should"], cat: "Possibility" },
+                    { s: "You ____ study for the test.", a: "should", o: ["should", "can", "might"], cat: "Advice" },
+                    { s: "____ you open the door, please?", a: "Could", o: ["Could", "Must", "Should"], cat: "Polite Request" },
+                    { s: "I ____ to do it now.", a: "have", o: ["must", "have", "can"], cat: "Obligation" },
+                    { s: "It ____ rain this afternoon.", a: "may", o: ["may", "must", "should"], cat: "Possibility" },
+                    { s: "You ____ not worry about it.", a: "should", o: ["should", "must", "might"], cat: "Advice" },
+                    { s: "____ I help you?", a: "Shall", o: ["Shall", "Must", "Would"], cat: "Offer" },
+                    { s: "They ____ have arrived by now.", a: "should", o: ["should", "can", "might"], cat: "Expectation" },
+                    { s: "I ____ be late for work today.", a: "might", o: ["might", "must", "should"], cat: "Possibility" },
+                    { s: "You ____ to tell the truth.", a: "ought", o: ["ought", "must", "should"], cat: "Advice" },
+                    { s: "____ you help me with this box?", a: "Will", o: ["Will", "Must", "Should"], cat: "Request" },
+                    { s: "I ____ go to the dentist yesterday.", a: "had to", o: ["must", "had to", "should"], cat: "Past Obligation" },
+                    { s: "It ____ be him at the door.", a: "could", o: ["could", "must", "should"], cat: "Possibility" }
+                ];
+            }
+
+            nextQuestion() {
+                if (this.questionsPool.length === 0) {
+                    this.scene.start('GameOverScene', { win: true, score: this.score });
+                    return;
+                }
+
+                this.currentQuestion = this.questionsPool.pop();
+                this.sentenceText.setText(this.currentQuestion.s.replace("____", "_______"));
+                this.categoryLabel.setText("GRAMMAR: " + this.currentQuestion.cat);
+                
+                this.options.forEach(o => o.destroy());
+                this.options = [];
+
+                let shuffled = [...this.currentQuestion.o].sort(() => Math.random() - 0.5);
+                const { width } = this.scale;
+
+                shuffled.forEach((text, index) => {
+                    let container = this.add.container(width * (0.2 + (index * 0.3)), -50);
+                    
+                    let bg = this.add.graphics();
+                    bg.fillStyle(0x3b82f6, 1);
+                    bg.fillRoundedRect(-90, -35, 180, 70, 10);
+                    bg.lineStyle(3, 0x60a5fa);
+                    bg.strokeRoundedRect(-90, -35, 180, 70, 10);
+
+                    let label = this.add.text(0, 0, text, { 
+                        fontSize: '22px', color: '#fff', fontStyle: 'bold' 
+                    }).setOrigin(0.5);
+
+                    container.add([bg, label]);
+                    
+                    let hitArea = new Phaser.Geom.Rectangle(-90, -35, 180, 70);
+                    container.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains);
+                    
+                    container.on('pointerdown', () => this.checkAnswer(text, container));
+
+                    this.options.push(container);
+                });
+            }
+
+            checkAnswer(selected, container) {
+                if (selected === this.currentQuestion.a) {
+                    this.score += 100;
+                    this.scoreText.setText('SCORE: ' + this.score);
+                    this.level = Math.floor(this.score / 600) + 1;
+                    this.levelText.setText('LVL ' + this.level);
+                    
+                    this.cameras.main.flash(200, 34, 197, 94, 0.2);
+                    this.nextQuestion();
+                } else {
+                    this.handleFailure(false);
+                }
+            }
+
+            handleFailure(isMiss) {
+                this.lives--;
+                this.updateLivesText();
+                this.cameras.main.shake(200, 0.01);
+                
+                if (this.lives <= 0) {
+                    this.scene.start('GameOverScene', { win: false, score: this.score });
+                } else {
+                    this.nextQuestion();
+                }
+            }
+
+            updateLivesText() {
+                let h = "";
+                for(let i=0; i<3; i++) h += (i < this.lives) ? "❤️" : "🖤";
+                this.livesText.setText(h);
+            }
+
+            destroyOption(opt) {
+                this.options = this.options.filter(o => o !== opt);
+                opt.destroy();
+            }
+        }
+
+        class MenuScene extends Phaser.Scene {
+            constructor() { super('MenuScene'); }
+            create() {
+                const { width, height } = this.scale;
+                let bg = this.add.graphics();
+                bg.fillGradientStyle(0x1e293b, 0x1e293b, 0x0f172a, 0x0f172a, 1);
+                bg.fillRect(0, 0, width, height);
+
+                this.add.text(width / 2, height * 0.3, 'MODAL QUEST', { 
+                    fontSize: '64px', color: '#fbbf24', fontStyle: 'bold' 
+                }).setOrigin(0.5);
+
+                this.add.text(width / 2, height * 0.45, 'The Ultimate Grammar Challenge', { 
+                    fontSize: '24px', color: '#94a3b8' 
+                }).setOrigin(0.5);
+
+                let startBtn = this.add.graphics();
+                startBtn.fillStyle(0x2563eb, 1);
+                startBtn.fillRoundedRect(width/2 - 120, height*0.6, 240, 70, 15);
+                
+                this.add.text(width / 2, height * 0.6 + 35, 'PLAY NOW', { 
+                    fontSize: '32px', color: '#fff', fontStyle: 'bold' 
+                }).setOrigin(0.5);
+
+                let hitArea = new Phaser.Geom.Rectangle(width/2 - 120, height*0.6, 240, 70);
+                let interactive = this.add.zone(width/2, height*0.6 + 35, 240, 70).setInteractive({ useHandCursor: true });
+                
+                interactive.on('pointerdown', () => this.scene.start('MainScene'));
+            }
+        }
+
+        class GameOverScene extends Phaser.Scene {
+            constructor() { super('GameOverScene'); }
+            create(data) {
+                const { width, height } = this.scale;
+                let bg = this.add.graphics();
+                bg.fillGradientStyle(0x0f172a, 0x0f172a, 0x1e293b, 0x1e293b, 1);
+                bg.fillRect(0, 0, width, height);
+
+                let title = data.win ? 'MISSION COMPLETE' : 'GAME OVER';
+                let color = data.win ? '#4ade80' : '#f87171';
+
+                this.add.text(width / 2, height * 0.3, title, { 
+                    fontSize: '52px', color: color, fontStyle: 'bold' 
+                }).setOrigin(0.5);
+
+                this.add.text(width / 2, height * 0.45, 'FINAL SCORE: ' + data.score, { 
+                    fontSize: '36px', color: '#fff' 
+                }).setOrigin(0.5);
+
+                let replayBtn = this.add.graphics();
+                replayBtn.fillStyle(0x3b82f6, 1);
+                replayBtn.fillRoundedRect(width/2 - 100, height*0.6, 200, 60, 10);
+                
+                this.add.text(width / 2, height * 0.6 + 30, 'RETRY', { 
+                    fontSize: '24px', color: '#fff', fontStyle: 'bold' 
+                }).setOrigin(0.5);
+
+                let interactive = this.add.zone(width/2, height*0.6 + 30, 200, 60).setInteractive({ useHandCursor: true });
+                interactive.on('pointerdown', () => this.scene.start('MainScene'));
+            }
+        }
+
+        const config = {
+            type: Phaser.AUTO,
+            parent: 'game-container',
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH,
+                width: 800,
+                height: 600
+            },
+            scene: [MenuScene, MainScene, GameOverScene]
+        };
+
+        const game = new Phaser.Game(config);
+    </script>
+</body>
+</html>
