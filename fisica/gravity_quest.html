@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Gravity Master PRO - 4º ESO</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.60.0/phaser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { margin: 0; background: #020617; color: white; font-family: 'Poppins', sans-serif; overflow: hidden; touch-action: none; }
+        #game-container { width: 100vw; height: 100vh; position: relative; }
+        
+        .ui-top { position: absolute; top: 15px; width: 100%; display: flex; justify-content: space-around; z-index: 10; pointer-events: none; }
+        .stat { background: rgba(15, 23, 42, 0.9); padding: 12px 20px; border-radius: 15px; border: 2px solid #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); font-weight: bold; }
+        
+        .feedback-toast { 
+            position: absolute; top: 100px; left: 50%; transform: translateX(-50%); 
+            background: rgba(0,0,0,0.8); padding: 15px 25px; border-radius: 12px; 
+            font-size: 14px; text-align: center; border-left: 5px solid #38bdf8;
+            display: none; z-index: 20; width: 80%; animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+        .controls { 
+            position: absolute; bottom: 0; width: 100%; background: linear-gradient(transparent, #0f172a 30%); 
+            padding: 30px 20px 40px; box-sizing: border-box; z-index: 10;
+        }
+        
+        .slider-wrap { margin-bottom: 20px; }
+        .label-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; font-weight: bold; color: #38bdf8; text-transform: uppercase; }
+        
+        input[type=range] { width: 100%; height: 12px; border-radius: 10px; background: #1e293b; outline: none; -webkit-appearance: none; border: 1px solid #334155; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 35px; height: 35px; background: #38bdf8; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+
+        #quiz-overlay { 
+            position: absolute; inset: 0; background: rgba(2, 6, 23, 0.98); 
+            display: none; flex-direction: column; align-items: center; justify-content: center; 
+            z-index: 100; padding: 30px; 
+        }
+        .quiz-card { background: #1e293b; padding: 40px; border-radius: 30px; border: 3px solid #38bdf8; width: 90%; max-width: 450px; text-align: center; }
+        .btn-opt { background: #38bdf8; color: #020617; border: none; padding: 18px; border-radius: 15px; font-weight: 800; margin: 10px 0; width: 100%; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <div class="ui-top">
+            <div class="stat"><i class="fas fa-satellite text-blue-400"></i> <span id="score">0</span></div>
+            <div class="stat"><i class="fas fa-shield-heart text-red-500"></i> <span id="lives">3</span></div>
+        </div>
+
+        <div id="feedback" class="feedback-toast">Mensaje de Física</div>
+
+        <div id="quiz-overlay">
+            <div class="quiz-card">
+                <i class="fas fa-brain text-purple-400 fa-3x mb-4"></i>
+                <h2 id="quiz-question" style="font-size: 20px; margin-bottom: 25px;">Pregunta</h2>
+                <div id="quiz-options"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="slider-wrap">
+                <div class="label-row"><span>Masa del Planeta (M)</span> <span id="val-mass">50</span></div>
+                <input type="range" id="mass-slider" min="10" max="150" value="50">
+            </div>
+            <div class="slider-wrap">
+                <div class="label-row"><span>Radio de Órbita (r)</span> <span id="val-radius">200</span></div>
+                <input type="range" id="radius-slider" min="120" max="350" value="200">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Audio Engine
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, type, duration) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        const config = {
+            type: Phaser.AUTO,
+            parent: 'game-container',
+            width: window.innerWidth,
+            height: window.innerHeight,
+            transparent: true,
+            physics: { default: 'arcade', arcade: { gravity: { y: 0 } } },
+            scene: { preload: preload, create: create, update: update }
+        };
+
+        const game = new Phaser.Game(config);
+        let planet, asteroids, targetOrbit, particles;
+        let score = 0, lives = 3, mass = 50, radius = 200;
+
+        function preload() {
+            let graphics = this.make.graphics({ x: 0, y: 0, add: false });
+            // Planeta con degradado
+            graphics.fillGradientStyle(0x0ea5e9, 0x38bdf8, 0x0284c7, 0x0c4a6e, 1);
+            graphics.fillCircle(50, 50, 50);
+            graphics.generateTexture('planet', 100, 100);
+            graphics.clear();
+            // Asteroide
+            graphics.fillStyle(0x94a3b8, 1);
+            graphics.fillCircle(10, 10, 10);
+            graphics.generateTexture('asteroid', 20, 20);
+        }
+
+        function create() {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2 - 80;
+
+            // Estrellas de fondo
+            this.add.particles(0, 0, 'asteroid', {
+                x: { min: 0, max: window.innerWidth },
+                y: { min: 0, max: window.innerHeight },
+                scale: { min: 0.01, max: 0.05 },
+                alpha: { min: 0.2, max: 0.5 },
+                quantity: 100,
+                lifespan: 0
+            });
+
+            planet = this.physics.add.staticImage(cx, cy, 'planet');
+            targetOrbit = this.add.graphics();
+            asteroids = this.physics.add.group();
+
+            this.physics.add.overlap(planet, asteroids, (p, a) => {
+                a.destroy();
+                lives--;
+                updateUI();
+                showFeedback("¡CHOQUE! Fuerza G excesiva. Radio muy corto o Masa muy alta.", "#ef4444");
+                playTone(100, 'sawtooth', 0.4);
+                this.cameras.main.shake(200, 0.02);
+                checkGameOver();
+            });
+
+            this.time.addEvent({ delay: 3500, callback: spawnAsteroid, callbackScope: this, loop: true });
+
+            // Handlers
+            document.getElementById('mass-slider').oninput = (e) => { 
+                mass = e.target.value; 
+                document.getElementById('val-mass').innerText = mass;
+            };
+            document.getElementById('radius-slider').oninput = (e) => { 
+                radius = parseInt(e.target.value); 
+                document.getElementById('val-radius').innerText = radius;
+            };
+        }
+
+        function spawnAsteroid() {
+            const side = Math.random() > 0.5 ? -50 : window.innerWidth + 50;
+            const asteroid = asteroids.create(side, Math.random() * 400, 'asteroid');
+            asteroid.setVelocity(side < 0 ? 120 : -120, 60);
+        }
+
+        function update() {
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2 - 80;
+
+            targetOrbit.clear();
+            targetOrbit.lineStyle(3, 0x38bdf8, 0.4);
+            targetOrbit.strokeCircle(cx, cy, radius);
+
+            asteroids.children.iterate((a) => {
+                if (!a) return;
+                const dx = cx - a.x, dy = cy - a.y;
+                const distSq = dx*dx + dy*dy, dist = Math.sqrt(distSq);
+                const force = (mass * 600) / distSq;
+                
+                a.body.acceleration.x = (dx / dist) * force * 150;
+                a.body.acceleration.y = (dy / dist) * force * 150;
+
+                // Lógica de Captura
+                if (Math.abs(dist - radius) < 15 && a.body.speed < 180) {
+                    a.destroy();
+                    score += 10;
+                    showFeedback("¡CAPTURA ÉXITO! Equilibrio entre Masa y Distancia logrado.", "#10b981");
+                    playTone(600, 'sine', 0.2);
+                    updateUI();
+                    if (score % 50 === 0) startQuiz();
+                }
+
+                if (dist > 800) {
+                    a.destroy();
+                    showFeedback("¡ESCAPÓ! Gravedad insuficiente para retener la inercia.", "#94a3b8");
+                    playTone(200, 'sine', 0.1);
+                }
+            });
+        }
+
+        function showFeedback(txt, color) {
+            const el = document.getElementById('feedback');
+            el.innerText = txt;
+            el.style.borderLeftColor = color;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 3000);
+        }
+
+        function updateUI() {
+            document.getElementById('score').innerText = score;
+            document.getElementById('lives').innerText = lives;
+        }
+
+        function checkGameOver() {
+            if (lives <= 0) {
+                alert("MISIÓN FALLIDA. Puntuación final: " + score);
+                location.reload();
+            }
+        }
+
+        const questions = [
+            { q: "Si duplicas la distancia entre masas, la Fuerza...", a: ["Se divide por 4", "Se divide por 2", "No cambia"], c: 0 },
+            { q: "La masa se mide en kg, pero el PESO se mide en...", a: ["Newtons", "Kilogramos", "Julios"], c: 0 },
+            { q: "¿Qué pesa más en la Luna?", a: ["Pesan igual", "1kg de hierro", "1kg de plumas"], c: 0 },
+            { q: "¿Por qué orbitan los satélites?", a: ["Por caída libre perpetua", "Porque no hay gravedad", "Por motores"], c: 0 },
+            { q: "¿Qué ley dice que las órbitas son elipses?", a: ["1ª Ley de Kepler", "2ª Ley de Kepler", "Ley de Newton"], c: 0 },
+            { q: "¿Quién midió por primera vez la constante G?", a: ["Henry Cavendish", "Isaac Newton", "Albert Einstein"], c: 0 },
+            { q: "¿Dónde pesarías MENOS?", a: ["En la Luna", "En Marte", "En la Tierra"], c: 0 },
+            { q: "A mayor distancia del Sol, el planeta va...", a: ["Más lento", "Más rápido", "Igual"], c: 1 },
+            { q: "¿Qué nombre recibe el punto más cercano al Sol?", a: ["Perihelio", "Afelio", "Apogeo"], c: 0 },
+            { q: "La gravedad en la Tierra (g) es aproximadamente...", a: ["9,8 m/s²", "1,6 m/s²", "24,8 m/s²"], c: 0 },
+            { q: "¿Qué atrae más, el Sol a la Tierra o la Tierra al Sol?", a: ["Atraen con igual fuerza", "El Sol atrae más", "La Tierra atrae más"], c: 0 },
+            { q: "Si la masa de la Tierra se duplicara, tu PESO...", a: ["Se duplicaría", "Se dividiría por 2", "Se cuadruplicaría"], c: 0 },
+            { q: "¿Qué pasaría con tu MASA en Júpiter?", a: ["Seguiría siendo la misma", "Aumentaría mucho", "Disminuiría"], c: 0 },
+            { q: "Los satélites Geoestacionarios están siempre...", a: ["Sobre el mismo punto", "Sobre los Polos", "Cambiando de lugar"], c: 0 }
+        ];
+
+        function startQuiz() {
+            game.scene.pause('default');
+            const quiz = questions[Math.floor(Math.random() * questions.length)];
+            const overlay = document.getElementById('quiz-overlay');
+            const qEl = document.getElementById('quiz-question');
+            const optsEl = document.getElementById('quiz-options');
+
+            overlay.style.display = 'flex';
+            qEl.innerText = quiz.q;
+            optsEl.innerHTML = "";
+
+            quiz.a.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "btn-opt";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    if (idx === quiz.c) {
+                        score += 30;
+                        showFeedback("¡CORRECTO! +30 Puntos", "#10b981");
+                        playTone(800, 'sine', 0.3);
+                    } else {
+                        lives--;
+                        showFeedback("ERROR. Repasa las Leyes de Newton.", "#ef4444");
+                        playTone(100, 'sawtooth', 0.5);
+                    }
+                    updateUI();
+                    overlay.style.display = 'none';
+                    game.scene.resume('default');
+                };
+                optsEl.appendChild(btn);
+            });
+        }
+
+        window.addEventListener('resize', () => game.scale.resize(window.innerWidth, window.innerHeight));
+    </script>
+</body>
+</html>

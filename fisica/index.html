@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMO: Proyecto Código Cosmos - Gravitación 4º ESO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'JetBrains Mono', monospace; background-color: #f1f5f9; color: #1e293b; }
+        .header-font { font-family: 'Montserrat', sans-serif; }
+        .mission-card { background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 4px 4px 0px #cbd5e1; }
+        .step-number { background: #3b82f6; color: white; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: bold; margin-right: 12px; flex-shrink: 0; }
+        .formula { background: #f8fafc; border-left: 4px solid #3b82f6; padding: 12px; font-size: 1.1rem; margin: 10px 0; }
+        .checklist-item { display: flex; align-items: center; margin-bottom: 10px; cursor: pointer; }
+        .checklist-item input { margin-right: 12px; width: 18px; height: 18px; }
+        .warning { background: #fff7ed; border: 2px solid #fb923c; border-radius: 8px; padding: 15px; color: #9a3412; }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- HEADER -->
+        <header class="mb-12 border-b-4 border-slate-900 pb-6 text-center md:text-left">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h1 class="header-font text-4xl font-black uppercase tracking-tighter text-slate-900">PMO: Proyecto Código Cosmos</h1>
+                    <p class="text-slate-500 font-bold mt-2 underline">PLAN DE MISIÓN OPERATIVA • FÍSICA Y QUÍMICA 4º ESO</p>
+                </div>
+                <div class="bg-slate-900 text-white p-4 rounded-lg text-center">
+                    <p class="text-[10px] font-bold uppercase tracking-widest">Estado de Misión</p>
+                    <p class="text-green-400 font-bold">ACTIVA</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- INTRO -->
+        <div class="mission-card bg-slate-900 text-white border-none shadow-none">
+            <h2 class="header-font text-xl mb-3 uppercase tracking-wider"><i class="fas fa-bullseye text-red-500 mr-2"></i> Objetivo de la Misión</h2>
+            <p class="text-sm leading-relaxed opacity-90">
+                Tu objetivo no es solo aprobar un examen. Al finalizar este plan, habrás dominado las leyes que mantienen unido al Universo. Serás capaz de calcular la fuerza de un planeta, entender el ballet de los satélites y diferenciar la masa del peso como un auténtico astrofísico.
+            </p>
+        </div>
+
+        <!-- HOJA DE RUTA -->
+        <h2 class="header-font text-2xl mb-6 uppercase border-l-8 border-blue-600 pl-4">Fases de Entrenamiento</h2>
+        
+        <div class="mission-card flex items-start">
+            <div class="step-number">01</div>
+            <div>
+                <h3 class="font-bold text-lg mb-2">Inmersión Teórica (Presentación Master)</h3>
+                <p class="text-sm text-slate-600 mb-4">Abre el archivo <span class="font-bold text-blue-600">gravitacion_4eso_reveal.html</span>. Es tu briefing inicial.</p>
+                <ul class="text-xs space-y-2 list-disc pl-4 text-slate-500">
+                    <li>Fíjate en el "Duelo Histórico" entre Aristóteles y Newton.</li>
+                    <li>Analiza por qué los astronautas flotan (Spoiler: no es por falta de gravedad).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mission-card flex items-start">
+            <div class="step-number">02</div>
+            <div>
+                <h3 class="font-bold text-lg mb-2">Análisis de Datos (Infografía PRO)</h3>
+                <p class="text-sm text-slate-600 mb-4">Estudia la <span class="font-bold text-purple-600">infografia_gravitacion_4eso.html</span>.</p>
+                <ul class="text-xs space-y-2 list-disc pl-4 text-slate-500">
+                    <li>Memoriza la sección "Protocolo Anti-Errores". Es vital para el examen.</li>
+                    <li>Comprende visualmente la Ley del Cuadrado Inverso (Distancia vs Fuerza).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mission-card flex items-start">
+            <div class="step-number">03</div>
+            <div>
+                <h3 class="font-bold text-lg mb-2">Simulación Táctica (Gravity Quest)</h3>
+                <p class="text-sm text-slate-600 mb-4">Ejecuta el juego <span class="font-bold text-green-600">gravity_quest.html</span>.</p>
+                <ul class="text-xs space-y-2 list-disc pl-4 text-slate-500">
+                    <li>Consigue al menos 200 puntos.</li>
+                    <li>Aprende por "ensayo y error" cómo la Masa y el Radio afectan a la órbita.</li>
+                    <li>Resuelve los desafíos del Quiz integrado.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FORMULARIO -->
+        <h2 class="header-font text-2xl mb-6 uppercase border-l-8 border-red-600 pl-4">Caja de Herramientas (Ecuaciones)</h2>
+        <div class="mission-card grid md:grid-cols-2 gap-6">
+            <div>
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Ley de Gravitación</p>
+                <div class="formula">F = G · (M · m) / r²</div>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Intensidad de Campo (g)</p>
+                <div class="formula">g = G · M / R²</div>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Peso de un Cuerpo</p>
+                <div class="formula">P = m · g</div>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Velocidad Orbital</p>
+                <div class="formula">v = √(G · M / r)</div>
+            </div>
+        </div>
+
+        <!-- PROTOCOLO DE ERRORES -->
+        <div class="warning mb-10">
+            <h3 class="font-bold mb-2"><i class="fas fa-exclamation-triangle"></i> PROTOCOLO DE SUPERVIVENCIA</h3>
+            <ul class="text-xs space-y-2">
+                <li><strong>1. LA TRAMPA DE LOS KM:</strong> La física se hace en METROS. Si ves "km", multiplica por 1000 inmediatamente.</li>
+                <li><strong>2. RADIO TOTAL:</strong> Si un satélite está a una altura 'h', la distancia 'r' es: Radio Planeta + h.</li>
+                <li><strong>3. MASA VS PESO:</strong> Tu masa no cambia. Tu peso es una fuerza en Newtons. No los mezcles en los problemas.</li>
+            </ul>
+        </div>
+
+        <!-- CHECKLIST -->
+        <h2 class="header-font text-2xl mb-6 uppercase border-l-8 border-green-600 pl-4">Checklist de Competencia</h2>
+        <div class="mission-card">
+            <label class="checklist-item">
+                <input type="checkbox"> <span>Sé explicar por qué la Luna no cae sobre la Tierra.</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox"> <span>Diferencio perfectamente entre Masa (kg) y Peso (N).</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox"> <span>Sé calcular la gravedad 'g' en cualquier planeta.</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox"> <span>Entiendo las 3 Leyes de Kepler y cómo afectan a los planetas.</span>
+            </label>
+            <label class="checklist-item">
+                <input type="checkbox"> <span>Uso correctamente las potencias de 10 en la calculadora.</span>
+            </label>
+        </div>
+
+        <footer class="text-center text-slate-400 text-[10px] mt-12 mb-12 uppercase tracking-widest">
+            © 2026 Lab Pedagógico IA • Misión Gravitación • Fin del Documento
+        </footer>
+    </div>
+
+</body>
+</html>

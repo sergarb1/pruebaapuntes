@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gravitación Universal: Deep Space Edition - 4º ESO</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- MathJax for LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root { 
+            --gold: #ffcc00; --blue: #38bdf8; --red: #f87171; --green: #34d399; --purple: #a78bfa;
+            --space-dark: #020617;
+            --glass: rgba(255, 255, 255, 0.05); 
+        }
+        .reveal { background: radial-gradient(circle at center, #0f172a 0%, #020617 100%); }
+        .reveal h1 { font-weight: 900; color: var(--gold); text-shadow: 0 0 30px rgba(255, 204, 0, 0.3); font-size: 2.5em; }
+        .reveal h2 { color: var(--blue); }
+        .reveal h3 { color: var(--gold); text-transform: none; font-size: 1.8em; margin-bottom: 20px; }
+        
+        .card { 
+            background: var(--glass); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px; 
+            border: 1px solid rgba(255,255,255,0.1); text-align: left; margin: 10px 0;
+        }
+        
+        .formula-box {
+            font-size: 2.2em; color: var(--blue); text-align: center; padding: 25px;
+            background: rgba(0,0,0,0.6); border-radius: 15px; margin: 20px 0;
+            border: 1px solid var(--blue); box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .example-block { 
+            margin-top: 15px; font-size: 0.8em; border-left: 5px solid var(--green); 
+            padding: 15px 20px; background: rgba(52, 211, 153, 0.05); border-radius: 0 12px 12px 0; 
+        }
+
+        .tag { 
+            font-size: 0.5em; padding: 6px 15px; border-radius: 10px; background: var(--purple); 
+            color: #fff; font-weight: bold; margin-bottom: 25px; display: inline-block; 
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+
+        .pro-tip { 
+            border-left: 5px solid var(--purple); background: rgba(167, 139, 250, 0.1); 
+            padding: 15px; border-radius: 12px; font-size: 0.7em; margin-top: 25px;
+        }
+
+        .highlight { color: var(--gold); font-weight: bold; }
+        .icon-header { font-size: 2.5em; color: var(--gold); margin-bottom: 20px; display: block; }
+
+        /* Estilo para los pasos de resolución */
+        .step { color: var(--blue); font-weight: bold; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- 1. PORTADA -->
+            <section data-background-color="#020617">
+                <div class="animate__animated animate__fadeIn">
+                    <i class="fas fa-rocket icon-header" style="font-size: 4em;"></i>
+                    <h1>GRAVITACIÓN<br>UNIVERSAL</h1>
+                    <p style="opacity: 0.7;">El código que rige el Cosmos</p>
+                    <div class="tag">Física 4º ESO - Master Edition</div>
+                </div>
+            </section>
+
+            <!-- 2. EL GRAN CAMBIO DE MENTALIDAD -->
+            <section>
+                <h3>1. Historia de una Fuerza</h3>
+                <div class="grid-2">
+                    <div class="card fragment">
+                        <h4 style="color:var(--red)"><i class="fas fa-hourglass-start"></i> Aristóteles</h4>
+                        <p style="font-size: 0.6em;">"Los objetos caen porque buscan su lugar natural en el centro de la Tierra".</p>
+                    </div>
+                    <div class="card fragment">
+                        <h4 style="color:var(--green)"><i class="fas fa-apple-whole"></i> Newton</h4>
+                        <p style="font-size: 0.6em;">"La fuerza que tira de la manzana es la misma que mantiene a la Luna en órbita".</p>
+                    </div>
+                </div>
+                <div class="pro-tip fragment">
+                    Esto se llama <strong>Unificación</strong>: las leyes de la Tierra valen para todo el Universo.
+                </div>
+            </section>
+
+            <!-- 3. LA LEY DE NEWTON (CENTRAL) -->
+            <section>
+                <h3>2. La Ley Fundamental</h3>
+                <div class="formula-box">
+                    \[ F = G \cdot \frac{M \cdot m}{r^2} \]
+                </div>
+                <div class="card" style="font-size: 0.7em;">
+                    <ul>
+                        <li><span class="highlight">G:</span> Constante Universal \( (6,67 \cdot 10^{-11}) \).</li>
+                        <li><span class="highlight">M, m:</span> Masas de los cuerpos (kg).</li>
+                        <li><span class="highlight">r:</span> Distancia entre centros (m).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 4. EL SECRETO DE 'G' -->
+            <section>
+                <h3>3. ¿Cómo se midió G?</h3>
+                <div class="card">
+                    <p>Newton nunca supo el valor de G. Fue <span class="highlight">Henry Cavendish</span> en 1798 quien la midió con una balanza de torsión.</p>
+                </div>
+                <div class="scenario-box" style="font-size: 0.6em; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin-top: 20px;">
+                    <i class="fas fa-microscope"></i> Gracias a medir G, pudimos calcular por primera vez la <strong>masa de la Tierra</strong>. ¡Cavendish pesó el mundo!
+                </div>
+            </section>
+
+            <!-- 5. ANALIZANDO LA DISTANCIA -->
+            <section>
+                <h3>4. El Peligro del Cuadrado</h3>
+                <p>¿Qué pasa si alejamos dos planetas?</p>
+                <div class="grid-2">
+                    <div class="card fragment">
+                        <h4 style="color:var(--blue)">Distancia x2</h4>
+                        <p style="font-size: 0.6em;">La fuerza no se divide por 2...</p>
+                        <p class="highlight">¡Se divide por 4!</p>
+                    </div>
+                    <div class="card fragment">
+                        <h4 style="color:var(--red)">Distancia x3</h4>
+                        <p style="font-size: 0.6em;">La fuerza...</p>
+                        <p class="highlight">¡Se divide por 9!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. MASA VS PESO (CLARIDAD ABSOLUTA) -->
+            <section>
+                <h3>5. Masa vs Peso</h3>
+                <div class="grid-2">
+                    <div class="card" style="border-top: 5px solid var(--green);">
+                        <h4 style="color:var(--green)">Masa (kg)</h4>
+                        <p style="font-size: 0.55em;">Cantidad de átomos. Eres el mismo aquí que en Júpiter.</p>
+                    </div>
+                    <div class="card" style="border-top: 5px solid var(--red);">
+                        <h4 style="color:var(--red)">Peso (N)</h4>
+                        <p style="font-size: 0.55em;">Fuerza con la que el suelo te empuja. Cambia según el planeta.</p>
+                    </div>
+                </div>
+                <div class="formula-box" style="font-size: 1.5em; margin-top: 30px;">
+                    \[ P = m \cdot g \]
+                </div>
+            </section>
+
+            <!-- 7. EL CAMPO GRAVITATORIO (g) -->
+            <section>
+                <h3>6. Intensidad de Campo (g)</h3>
+                <div class="card">
+                    <p>Es la aceleración que imprime un planeta a cualquier objeto cercano.</p>
+                    <div class="formula-box">
+                        \[ g = G \cdot \frac{M_{planeta}}{R^2} \]
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. VIAJE POR EL SISTEMA SOLAR -->
+            <section>
+                <h3>7. Tu Peso en otros mundos</h3>
+                <div class="grid-3" style="font-size: 0.5em;">
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-moon fa-2x"></i><br><strong>Luna</strong><br>1,6 m/s²<br><span class="highlight">Saltas 6x más</span>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <i class="fas fa-meteor fa-2x"></i><br><strong>Marte</strong><br>3,7 m/s²<br><span class="highlight">Te sientes ligero</span>
+                    </div>
+                    <div class="card" style="text-align: center; border-color: var(--purple);">
+                        <i class="fas fa-sun fa-2x"></i><br><strong>Júpiter</strong><br>24,8 m/s²<br><span class="highlight">Casi no podrías andar</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. LEYES DE KEPLER: INTRO -->
+            <section data-background-color="#0f172a">
+                <i class="fas fa-compass icon-header" style="font-size: 4em;"></i>
+                <h1>Leyes de Kepler</h1>
+                <p>Las reglas del tráfico espacial</p>
+            </section>
+
+            <!-- 10. KEPLER 1 -->
+            <section>
+                <h3>Kepler: 1ª Ley</h3>
+                <div class="card">
+                    <p>Las órbitas no son círculos, son <span class="highlight">Elipses</span>.</p>
+                    <p style="font-size: 0.7em; margin-top: 15px;">El Sol no está en el centro, sino en uno de los puntos llamados <strong>Focos</strong>.</p>
+                </div>
+                <i class="fas fa-draw-polygon fa-4x" style="opacity: 0.2; margin-top: 20px;"></i>
+            </section>
+
+            <!-- 11. KEPLER 2 -->
+            <section>
+                <h3>Kepler: 2ª Ley</h3>
+                <div class="card">
+                    <p>"Áreas iguales en tiempos iguales".</p>
+                    <p class="highlight" style="font-size: 0.7em; margin-top: 15px;">Significado: Cuando el planeta está cerca del Sol (Perihelio), ¡corre mucho más!</p>
+                </div>
+                <i class="fas fa-tachometer-alt fa-4x" style="opacity: 0.2; color: var(--red);"></i>
+            </section>
+
+            <!-- 12. KEPLER 3 -->
+            <section>
+                <h3>Kepler: 3ª Ley</h3>
+                <div class="formula-box" style="font-size: 1.8em;">
+                    \[ T^2 = k \cdot r^3 \]
+                </div>
+                <div class="card">
+                    <p style="font-size: 0.7em;">Cuanto más lejos está un planeta del Sol, más años tarda en dar una vuelta completa.</p>
+                </div>
+            </section>
+
+            <!-- 13. SATÉLITES: ¿POR QUÉ NO CAEN? -->
+            <section>
+                <h3>8. Satélites en Órbita</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <p style="font-size: 0.6em;">Un satélite es un objeto que <span class="highlight">está cayendo</span> constantemente hacia la Tierra, pero va tan rápido de lado que "falla" el suelo.</p>
+                    </div>
+                    <div class="card" style="border-left: 4px solid var(--blue);">
+                        <h4 style="font-size: 0.7em;">Velocidad Orbital</h4>
+                        <div class="formula-box" style="font-size: 1.2em;">
+                            \[ v = \sqrt{\frac{G \cdot M}{r}} \]
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 14. TIPOS DE SATÉLITES -->
+            <section>
+                <h3>9. Satélites en la vida real</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4 style="color:var(--orange); font-size: 0.7em;"><i class="fas fa-satellite-dish"></i> Geoestacionarios</h4>
+                        <p style="font-size: 0.5em;">Están siempre sobre el mismo punto (TV, Meteorología). A 36.000 km.</p>
+                    </div>
+                    <div class="card">
+                        <h4 style="color:var(--blue); font-size: 0.7em;"><i class="fas fa-globe"></i> Polares</h4>
+                        <p style="font-size: 0.5em;">Pasan por los polos. Espionaje y cartografía.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 15. ¿GRAVEDAD CERO? -->
+            <section>
+                <h3>10. El Mito de la Gravedad 0</h3>
+                <div class="card">
+                    <p>¿Hay gravedad en la Estación Espacial (ISS)?</p>
+                    <p class="highlight fragment" style="font-size: 1.5em; text-align: center;">¡SÍ! (Un 90%)</p>
+                </div>
+                <div class="pro-tip fragment">
+                    Los astronautas flotan no porque no haya gravedad, sino porque están en <span class="highlight">caída libre perpetua</span>. Como un ascensor que cae sin frenos.
+                </div>
+            </section>
+
+            <!-- 16. LAS MAREAS -->
+            <section>
+                <h3>11. El Tirón de la Luna</h3>
+                <div class="card">
+                    <p>La gravedad de la Luna atrae el agua de los mares, creando el ciclo de mareas.</p>
+                </div>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <i class="fas fa-water fa-4x" style="color:var(--blue)"></i>
+                    <p style="font-size: 0.6em;">El Sol también ayuda, pero está tan lejos que su fuerza de marea es menor que la de la pequeña Luna.</p>
+                </div>
+            </section>
+
+            <!-- 17. CURIOSIDAD: AGUJEROS NEGROS -->
+            <section data-background-color="#000">
+                <h3>12. Gravedad Extrema</h3>
+                <div class="card" style="background: rgba(139, 92, 246, 0.1);">
+                    <p>En un <strong>Agujero Negro</strong>, la masa es tan brutal que la gravedad no deja escapar ni a la luz.</p>
+                </div>
+                <i class="fas fa-dot-circle fa-4x" style="color:white; box-shadow: 0 0 50px #fff; border-radius: 50%;"></i>
+            </section>
+
+            <!-- 18. TALLER DE PROBLEMAS: INTRO -->
+            <section data-background-color="#26a269">
+                <i class="fas fa-pencil-alt icon-header" style="color:white"></i>
+                <h1 style="color:white">Taller de<br>Problemas</h1>
+                <p>Paso a paso para el examen</p>
+            </section>
+
+            <!-- 19. PROBLEMA 1 -->
+            <section>
+                <h3>Problema 1: La Fuerza</h3>
+                <div class="card" style="font-size: 0.6em;">
+                    <p>"Calcula la fuerza entre la Tierra (\( 6 \cdot 10^{24} \, kg \)) y un satélite de 500 kg a 10.000 km del centro."</p>
+                    <div class="example-block">
+                        <span class="step">1</span> Datos a S.I: \( r = 10^7 \, m \).<br>
+                        <span class="step">2</span> Fórmula: \( F = G \cdot \frac{M \cdot m}{r^2} \).<br>
+                        <span class="step">3</span> Resultado: <span class="highlight">2000 N</span>.
+                    </div>
+                </div>
+            </section>
+
+            <!-- 20. PROBLEMA 2 -->
+            <section>
+                <h3>Problema 2: ¿Cuánto peso?</h3>
+                <div class="card" style="font-size: 0.6em;">
+                    <p>"¿Cuánto pesa un astronauta de 80 kg en Marte (\( g = 3,7 \))?"</p>
+                    <div class="example-block">
+                        <span class="step">1</span> Fórmula: \( P = m \cdot g \).<br>
+                        <span class="step">2</span> Cálculo: \( 80 \cdot 3,7 \).<br>
+                        <span class="step">3</span> Resultado: <span class="highlight">296 N</span>.
+                    </div>
+                </div>
+            </section>
+
+            <!-- 21. TRUCOS DE EXAMEN -->
+            <section>
+                <h3>⚠️ Evita el Desastre</h3>
+                <div class="card">
+                    <ol style="font-size: 0.6em;">
+                        <li><span class="highlight">Kilómetros:</span> ¡Pásalos siempre a metros (\( \cdot 1000 \))!</li>
+                        <li><span class="highlight">El Radio:</span> Si te dan la altura, súmale el radio del planeta.</li>
+                        <li><span class="highlight">La Calculadora:</span> Cuidado con el \( 10^{-11} \). Usa el botón `EXP` o `x10^x`.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 22. CIERRE MAESTRO -->
+            <section data-background-gradient="linear-gradient(to bottom, #020617, #1e293b)">
+                <i class="fas fa-graduation-cap icon-header" style="font-size: 4em;"></i>
+                <h1>¡Misión Cumplida!</h1>
+                <p>Ahora el Universo tiene sentido.</p>
+                <div class="tag" style="background:var(--green); margin-top: 30px;">Experto en Gravitación</div>
+                <div class="pro-tip" style="text-align: center;">
+                    "La gravedad es lo que nos mantiene unidos, pero la curiosidad es lo que nos hace volar."
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/notes/notes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/markdown/markdown.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+            transition: 'slide',
+            backgroundTransition: 'zoom',
+            slideNumber: 'h/v',
+            center: true,
+            mouseWheel: true,
+            controls: true,
+            progress: true,
+            width: 1100,
+            height: 750,
+            margin: 0.1,
+            minScale: 0.2,
+            maxScale: 2.0
+        });
+    </script>
+</body>
+</html>
