@@ -88,11 +88,10 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 350px;
+            min-height: 400px;
         }
 
         .card:hover {
@@ -117,12 +116,15 @@
         .card p {
             font-size: 1.1em;
             color: #94a3b8;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            flex-grow: 1; /* Empuja el botón hacia abajo de forma equilibrada */
         }
 
         .btn {
-            display: inline-block;
-            padding: 12px 25px;
+            display: block; /* Ocupa el ancho necesario pero centrado */
+            width: fit-content;
+            margin: 0 auto;
+            padding: 12px 30px;
             background: transparent;
             border: 2px solid var(--neon-blue);
             color: var(--neon-blue);
