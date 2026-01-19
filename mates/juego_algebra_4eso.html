@@ -194,7 +194,7 @@
     </div>
 
     <script>
-        const LAB_DATA = [
+        const LAB_DATA_MASTER = [
             { 
                 start: "x² - 64", 
                 steps: [{ type: 'identity', choice: "(x+8)(x-8)", next: "(x+8)(x-8)" }],
@@ -249,31 +249,69 @@
                     wrong_choice_common: "Divide por 3 y por x.",
                     wrong_choice_identity: "9 es 3²."
                 }
-            }
-        ];
-
-        const QUIZ_DATA = [
-            {
-                q: "¿Cuál es el factor de la raíz x = -2?",
-                o: ["(x - 2)", "(x + 2)", "x", "2x"],
-                c: 1,
-                e: "¡Correcto! Factor = (x - raíz).",
-                w: "Incorrecto. Se cambia el signo."
             },
-            {
-                q: "¿Qué simplificamos en fracciones?",
-                o: ["Sumas", "Factores", "Restas", "Todo"],
-                c: 1,
-                e: "¡Exacto! Solo productos.",
-                w: "Fallo. Jamás simplifiques sumas."
+            { 
+                start: "x² - 1", 
+                steps: [{ type: 'identity', choice: "(x+1)(x-1)", next: "(x+1)(x-1)" }],
+                hints: { identity: "Diferencia de cuadrados básica.", common: "No hay nada común.", ruffini: "Demasiado complejo.", wrong_choice: "1² es 1." }
+            },
+            { 
+                start: "x² - 10x + 25", 
+                steps: [{ type: 'identity', choice: "(x-5)²", next: "(x-5)²" }],
+                hints: { identity: "Cuadrado de una resta: (x-5)².", common: "No hay común.", ruffini: "Usa identidades.", wrong_choice: "5² es 25." }
+            },
+            { 
+                start: "x³ - x²", 
+                steps: [{ type: 'common', choice: "x²", next: "x²(x - 1)" }],
+                hints: { common: "Saca la x de menor grado (x²).", identity: "No es identidad.", ruffini: "Prueba factor común.", wrong_choice: "El grado menor es 2." }
+            },
+            { 
+                start: "x² + 4x + 4", 
+                steps: [{ type: 'identity', choice: "(x+2)²", next: "(x+2)²" }],
+                hints: { identity: "Cuadrado de una suma: (x+2)².", common: "No hay común.", ruffini: "Usa identidades.", wrong_choice: "2² es 4." }
+            },
+            { 
+                start: "x² - 9", 
+                steps: [{ type: 'identity', choice: "(x+3)(x-3)", next: "(x+3)(x-3)" }],
+                hints: { identity: "Diferencia de cuadrados: x² - 3².", common: "No hay común.", ruffini: "Usa identidades.", wrong_choice: "3² es 9." }
             }
         ];
 
+        const QUIZ_DATA_MASTER = [
+            { q: "¿Cuál es el factor de la raíz x = -2?", o: ["(x - 2)", "(x + 2)", "x", "2x"], c: 1, e: "¡Correcto! Factor = (x - raíz).", w: "Incorrecto. Se cambia el signo." },
+            { q: "¿Qué simplificamos en fracciones?", o: ["Sumas", "Factores", "Restas", "Todo"], c: 1, e: "¡Exacto! Solo productos.", w: "Fallo. Jamás simplifiques sumas." },
+            { q: "¿Qué es factorizar un polinomio?", o: ["Sumar términos", "Convertirlo en producto", "Derivarlo", "Igualarlo a cero"], c: 1, e: "¡Correcto! Es descomponer en factores.", w: "Incorrecto. Es un producto." },
+            { q: "Identidad notable: (a + b)(a - b) =", o: ["a² + b²", "a² - b²", "(a - b)²", "a² + 2ab + b²"], c: 1, e: "¡Correcto! Diferencia de cuadrados.", w: "Incorrecto. Es a² - b²." },
+            { q: "Si x = 3 es raíz de P(x), entonces...", o: ["P(3) = 0", "P(0) = 3", "P(3) = 1", "P(-3) = 0"], c: 0, e: "¡Exacto! El valor numérico es cero.", w: "Mal. P(raíz) siempre es cero." },
+            { q: "¿Cuál es el primer paso recomendado?", o: ["Ruffini", "Identidades", "Factor común", "Ecuación 2º grado"], c: 2, e: "¡Sí! Siempre buscar factor común primero.", w: "No. El factor común simplifica todo." },
+            { q: "Identidad notable: (x - 3)² =", o: ["x² - 9", "x² + 9", "x² - 6x + 9", "x² + 6x + 9"], c: 2, e: "¡Correcto! Cuadrado del 1º - 2*1º*2º + cuadrado del 2º.", w: "Incorrecto. No olvides el término doble." },
+            { q: "¿Cuántas raíces tiene un polinomio de grado 3?", o: ["Exactamente 3", "Mínimo 3", "Máximo 3", "Infinitas"], c: 2, e: "¡Correcto! Máximo tantas como su grado.", w: "Incorrecto. Es el número máximo." },
+            { q: "El resto de P(x) dividido por (x - a) es...", o: ["P(a)", "P(-a)", "0", "a"], c: 0, e: "¡Correcto! Teorema del resto.", w: "Mal. Es P(a)." },
+            { q: "Factorizar x² - 1 resulta en...", o: ["(x-1)²", "(x+1)²", "(x+1)(x-1)", "x(x-1)"], c: 2, e: "¡Sí! Diferencia de cuadrados.", w: "Incorrecto. 1² es 1." },
+            { q: "Si sacamos factor común en 5x² + 10x...", o: ["5(x²+2x)", "x(5x+10)", "5x(x+2)", "5x(x+10)"], c: 2, e: "¡Exacto! 5 y x son comunes.", w: "Casi, pero puedes sacar más." },
+            { q: "¿Qué valor buscamos en la última columna de Ruffini?", o: ["1", "0", "El grado", "La raíz"], c: 1, e: "¡Correcto! El resto debe ser 0 para ser raíz.", w: "Incorrecto. Buscamos resto cero." },
+            { q: "¿Cómo se llama un polinomio que no se puede factorizar?", o: ["Compuesto", "Primo o irreducible", "Nulo", "Grado cero"], c: 1, e: "¡Sí! Como los números primos.", w: "No. Se llama irreducible o primo." },
+            { q: "Identidad notable: (x + 5)² =", o: ["x² + 25", "x² + 10x + 25", "x² - 10x + 25", "2x + 10"], c: 1, e: "¡Correcto! x² + 2*5*x + 5².", w: "Mal. Falta el doble producto." },
+            { q: "¿Cuál es el factor asociado a la raíz x = 0?", o: ["(x - 0)", "x", "(x + 1)", "No tiene"], c: 1, e: "¡Sí! Simplemente x.", w: "Incorrecto. Es x." },
+            { q: "En x² + bx + c, si la suma de raíces es -b y el producto c...", o: ["Es Ruffini", "Es Cardano-Vieta", "Es identidad", "No existe"], c: 1, e: "¡Correcto! Relación entre raíces y coeficientes.", w: "No. Es una propiedad de las raíces." },
+            { q: "Factorizar x² - x implica sacar factor común...", o: ["x", "1", "x²", "-x"], c: 0, e: "¡Correcto! Queda x(x - 1).", w: "Incorrecto. La x está en ambos términos." },
+            { q: "¿Qué grado tiene el polinomio P(x) = 5?", o: ["1", "5", "0", "No tiene"], c: 2, e: "¡Correcto! Los números son grado 0.", w: "Incorrecto. Es grado 0." },
+            { q: "Al simplificar (x-3)/(x²-9) queda...", o: ["1/(x-3)", "1/(x+3)", "x+3", "x-3"], c: 1, e: "¡Sí! (x-3)/[(x+3)(x-3)].", w: "No. Debes factorizar el denominador." },
+            { q: "¿Se puede aplicar Ruffini con (x² + 1)?", o: ["Sí", "No", "A veces", "Solo en grado 2"], c: 1, e: "¡Correcto! Solo para divisores de la forma (x - a).", w: "Incorrecto. Solo divisores de primer grado." }
+        ];
+
+        let LAB_DATA = [];
+        let QUIZ_DATA = [];
         let mode = '', level = 0, stability = 100, score = 0, step = 0;
 
         function initMode(m) {
             mode = m;
             document.getElementById('start-screen').style.display = 'none';
+            if (mode === 'quiz') {
+                QUIZ_DATA = [...QUIZ_DATA_MASTER].sort(() => Math.random() - 0.5).slice(0, 15); // At least 15 questions
+            } else {
+                LAB_DATA = [...LAB_DATA_MASTER].sort(() => Math.random() - 0.5);
+            }
             showInstructions();
         }
 
@@ -281,8 +319,8 @@
             const overlay = document.getElementById('instruction-overlay');
             document.getElementById('ins-title').innerText = mode === 'lab' ? "LABORATORIO" : "TEST TEÓRICO";
             document.getElementById('ins-body').innerHTML = mode === 'lab' ? 
-                "<p>Factoriza usando las herramientas en orden.</p>" : 
-                "<p>Responde correctamente para ganar puntos.</p>";
+                "<p>Factoriza los polinomios usando las herramientas en orden. ¡Completa los 10 niveles!</p>" : 
+                "<p>Responde correctamente a la batería de 15 preguntas. ¡Mínimo 10 aciertos para ser Master!</p>";
             overlay.style.display = 'flex';
             document.getElementById('btn-begin').onclick = startActualGame;
         }
@@ -306,6 +344,7 @@
             document.getElementById('poly-hint').innerText = "Iniciando análisis...";
             document.getElementById('poly-hint').style.color = "#94a3b8";
             document.getElementById('level-text').innerText = level + 1;
+            document.getElementById('stability-text').innerText = stability;
             step = 0;
         }
 
@@ -314,9 +353,9 @@
             const container = document.getElementById('opt-container');
             modal.style.display = 'flex';
             container.innerHTML = "";
-            let opts = (t === 'common') ? ["x", "3x", "2", "3"] : 
-                       (t === 'identity') ? ["(x+8)(x-8)", "(x+7)²", "(x+3)(x-3)", "(x+2)(x-2)"] : 
-                       ["Raíz: 1", "Raíz: 2", "Raíz: 3", "Raíz: -1"];
+            let opts = (t === 'common') ? ["x", "3x", "2", "3", "x²"] : 
+                       (t === 'identity') ? ["(x+8)(x-8)", "(x+7)²", "(x+3)(x-3)", "(x+2)(x-2)", "(x+1)(x-1)", "(x-5)²"] : 
+                       ["Raíz: 1", "Raíz: 2", "Raíz: 3", "Raíz: -1", "Raíz: 5"];
             opts.sort(() => Math.random() - 0.5).forEach(o => {
                 const btn = document.createElement('button');
                 btn.className = "opt-btn"; btn.innerText = o;
@@ -332,19 +371,19 @@
             if (currentStep.type === t && currentStep.choice === o) {
                 step++;
                 document.getElementById('poly-val').innerText = currentStep.next;
-                document.getElementById('poly-hint').innerText = data.hints[t];
+                document.getElementById('poly-hint').innerText = data.hints[t] || "¡Buen paso!";
                 document.getElementById('poly-hint').style.color = "var(--emerald)";
                 if (step >= data.steps.length) {
                     setTimeout(() => {
                         level++;
-                        if (level >= LAB_DATA.length) finishGame(true, "MAESTRÍA LOGRADA.");
+                        if (level >= LAB_DATA.length) finishGame(true, "MAESTRÍA LOGRADA EN LABORATORIO.");
                         else loadLabLevel();
                     }, 1000);
                 }
             } else {
-                stability -= 20;
+                stability -= 15;
                 document.getElementById('stability-text').innerText = stability;
-                document.getElementById('poly-hint').innerText = data.hints[t] || "Error detectado.";
+                document.getElementById('poly-hint').innerText = data.hints[t] || "Error en el procedimiento.";
                 document.getElementById('poly-hint').style.color = "var(--red)";
                 if (stability <= 0) finishGame(false, "COLAPSO DEL SISTEMA.");
             }
@@ -352,7 +391,7 @@
 
         function loadQuizQuestion() {
             const q = QUIZ_DATA[level];
-            document.getElementById('q-count').innerText = level + 1;
+            document.getElementById('q-count').innerText = (level + 1) + "/" + QUIZ_DATA.length;
             document.getElementById('quiz-score-val').innerText = score;
             document.getElementById('q-question').innerText = q.q;
             document.getElementById('q-expl').style.display = 'none';
@@ -376,12 +415,15 @@
             document.getElementById('btn-next').style.display = 'inline-block';
             if (idx === q.c) {
                 score += 100; expl.innerHTML = q.e; expl.style.color = "var(--emerald)";
+                btns[idx].style.borderColor = "var(--emerald)";
             } else {
                 expl.innerHTML = q.w; expl.style.color = "var(--red)";
+                btns[idx].style.borderColor = "var(--red)";
+                btns[q.c].style.borderColor = "var(--emerald)";
             }
             document.getElementById('btn-next').onclick = () => {
                 level++;
-                if (level >= QUIZ_DATA.length) finishGame(true, `Test finalizado. Score: ${score}`);
+                if (level >= QUIZ_DATA.length) finishGame(true, `Entrenamiento finalizado. Puntuación: ${score}`);
                 else loadQuizQuestion();
             };
         }
