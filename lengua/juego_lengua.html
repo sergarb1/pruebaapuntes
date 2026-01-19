@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Sintaxis Mastery: Century Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+    <style>
+        :root { --bg: #020617; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); overflow: hidden; font-family: 'Outfit', sans-serif; display: flex; justify-content: center; align-items: center; height: 100dvh; width: 100vw; }
+        #game-container { width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <div id="game-container"></div>
+    <script>
+        // --- 📊 BANCO DE DATOS MAESTRO (100 EJERCICIOS) ---
+        const MASTER_DATABASE = [
+            // BLOQUE 1: ORACIÓN SIMPLE (1-30)
+            { s: "Me gustan mucho los libros de aventuras.", q: "¿Cuál es el SUJETO de esta oración?", ops: ["Yo (elidido)", "Me", "Los libros de aventuras"], ok: 2, ana: "Sujeto: Concuerda en número con el verbo (Gusta -> Gustan).", adv: "TRUCO: ¡Nunca preguntes 'Quién'! Si cambias el verbo a singular, el sujeto cambia." },
+            { s: "Confío plenamente en tus posibilidades de éxito.", q: "¿Qué función cumple 'EN TUS POSIBILIDADES'?", ops: ["C. Régimen", "C. Indirecto", "CC de Modo"], ok: 0, ana: "C. Régimen: El verbo 'confiar' exige la preposición 'en'.", adv: "TRUCO: Si quitas la preposición 'en', la frase pierde el sentido." },
+            { s: "La noticia fue difundida por todos los medios.", q: "Identifica la función de 'POR TODOS LOS MEDIOS'.", ops: ["CC de Lugar", "C. Agente", "C. Indirecto"], ok: 1, ana: "C. Agente: Indica quién realiza la acción en una oración pasiva.", adv: "TRUCO: Siempre empieza por 'POR' y el verbo es pasivo (SER + Participio)." },
+            { s: "Ayer me encontré a tu hermano muy cansado.", q: "Analiza la función de 'A TU HERMANO'.", ops: ["C. Indirecto", "C. Directo", "Sujeto"], ok: 1, ana: "CD de persona: Lleva 'a' por ser persona determinada.", adv: "TRUCO: Sustituye por LO. 'Ayer LO encontré'. Es CD." },
+            { s: "Juan le dio un regalo a su amiga.", q: "Analiza la función de 'A SU AMIGA'.", ops: ["C. Directo", "C. Indirecto", "Atributo"], ok: 1, ana: "CI: Destinatario de la acción del verbo.", adv: "TRUCO: Sustituye por 'LE'. 'Juan LE dio un regalo'." },
+            { s: "Había muchas personas esperando en la puerta.", q: "Identifica el SUJETO de esta oración.", ops: ["Muchas personas", "Ellos (elidido)", "No tiene (Impersonal)"], ok: 2, ana: "Oración Impersonal: El verbo 'haber' en 3ª sing. indicando existencia no tiene sujeto.", adv: "TRUCO: Nunca pongas 'Habían'. 'Muchas personas' es el CD (Las había)." },
+            { s: "Los niños corren alegres por el parque.", q: "¿Qué función cumple la palabra 'ALEGRES'?", ops: ["CC de Modo", "C. Predicativo", "Atributo"], ok: 1, ana: "C. Predicativo: Adjetivo que concuerda con el sujeto 'los niños'.", adv: "TRUCO: Si fuera 'La niña', diríamos 'alegre'. Si cambia → Predicativo." },
+            { s: "Luis es un excelente pianista.", q: "Analiza 'UN EXCELENTE PIANISTA'.", ops: ["C. Directo", "Atributo", "C. Predicativo"], ok: 1, ana: "Atributo: Complemento necesario con verbos copulativos (Ser, Estar, Parecer).", adv: "TRUCO: Cámbialo por 'LO'. 'Luis LO es'." },
+            { s: "Cortó el pan con un cuchillo de sierra.", q: "Función de 'CON UN CUCHILLO'.", ops: ["CC de Modo", "CC de Instrumento", "C. Régimen"], ok: 1, ana: "CC de Instrumento: Indica la herramienta usada para la acción.", adv: "TRUCO: Responde a ¿Con qué hizo la acción?" },
+            { s: "Se arrepintió de no haber ido al cine.", q: "Función de 'DE NO HABER IDO...'", ops: ["C. Directo", "C. Régimen", "CI"], ok: 1, ana: "C. Régimen: El verbo 'arrepentirse' exige la preposición 'de'.", adv: "TRUCO: ¿De qué se arrepintió? De eso. Mantiene la preposición." },
+            { s: "Le entregó las llaves a la conserje.", q: "Función de 'LA CONSERJE'.", ops: ["CD", "CI", "CC Persona"], ok: 1, ana: "Complemento Indirecto: Recibe la acción.", adv: "TIP: 'LE entregó las llaves'. LE = conserje." },
+            { s: "Nombraron delegada a mi prima.", q: "Función de 'DELEGADA'.", ops: ["Atributo", "C. Predicativo", "CC Modo"], ok: 1, ana: "CPred: Se refiere al CD (mi prima) y concuerda.", adv: "TIP: Si fuera 'a mi primo', sería 'delegado'." },
+            { s: "Esa casa es de madera.", q: "Función de 'DE MADERA'.", ops: ["Atributo", "CC Modo", "C. Régimen"], ok: 0, ana: "Atributo: Sintagma preposicional tras verbo copulativo.", adv: "TIP: ¿Cómo es la casa? De madera. Sustituye: 'Esa casa LO es'." },
+            { s: "El atleta corre rápido.", q: "Función de 'RÁPIDO'.", ops: ["C. Predicativo", "CC Modo", "Atributo"], ok: 1, ana: "CC Modo: Adverbio invariable.", adv: "TIP: Si fuera 'Los atletas', seguiría siendo 'rápido'. No concuerda." },
+            { s: "Luis se parece a su padre.", q: "Función de 'A SU PADRE'.", ops: ["CI", "Atributo", "C. Régimen"], ok: 1, ana: "Atributo: Con el verbo parecer.", adv: "TIP: 'Luis lo parece'. Es atributo aunque lleve 'a'." },
+            { s: "Mañana lloverá en Madrid.", q: "Sujeto de la oración.", ops: ["Mañana", "Madrid", "No tiene"], ok: 2, ana: "Impersonal meteorológica.", adv: "TIP: Verbos de clima no llevan sujeto." },
+            { s: "Se oye un ruido extraño.", q: "Sujeto de la oración.", ops: ["Un ruido extraño", "Él (elidido)", "No tiene"], ok: 0, ana: "Pasiva Refleja: El ruido es el sujeto.", adv: "TIP: Prueba: 'Se oyen ruidos extraños'. Verbo cambia = Sujeto." },
+            { s: "La bicicleta fue robada anoche.", q: "Sujeto de la oración.", ops: ["Anoche", "La bicicleta", "No tiene"], ok: 1, ana: "Sujeto Paciente: Recibe la acción en pasiva.", adv: "TIP: Concuerda con 'fue robada'." },
+            { s: "Me duele la cabeza.", q: "Sujeto de la oración.", ops: ["Me", "La cabeza", "Yo"], ok: 1, ana: "La cabeza (Sujeto) concuerda con Duele.", adv: "TIP: ¡Cuidado! 'Me' es CI. 'Me duelen las piernas' (Plural)." },
+            { s: "Hacía un calor insoportable.", q: "Función de 'UN CALOR INSOPORTABLE'.", ops: ["Sujeto", "CD", "CC Modo"], ok: 1, ana: "Complemento Directo: 'Lo hacía'.", adv: "TIP: Verbo 'Hacer' de clima es impersonal. No tiene sujeto." },
+            { s: "Entregó el paquete con cuidado.", q: "Función de 'CON CUIDADO'.", ops: ["CC Modo", "CC Instrumento", "C. Régimen"], ok: 0, ana: "Complemento Circunstancial de Modo.", adv: "TIP: ¿Cómo lo entregó?" },
+            { s: "Dedica su tiempo a la lectura.", q: "Función de 'A LA LECTURA'.", ops: ["CI", "C. Régimen", "CC Finalidad"], ok: 1, ana: "C. Régimen: Dedicar algo A algo.", adv: "TIP: La preposición es necesaria." },
+            { s: "Se fuma mucho aquí.", q: "Función de 'MUCHO'.", ops: ["CC Cantidad", "CD", "Sujeto"], ok: 0, ana: "Complemento Circunstancial de Cantidad.", adv: "TIP: Indica intensidad." },
+            { s: "Este libro trata de historia.", q: "Función de 'DE HISTORIA'.", ops: ["Atributo", "CD", "C. Régimen"], ok: 2, ana: "C. Régimen: Tratar DE algo.", adv: "TIP: Sin 'de' no funciona." },
+            { s: "Llegó muy tarde a casa.", q: "Función de 'MUY TARDE'.", ops: ["CC Lugar", "CC Tiempo", "CC Modo"], ok: 1, ana: "Complemento Circunstancial de Tiempo.", adv: "TIP: ¿Cuándo llegó?" },
+            { s: "Ana compró pan a Luis ayer.", q: "Función de 'PAN'.", ops: ["Sujeto", "CD", "CI"], ok: 1, ana: "CD: Lo compró.", adv: "TIP: Objeto directo de la compra." },
+            { s: "Ana compró pan a Luis ayer.", q: "Función de 'A LUIS'.", ops: ["CD", "CI", "CC Persona"], ok: 1, ana: "CI: Le compró pan.", adv: "TIP: Destinatario." },
+            { s: "Fue felicitado por sus amigos.", q: "Función de 'POR SUS AMIGOS'.", ops: ["CC Causa", "C. Agente", "Sujeto"], ok: 1, ana: "Complemento Agente en pasiva.", adv: "TIP: Empieza por 'por' y hace la acción." },
+            { s: "La tarta es para María.", q: "Función de 'PARA MARÍA'.", ops: ["Atributo", "CI", "CC Destino"], ok: 0, ana: "Atributo: Tras verbo 'ser'.", adv: "TIP: 'La tarta LO es'." },
+            { s: "Trajeron el sofá ayer.", q: "Analiza 'EL SOFÁ'.", ops: ["Sujeto", "CD", "CC Lugar"], ok: 1, ana: "CD: Lo trajeron.", adv: "TIP: Pásalo a pasiva: 'El sofá fue traído'." },
+
+            // BLOQUE 2: VALORES DEL SE (31-50)
+            { s: "Se venden pisos de lujo.", q: "Valor del SE.", ops: ["Pasiva Refleja", "Impersonal", "Pronominal"], ok: 0, ana: "Pasiva Refleja: Pisos (Sujeto) concuerda.", adv: "TIP: Verbo plural -> Sujeto plural." },
+            { s: "Se vive bien aquí.", q: "Valor del SE.", ops: ["Pasiva Refleja", "Impersonal", "Reflexivo"], ok: 1, ana: "Impersonal: No admite sujeto.", adv: "TIP: Verbo siempre singular." },
+            { s: "Ella se lava la cara.", q: "Valor del SE.", ops: ["Reflexivo (CD)", "Reflexivo (CI)", "Recíproco"], ok: 1, ana: "Reflexivo CI: Ya hay un CD (la cara).", adv: "TIP: Ella se lava a sí misma." },
+            { s: "Los novios se miran.", q: "Valor del SE.", ops: ["Reflexivo", "Recíproco", "Dativo"], ok: 1, ana: "Recíproco: El uno al otro.", adv: "TIP: Acción mutua." },
+            { s: "Se arrepintió pronto.", q: "Valor del SE.", ops: ["Pronominal", "Reflexivo", "Pasiva Refleja"], ok: 0, ana: "Pronominal: Va con el verbo.", adv: "TIP: No existe el verbo 'arrepentir'." },
+            { s: "Se comió tres pizzas.", q: "Valor del SE.", ops: ["Pronominal", "Dativo Ético", "Impersonal"], ok: 1, ana: "Dativo Ético: Enfático.", adv: "TIP: Se puede quitar: 'Comió tres pizzas'." },
+            { s: "Se lo di ayer.", q: "Valor del SE.", ops: ["Reflexivo", "Falso SE", "Recíproco"], ok: 1, ana: "Falso SE: Sustituye a 'le'.", adv: "TIP: 'Le lo di' -> Se lo di." },
+            { s: "Se marchó a las cinco.", q: "Valor del SE.", ops: ["Reflexivo", "Pronominal", "Impersonal"], ok: 1, ana: "Pronominal: Marcharse.", adv: "TIP: El 'se' indica inicio de acción." },
+            { s: "Se busca empleado.", q: "Valor del SE.", ops: ["Pasiva Refleja", "Impersonal", "Reflexivo"], ok: 0, ana: "Pasiva Refleja: Empleado es buscado.", adv: "TIP: Plural: 'Se buscan empleados'. Concuerda -> Pasiva Refleja." },
+            { s: "Se habla español.", q: "Valor del SE.", ops: ["Pasiva Refleja", "Impersonal", "Dativo"], ok: 0, ana: "Pasiva Refleja: El español es hablado.", adv: "TIP: Concuerda con el verbo." },
+            { s: "Se duchó con agua fría.", q: "Valor del SE.", ops: ["Reflexivo (CD)", "Reflexivo (CI)", "Pronominal"], ok: 0, ana: "Reflexivo CD: Se ducha a sí mismo.", adv: "TIP: El 'se' es el objeto directo." },
+            { s: "Se olvidó las llaves.", q: "Valor del SE.", ops: ["Pronominal", "Dativo", "Reflexivo"], ok: 0, ana: "Pronominal: Olvidarse de algo.", adv: "TIP: Va con el verbo obligatoriamente." },
+            { s: "Se repartieron los premios.", q: "Valor del SE.", ops: ["Recíproco", "Pasiva Refleja", "Impersonal"], ok: 1, ana: "Pasiva Refleja: Premios (Sujeto) concuerda.", adv: "TIP: 'Fueron repartidos'." },
+            { s: "Se saludaron en el portal.", q: "Valor del SE.", ops: ["Reflexivo", "Recíproco", "Dativo"], ok: 1, ana: "Recíproco: Acción mutua.", adv: "TIP: El uno al otro." },
+            { s: "Se bebió el vaso de un trago.", q: "Valor del SE.", ops: ["Reflexivo", "Dativo Ético", "Pronominal"], ok: 1, ana: "Dativo Ético: Indica interés o énfasis.", adv: "TIP: Se puede omitir." },
+            { s: "Se queja por todo.", q: "Valor del SE.", ops: ["Pronominal", "Impersonal", "Reflexivo"], ok: 0, ana: "Pronominal: Quejarse.", adv: "TIP: Verbo de emoción o estado." },
+            { s: "Se alquila habitación.", q: "Valor del SE.", ops: ["Pasiva Refleja", "Impersonal", "Falso SE"], ok: 0, ana: "Pasiva Refleja: La habitación es alquilada.", adv: "TIP: Pluraliza: 'Se alquilan habitaciones'." },
+            { s: "Se despertó temprano.", q: "Valor del SE.", ops: ["Reflexivo", "Pronominal", "Impersonal"], ok: 1, ana: "Pronominal: Despertarse.", adv: "TIP: Indica cambio de estado." },
+            { s: "No se sabe nada.", q: "Valor del SE.", ops: ["Impersonal", "Pasiva Refleja", "Pronominal"], ok: 1, ana: "Pasiva Refleja: Nada es sabido.", adv: "TIP: 'No se saben las cosas'. Concuerda." },
+            { s: "Se afeita cada mañana.", q: "Valor del SE.", ops: ["Reflexivo (CD)", "Reflexivo (CI)", "Recíproco"], ok: 0, ana: "Reflexivo CD: A sí mismo.", adv: "TIP: Él es el objeto de la acción." },
+
+            // BLOQUE 3: ORACIÓN COMPUESTA (51-100)
+            { s: "El profesor considera brillante tu trabajo.", q: "Función de 'BRILLANTE'.", ops: ["Atributo", "CPred del CD", "CC Modo"], ok: 1, ana: "CPred: Califica al CD.", adv: "TIP: Cambia a 'tus trabajos' -> 'brillantes'." },
+            { s: "Dijo que vendría pronto.", q: "Tipo de subordinada.", ops: ["Sustantiva", "Adjetiva", "Adverbial"], ok: 0, ana: "Sustantiva: 'Dijo ESO'.", adv: "TIP: Reemplaza por ESO." },
+            { s: "El tren que sale llega tarde.", q: "Tipo de subordinada.", ops: ["Sustantiva", "Adjetiva", "Adverbial"], ok: 1, ana: "Adjetiva: 'El cual sale'.", adv: "TIP: Reemplaza por EL CUAL." },
+            { s: "No vino porque estaba enfermo.", q: "Tipo de adverbial.", ops: ["Causal", "Consecutiva", "Final"], ok: 0, ana: "Causal: Indica el motivo.", adv: "TIP: Responde a ¿Por qué?" },
+            { s: "Llegó donde le indicaste.", q: "Tipo de adverbial.", ops: ["Lugar", "Tiempo", "Modo"], ok: 0, ana: "Lugar: Indica espacio.", adv: "TIP: 'Llegó ALLÍ'." },
+            { s: "Hazlo como te dije.", q: "Tipo de adverbial.", ops: ["Modo", "Tiempo", "Lugar"], ok: 0, ana: "Modo: Indica manera.", adv: "TIP: 'Hazlo ASÍ'." },
+            { s: "Cuando termines, avísame.", q: "Tipo de adverbial.", ops: ["Tiempo", "Causal", "Final"], ok: 0, ana: "Tiempo: Indica momento.", adv: "TIP: 'ENTONCES avísame'." },
+            { s: "Estudió mucho, pero no aprobó.", q: "Tipo de coordinada.", ops: ["Adversativa", "Copulativa", "Disyuntiva"], ok: 0, ana: "Adversativa: Nexo pero.", adv: "TIP: Oposición." },
+            { s: "O vienes o te quedas.", q: "Tipo de coordinada.", ops: ["Disyuntiva", "Distributiva", "Copulativa"], ok: 0, ana: "Disyuntiva: Elección.", adv: "TIP: Nexo O." },
+            { s: "Es decir, habla mucho.", q: "Tipo de coordinada.", ops: ["Explicativa", "Consecutiva", "Copulativa"], ok: 0, ana: "Explicativa: Aclara.", adv: "TIP: Nexo ES DECIR." },
+            { s: "Pienso, luego existo.", q: "Tipo de coordinada.", ops: ["Consecutiva", "Causal", "Final"], ok: 0, ana: "Consecutiva: Resultado.", adv: "TIP: Nexo LUEGO." },
+            { s: "Comió tanto que enfermó.", q: "Tipo de subordinada.", ops: ["Consecutiva", "Causal", "Final"], ok: 0, ana: "Consecutiva: Consecuencia de grado.", adv: "TIP: TAN... QUE." },
+            { s: "Es tan alto como tú.", q: "Tipo de subordinada.", ops: ["Comparativa", "Modo", "Consecutiva"], ok: 0, ana: "Comparativa: Igualdad.", adv: "TIP: TAN... COMO." },
+            { s: "Te llamo para que vengas.", q: "Tipo de subordinada.", ops: ["Final", "Causal", "Consecutiva"], ok: 0, ana: "Final: Propósito.", adv: "TIP: ¿Para qué?" },
+            { s: "Si vienes, te invito.", q: "Tipo de subordinada.", ops: ["Condicional", "Concesiva", "Causal"], ok: 0, ana: "Condicional: Requisito.", adv: "TIP: Nexo SI." },
+            { s: "Aunque llueva, iré.", q: "Tipo de subordinada.", ops: ["Concesiva", "Causal", "Final"], ok: 0, ana: "Concesiva: Obstáculo.", adv: "TIP: Nexo AUNQUE." },
+            { s: "Dime quién ha venido.", q: "Función de la subordinada.", ops: ["CD", "Sujeto", "CI"], ok: 0, ana: "Sustantiva de CD: 'Dímelo'.", adv: "TIP: Interrogativa indirecta." },
+            { s: "Es fácil aprobar así.", q: "Sujeto de la oración.", ops: ["Fácil", "Aprobar así", "No tiene"], ok: 1, ana: "Subordinada de infinitivo Sujeto.", adv: "TIP: 'ESO es fácil'." },
+            { s: "Me alegro de que estés bien.", q: "Función de la subordinada.", ops: ["C. Régimen", "CD", "Atributo"], ok: 0, ana: "Sustantiva de C. Régimen.", adv: "TIP: 'Me alegro DE ESO'." },
+            { s: "El chico que ríe es Luis.", q: "Función de 'QUE'.", ops: ["Sujeto", "CD", "Nexo"], ok: 0, ana: "Pronombre relativo Sujeto.", adv: "TIP: 'El chico ríe'." },
+            { s: "Deseo que seas feliz.", q: "Función de la subordinada.", ops: ["CD", "Sujeto", "Atributo"], ok: 0, ana: "Sustantiva de CD: 'Lo deseo'.", adv: "TIP: Reemplaza por ESO." },
+            { s: "Luis vive donde puede.", q: "Función de la subordinada.", ops: ["CC Lugar", "CD", "Sujeto"], ok: 0, ana: "Adverbial de Lugar.", adv: "TIP: 'Vive ALLÍ'." },
+            { s: "Lo hice según me dijiste.", q: "Tipo de adverbial.", ops: ["Modo", "Tiempo", "Causal"], ok: 0, ana: "Adverbial de Modo.", adv: "TIP: 'Lo hice ASÍ'." },
+            { s: "Trabaja para ganar dinero.", q: "Tipo de adverbial.", ops: ["Final", "Consecutiva", "Causal"], ok: 0, ana: "Adverbial Final (Infinitivo).", adv: "TIP: Finalidad de la acción." },
+            { s: "Te veré en cuanto llegue.", q: "Tipo de adverbial.", ops: ["Tiempo", "Lugar", "Modo"], ok: 0, ana: "Adverbial de Tiempo.", adv: "TIP: Momento de la acción." },
+            { s: "Por más que grites, no iré.", q: "Tipo de subordinada.", ops: ["Concesiva", "Causal", "Consecutiva"], ok: 0, ana: "Adverbial Concesiva.", adv: "TIP: Obstáculo que no impide." },
+            { s: "Dado que no vienes, me voy.", q: "Tipo de subordinada.", ops: ["Causal", "Final", "Consecutiva"], ok: 0, ana: "Adverbial Causal.", adv: "TIP: Causa o motivo." },
+            { s: "Tanto gritó que quedó afónico.", q: "Tipo de subordinada.", ops: ["Consecutiva", "Causal", "Comparativa"], ok: 0, ana: "Subordinada Consecutiva.", adv: "TIP: Consecuencia del exceso." },
+            { s: "Es más listo que el hambre.", q: "Tipo de subordinada.", ops: ["Comparativa", "Consecutiva", "Modo"], ok: 0, ana: "Subordinada Comparativa.", adv: "TIP: MÁS... QUE." },
+            { s: "Salí antes de que amaneciera.", q: "Tipo de adverbial.", ops: ["Tiempo", "Lugar", "Modo"], ok: 0, ana: "Adverbial de Tiempo.", adv: "TIP: Indica momento." },
+            { s: "Quienes lleguen tarde no entran.", q: "Sujeto de la oración.", ops: ["Quienes lleguen tarde", "Ellos", "No tiene"], ok: 0, ana: "S. Adjetiva Sustantivada Sujeto.", adv: "TIP: 'ESOS no entran'." },
+            { s: "Dime dónde vives.", q: "Función de la subordinada.", ops: ["CD", "Sujeto", "CC Lugar"], ok: 0, ana: "Sustantiva CD (Interrogativa).", adv: "TIP: 'Dímelo'." },
+            { s: "La idea de ir me gusta.", q: "Función de 'DE IR'.", ops: ["C. Nombre", "C. Régimen", "Sujeto"], ok: 0, ana: "Sustantiva de C. Nombre.", adv: "TIP: Califica a 'Idea'." },
+            { s: "Estoy harto de esperar.", q: "Función de 'DE ESPERAR'.", ops: ["C. Adjetivo", "C. Régimen", "CD"], ok: 0, ana: "Sustantiva de C. Adjetivo.", adv: "TIP: Califica a 'Harto'." },
+            { s: "Cerca de donde vives hay un bar.", q: "Función de 'DONDE VIVES'.", ops: ["C. Adverbio", "CC Lugar", "CD"], ok: 0, ana: "Sustantiva de C. Adverbio.", adv: "TIP: Califica a 'Cerca'." },
+            { s: "Que digas eso es feo.", q: "Función de la subordinada.", ops: ["Sujeto", "CD", "Atributo"], ok: 0, ana: "Sustantiva de Sujeto.", adv: "TIP: 'ESO es feo'." },
+            { s: "Luis parece que está enfermo.", q: "Función de la subordinada.", ops: ["Atributo", "Sujeto", "CD"], ok: 0, ana: "Sustantiva de Atributo.", adv: "TIP: 'Luis LO parece'." },
+            { s: "Mi meta es que apruebes.", q: "Función de la subordinada.", ops: ["Atributo", "CD", "Sujeto"], ok: 0, ana: "Sustantiva de Atributo.", adv: "TIP: 'Mi meta LO es'." },
+            { s: "Le importa que seas feliz.", q: "Función de la subordinada.", ops: ["Sujeto", "CD", "CI"], ok: 0, ana: "Sustantiva de Sujeto.", adv: "TIP: 'ESO le importa'." },
+            { s: "No sé si vendrá.", q: "Función de la subordinada.", ops: ["CD", "Sujeto", "CC Duda"], ok: 0, ana: "Sustantiva CD (Dubitativa).", adv: "TIP: 'No LO sé'." },
+            { s: "Te daré lo que pidas.", q: "Función de 'LO QUE PIDAS'.", ops: ["CD", "CI", "Sujeto"], ok: 0, ana: "Adjetiva Sustantivada CD.", adv: "TIP: 'Te daré ESO'." },
+            { s: "Ayuda a quien lo necesite.", q: "Función de 'A QUIEN LO NECESITE'.", ops: ["CD", "CI", "CC Persona"], ok: 0, ana: "Adjetiva Sustantivada CD.", adv: "TIP: 'Ayúdalo'." },
+            { s: "El que venga, cobrará.", q: "Función de 'EL QUE VENGA'.", ops: ["Sujeto", "CD", "Atributo"], ok: 0, ana: "Adjetiva Sustantivada Sujeto.", adv: "TIP: 'ESE cobrará'." },
+            { s: "La razón por que lo hice es secreta.", q: "Tipo de subordinada.", ops: ["Adjetiva", "Sustantiva", "Causal"], ok: 0, ana: "Adjetiva: 'La cual'.", adv: "TIP: El relativo lleva antecedente." },
+            { s: "Habla que da gusto.", q: "Tipo de subordinada.", ops: ["Consecutiva", "Modo", "Copulativa"], ok: 0, ana: "Subordinada Consecutiva.", adv: "TIP: Indica consecuencia del habla." },
+            { s: "Como no vengas, me enfado.", q: "Tipo de subordinada.", ops: ["Condicional", "Causal", "Modo"], ok: 0, ana: "Adverbial Condicional.", adv: "TIP: Equivale a SI NO VIENES." },
+            { s: "Siendo así las cosas, me voy.", q: "Tipo de subordinada.", ops: ["Causal", "Condicional", "Tiempo"], ok: 0, ana: "Adverbial Causal (Gerundio).", adv: "TIP: Indica el motivo." },
+            { s: "A fuerza de insistir, lo logró.", q: "Tipo de subordinada.", ops: ["Causal", "Modal", "Final"], ok: 0, ana: "Adverbial Causal.", adv: "TIP: Indica la causa." },
+            { s: "Con ser listo, no aprueba.", q: "Tipo de subordinada.", ops: ["Concesiva", "Condicional", "Modal"], ok: 0, ana: "Adverbial Concesiva.", adv: "TIP: Equivale a AUNQUE SEA LISTO." },
+            { s: "Me voy, que tengo prisa.", q: "Tipo de subordinada.", ops: ["Causal", "Consecutiva", "Final"], ok: 0, ana: "Adverbial Causal.", adv: "TIP: Equivale a PORQUE TENGO PRISA." }
+        ];
+
+        // --- 🎮 MOTOR ACADEMY LANDSCAPE (PHASER 3) ---
+
+        class Boot extends Phaser.Scene {
+            constructor() { super('Boot'); }
+            create() {
+                const gfx = this.make.graphics({x:0, y:0, add:false});
+                gfx.fillStyle(0xffffff); gfx.fillRoundedRect(0,0,100,100,30);
+                gfx.generateTexture('card', 100, 100);
+                this.scene.start('Menu');
+            }
+        }
+
+        class Menu extends Phaser.Scene {
+            constructor() { super('Menu'); }
+            create() {
+                this.cameras.main.setBackgroundColor('#020617');
+                this.add.text(this.scale.width/2, this.scale.height*0.3, "SINTAXIS MASTER", {
+                    fontFamily: 'Outfit', fontSize: '120px', fontWeight: '900', color: '#fff'
+                }).setOrigin(0.5).setShadow(0, 10, '#38bdf8', 20, true, true);
+
+                this.createBtn(this.scale.width/2, this.scale.height*0.65, "COMENZAR RETO", 0x38bdf8, () => this.scene.start('Play'));
+                
+                this.add.text(this.scale.width/2, this.scale.height*0.85, "Century Edition: 100 Retos Aleatorios disponibles.", {
+                    fontFamily: 'Outfit', fontSize: '24px', color: '#94a3b8'
+                }).setOrigin(0.5);
+            }
+
+            createBtn(x, y, txt, color, cb) {
+                const c = this.add.container(x, y);
+                const bg = this.add.nineslice(0, 0, 'card', 0, 600, 120, 30, 30, 30, 30).setTint(color);
+                const t = this.add.text(0, 0, txt, { fontFamily: 'Outfit', fontSize: '42px', fontWeight: '800', color: '#020617' }).setOrigin(0.5);
+                c.add([bg, t]);
+                c.setSize(600, 120).setInteractive().on('pointerdown', () => {
+                    this.tweens.add({ targets: c, scale: 0.95, duration: 80, yoyo: true, onComplete: cb });
+                });
+                return c;
+            }
+        }
+
+        class Play extends Phaser.Scene {
+            constructor() { super('Play'); }
+            init() {
+                this.score = 0; this.qIdx = 0; this.lives = 3; this.isPaused = false;
+                // SELECCIÓN DE 10 PREGUNTAS ALEATORIAS
+                this.qs = [...MASTER_DATABASE].sort(() => Math.random() - 0.5).slice(0, 10);
+            }
+
+            create() {
+                this.cameras.main.setBackgroundColor('#020617');
+                this.header = this.add.graphics().fillStyle(0x0f172a).fillRect(0, 0, this.scale.width, 100);
+                this.sTxt = this.add.text(40, 50, `PTS: 0`, { fontFamily: 'Outfit', fontSize: '32px', fontWeight: '800', color: '#38bdf8' }).setOrigin(0, 0.5);
+                this.lTxt = this.add.text(this.scale.width - 40, 50, `❤❤❤`, { fontSize: '40px' }).setOrigin(1, 0.5);
+                
+                this.progressBg = this.add.graphics().fillStyle(0x1e293b).fillRoundedRect(this.scale.width/2 - 200, 45, 400, 10, 5);
+                this.progressFill = this.add.graphics();
+                
+                this.showQuestion();
+            }
+
+            showQuestion() {
+                if (this.qIdx >= 10) { this.scene.start('End', { s: this.score }); return; }
+                const data = this.qs[this.qIdx];
+                this.mainCont = this.add.container(this.scale.width/2, this.scale.height/2 - 50);
+
+                const card = this.add.nineslice(0, 0, 'card', 0, 1100, 300, 40, 40, 40, 40).setTint(0x1e293b);
+                const sentence = this.add.text(0, -60, `"${data.s}"`, { 
+                    fontFamily: 'Outfit', fontSize: '42px', fontWeight: '700', color: '#38bdf8', align: 'center', wordWrap: { width: 1000 } 
+                }).setOrigin(0.5);
+                const question = this.add.text(0, 60, data.q, { 
+                    fontFamily: 'Outfit', fontSize: '32px', color: '#fff', align: 'center', wordWrap: { width: 1000 } 
+                }).setOrigin(0.5);
+
+                this.mainCont.add([card, sentence, question]);
+
+                data.ops.forEach((op, i) => {
+                    const btn = this.createOptionBtn(-400 + (i * 400), 250, op, i === data.ok, data);
+                    this.mainCont.add(btn);
+                });
+
+                this.updateProgress();
+            }
+
+            updateProgress() {
+                this.progressFill.clear().fillStyle(0x38bdf8).fillRoundedRect(this.scale.width/2 - 200, 45, 400 * (this.qIdx / 10), 10, 5);
+            }
+
+            createOptionBtn(x, y, txt, isOk, data) {
+                const c = this.add.container(x, y);
+                const bg = this.add.nineslice(0, 0, 'card', 0, 380, 140, 25, 25, 25, 25).setTint(0x334155);
+                const t = this.add.text(0, 0, txt, { fontFamily: 'Outfit', fontSize: '26px', fontWeight: '600', color: '#fff', align: 'center', wordWrap: { width: 350 } }).setOrigin(0.5);
+                c.add([bg, t]);
+                c.setSize(380, 140).setInteractive().on('pointerdown', () => {
+                    if (!this.isPaused) { this.isPaused = true; this.handleResult(isOk, bg, data); }
+                });
+                return c;
+            }
+
+            handleResult(win, bg, data) {
+                bg.setTint(win ? 0x10b981 : 0xf43f5e);
+                if (win) this.score += 100; else { this.lives--; this.lTxt.setText('❤'.repeat(this.lives)); this.cameras.main.shake(200, 0.01); }
+                this.sTxt.setText(`PTS: ${this.score}`);
+                this.showFeedback(win, data);
+            }
+
+            showFeedback(win, data) {
+                const overlay = this.add.graphics().fillStyle(0x020617, 0.8).fillRect(0, 0, this.scale.width, this.scale.height).setAlpha(0);
+                this.tweens.add({ targets: overlay, alpha: 1, duration: 200 });
+
+                const f = this.add.container(this.scale.width/2, this.scale.height/2);
+                const fBg = this.add.nineslice(0, 0, 'card', 0, 1050, 580, 40, 40, 40, 40).setTint(0x0f172a);
+                const fT = this.add.text(0, -200, win ? "ANÁLISIS CORRECTO" : "ERROR DETECTADO", { fontFamily: 'Outfit', fontSize: '56px', fontWeight: '900', color: win ? '#10b981' : '#f43f5e' }).setOrigin(0.5);
+                const fD = this.add.text(0, -40, data.ana, { fontFamily: 'Outfit', fontSize: '28px', color: '#fff', align: 'center', wordWrap: { width: 950 } }).setOrigin(0.5);
+                const fA = this.add.text(0, 110, data.adv, { fontFamily: 'Outfit', fontSize: '26px', fontStyle: 'italic', color: '#38bdf8', align: 'center', wordWrap: { width: 950 } }).setOrigin(0.5);
+                
+                const nextBtn = this.add.container(0, 230);
+                const nBg = this.add.nineslice(0, 0, 'card', 0, 400, 90, 20, 20, 20, 20).setTint(0x38bdf8);
+                const nT = this.add.text(0, 0, "CONTINUAR >", { fontFamily: 'Outfit', fontSize: '32px', fontWeight: '900', color: '#020617' }).setOrigin(0.5);
+                nextBtn.add([nBg, nT]).setSize(400, 90).setInteractive().on('pointerdown', () => {
+                    this.tweens.add({ targets: [this.mainCont, f, overlay], alpha: 0, duration: 200, onComplete: () => {
+                        this.mainCont.destroy(); f.destroy(); overlay.destroy();
+                        this.qIdx++; this.isPaused = false;
+                        if (this.lives <= 0) this.scene.start('End', { s: this.score }); else this.showQuestion();
+                    }});
+                });
+
+                f.add([fBg, fT, fD, fA, nextBtn]).setScale(0.8).setAlpha(0);
+                this.tweens.add({ targets: f, alpha: 1, scale: 1, duration: 300, ease: 'Back.out' });
+            }
+        }
+
+        class End extends Phaser.Scene {
+            constructor() { super('End'); }
+            create(d) {
+                this.add.text(this.scale.width/2, this.scale.height*0.4, "RETO FINALIZADO", { fontFamily: 'Outfit', fontSize: '100px', fontWeight: '900', color: '#fff' }).setOrigin(0.5);
+                this.add.text(this.scale.width/2, this.scale.height*0.55, `PTS TOTALES: ${d.s}`, { fontFamily: 'Outfit', fontSize: '60px', color: '#38bdf8' }).setOrigin(0.5);
+                const b = this.add.text(this.scale.width/2, this.scale.height*0.75, "REINTENTAR", { 
+                    fontFamily: 'Outfit', fontSize: '40px', fontWeight: '800', backgroundColor: '#38bdf8', padding: {x:60, y:30}, color: '#020617' 
+                }).setOrigin(0.5).setInteractive().on('pointerdown', () => this.scene.start('Menu'));
+            }
+        }
+
+        const config = {
+            type: Phaser.AUTO, parent: 'game-container', width: 1280, height: 720,
+            scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
+            scene: [Boot, Menu, Play, End]
+        };
+        new Phaser.Game(config);
+    </script>
+</body>
+</html>

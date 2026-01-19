@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintaxis Hub | 4º ESO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #38bdf8;
+            --text: #f8fafc;
+            --glass: rgba(30, 41, 59, 0.7);
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .hero {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.8)), 
+                        url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+        }
+        .hero h1 { font-size: 4rem; margin: 0; font-weight: 900; letter-spacing: -2px; }
+        .hero p { font-size: 1.5rem; opacity: 0.8; max-width: 600px; }
+
+        .container {
+            max-width: 1100px;
+            width: 90%;
+            margin-top: -50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding-bottom: 50px;
+        }
+
+        .mission-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            text-decoration: none;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .mission-card:hover {
+            transform: translateY(-10px);
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .mission-card i { font-size: 3.5rem; color: var(--accent); margin-bottom: 20px; }
+        .mission-card h2 { font-size: 1.8rem; margin: 10px 0; }
+        .mission-card p { opacity: 0.7; line-height: 1.6; }
+        
+        .badge {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            margin-top: 20px;
+        }
+
+        .motivation-section {
+            width: 100%;
+            max-width: 1100px;
+            margin: 50px 0;
+            padding: 40px;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 30px;
+            border: 1px dashed var(--accent);
+            text-align: center;
+        }
+        .quote { font-style: italic; font-size: 1.4rem; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>GRAMÁTICA COMMAND</h1>
+        <p>Centro de Operaciones Sintácticas para 4º ESO</p>
+    </div>
+
+    <div class="container">
+        <!-- Presentación -->
+        <a href="presentacion_sintaxis_4eso.html" class="mission-card">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <h2>Misión: Teoría</h2>
+            <p>Masterclass visual con Reveal.js. Entiende los conceptos antes de lanzarte al campo de batalla.</p>
+            <span class="badge">NIVEL: ESTRATEGIA</span>
+        </a>
+
+        <!-- Infografía -->
+        <a href="infografia_trucos_sintaxis.html" class="mission-card">
+            <i class="fas fa-map-marked-alt"></i>
+            <h2>Misión: Mapa</h2>
+            <p>Infografía de trucos rápidos. Tu hoja de ruta para identificar complementos en segundos.</p>
+            <span class="badge">NIVEL: TÁCTICO</span>
+        </a>
+
+        <!-- Juego -->
+        <a href="juego_lengua.html" class="mission-card">
+            <i class="fas fa-gamepad"></i>
+            <h2>Misión: Combate</h2>
+            <p>Pon a prueba tus conocimientos en el simulador de 40 niveles. ¡Gana puntos y evita el Game Over!</p>
+            <span class="badge">NIVEL: ACCIÓN</span>
+        </a>
+    </div>
+
+    <div class="motivation-section">
+        <p class="quote">"La sintaxis no es analizar frases, es entender cómo el pensamiento se organiza para ser libre."</p>
+        <p style="margin-top: 20px; opacity: 0.6;">Sigue el orden: Teoría → Mapa → Combate. ¡A por el 10!</p>
+    </div>
+
+    <footer style="margin-bottom: 40px; opacity: 0.4; font-size: 0.9rem;">
+        &copy; 2026 Academia de Sintaxis Digital
+    </footer>
+
+</body>
+</html>

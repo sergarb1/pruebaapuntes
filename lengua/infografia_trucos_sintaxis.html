@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintaxis 360°: La Biblia Definitiva de 4º ESO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #020617; --card: #0f172a; --accent: #38bdf8;
+            --success: #10b981; --error: #f43f5e; --warning: #facc15;
+            --purple: #a855f7; --orange: #f97316; --slate: #1e293b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg); 
+            color: #f1f5f9; 
+            font-family: 'Outfit', sans-serif; 
+            padding: 20px;
+            display: flex; justify-content: center;
+            line-height: 1.4;
+        }
+        .container { max-width: 1600px; width: 100%; }
+        
+        /* Header Visual */
+        .header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 25px; border-bottom: 2px solid var(--slate); padding-bottom: 15px;
+        }
+        .header h1 { font-size: 2.5rem; font-weight: 900; letter-spacing: -2px; text-transform: uppercase; color: #fff; }
+        .header h1 span { color: var(--accent); }
+        .badge-main { background: var(--accent); color: var(--bg); padding: 5px 15px; border-radius: 30px; font-weight: 900; font-size: 0.8rem; }
+
+        /* Bento Grid 12 Column System */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 15px;
+            grid-auto-flow: dense;
+        }
+
+        .card { 
+            background: var(--card); 
+            padding: 20px; 
+            border-radius: 24px; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            display: flex; flex-direction: column;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        /* Typography */
+        h2 { font-size: 1.1rem; margin-bottom: 12px; color: var(--accent); display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { font-size: 0.9rem; color: var(--warning); margin: 10px 0 5px 0; }
+        p { font-size: 0.85rem; opacity: 0.9; }
+        .example { background: rgba(2, 6, 23, 0.6); padding: 8px 12px; border-radius: 12px; margin: 8px 0; border-left: 3px solid var(--accent); font-style: italic; font-size: 0.8rem; }
+        .example b { color: var(--warning); }
+        .bad { color: var(--error); text-decoration: line-through; opacity: 0.6; }
+
+        /* Spans */
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+        .span-3 { grid-column: span 3; }
+        .row-2 { grid-row: span 2; }
+
+        /* Lists */
+        .check-list { list-style: none; font-size: 0.8rem; }
+        .check-list li { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px; }
+        .check-list i { color: var(--success); margin-top: 3px; font-size: 0.7rem; }
+
+        /* Special Styling */
+        .danger { border: 1px solid var(--error) !important; background: rgba(244, 63, 94, 0.05); }
+        .danger h2 { color: var(--error); }
+        .fix { color: var(--success); font-weight: 700; font-size: 0.75rem; display: block; margin-top: 4px; }
+        .step-num { background: var(--accent); color: var(--bg); width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.7rem; margin-right: 8px; }
+
+        @media (max-width: 1200px) { .span-4, .span-3 { grid-column: span 6; } }
+        @media (max-width: 768px) { .span-12, .span-8, .span-6, .span-4, .span-3 { grid-column: span 12; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <h1>SINTAXIS <span>MASTER 360°</span></h1>
+        <div class="badge-main">ACADEMY EDITION v5.0</div>
+    </header>
+
+    <div class="bento-grid">
+        
+        <!-- 1. PROTOCOLO DE ANÁLISIS (EL ALGORITMO) -->
+        <div class="card span-8">
+            <h2><i class="fas fa-microscope"></i> Protocolo de Análisis Estándar</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                <div>
+                    <p><span class="step-num">1</span> <b>NÚCLEO:</b> Busca el verbo.</p>
+                    <p><span class="step-num">2</span> <b>SUJETO:</b> Prueba de concordancia.</p>
+                </div>
+                <div>
+                    <p><span class="step-num">3</span> <b>PREDICADO:</b> ¿Verbal o Nominal?</p>
+                    <p><span class="step-num">4</span> <b>CD:</b> Sustituye LO/LA o Pasa a Pasiva.</p>
+                </div>
+                <div>
+                    <p><span class="step-num">5</span> <b>RESTO:</b> CI, CRég, CPred, CC...</p>
+                    <p><span class="step-num">6</span> <b>SINTAGMAS:</b> Etiqueta los grupos (SN, SP...).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. LA TRAMPA DEL SUJETO -->
+        <div class="card span-4 warning">
+            <h2><i class="fas fa-user-ninja"></i> Trampa: Sujeto "Gusta"</h2>
+            <div class="example">"Me <b>gustan</b> los <b>libros</b>"</div>
+            <p>❌ Sujeto: Yo / Me. <br>✅ Sujeto: <b>Los libros</b> (Cambia con el verbo).</p>
+            <span class="fix">"Me GUSTA EL LIBRO" → ¡Confirmado!</span>
+        </div>
+
+        <!-- 3. EL MAPA DEL SE -->
+        <div class="card span-4 row-2">
+            <h2><i class="fas fa-key"></i> Diccionario del "SE"</h2>
+            <ul class="check-list">
+                <li><b>Reflexivo:</b> Acción sobre sí mismo. (CD/CI).</li>
+                <li><b>Recíproco:</b> El uno al otro.</li>
+                <li><b>Pasiva Refleja:</b> Con Sujeto paciente. <br><small>"Se alquilan pisos" (Pisos = Suj).</small></li>
+                <li><b>Impersonal:</b> Sin sujeto. <br><small>"Se busca a los culpables".</small></li>
+                <li><b>Pronominal:</b> Parte del verbo (Quejarse).</li>
+                <li><b>Dativo Ético:</b> Énfasis. <br><small>"Se comió la tarta".</small></li>
+                <li><b>Falso SE:</b> Equivale a LE delante de LO.</li>
+            </ul>
+        </div>
+
+        <!-- 4. CD vs CI -->
+        <div class="card span-4">
+            <h2><i class="fas fa-exchange-alt"></i> CD vs CI</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <h3>CD</h3>
+                    <p>LO, LA, LOS, LAS.</p>
+                    <div class="example">"Vi <b>la tele</b>"</div>
+                </div>
+                <div>
+                    <h3>CI</h3>
+                    <p>LE, LES.</p>
+                    <div class="example">"Di pan <b>a él</b>"</div>
+                </div>
+            </div>
+            <p style="font-size:0.7rem; color:var(--success);"><b>PERSONA:</b> El CD lleva "a" si es persona. <br>"Vi <b>a Luis</b>" → <b>LO</b> vi (CD).</p>
+        </div>
+
+        <!-- 5. ATR vs PRED vs MODO -->
+        <div class="card span-4">
+            <h2><i class="fas fa-balance-scale"></i> El Triángulo Crítico</h2>
+            <ul class="check-list">
+                <li><b>ATRIBUTO:</b> Con V. Copulativos. Sustituye por <b>LO</b>.</li>
+                <li><b>CPRED:</b> Con V. Predicativos. <b>CONCUERDA</b> con Suj/CD.</li>
+                <li><b>CC MODO:</b> Adverbio. <b>INVARIABLE</b>.</li>
+            </ul>
+            <div class="example">"Corren <b>bien</b> (Modo) / <b>cansados</b> (Pred)".</div>
+        </div>
+
+        <!-- 6. DANGER ZONE: HABER/HACER -->
+        <div class="card span-4 danger">
+            <h2><i class="fas fa-biohazard"></i> Impersonales</h2>
+            <div class="example">"Había <b>muchos niños</b>" ✅ <br><span class="bad">"Habían muchos niños" ❌</span></div>
+            <p>Haber (existencia) y Hacer (clima) son impersonales. Lo que sigue es <b>CD</b>.</p>
+        </div>
+
+        <!-- 7. C. RÉGIMEN Y AGENTE -->
+        <div class="card span-4">
+            <h2><i class="fas fa-anchor"></i> Régimen y Agente</h2>
+            <p><b>CRég:</b> Prep. obligatoria. <br><i>"Confío <b>en</b> ti"</i>.</p>
+            <p><b>CAg:</b> En pasiva. <br><i>"Por el médico"</i>.</p>
+            <div class="pro-tip"><b>TEST RÉGIMEN:</b> "¿En qué confías? En eso". La prep se queda.</div>
+        </div>
+
+        <!-- 8. ORACIÓN COMPUESTA -->
+        <div class="card span-8">
+            <h2><i class="fas fa-project-diagram"></i> Mapa de la Oración Compuesta</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                <div>
+                    <h3>Sustantivas</h3>
+                    <p>Truco: <b>"ESO"</b></p>
+                    <div class="example">"Dijo <b>que vendría</b>" <br>→ "Dijo <b>ESO</b>" ✅</div>
+                </div>
+                <div>
+                    <h3>Adjetivas</h3>
+                    <p>Truco: <b>"EL CUAL"</b></p>
+                    <div class="example">"El libro <b>que leí</b>" <br>→ "<b>El cual</b> leí" ✅</div>
+                </div>
+                <div>
+                    <h3>Adverbiales</h3>
+                    <p>Funcionan como CC.</p>
+                    <p>Donde, Cuando, Como...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. SINTAGMAS Y COORDINADAS -->
+        <div class="card span-4">
+            <h2><i class="fas fa-box"></i> Sintagmas (G)</h2>
+            <p style="font-size:0.75rem;"><b>SN:</b> Det + N + CN<br><b>SAdj:</b> Mod + N + CAdj<br><b>SPrep:</b> E + T (Sintagma)</p>
+        </div>
+
+        <!-- 10. LEÍSMO / LAÍSMO -->
+        <div class="card span-4">
+            <h2><i class="fas fa-spell-check"></i> Guía Pronombres</h2>
+            <p><b>CD:</b> LO / LA <br><b>CI:</b> LE</p>
+            <div class="example">"<b>La</b> di un beso" ❌ (LE) <br> "<b>Le</b> vi en el bus" ❌ (LO)</div>
+        </div>
+
+        <!-- 11. CHECKLIST FINAL -->
+        <div class="card span-4 bg-purple">
+            <h2 style="color:white;"><i class="fas fa-clipboard-check"></i> Checklist Examen</h2>
+            <ul class="check-list" style="color:white;">
+                <li><i class="fas fa-check" style="color:white;"></i> ¿Sujeto y Verbo concuerdan?</li>
+                <li><i class="fas fa-check" style="color:white;"></i> ¿El CD de persona tiene la 'a'?</li>
+                <li><i class="fas fa-check" style="color:white;"></i> ¿Has puesto el tipo de Sintagma?</li>
+                <li><i class="fas fa-check" style="color:white;"></i> ¿Has marcado los núcleos?</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer style="text-align: center; margin-top: 30px; opacity: 0.4; font-size: 0.75rem;">
+        &copy; 2026 Master Sintaxis Digital - Biblia 360° Edición 4º ESO
+    </footer>
+</div>
+
+</body>
+</html>
