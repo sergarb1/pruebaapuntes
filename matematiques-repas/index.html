@@ -119,9 +119,32 @@
             return this.add.rectangle(x, y, width, 70, 0, 0).setInteractive({ useHandCursor: true });
         };
 
+        Phaser.Scene.prototype.drawHomeButton = function() {
+            let btnX = 45;
+            let btnY = 40;
+            let size = 50;
+            // Shadow y Botón más pequeños
+            let shadow = this.add.graphics().fillStyle(0x000000, 1).fillRoundedRect(btnX - size/2 + 4, btnY - size/2 + 4, size, size, 12);
+            let g = this.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(btnX - size/2, btnY - size/2, size, size, 12).lineStyle(3, 0x000, 1).strokeRoundedRect(btnX - size/2, btnY - size/2, size, size, 12);
+            let icon = this.add.text(btnX, btnY, '🏠', { fontSize: '28px' }).setOrigin(0.5);
+            let area = this.add.rectangle(btnX, btnY, size, size, 0, 0).setInteractive({ useHandCursor: true });
+            
+            // Asegurar que esté por encima de todo (depth alto)
+            shadow.setDepth(100);
+            g.setDepth(100);
+            icon.setDepth(100);
+            area.setDepth(101);
+
+            area.on('pointerdown', () => {
+                this.time.removeAllEvents();
+                this.showMainMenu();
+            });
+        };
+
         Phaser.Scene.prototype.showInstructions = function() {
             this.children.removeAll();
             this.cameras.main.setBackgroundColor('#000');
+            this.drawHomeButton();
             this.add.text(400, 200, "OBJECTIU", { fontSize: "50px", fill: "#ffde59", fontWeight: "900" }).setOrigin(0.5);
             this.add.text(400, 320, "Clica les FRACCIONS PRÒPIES\n(Número de DALT més XICOTET)", { fontSize: "26px", fill: "#fff", align: 'center' }).setOrigin(0.5);
             this.drawBrutalButton(400, 480, "¡JUGAR ARA!", 0x5ce1e6).on("pointerdown", () => this.startGame());
@@ -139,6 +162,7 @@
             let q = pool[questionIndex];
 
             this.cameras.main.setBackgroundColor('#a29bfe');
+            this.drawHomeButton();
             this.add.graphics().fillStyle(0x000, 1).fillRoundedRect(48, 48, 720, 520, 30); // Shadow
             this.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(40, 40, 720, 520, 30).lineStyle(5, 0x000, 1).strokeRoundedRect(40, 40, 720, 520, 30);
 
@@ -172,6 +196,7 @@
         Phaser.Scene.prototype.startGame = function() {
             score = 0; this.children.removeAll();
             this.cameras.main.setBackgroundColor('#7ed957');
+            this.drawHomeButton();
             let time = 30;
             let timerTxt = this.add.text(400, 40, `TEMPS: ${time}s`, { fontSize: "32px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
             let scoreTxt = this.add.text(120, 40, `PUNTS: 0`, { fontSize: "26px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
@@ -193,19 +218,16 @@
                     this.physics.add.existing(card);
                     card.body.setVelocityY(200);
         
-                    let danceTimer = 0;
-                    let sync = () => {
-                        if (!card.active) return;
-                        danceTimer += 0.05;
-                        // Ball de la caca: balanceig lateral i xicotet salt
-                        poop.x = card.x + Math.sin(danceTimer * 5) * 10;
-                        poop.y = card.y - 85 + Math.abs(Math.cos(danceTimer * 5)) * 5;
-                        
-                        num.x = card.x; num.y = card.y - 25; 
-                        line.x = card.x; line.y = card.y + 5; 
-                        den.x = card.x; den.y = card.y + 35;
-                    };
-                    this.events.on('update', sync);
+                                let sync = () => {
+                                    if (!card.active) return;
+                                    // Posició fixa sobre la targeta (sense ball)
+                                    poop.x = card.x;
+                                    poop.y = card.y - 75;
+                                    
+                                    num.x = card.x; num.y = card.y - 25; 
+                                    line.x = card.x; line.y = card.y + 5; 
+                                    den.x = card.x; den.y = card.y + 35;
+                                };                    this.events.on('update', sync);
         
                     card.on('pointerdown', () => {
                         if (isProper) { score += 10; card.setFillStyle(0x7ed957); }
