@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Mestre de Fraccions 5.0 - Versió Final</title>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { 
             margin: 0; 
@@ -15,7 +18,7 @@
             align-items: center; 
             height: 100dvh; 
             overflow: hidden; 
-            font-family: -apple-system, system-ui, sans-serif;
+            font-family: 'Fredoka', sans-serif;
         }
         #game-container { 
             width: 100%; 
@@ -129,51 +132,39 @@
             this.children.removeAll();
             this.cameras.main.setBackgroundColor('#ffde59'); // Groc vibrant Neo-Brutal
 
-            this.add.text(400, 150, '💩', { fontSize: '150px' }).setOrigin(0.5);
+            this.add.text(400, 150, '💩', { fontSize: '150px', fontFamily: 'Fredoka' }).setOrigin(0.5);
             this.add.text(400, 300, "MESTRE DE\nFRACCIONS", { 
-                fontSize: "60px", fill: "#000", fontWeight: "900", align: 'center', stroke: "#fff", strokeThickness: 4
+                fontSize: "60px", fill: "#000", fontFamily: 'Fredoka', fontWeight: "700", align: 'center', stroke: "#fff", strokeThickness: 6
             }).setOrigin(0.5);
 
-            this.drawBrutalButton(400, 440, "QUIZ DE MESTRIA", 0x5ce1e6).on("pointerdown", () => this.startQuiz());
-            this.drawBrutalButton(400, 530, "CAÇA DE CAQUES", 0xff5757).on("pointerdown", () => this.showInstructions());
+            this.drawBrutalButton(400, 480, "QUIZ DE MESTRIA", 0x5ce1e6).on("pointerdown", () => this.startQuiz());
         };
 
         Phaser.Scene.prototype.drawBrutalButton = function(x, y, text, color, width = 600) {
             let shadow = this.add.graphics().fillStyle(0x000000, 1).fillRoundedRect(x - width/2 + 8, y - 35 + 8, width, 70, 20);
             let g = this.add.graphics().fillStyle(color, 1).fillRoundedRect(x - width/2, y - 35, width, 70, 20).lineStyle(5, 0x000, 1).strokeRoundedRect(x - width/2, y - 35, width, 70, 20);
-            this.add.text(x, y, text, { fontSize: "28px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
+            this.add.text(x, y, text, { fontSize: "28px", fill: "#000", fontFamily: 'Fredoka', fontWeight: "700" }).setOrigin(0.5);
             return this.add.rectangle(x, y, width, 70, 0, 0).setInteractive({ useHandCursor: true });
         };
 
         Phaser.Scene.prototype.drawHomeButton = function() {
-            let btnX = 45;
-            let btnY = 40;
+            let btnX = 750; // Dreta
+            let btnY = 50;
             let size = 50;
-            // Shadow y Botón más pequeños
+            
             let shadow = this.add.graphics().fillStyle(0x000000, 1).fillRoundedRect(btnX - size/2 + 4, btnY - size/2 + 4, size, size, 12);
             let g = this.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(btnX - size/2, btnY - size/2, size, size, 12).lineStyle(3, 0x000, 1).strokeRoundedRect(btnX - size/2, btnY - size/2, size, size, 12);
-            let icon = this.add.text(btnX, btnY, '🏠', { fontSize: '28px' }).setOrigin(0.5);
+            let icon = this.add.text(btnX, btnY, '🏠', { fontSize: '28px', fontFamily: 'Fredoka' }).setOrigin(0.5);
             let area = this.add.rectangle(btnX, btnY, size, size, 0, 0).setInteractive({ useHandCursor: true });
             
-            // Asegurar que esté por encima de todo (depth alto)
             shadow.setDepth(100);
             g.setDepth(100);
             icon.setDepth(100);
             area.setDepth(101);
 
             area.on('pointerdown', () => {
-                this.time.removeAllEvents();
-                this.showMainMenu();
+                this.scene.restart();
             });
-        };
-
-        Phaser.Scene.prototype.showInstructions = function() {
-            this.children.removeAll();
-            this.cameras.main.setBackgroundColor('#000');
-            this.drawHomeButton();
-            this.add.text(400, 200, "OBJECTIU", { fontSize: "50px", fill: "#ffde59", fontWeight: "900" }).setOrigin(0.5);
-            this.add.text(400, 320, "Resol l'operació superior i\nCLICA EL RESULTAT CORRECTE!", { fontSize: "26px", fill: "#fff", align: 'center' }).setOrigin(0.5);
-            this.drawBrutalButton(400, 480, "¡JUGAR ARA!", 0x5ce1e6).on("pointerdown", () => this.startGame());
         };
 
         Phaser.Scene.prototype.startQuiz = function() {
@@ -193,7 +184,7 @@
             this.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(40, 40, 720, 520, 30).lineStyle(5, 0x000, 1).strokeRoundedRect(40, 40, 720, 520, 30);
 
             this.add.text(400, 100, q.q, { 
-                fontSize: "30px", fill: "#000", fontWeight: "900", align: "center", wordWrap: { width: 650 }, stroke: "#fff", strokeThickness: 2 
+                fontSize: "30px", fill: "#000", fontFamily: 'Fredoka', fontWeight: "700", align: "center", wordWrap: { width: 650 }, stroke: "#fff", strokeThickness: 2 
             }).setOrigin(0.5);
 
             if (q.type === "fraction") this.drawFraction(400, 210, q.n, q.d);
@@ -211,160 +202,36 @@
             this.children.removeAll();
             this.cameras.main.setBackgroundColor(isCorrect ? '#7ed957' : '#ff5757');
             this.add.text(400, 100, isCorrect ? "CORRECTE! 🎉" : "OH NO! 💩", { 
-                fontSize: "60px", fill: "#000", fontWeight: "900", stroke: "#fff", strokeThickness: 6 
+                fontSize: "60px", fill: "#000", fontFamily: 'Fredoka', fontWeight: "700", stroke: "#fff", strokeThickness: 6 
             }).setOrigin(0.5);
             
             this.add.graphics().fillStyle(0x000, 1).fillRoundedRect(108, 188, 600, 280, 30);
             this.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(100, 180, 600, 280, 30).lineStyle(5, 0x000, 1).strokeRoundedRect(100, 180, 600, 280, 30);
             
-            this.add.text(400, 260, q.f, { fontSize: "26px", fill: "#000", align: "center", wordWrap: { width: 550 }, fontWeight: "900" }).setOrigin(0.5);
+            this.add.text(400, 260, q.f, { fontSize: "26px", fill: "#000", fontFamily: 'Fredoka', fontWeight: "600", align: "center", wordWrap: { width: 550 } }).setOrigin(0.5);
             this.add.text(400, 380, `💡 Consell: ${q.tip}`, { 
-                fontSize: "22px", fill: "#000", fontStyle: "italic", fontWeight: "900", align: "center", wordWrap: { width: 550 } 
+                fontSize: "22px", fill: "#000", fontFamily: 'Fredoka', fontStyle: "italic", fontWeight: "600", align: "center", wordWrap: { width: 550 } 
             }).setOrigin(0.5);
 
             this.drawBrutalButton(400, 530, "SEGÜENT", 0xffde59).on("pointerdown", () => { questionIndex++; this.nextQuiz(); });
         };
 
-        let currentResult = { n: 0, d: 1 };
-
-        Phaser.Scene.prototype.startGame = function() {
-            score = 0; 
-            this.children.removeAll();
-            this.cameras.main.setBackgroundColor('#7ed957');
-            this.drawHomeButton();
-            
-            let time = 60;
-            let timerTxt = this.add.text(700, 40, `TEMPS: ${time}s`, { fontSize: "32px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
-            let scoreTxt = this.add.text(120, 40, `PUNTS: 0`, { fontSize: "32px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
-
-            // Operation display
-            this.add.rectangle(400, 130, 500, 100, 0xffffff).setStrokeStyle(4, 0x000);
-            this.opTextN1 = this.add.text(280, 110, "0", { fontSize: "40px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
-            this.add.rectangle(280, 135, 40, 4, 0x000).setOrigin(0.5);
-            this.opTextD1 = this.add.text(280, 160, "0", { fontSize: "40px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
-
-            this.opSymbol = this.add.text(350, 130, "+", { fontSize: "50px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
-
-            this.opTextN2 = this.add.text(420, 110, "0", { fontSize: "40px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
-            this.add.rectangle(420, 135, 40, 4, 0x000).setOrigin(0.5);
-            this.opTextD2 = this.add.text(420, 160, "0", { fontSize: "40px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
-            
-            this.add.text(490, 130, "=", { fontSize: "50px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
-            this.add.text(560, 130, "?", { fontSize: "60px", fill: "#ff5757", fontWeight: "900" }).setOrigin(0.5);
-
-            this.generateOperation();
-
-            this.time.addEvent({ delay: 1500, callback: () => this.spawnFallingCard(scoreTxt), loop: true });
-            this.time.addEvent({ delay: 1000, callback: () => { 
-                time--; 
-                timerTxt.setText(`TEMPS: ${time}s`); 
-                if (time <= 0) this.showFinalResults(); 
-            }, loop: true });
-        };
-
-        Phaser.Scene.prototype.generateOperation = function() {
-            let d = Phaser.Math.Between(3, 10);
-            let n1 = Phaser.Math.Between(1, d * 2); 
-            let n2 = Phaser.Math.Between(1, d);
-            let isSum = Math.random() > 0.5;
-
-            if (!isSum) {
-                // Ensure positive result for subtraction
-                if (n1 < n2) { let temp = n1; n1 = n2; n2 = temp; }
-            }
-
-            this.opTextN1.setText(n1); this.opTextD1.setText(d);
-            this.opTextN2.setText(n2); this.opTextD2.setText(d);
-            this.opSymbol.setText(isSum ? "+" : "-");
-
-            let resN = isSum ? n1 + n2 : n1 - n2;
-            currentResult = { n: resN, d: d };
-        };
-
-        Phaser.Scene.prototype.spawnFallingCard = function(st) {
-            let x = Phaser.Math.Between(100, 700);
-            let isCorrect = Math.random() < 0.35; 
-            let n, d;
-
-            d = currentResult.d;
-            if (isCorrect) {
-                n = currentResult.n;
-            } else {
-                do {
-                    n = Phaser.Math.Between(0, d * 3);
-                } while (n === currentResult.n);
-            }
-
-            // Container for physics and grouping
-            let container = this.add.container(x, -100);
-            container.setSize(120, 160);
-
-            // Card background (estétic com abans)
-            let cardBg = this.add.graphics();
-            cardBg.fillStyle(0xffffff, 1);
-            cardBg.lineStyle(4, 0x000, 1);
-            cardBg.fillRoundedRect(-60, -80, 120, 160, 15);
-            cardBg.strokeRoundedRect(-60, -80, 120, 160, 15);
-
-            let poop = this.add.text(0, -105, '💩', { fontSize: '50px' }).setOrigin(0.5);
-            let numTxt = this.add.text(0, -30, n, { fontSize: '42px', fill: '#ff5757', fontWeight: '900' }).setOrigin(0.5);
-            let line = this.add.rectangle(0, 0, 50, 5, 0x000).setOrigin(0.5);
-            let denTxt = this.add.text(0, 35, d, { fontSize: '42px', fill: '#5ce1e6', fontWeight: '900' }).setOrigin(0.5);
-
-            container.add([cardBg, poop, numTxt, line, denTxt]);
-
-            this.physics.add.existing(container);
-            // Velocitat més lenta (100-180)
-            container.body.setVelocityY(Phaser.Math.Between(100, 180));
-            
-            let hitArea = this.add.rectangle(x, -100, 120, 160, 0x000000, 0).setInteractive();
-            
-            let updateHitArea = () => {
-                if(container.active) {
-                    hitArea.x = container.x;
-                    hitArea.y = container.y;
-                } else {
-                    hitArea.destroy();
-                }
-            };
-            this.events.on('update', updateHitArea);
-
-            hitArea.on('pointerdown', () => {
-                if (isCorrect) {
-                    score += 10;
-                    st.setText(`PUNTS: ${score}`);
-                    this.cameras.main.flash(200, 126, 217, 87);
-                    this.generateOperation();
-                } else {
-                    score -= 5;
-                    st.setText(`PUNTS: ${score}`);
-                    this.cameras.main.shake(100, 0.01);
-                }
-                container.destroy();
-                hitArea.destroy();
-                this.events.off('update', updateHitArea);
-            });
-
-            this.time.delayedCall(8000, () => { 
-                if (container.active) { container.destroy(); hitArea.destroy(); this.events.off('update', updateHitArea); } 
-            });
-        };
         Phaser.Scene.prototype.showFinalResults = function() {
             this.children.removeAll(); this.cameras.main.setBackgroundColor('#ffde59');
-            this.add.text(400, 200, "FINAL!", { fontSize: "60px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
-            this.add.text(400, 320, `Puntuació: ${score}`, { fontSize: "40px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
-            this.drawBrutalButton(400, 480, "TORNAR AL MENÚ", 0x5ce1e6).on("pointerdown", () => this.showMainMenu());
+            this.add.text(400, 200, "FINAL!", { fontSize: "60px", fill: "#000", fontFamily: 'Fredoka', fontWeight: "700" }).setOrigin(0.5);
+            this.add.text(400, 320, `Puntuació: ${score} / ${totalQuestions}`, { fontSize: "40px", fill: "#000", fontFamily: 'Fredoka', fontWeight: "700" }).setOrigin(0.5);
+            this.drawBrutalButton(400, 480, "TORNAR AL MENÚ", 0x5ce1e6).on("pointerdown", () => this.scene.restart());
         };
 
         Phaser.Scene.prototype.drawFraction = function(x, y, n, d) {
-            this.add.text(x, y - 45, n, { fontSize: "56px", fill: "#ff5757", fontWeight: "900" }).setOrigin(0.5);
+            this.add.text(x, y - 45, n, { fontSize: "56px", fill: "#ff5757", fontFamily: 'Fredoka', fontWeight: "700" }).setOrigin(0.5);
             this.add.rectangle(x, y, 90, 6, 0x000).setOrigin(0.5);
-            this.add.text(x, y + 50, d, { fontSize: "56px", fill: "#5ce1e6", fontWeight: "900" }).setOrigin(0.5);
+            this.add.text(x, y + 50, d, { fontSize: "56px", fill: "#5ce1e6", fontFamily: 'Fredoka', fontWeight: "700" }).setOrigin(0.5);
         };
 
         Phaser.Scene.prototype.drawOp = function(x, y, q) {
             this.drawFraction(x-85, y, q.n1, q.d1);
-            this.add.text(x, y, q.op, { fontSize: "48px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
+            this.add.text(x, y, q.op, { fontSize: "48px", fill: "#000", fontFamily: 'Fredoka', fontWeight: "700" }).setOrigin(0.5);
             this.drawFraction(x+85, y, q.n2, q.d2);
         };
     </script>
