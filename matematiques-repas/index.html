@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Super Caca-Fraccions Mobile</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background: #2c3e50; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100dvh; 
+            overflow: hidden; 
+            font-family: 'Comic Sans MS', cursive; 
+        }
+        canvas { 
+            border-radius: 20px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5); 
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container"></div>
+    <script>
+        const config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            parent: "game-container",
+            backgroundColor: "#74b9ff",
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
+            physics: { default: "arcade", arcade: { gravity: { y: 0 } } },
+            scene: { preload: preload, create: create, update: update }
+        };
+
+        const game = new Phaser.Game(config);
+        let score = 0;
+        let questionIndex = 0;
+        let pool = [];
+        let mode = "";
+        const totalQuestions = 10;
+
+        const allQuestions = [
+            { type: "text", q: "Què indica el denominador d'una fracció?", a: ["Les parts que agafem", "En quantes parts es divideix la unitat", "El resultat"], c: 1, f: "El denominador indica el total de parts iguals.", tip: "És el número de BAIX." },
+            { type: "text", q: "Què indica el numerador?", a: ["Les parts que prenem", "Les parts totals", "La suma"], c: 0, f: "El numerador diu quants talls hem triat.", tip: "És el número de DALT." },
+            { type: "fraction", q: "Com es llegeix aquesta fracció?", n: 1, d: 4, a: ["Un quart", "Un quatre", "Quatre"], c: 0, f: "1/4 és un quart.", tip: "Com un quart d'hora!" },
+            { type: "fraction", q: "Com es llegeix aquesta?", n: 3, d: 5, a: ["Tres cinc", "Tres cinquens", "Cinc terços"], c: 1, f: "3/5 són tres cinquens.", tip: "5 baix = cinquens." },
+            { type: "fraction", q: "I aquesta tan gran?", n: 18, d: 11, a: ["Onze divuitens", "Divuit onzens", "Divuit d'onze"], c: 1, f: "18/11 són divuit onzens.", tip: "Més de 10 -> afegeix '-ens'." },
+            { type: "fraction", q: "És equivalent a 1 unitat?", n: 31, d: 31, a: ["No", "Sí", "Tal vegada"], c: 1, f: "31 de 31 és la unitat completa!", tip: "Dalt i baix igual = 1." },
+            { type: "fraction", q: "Aquesta fracció és PRÒPIA?", n: 7, d: 9, a: ["Sí (menor que 1)", "No (major que 1)", "És la unitat"], c: 0, f: "Pròpia! 7 és menor que 9.", tip: "Pròpia = El de dalt és més xicotet." },
+            { type: "op", q: "Suma aquestes fraccions:", n1: 2, d1: 6, op: "+", n2: 3, d2: 6, a: ["5/12", "5/6", "6/6"], c: 1, f: "2 + 3 = 5. Resultat: 5/6.", tip: "No sumis els de baix!" },
+            { type: "text", q: "Paula té 72 flors. 5/8 són roses. Quantes en té?", a: ["45", "40", "50"], c: 0, f: "72 / 8 = 9; 9 x 5 = 45.", tip: "Divideix i després multiplica." },
+            { type: "text", q: "Elena té 30 alumnes. 3/5 fan natació. Quants en fan?", a: ["15", "18", "10"], c: 1, f: "30 / 5 = 6; 6 x 3 = 18.", tip: "Fes-ho pas a pas." }
+        ];
+
+        function preload() {}
+
+        function create() {
+            this.showMainMenu();
+        }
+
+        function update() {}
+
+        Phaser.Scene.prototype.showMainMenu = function() {
+            this.children.removeAll();
+            this.cameras.main.setBackgroundColor('#74b9ff');
+            
+            // Caca ballarina
+            let poop = this.add.text(400, 180, '💩', { fontSize: '150px' }).setOrigin(0.5);
+            this.tweens.add({
+                targets: poop,
+                y: 160,
+                angle: { from: -10, to: 10 },
+                scale: 1.2,
+                duration: 600,
+                yoyo: true,
+                repeat: -1,
+                ease: 'Sine.easeInOut'
+            });
+
+            this.add.text(400, 320, "SUPER CACA-FRACCIONS", { 
+                fontSize: "45px", fill: "#fff", stroke: "#2d3436", strokeThickness: 10, align: 'center' 
+            }).setOrigin(0.5);
+
+            let btn1 = this.drawButton(400, 420, "QUIZ DE MESTRIA", 0x27ae60);
+            btn1.on("pointerdown", () => this.startQuiz());
+
+            let btn2 = this.drawButton(400, 510, "CAÇA DE CAQUES", 0xf39c12);
+            btn2.on("pointerdown", () => this.startGame());
+        };
+
+        Phaser.Scene.prototype.startQuiz = function() {
+            score = 0;
+            questionIndex = 0;
+            pool = [...allQuestions].sort(() => Math.random() - 0.5).slice(0, totalQuestions);
+            this.nextQuizQuestion();
+        };
+
+        Phaser.Scene.prototype.nextQuizQuestion = function() {
+            this.children.removeAll();
+            if (questionIndex >= pool.length) return this.showFinalResults();
+
+            let q = pool[questionIndex];
+            this.cameras.main.setBackgroundColor('#a29bfe');
+
+            let card = this.add.graphics();
+            card.fillStyle(0xffffff, 1);
+            card.fillRoundedRect(40, 40, 720, 520, 40);
+
+            this.add.text(400, 100, q.q, { 
+                fontSize: "28px", fill: "#2d3436", fontWeight: "bold", align: "center", wordWrap: { width: 650 } 
+            }).setOrigin(0.5);
+
+            if (q.type === "fraction") this.drawFraction(400, 220, q.n, q.d);
+            else if (q.type === "op") this.drawOp(400, 220, q);
+
+            q.a.forEach((opt, i) => {
+                let btn = this.drawButton(400, 380 + (i * 70), opt, 0x0984e3, 550);
+                btn.on("pointerdown", () => this.handleAnswer(i));
+            });
+        };
+
+        Phaser.Scene.prototype.handleAnswer = function(idx) {
+            let q = pool[questionIndex];
+            let isCorrect = (idx === q.c);
+            if (isCorrect) score++;
+
+            this.children.removeAll();
+            this.cameras.main.setBackgroundColor(isCorrect ? '#55efc4' : '#ff7675');
+
+            let poop = this.add.text(400, 420, isCorrect ? '💩✨' : '💩💨', { fontSize: '120px' }).setOrigin(0.5);
+            if (isCorrect) {
+                this.tweens.add({ targets: poop, y: 380, scale: 1.3, duration: 400, yoyo: true, repeat: 2 });
+            }
+
+            this.add.text(400, 100, isCorrect ? "MOLT BÉ! 🎉" : "OOPS! 💩", { fontSize: "60px", fill: "#fff", stroke: "#000", strokeThickness: 5 }).setOrigin(0.5);
+            
+            this.add.text(400, 240, q.f, { fontSize: "24px", fill: "#fff", align: "center", wordWrap: { width: 600 }, fontWeight: "bold" }).setOrigin(0.5);
+            this.add.text(400, 330, `💡 CONSELL: ${q.tip}`, { fontSize: "20px", fill: "#2d3436", align: "center", fontStyle: "italic", wordWrap: { width: 600 } }).setOrigin(0.5);
+
+            let btn = this.drawButton(400, 530, "SEGÜENT", 0x2d3436);
+            btn.on("pointerdown", () => { questionIndex++; this.nextQuizQuestion(); });
+        };
+
+        Phaser.Scene.prototype.startGame = function() {
+            score = 0;
+            this.children.removeAll();
+            this.cameras.main.setBackgroundColor('#81ecec');
+            
+            let time = 30;
+            let timerText = this.add.text(400, 50, `Temps: ${time}`, { fontSize: "32px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
+            let scoreText = this.add.text(120, 50, `Punts: 0`, { fontSize: "26px", fill: "#000" }).setOrigin(0.5);
+
+            this.time.addEvent({
+                delay: 1000,
+                callback: () => this.spawnCaca(scoreText),
+                loop: true
+            });
+
+            this.time.addEvent({
+                delay: 1000,
+                callback: () => {
+                    time--;
+                    timerText.setText(`Temps: ${time}`);
+                    if (time <= 0) this.showFinalResults();
+                },
+                loop: true
+            });
+        };
+
+        Phaser.Scene.prototype.spawnCaca = function(st) {
+            let x = Phaser.Math.Between(100, 700);
+            let n = Phaser.Math.Between(1, 20);
+            let d = Phaser.Math.Between(5, 15);
+            let isProper = n < d;
+
+            let container = this.add.container(x, -100);
+            let p = this.add.text(0, 0, '💩', { fontSize: '70px' }).setOrigin(0.5).setInteractive();
+            let t = this.add.text(0, 45, `${n}/${d}`, { fontSize: '24px', fill: '#fff', backgroundColor: '#000', padding: 5 }).setOrigin(0.5);
+            container.add([p, t]);
+
+            this.physics.add.existing(p);
+            p.body.setVelocityY(Phaser.Math.Between(180, 280));
+
+            p.on('pointerdown', () => {
+                if (isProper) { score += 10; } else { score -= 5; this.cameras.main.shake(100, 0.01); }
+                st.setText(`Punts: ${score}`);
+                container.destroy();
+            });
+        };
+
+        Phaser.Scene.prototype.showFinalResults = function() {
+            this.children.removeAll();
+            this.cameras.main.setBackgroundColor('#6c5ce7');
+            this.add.text(400, 200, "RESULTAT FINAL", { fontSize: "50px", fill: "#fff", fontWeight: "bold" }).setOrigin(0.5);
+            this.add.text(400, 300, `Has aconseguit: ${score} punts`, { fontSize: "40px", fill: "#fff" }).setOrigin(0.5);
+            let btn = this.drawButton(400, 450, "TORNAR AL MENÚ", 0x00b894);
+            btn.on("pointerdown", () => this.showMainMenu());
+        };
+
+        Phaser.Scene.prototype.drawButton = function(x, y, text, color, width = 350) {
+            let g = this.add.graphics();
+            g.fillStyle(color, 1);
+            g.fillRoundedRect(x - width/2, y - 35, width, 70, 35); // Super redondeado
+            
+            let t = this.add.text(x, y, text, { fontSize: "26px", fill: "#fff", fontWeight: "bold" }).setOrigin(0.5);
+            let a = this.add.rectangle(x, y, width, 70, 0x000, 0).setInteractive({ useHandCursor: true });
+            
+            a.on("pointerover", () => g.setAlpha(0.8));
+            a.on("pointerout", () => g.setAlpha(1));
+            return a;
+        };
+
+        Phaser.Scene.prototype.drawFraction = function(x, y, n, d) {
+            this.add.text(x, y - 45, n, { fontSize: "55px", fill: "#d63031", fontWeight: "bold" }).setOrigin(0.5);
+            this.add.rectangle(x, y, 90, 8, 0x2d3436).setOrigin(0.5);
+            this.add.text(x, y + 50, d, { fontSize: "55px", fill: "#0984e3", fontWeight: "bold" }).setOrigin(0.5);
+        };
+
+        Phaser.Scene.prototype.drawOp = function(x, y, q) {
+            this.drawFraction(x-90, y, q.n1, q.d1);
+            this.add.text(x, y, q.op, { fontSize: "45px", fill: "#2d3436" }).setOrigin(0.5);
+            this.drawFraction(x+90, y, q.n2, q.d2);
+        };
+    </script>
+</body>
+</html>
