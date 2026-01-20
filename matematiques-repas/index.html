@@ -92,7 +92,30 @@
             { type: "text", q: "Na Paula té 72 flors. 5/8 són roses. Quantes en té?", a: ["40", "45", "50"], c: 1, f: "72 / 8 = 9. 9 * 5 = 45.", tip: "Troba quant és 1/8 primer." },
             { type: "text", q: "El pare et dóna 1/8 de pastís i al germà 2/16. Qui en menja més?", a: ["Tu", "Ell", "Igual"], c: 2, f: "Són equivalents (1/8 = 2/16).", tip: "Mengeu el mateix!" },
             { type: "text", q: "Pau menja 4/10 de pizza i Lorena 3/10. Quina fracció mengen total?", a: ["7/20", "7/10", "1/10"], c: 1, f: "4/10 + 3/10 = 7/10.", tip: "Suma els trossos que han agafat." },
-            { type: "text", q: "Quina fracció de pizza menja Lorena MENYS que Pau (4/10 vs 3/10)?", a: ["1/10", "2/10", "7/10"], c: 0, f: "4/10 - 3/10 = 1/10.", tip: "Resta el que ha menjat cadascú." }
+            { type: "text", q: "Quina fracció de pizza menja Lorena MENYS que Pau (4/10 vs 3/10)?", a: ["1/10", "2/10", "7/10"], c: 0, f: "4/10 - 3/10 = 1/10.", tip: "Resta el que ha menjat cadascú." },
+
+            // Noves Preguntes (Lectura i Comparació)
+            { type: "fraction", q: "Com es llegeix aquesta?", n: 5, d: 9, a: ["Cinc novens", "Nou cinquens", "Cinc nous"], c: 0, f: "5/9 es llegeix cinc novens.", tip: "9 baix = novens." },
+            { type: "fraction", q: "Com es llegeix aquesta?", n: 2, d: 7, a: ["Dos setens", "Set mitjos", "Dos sets"], c: 0, f: "2/7 es llegeix dos setens.", tip: "7 baix = setens." },
+            { type: "text", q: "Quina fracció és major?", a: ["3/7", "5/7", "Iguals"], c: 1, f: "5/7 és major que 3/7 perquè 5 és més que 3.", tip: "Si els trossos són iguals, qui en té més?" },
+            { type: "text", q: "Quina fracció és menor?", a: ["2/9", "8/9", "Cap"], c: 0, f: "2/9 és menor que 8/9.", tip: "Mira el numerador (dalt)." },
+
+            // Preguntes Difícils (Comparació inversa i problemes de lògica)
+            { type: "text", q: "Quina és MAJOR? (Atenció!)", a: ["1/4", "1/8", "Són iguals"], c: 0, f: "1/4 és major. Imagina un pastís: millor dividir-lo entre 4 que entre 8!", tip: "Amb el mateix de dalt, el de baix més petit guanya." },
+            { type: "text", q: "Quina és MENOR?", a: ["2/5", "2/10", "Iguals"], c: 1, f: "2/10 és menor. Repartir entre 10 toca a menys.", tip: "Més denominador = Trossos més petits." },
+            
+            // Càlcul de fracció d'un nombre
+            { type: "text", q: "Calcula 2/3 de 12", a: ["8", "6", "4"], c: 0, f: "12 dividit per 3 és 4. 4 per 2 és 8.", tip: "Divideix pel de baix, multiplica pel de dalt." },
+            { type: "text", q: "Calcula 1/4 de 20", a: ["5", "4", "20"], c: 0, f: "20 dividit per 4 és 5.", tip: "Un quart és la meitat de la meitat." },
+            { type: "text", q: "Tinc 24 caramels i en dono 1/3. Quants en dono?", a: ["8", "12", "6"], c: 0, f: "24 / 3 = 8.", tip: "Un terç és dividir entre 3." },
+
+            // Problemes de nivell alt
+            { type: "text", q: "En una classe de 20, 1/4 porten ulleres. Quants NO en porten?", a: ["15", "5", "10"], c: 0, f: "1/4 de 20 són 5. 20 - 5 = 15.", tip: "Calcula els que sí, i resta-ho del total." },
+            { type: "text", q: "He llegit 2/5 d'un llibre de 100 pàgines. Quantes em queden?", a: ["60", "40", "20"], c: 0, f: "2/5 de 100 són 40. 100 - 40 = 60.", tip: "Pots calcular 3/5 (les que queden) directament." },
+            { type: "text", q: "Si 1/3 de la classe són 10 alumnes, quants n'hi ha en total?", a: ["30", "20", "10"], c: 0, f: "Si una part són 10, i n'hi ha 3 parts: 10 x 3 = 30.", tip: "Multiplica la part pel total de parts (denominador)." },
+
+            // Operacions combinades extra
+            { type: "op", q: "Calcula:", n1: 8, d1: 12, op: "-", n2: 3, d2: 12, op2: "+", n3: 2, d3: 12, a: ["7/12", "5/12", "13/12"], c: 0, f: "8-3=5. 5+2=7. Resultat 7/12.", tip: "Fes les operacions en ordre d'esquerra a dreta." }
         ];
 
         function preload() {}
@@ -100,12 +123,15 @@
         function update() {}
 
         Phaser.Scene.prototype.showMainMenu = function() {
+            this.time.removeAllEvents();
+            this.events.off('update');
+            this.physics.world.bodies.clear();
             this.children.removeAll();
             this.cameras.main.setBackgroundColor('#ffde59'); // Groc vibrant Neo-Brutal
 
             this.add.text(400, 150, '💩', { fontSize: '150px' }).setOrigin(0.5);
             this.add.text(400, 300, "MESTRE DE\nFRACCIONS", { 
-                fontSize: "60px", fill: "#000", fontWeight: "900", align: 'center', stroke: "#000", strokeThickness: 2
+                fontSize: "60px", fill: "#000", fontWeight: "900", align: 'center', stroke: "#fff", strokeThickness: 4
             }).setOrigin(0.5);
 
             this.drawBrutalButton(400, 440, "QUIZ DE MESTRIA", 0x5ce1e6).on("pointerdown", () => this.startQuiz());
@@ -146,7 +172,7 @@
             this.cameras.main.setBackgroundColor('#000');
             this.drawHomeButton();
             this.add.text(400, 200, "OBJECTIU", { fontSize: "50px", fill: "#ffde59", fontWeight: "900" }).setOrigin(0.5);
-            this.add.text(400, 320, "Clica les FRACCIONS PRÒPIES\n(Número de DALT més XICOTET)", { fontSize: "26px", fill: "#fff", align: 'center' }).setOrigin(0.5);
+            this.add.text(400, 320, "Resol l'operació superior i\nCLICA EL RESULTAT CORRECTE!", { fontSize: "26px", fill: "#fff", align: 'center' }).setOrigin(0.5);
             this.drawBrutalButton(400, 480, "¡JUGAR ARA!", 0x5ce1e6).on("pointerdown", () => this.startGame());
         };
 
@@ -166,7 +192,9 @@
             this.add.graphics().fillStyle(0x000, 1).fillRoundedRect(48, 48, 720, 520, 30); // Shadow
             this.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(40, 40, 720, 520, 30).lineStyle(5, 0x000, 1).strokeRoundedRect(40, 40, 720, 520, 30);
 
-            this.add.text(400, 100, q.q, { fontSize: "28px", fill: "#000", fontWeight: "900", align: "center", wordWrap: { width: 650 } }).setOrigin(0.5);
+            this.add.text(400, 100, q.q, { 
+                fontSize: "30px", fill: "#000", fontWeight: "900", align: "center", wordWrap: { width: 650 }, stroke: "#fff", strokeThickness: 2 
+            }).setOrigin(0.5);
 
             if (q.type === "fraction") this.drawFraction(400, 210, q.n, q.d);
             else if (q.type === "op") this.drawOp(400, 210, q);
@@ -182,60 +210,145 @@
             if (isCorrect) score++;
             this.children.removeAll();
             this.cameras.main.setBackgroundColor(isCorrect ? '#7ed957' : '#ff5757');
-            this.add.text(400, 100, isCorrect ? "CORRECTE! 🎉" : "OH NO! 💩", { fontSize: "60px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
+            this.add.text(400, 100, isCorrect ? "CORRECTE! 🎉" : "OH NO! 💩", { 
+                fontSize: "60px", fill: "#000", fontWeight: "900", stroke: "#fff", strokeThickness: 6 
+            }).setOrigin(0.5);
             
             this.add.graphics().fillStyle(0x000, 1).fillRoundedRect(108, 188, 600, 280, 30);
             this.add.graphics().fillStyle(0xffffff, 1).fillRoundedRect(100, 180, 600, 280, 30).lineStyle(5, 0x000, 1).strokeRoundedRect(100, 180, 600, 280, 30);
             
-            this.add.text(400, 260, q.f, { fontSize: "24px", fill: "#000", align: "center", wordWrap: { width: 550 }, fontWeight: "bold" }).setOrigin(0.5);
-            this.add.text(400, 380, `💡 Consell: ${q.tip}`, { fontSize: "20px", fill: "#000", fontStyle: "italic" }).setOrigin(0.5);
+            this.add.text(400, 260, q.f, { fontSize: "26px", fill: "#000", align: "center", wordWrap: { width: 550 }, fontWeight: "900" }).setOrigin(0.5);
+            this.add.text(400, 380, `💡 Consell: ${q.tip}`, { 
+                fontSize: "22px", fill: "#000", fontStyle: "italic", fontWeight: "900", align: "center", wordWrap: { width: 550 } 
+            }).setOrigin(0.5);
 
             this.drawBrutalButton(400, 530, "SEGÜENT", 0xffde59).on("pointerdown", () => { questionIndex++; this.nextQuiz(); });
         };
 
+        let currentResult = { n: 0, d: 1 };
+
         Phaser.Scene.prototype.startGame = function() {
-            score = 0; this.children.removeAll();
+            score = 0; 
+            this.children.removeAll();
             this.cameras.main.setBackgroundColor('#7ed957');
             this.drawHomeButton();
-            let time = 30;
-            let timerTxt = this.add.text(400, 40, `TEMPS: ${time}s`, { fontSize: "32px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
-            let scoreTxt = this.add.text(120, 40, `PUNTS: 0`, { fontSize: "26px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
+            
+            let time = 60;
+            let timerTxt = this.add.text(700, 40, `TEMPS: ${time}s`, { fontSize: "32px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
+            let scoreTxt = this.add.text(120, 40, `PUNTS: 0`, { fontSize: "32px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
 
-            this.time.addEvent({ delay: 1200, callback: () => this.spawnFallingCard(scoreTxt), loop: true });
-            this.time.addEvent({ delay: 1000, callback: () => { time--; timerTxt.setText(`TEMPS: ${time}s`); if (time <= 0) this.showFinalResults(); }, loop: true });
+            // Operation display
+            this.add.rectangle(400, 130, 500, 100, 0xffffff).setStrokeStyle(4, 0x000);
+            this.opTextN1 = this.add.text(280, 110, "0", { fontSize: "40px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
+            this.add.rectangle(280, 135, 40, 4, 0x000).setOrigin(0.5);
+            this.opTextD1 = this.add.text(280, 160, "0", { fontSize: "40px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
+
+            this.opSymbol = this.add.text(350, 130, "+", { fontSize: "50px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
+
+            this.opTextN2 = this.add.text(420, 110, "0", { fontSize: "40px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
+            this.add.rectangle(420, 135, 40, 4, 0x000).setOrigin(0.5);
+            this.opTextD2 = this.add.text(420, 160, "0", { fontSize: "40px", fill: "#000", fontWeight: "bold" }).setOrigin(0.5);
+            
+            this.add.text(490, 130, "=", { fontSize: "50px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
+            this.add.text(560, 130, "?", { fontSize: "60px", fill: "#ff5757", fontWeight: "900" }).setOrigin(0.5);
+
+            this.generateOperation();
+
+            this.time.addEvent({ delay: 1500, callback: () => this.spawnFallingCard(scoreTxt), loop: true });
+            this.time.addEvent({ delay: 1000, callback: () => { 
+                time--; 
+                timerTxt.setText(`TEMPS: ${time}s`); 
+                if (time <= 0) this.showFinalResults(); 
+            }, loop: true });
         };
 
-                Phaser.Scene.prototype.spawnFallingCard = function(st) {
-                    let x = Phaser.Math.Between(150, 650);
-                    let n = Phaser.Math.Between(1, 15); let d = Phaser.Math.Between(4, 12); let isProper = n < d;
-        
-                    let card = this.add.rectangle(x, -100, 130, 160, 0xffffff).setInteractive().setStrokeStyle(5, 0x000);
-                    let poop = this.add.text(x, -150, '💩', { fontSize: '40px' }).setOrigin(0.5);
-                    let num = this.add.text(x, -100, n, { fontSize: '38px', fill: '#ff5757', fontWeight: '900' }).setOrigin(0.5);
-                    let line = this.add.rectangle(x, -75, 60, 5, 0x000).setOrigin(0.5);
-                    let den = this.add.text(x, -50, d, { fontSize: '38px', fill: '#5ce1e6', fontWeight: '900' }).setOrigin(0.5);
-        
-                    this.physics.add.existing(card);
-                    card.body.setVelocityY(200);
-        
-                                let sync = () => {
-                                    if (!card.active) return;
-                                    // Posició fixa sobre la targeta (sense ball)
-                                    poop.x = card.x;
-                                    poop.y = card.y - 75;
-                                    
-                                    num.x = card.x; num.y = card.y - 25; 
-                                    line.x = card.x; line.y = card.y + 5; 
-                                    den.x = card.x; den.y = card.y + 35;
-                                };                    this.events.on('update', sync);
-        
-                    card.on('pointerdown', () => {
-                        if (isProper) { score += 10; card.setFillStyle(0x7ed957); }
-                        else { score -= 5; card.setFillStyle(0xff5757); this.cameras.main.shake(100, 0.01); }
-                        st.setText(`PUNTS: ${score}`);
-                        this.events.off('update', sync); card.destroy(); poop.destroy(); num.destroy(); line.destroy(); den.destroy();
-                    });
-                };
+        Phaser.Scene.prototype.generateOperation = function() {
+            let d = Phaser.Math.Between(3, 10);
+            let n1 = Phaser.Math.Between(1, d * 2); 
+            let n2 = Phaser.Math.Between(1, d);
+            let isSum = Math.random() > 0.5;
+
+            if (!isSum) {
+                // Ensure positive result for subtraction
+                if (n1 < n2) { let temp = n1; n1 = n2; n2 = temp; }
+            }
+
+            this.opTextN1.setText(n1); this.opTextD1.setText(d);
+            this.opTextN2.setText(n2); this.opTextD2.setText(d);
+            this.opSymbol.setText(isSum ? "+" : "-");
+
+            let resN = isSum ? n1 + n2 : n1 - n2;
+            currentResult = { n: resN, d: d };
+        };
+
+        Phaser.Scene.prototype.spawnFallingCard = function(st) {
+            let x = Phaser.Math.Between(100, 700);
+            let isCorrect = Math.random() < 0.35; 
+            let n, d;
+
+            d = currentResult.d;
+            if (isCorrect) {
+                n = currentResult.n;
+            } else {
+                do {
+                    n = Phaser.Math.Between(0, d * 3);
+                } while (n === currentResult.n);
+            }
+
+            // Container for physics and grouping
+            let container = this.add.container(x, -100);
+            container.setSize(120, 160);
+
+            // Card background (estétic com abans)
+            let cardBg = this.add.graphics();
+            cardBg.fillStyle(0xffffff, 1);
+            cardBg.lineStyle(4, 0x000, 1);
+            cardBg.fillRoundedRect(-60, -80, 120, 160, 15);
+            cardBg.strokeRoundedRect(-60, -80, 120, 160, 15);
+
+            let poop = this.add.text(0, -105, '💩', { fontSize: '50px' }).setOrigin(0.5);
+            let numTxt = this.add.text(0, -30, n, { fontSize: '42px', fill: '#ff5757', fontWeight: '900' }).setOrigin(0.5);
+            let line = this.add.rectangle(0, 0, 50, 5, 0x000).setOrigin(0.5);
+            let denTxt = this.add.text(0, 35, d, { fontSize: '42px', fill: '#5ce1e6', fontWeight: '900' }).setOrigin(0.5);
+
+            container.add([cardBg, poop, numTxt, line, denTxt]);
+
+            this.physics.add.existing(container);
+            // Velocitat més lenta (100-180)
+            container.body.setVelocityY(Phaser.Math.Between(100, 180));
+            
+            let hitArea = this.add.rectangle(x, -100, 120, 160, 0x000000, 0).setInteractive();
+            
+            let updateHitArea = () => {
+                if(container.active) {
+                    hitArea.x = container.x;
+                    hitArea.y = container.y;
+                } else {
+                    hitArea.destroy();
+                }
+            };
+            this.events.on('update', updateHitArea);
+
+            hitArea.on('pointerdown', () => {
+                if (isCorrect) {
+                    score += 10;
+                    st.setText(`PUNTS: ${score}`);
+                    this.cameras.main.flash(200, 126, 217, 87);
+                    this.generateOperation();
+                } else {
+                    score -= 5;
+                    st.setText(`PUNTS: ${score}`);
+                    this.cameras.main.shake(100, 0.01);
+                }
+                container.destroy();
+                hitArea.destroy();
+                this.events.off('update', updateHitArea);
+            });
+
+            this.time.delayedCall(8000, () => { 
+                if (container.active) { container.destroy(); hitArea.destroy(); this.events.off('update', updateHitArea); } 
+            });
+        };
         Phaser.Scene.prototype.showFinalResults = function() {
             this.children.removeAll(); this.cameras.main.setBackgroundColor('#ffde59');
             this.add.text(400, 200, "FINAL!", { fontSize: "60px", fill: "#000", fontWeight: "900" }).setOrigin(0.5);
