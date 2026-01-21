@@ -5,50 +5,130 @@
     <title>Manual de Stands - Intranet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; background: #0f172a; color: #e2e8f0; }</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { 
+                    colors: { 
+                        brand: '#00dc82', 
+                        dark: '#0f172a', 
+                        card: '#1e293b',
+                        accent: '#38bdf8' 
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }</style>
 </head>
-<body class="p-8">
-    <div class="max-w-4xl mx-auto">
+<body class="antialiased min-h-screen flex flex-col md:flex-row">
+
+    <!-- Sidebar de Navegación -->
+    <aside class="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+        <div class="p-6 flex items-center gap-3 border-b border-slate-800">
+            <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-slate-900 font-black">FP</div>
+            <div>
+                <h1 class="font-bold text-white text-sm leading-tight">ASISTENCIA A<br>LA DIRECCIÓN</h1>
+                <p class="text-[10px] text-brand uppercase tracking-wider font-bold">Panel de Control v2.0</p>
+            </div>
+        </div>
+
+        <nav class="flex-grow p-4 space-y-2">
+            <p class="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4">Operativa</p>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>⚡</span> Dashboard
+            </a>
+            <a href="atencion.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>💁‍♂️</span> Atención Visitante
+            </a>
+            <a href="registro.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📝</span> Registro Incidencias
+            </a>
+            <a href="cuadrantes.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📅</span> Cuadrantes Prof.
+            </a>
+            <a href="grupos.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>👥</span> Flujo de Grupos
+            </a>
+            <a href="prestamos.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📖</span> Préstamo Express
+            </a>
+            <a href="manual_stands.html" class="flex items-center gap-3 px-4 py-3 bg-brand/10 text-brand rounded-xl font-bold text-sm border border-brand/20">
+                <span>🏷️</span> Manual de Stands
+            </a>
+            <a href="cierre.html" class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors border border-red-500/20 mt-4">
+                <span>🏁</span> Checklist de Cierre
+            </a>
+            
+            <p class="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6">Recursos</p>
+            <a href="../herramientas_apoyo/guion_moderacion.html" class="flex items-center gap-3 px-4 py-3 text-emerald-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors border border-emerald-500/20">
+                <span>🎤</span> Guion Mesa Redonda
+            </a>
+            <a href="../documentacion/emails.html" target="_blank" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📧</span> Plantillas Email
+            </a>
+            <a href="../webferia/index.html" target="_blank" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>🌍</span> Ver Web Pública
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 text-center">
+                <p class="text-xs text-white/80 font-medium mb-1">Proyecto Real</p>
+                <p class="text-white font-bold text-sm">IES Serra Perenxisa</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-grow p-6 md:p-12 overflow-y-auto">
         <header class="mb-12 border-b border-slate-800 pb-8">
-            <h1 class="text-3xl font-black text-white italic mb-2 tracking-tighter">MANUAL DE ESTÉTICA: STANDS</h1>
-            <p class="text-slate-400 uppercase text-xs font-bold tracking-widest">Protocolo Visual para Expositores • 2º CFGS</p>
+            <h1 class="text-3xl font-black text-white italic mb-2 tracking-tighter uppercase">Protocolo Estético: Stands</h1>
+            <p class="text-slate-400 uppercase text-[10px] font-bold tracking-widest">Guía de Imagen Corporativa • Equipo Bravo</p>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <!-- Norma 1 -->
-            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                <div class="text-3xl mb-4">🏷️</div>
-                <h3 class="text-xl font-bold text-white mb-2">Identificación Unificada</h3>
-                <p class="text-sm text-slate-400">Todos los stands deben colocar el identificador de mesa oficial en el extremo frontal derecho. <strong class="text-emerald-400">No se permiten carteles hechos a mano.</strong></p>
+            <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-xl group hover:border-brand/30 transition-colors">
+                <div class="text-4xl mb-6 grayscale group-hover:grayscale-0 transition-all">🏷️</div>
+                <h3 class="text-xl font-bold text-white mb-3 tracking-tight">Identificación Unificada</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Todos los stands deben colocar el identificador de mesa oficial en el extremo frontal derecho. <strong class="text-brand font-bold uppercase text-[10px] tracking-widest block mt-2">No se permiten carteles manuscritos.</strong></p>
             </div>
             <!-- Norma 2 -->
-            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                <div class="text-3xl mb-4">✨</div>
-                <h3 class="text-xl font-bold text-white mb-2">Orden y Limpieza</h3>
-                <p class="text-sm text-slate-400">Las cajas de stock deben estar ocultas bajo la mesa (usar el faldón verde proporcionado). El material promocional debe estar en pirámide o abanico.</p>
+            <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-xl group hover:border-brand/30 transition-colors">
+                <div class="text-4xl mb-6 grayscale group-hover:grayscale-0 transition-all">✨</div>
+                <h3 class="text-xl font-bold text-white mb-3 tracking-tight">Orden y Limpieza</h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Las cajas de stock deben estar ocultas bajo la mesa usando el faldón verde. El material promocional debe estar en pirámide o abanico.</p>
             </div>
         </div>
 
-        <section class="bg-emerald-500/10 border border-emerald-500/20 p-8 rounded-3xl mb-12">
-            <h2 class="text-emerald-400 font-black text-xl mb-6 flex items-center gap-3">
-                <span>🎨</span> La Paleta de la Feria
+        <section class="bg-brand/5 border border-brand/20 p-8 md:p-12 rounded-[2.5rem] mb-12">
+            <h2 class="text-brand font-black text-2xl mb-8 flex items-center gap-4">
+                <span class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-slate-900 text-sm">🎨</span> 
+                Identidad Visual Feria 2026
             </h2>
-            <div class="flex flex-wrap gap-4">
-                <div class="flex items-center gap-2 bg-slate-900 p-2 rounded-lg border border-slate-700">
-                    <div class="w-8 h-8 bg-[#047857] rounded shadow-inner"></div>
-                    <span class="text-xs font-mono">#047857 (Verde)</span>
+            <div class="flex flex-wrap gap-6">
+                <div class="flex items-center gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-700 shadow-lg">
+                    <div class="w-12 h-12 bg-[#047857] rounded-xl shadow-inner border border-white/10"></div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-tighter">Color Primario</p>
+                        <span class="text-sm font-mono text-white font-bold">#047857</span>
+                    </div>
                 </div>
-                <div class="flex items-center gap-2 bg-slate-900 p-2 rounded-lg border border-slate-700">
-                    <div class="w-8 h-8 bg-[#f59e0b] rounded shadow-inner"></div>
-                    <span class="text-xs font-mono">#f59e0b (Ámbar)</span>
+                <div class="flex items-center gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-700 shadow-lg">
+                    <div class="w-12 h-12 bg-[#f59e0b] rounded-xl shadow-inner border border-white/10"></div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-tighter">Color Acento</p>
+                        <span class="text-sm font-mono text-white font-bold">#f59e0b</span>
+                    </div>
                 </div>
             </div>
-            <p class="text-xs text-slate-500 mt-6 italic">Cualquier decoración adicional (manteles, globos, telas) debe ajustarse a estos dos colores primarios.</p>
+            <p class="text-xs text-slate-500 mt-8 italic border-l border-slate-700 pl-4 max-w-xl">Cualquier elemento decorativo adicional (manteles, globos, señalética extra) debe ajustarse estrictamente a estos dos colores para mantener la cohesión institucional.</p>
         </section>
 
-        <footer class="text-center text-slate-600 text-[10px] font-bold uppercase tracking-widest">
-            Documento de uso interno • IES Serra Perenxisa
+        <footer class="text-center text-slate-600 text-[10px] font-bold uppercase tracking-widest mt-12">
+            Documento Exclusivo de Organización • IES Serra Perenxisa
         </footer>
-    </div>
+    </main>
 </body>
 </html>

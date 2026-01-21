@@ -7,24 +7,81 @@
     <script>
         tailwind.config = {
             theme: {
-                extend: { colors: { primary: '#00dc82', dark: '#0f172a', surface: '#1e293b' } }
+                extend: { 
+                    colors: { 
+                        brand: '#00dc82', 
+                        dark: '#0f172a', 
+                        card: '#1e293b',
+                        accent: '#38bdf8' 
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
             }
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }</style>
 </head>
-<body class="antialiased flex min-h-screen">
+<body class="antialiased min-h-screen flex flex-col md:flex-row">
 
-    <aside class="w-64 bg-slate-900 border-r border-slate-800 hidden md:flex flex-col">
-        <div class="p-6 border-b border-slate-800"><h1 class="font-bold text-white text-sm uppercase tracking-widest">Panel Interno</h1></div>
-        <nav class="p-4 space-y-2">
-            <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white text-sm">Dashboard</a>
-            <a href="atencion.html" class="block px-4 py-2 bg-primary text-slate-900 rounded-lg font-bold text-sm">Atención Visitante</a>
+    <!-- Sidebar de Navegación -->
+    <aside class="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+        <div class="p-6 flex items-center gap-3 border-b border-slate-800">
+            <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-slate-900 font-black">FP</div>
+            <div>
+                <h1 class="font-bold text-white text-sm leading-tight">ASISTENCIA A<br>LA DIRECCIÓN</h1>
+                <p class="text-[10px] text-brand uppercase tracking-wider font-bold">Panel de Control v2.0</p>
+            </div>
+        </div>
+
+        <nav class="flex-grow p-4 space-y-2">
+            <p class="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4">Operativa</p>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>⚡</span> Dashboard
+            </a>
+            <a href="atencion.html" class="flex items-center gap-3 px-4 py-3 bg-brand/10 text-brand rounded-xl font-bold text-sm border border-brand/20">
+                <span>💁‍♂️</span> Atención Visitante
+            </a>
+            <a href="registro.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📝</span> Registro Incidencias
+            </a>
+            <a href="cuadrantes.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📅</span> Cuadrantes Prof.
+            </a>
+            <a href="grupos.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>👥</span> Flujo de Grupos
+            </a>
+            <a href="prestamos.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📖</span> Préstamo Express
+            </a>
+            <a href="manual_stands.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>🏷️</span> Manual de Stands
+            </a>
+            <a href="cierre.html" class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors border border-red-500/20 mt-4">
+                <span>🏁</span> Checklist de Cierre
+            </a>
+            
+            <p class="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6">Recursos</p>
+            <a href="../herramientas_apoyo/guion_moderacion.html" class="flex items-center gap-3 px-4 py-3 text-emerald-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors border border-emerald-500/20">
+                <span>🎤</span> Guion Mesa Redonda
+            </a>
+            <a href="../documentacion/emails.html" target="_blank" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📧</span> Plantillas Email
+            </a>
+            <a href="../webferia/index.html" target="_blank" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>🌍</span> Ver Web Pública
+            </a>
         </nav>
+
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 text-center">
+                <p class="text-xs text-white/80 font-medium mb-1">Proyecto Real</p>
+                <p class="text-white font-bold text-sm">IES Serra Perenxisa</p>
+            </div>
+        </div>
     </aside>
 
-    <main class="flex-grow p-8">
+    <main class="flex-grow p-6 md:p-12 overflow-y-auto">
         <header class="mb-12">
             <h2 class="text-3xl font-black text-white italic">Base de Conocimientos (Mostrador)</h2>
             <p class="text-slate-400 font-medium">Respuestas rápidas para el Equipo de Recepción.</p>
@@ -34,39 +91,39 @@
             
             <!-- Preguntas Frecuentes -->
             <div class="space-y-4">
-                <h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">Preguntas Típicas</h3>
+                <h3 class="text-xs font-bold text-brand uppercase tracking-widest mb-4">Preguntas Típicas</h3>
                 
-                <div class="bg-surface p-4 rounded-xl border border-slate-700">
+                <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl">
                     <p class="font-bold text-white text-sm">¿Dónde están los servicios más cercanos?</p>
-                    <p class="text-xs text-slate-400 mt-1 italic">Respuesta: Saliendo del Salón de Actos a la izquierda, junto a la cristalera del patio.</p>
+                    <p class="text-xs text-slate-400 mt-2 italic border-l-2 border-brand pl-3">Saliendo del Salón de Actos a la izquierda, junto a la cristalera del patio.</p>
                 </div>
 
-                <div class="bg-surface p-4 rounded-xl border border-slate-700">
+                <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl">
                     <p class="font-bold text-white text-sm">¿Se pueden comprar libros aquí?</p>
-                    <p class="text-xs text-slate-400 mt-1 italic">Respuesta: Sí, en los stands de Releo y Nova Llibres. Aceptan efectivo y tarjeta.</p>
+                    <p class="text-xs text-slate-400 mt-2 italic border-l-2 border-brand pl-3">Sí, en los stands de Releo y Nova Llibres. Aceptan efectivo y tarjeta.</p>
                 </div>
 
-                <div class="bg-surface p-4 rounded-xl border border-slate-700">
+                <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl">
                     <p class="font-bold text-white text-sm">¿Dónde está el punto de carga para móviles?</p>
-                    <p class="text-xs text-slate-400 mt-1 italic">Respuesta: En la Zona de Descanso (Rincón de Lectura) hay una regleta habilitada.</p>
+                    <p class="text-xs text-slate-400 mt-2 italic border-l-2 border-brand pl-3">En la Zona de Descanso (Rincón de Lectura) hay una regleta habilitada.</p>
                 </div>
             </div>
 
             <!-- Protocolo VIP -->
             <div class="space-y-4">
-                <h3 class="text-xs font-bold text-accent uppercase tracking-widest mb-4">Protocolo Autoridades / Autores</h3>
-                <div class="bg-amber-500/10 border border-amber-500/20 p-6 rounded-2xl">
-                    <ul class="space-y-4 text-sm">
-                        <li class="flex gap-3">
-                            <span class="text-amber-500 font-bold text-lg">1.</span>
+                <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest mb-4">Protocolo Autoridades / Autores</h3>
+                <div class="bg-amber-500/5 border border-amber-500/20 p-8 rounded-3xl shadow-xl">
+                    <ul class="space-y-6 text-sm">
+                        <li class="flex gap-4 items-start">
+                            <span class="bg-amber-500 text-slate-900 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0">01</span>
                             <span>Ofrecer agua inmediatamente (botellas en el mueble inferior del mostrador).</span>
                         </li>
-                        <li class="flex gap-3">
-                            <span class="text-amber-500 font-bold text-lg">2.</span>
+                        <li class="flex gap-4 items-start">
+                            <span class="bg-amber-500 text-slate-900 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0">02</span>
                             <span>Pedir que firmen en el <strong>Libro de Honor</strong> de la Feria.</span>
                         </li>
-                        <li class="flex gap-3">
-                            <span class="text-amber-500 font-bold text-lg">3.</span>
+                        <li class="flex gap-4 items-start">
+                            <span class="bg-amber-500 text-slate-900 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0">03</span>
                             <span>Avisar por radio al Coordinador de Protocolo (Equipo Alpha).</span>
                         </li>
                     </ul>

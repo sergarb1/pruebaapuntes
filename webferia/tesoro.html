@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Búsqueda del Tesoro - Feria del Libro</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#047857', accent: '#f59e0b' } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-900 text-white min-h-screen">
+    <div id="app">
+        <!-- Navbar Estilo Académico (White background for clarity) -->
+        <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 text-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <div class="flex items-center gap-3">
+                        <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
+                        <div class="hidden md:block text-slate-900">
+                            <span class="block font-bold leading-none">Feria del Libro</span>
+                            <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
+                        </div>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden lg:flex gap-5 text-[11px] xl:text-[13px] font-bold uppercase tracking-wider items-center">
+                        <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
+                        <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
+                        <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
+                        <a href="mago-de-oz.html" class="text-slate-500 hover:text-primary transition-colors">Mago Oz</a>
+                        <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
+                        <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
+                        <a href="tesoro.html" class="text-primary border-b-2 border-primary">Tesoro</a>
+                        <a href="muro.html" class="text-slate-500 hover:text-primary transition-colors">Muro</a>
+                        <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
+                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Nosotros</a>
+                        <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
+                    </div>
+                    <!-- Mobile Menu Selector -->
+                    <div class="lg:hidden">
+                        <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
+                            <option value="" disabled selected>Ir a...</option>
+                            <option value="index.html">Inicio</option>
+                            <option value="actividades.html">Agenda</option>
+                            <option value="mesa-redonda.html">Mesa Redonda</option>
+                            <option value="mago-de-oz.html">Mago Oz</option>
+                            <option value="autores.html">Autores</option>
+                            <option value="pasaporte.html">Pasaporte</option>
+                            <option value="tesoro.html">Tesoro</option>
+                            <option value="muro.html">Muro</option>
+                            <option value="stands.html">Mapa</option>
+                            <option value="nosotros.html">Nosotros</option>
+                            <option value="encuesta.html">Encuesta ⭐</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-md mx-auto py-12 px-6">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-3xl font-black italic mb-2 tracking-tighter">EL TESORO OCULTO 🏆</h1>
+            <p class="text-slate-400 text-sm">Escanea los 5 libros de oro escondidos por el IES.</p>
+        </header>
+
+        <!-- Progreso -->
+        <div class="grid grid-cols-5 gap-3 mb-12">
+            <div v-for="n in 5" :key="n" 
+                 class="aspect-square rounded-xl border-2 flex items-center justify-center text-2xl shadow-lg transition-all duration-500"
+                 :class="foundItems.includes(n) ? 'bg-amber-400 border-amber-200 scale-110' : 'bg-slate-800 border-slate-700 opacity-30'">
+                {{ foundItems.includes(n) ? '📖' : '❓' }}
+            </div>
+        </div>
+
+        <div v-if="foundItems.length < 5" class="bg-slate-800 p-8 rounded-[2rem] border border-slate-700 text-center">
+            <div class="animate-bounce text-5xl mb-6">🔍</div>
+            <h2 class="text-xl font-bold mb-4">¿Has encontrado uno?</h2>
+            <p class="text-slate-400 text-sm mb-8 leading-relaxed">Pide al organizador del punto donde estés el <strong>Número Secreto</strong> del libro para desbloquearlo.</p>
+            
+            <div class="flex gap-2">
+                <input v-model="secretCode" type="number" placeholder="Nº" class="w-20 bg-slate-900 border border-slate-600 p-4 rounded-xl text-center font-black text-2xl">
+                <button @click="checkCode" class="flex-grow bg-primary text-white font-black rounded-xl hover:brightness-110 uppercase tracking-widest">Desbloquear</button>
+            </div>
+        </div>
+
+        <!-- Victoria -->
+        <div v-else class="bg-gradient-to-br from-amber-400 to-orange-600 p-8 rounded-[2rem] text-center shadow-2xl">
+            <div class="text-6xl mb-6">🏆</div>
+            <h2 class="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">¡MAESTRO/A LECTOR/A!</h2>
+            <p class="text-amber-900 font-bold mb-8 italic">Has encontrado todos los libros ocultos.</p>
+            <div class="bg-white/20 backdrop-blur p-4 rounded-xl border border-white/30 text-slate-900 font-mono text-xs font-bold mb-8 uppercase">
+                Código de Canje:<br>GOLDEN-SERRA-2026
+            </div>
+            <p class="text-sm text-amber-950">Muestra esta pantalla en el stand de 2º FP para recibir tu premio final.</p>
+        </div>
+
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue
+        createApp({
+            setup() {
+                const foundItems = ref([])
+                const secretCode = ref('')
+                const validCodes = [101, 242, 389, 415, 500] // Códigos de los 5 QRs
+
+                const checkCode = () => {
+                    const code = parseInt(secretCode.value)
+                    const index = validCodes.indexOf(code)
+                    if (index !== -1) {
+                        const bookNum = index + 1
+                        if (!foundItems.value.includes(bookNum)) {
+                            foundItems.value.push(bookNum)
+                            localStorage.setItem('feria_tesoro', JSON.stringify(foundItems.value))
+                            alert('¡Libro ' + bookNum + ' encontrado!')
+                        } else {
+                            alert('Ya tenías este libro.')
+                        }
+                    } else {
+                        alert('Código no válido. ¡Sigue buscando!')
+                    }
+                    secretCode.value = ''
+                }
+
+                onMounted(() => {
+                    const saved = localStorage.getItem('feria_tesoro')
+                    if (saved) foundItems.value = JSON.parse(saved)
+                })
+
+                return { foundItems, secretCode, checkCode }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pantallas Hall - II Feria del Libro</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#047857', accent: '#f59e0b', dark: '#064e3b' } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; overflow: hidden; background: #064e3b; }
+        .slide-fade-enter-active, .slide-fade-leave-active { transition: all 1s ease; }
+        .slide-fade-enter-from, .slide-fade-leave-to { opacity: 0; transform: translateX(50px); }
+    </style>
+</head>
+<body class="text-white">
+    <div id="app" class="h-screen w-full flex items-center justify-center p-12">
+        
+        <transition name="slide-fade" mode="out-in">
+            <!-- Slide 1: Próxima Actividad -->
+            <div v-if="currentSlide === 0" :key="0" class="text-center">
+                <p class="text-3xl font-bold text-emerald-400 uppercase tracking-[0.3em] mb-8">Próximamente</p>
+                <h1 class="text-[120px] leading-none font-black mb-12 italic">Mesa Redonda:<br>Vivir de Escribir</h1>
+                <div class="flex justify-center gap-12 text-5xl font-light opacity-80">
+                    <span>📍 Salón de Actos</span>
+                    <span>⏰ 11:00 H</span>
+                </div>
+            </div>
+
+            <!-- Slide 2: Autores -->
+            <div v-else-if="currentSlide === 1" :key="1" class="w-full max-w-6xl">
+                <div class="flex justify-between items-center mb-12">
+                    <h2 class="text-6xl font-black italic">Autores en la Feria</h2>
+                    <img src="assets/logo.png" class="h-20 brightness-0 invert opacity-50">
+                </div>
+                <div class="grid grid-cols-2 gap-8">
+                    <div v-for="a in ['Manolo Alamo', 'Edurne Sáez', 'Julián C. Pastor', 'Yelena Black']" 
+                         class="bg-white/10 p-8 rounded-3xl border border-white/10 text-4xl font-bold">
+                        ✒️ {{ a }}
+                    </div>
+                </div>
+                <p class="mt-12 text-center text-3xl text-emerald-300 font-bold uppercase tracking-widest">Firmando ahora en los Stands</p>
+            </div>
+
+            <!-- Slide 3: Pasaporte -->
+            <div v-else-if="currentSlide === 2" :key="2" class="text-center">
+                <div class="bg-amber-400 text-dark inline-block px-8 py-2 rounded-full text-2xl font-black mb-8 uppercase tracking-widest">¡Participa!</div>
+                <h1 class="text-[100px] leading-tight font-black mb-8">Completa tu<br>Pasaporte Literario</h1>
+                <p class="text-4xl opacity-70 italic max-w-4xl mx-auto leading-relaxed">Pide tus sellos al finalizar cada actividad y consigue premios en el stand de información.</p>
+            </div>
+        </transition>
+
+        <!-- Barra de Progreso Inferior -->
+        <div class="absolute bottom-0 left-0 h-4 bg-emerald-500 transition-all duration-[8000ms] ease-linear" :style="{ width: progress + '%' }"></div>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue
+        createApp({
+            setup() {
+                const currentSlide = ref(0)
+                const progress = ref(0)
+                const totalSlides = 3
+
+                const nextSlide = () => {
+                    progress.value = 0
+                    setTimeout(() => {
+                        currentSlide.value = (currentSlide.value + 1) % totalSlides
+                        progress.value = 100
+                    }, 100)
+                }
+
+                onMounted(() => {
+                    progress.value = 100
+                    setInterval(nextSlide, 8000)
+                })
+
+                return { currentSlide, progress }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

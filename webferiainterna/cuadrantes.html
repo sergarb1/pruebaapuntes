@@ -7,160 +7,207 @@
     <script>
         tailwind.config = {
             theme: {
-                extend: { colors: { primary: '#047857', dark: '#064e3b', surface: '#ffffff', background: '#0f172a' } }
+                extend: { 
+                    colors: { 
+                        brand: '#00dc82', 
+                        dark: '#0f172a', 
+                        card: '#1e293b',
+                        accent: '#38bdf8' 
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
             }
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <style>body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }</style>
 </head>
-<body class="bg-slate-900 text-slate-200">
-    <div id="app" class="flex min-h-screen">
-        
-        <!-- Sidebar -->
-        <aside class="w-64 bg-black/20 border-r border-white/10 hidden md:flex flex-col">
-            <div class="p-6 border-b border-white/10">
-                <img src="assets/logo.png" alt="Logo" class="h-8 w-auto mb-2 brightness-0 invert">
-                <h1 class="font-bold text-white text-sm uppercase tracking-widest">Panel Interno</h1>
+<body class="antialiased min-h-screen flex flex-col md:flex-row">
+
+    <!-- Sidebar de Navegación -->
+    <aside class="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+        <div class="p-6 flex items-center gap-3 border-b border-slate-800">
+            <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-slate-900 font-black">FP</div>
+            <div>
+                <h1 class="font-bold text-white text-sm leading-tight">ASISTENCIA A<br>LA DIRECCIÓN</h1>
+                <p class="text-[10px] text-brand uppercase tracking-wider font-bold">Panel de Control v2.0</p>
             </div>
-            <nav class="flex-grow p-4 space-y-2">
-                <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white text-sm transition-colors">Fichas de Actuación</a>
-                <a href="cuadrantes.html" class="block px-4 py-2 bg-primary text-white rounded-lg font-bold text-sm">Cuadrantes Prof.</a>
-                <a href="grupos.html" class="block px-4 py-2 text-slate-400 hover:text-white text-sm transition-colors">Gestión de Grupos</a>
-            </nav>
-            <div class="p-4 border-t border-white/10">
-                <p class="text-[10px] text-slate-500 font-mono tracking-tighter uppercase">Asistencia a la Dirección 2026</p>
+        </div>
+
+        <nav class="flex-grow p-4 space-y-2">
+            <p class="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4">Operativa</p>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>⚡</span> Dashboard
+            </a>
+            <a href="atencion.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>💁‍♂️</span> Atención Visitante
+            </a>
+            <a href="registro.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📝</span> Registro Incidencias
+            </a>
+            <a href="cuadrantes.html" class="flex items-center gap-3 px-4 py-3 bg-brand/10 text-brand rounded-xl font-bold text-sm border border-brand/20">
+                <span>📅</span> Cuadrantes Prof.
+            </a>
+            <a href="grupos.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>👥</span> Flujo de Grupos
+            </a>
+            <a href="prestamos.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📖</span> Préstamo Express
+            </a>
+            <a href="manual_stands.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>🏷️</span> Manual de Stands
+            </a>
+            <a href="cierre.html" class="flex items-center gap-3 px-4 py-3 text-red-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors border border-red-500/20 mt-4">
+                <span>🏁</span> Checklist de Cierre
+            </a>
+            
+            <p class="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6">Recursos</p>
+            <a href="../herramientas_apoyo/guion_moderacion.html" class="flex items-center gap-3 px-4 py-3 text-emerald-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors border border-emerald-500/20">
+                <span>🎤</span> Guion Mesa Redonda
+            </a>
+            <a href="../documentacion/emails.html" target="_blank" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📧</span> Plantillas Email
+            </a>
+            <a href="../webferia/index.html" target="_blank" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>🌍</span> Ver Web Pública
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 text-center">
+                <p class="text-xs text-white/80 font-medium mb-1">Proyecto Real</p>
+                <p class="text-white font-bold text-sm">IES Serra Perenxisa</p>
             </div>
-        </aside>
+        </div>
+    </aside>
 
-        <!-- Main Content -->
-        <main class="flex-grow p-6 md:p-12 overflow-y-auto">
-            <header class="mb-8 flex justify-between items-end">
-                <div>
-                    <h2 class="text-3xl font-black text-white mb-2 tracking-tight">Turnos de Guardia</h2>
-                    <p class="text-slate-400">Distribución de profesorado y soporte de alumnos FP.</p>
-                </div>
-                <div class="hidden md:block">
-                    <span class="px-3 py-1 rounded bg-slate-800 border border-slate-700 text-xs font-mono text-slate-400">Lunes 02/02/2026</span>
-                </div>
-            </header>
-
-            <!-- Tabla de Cuadrantes -->
-            <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden shadow-xl">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left">
-                        <thead class="bg-slate-900/50 text-slate-400 uppercase text-xs font-bold border-b border-slate-700">
-                            <tr>
-                                <th class="px-6 py-4 w-32">Horario</th>
-                                <th class="px-6 py-4">Zona / Actividad</th>
-                                <th class="px-6 py-4">Profesorado Responsable</th>
-                                <th class="px-6 py-4 text-primary">Soporte FP (Alumnos)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-700/50">
-                            <!-- 09:00 - 10:00 -->
-                            <tr class="hover:bg-slate-700/30 transition-colors">
-                                <td class="px-6 py-4 font-mono font-bold text-white">09:00 - 10:00</td>
-                                <td class="px-6 py-4">
-                                    <span class="block text-white font-bold">Cuentacuentos (Oz)</span>
-                                    <span class="text-xs text-slate-500">Primaria</span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                                        <span>Laura M. (Narradora)</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 mt-1 opacity-70">
-                                        <span class="w-2 h-2 rounded-full bg-slate-500"></span>
-                                        <span>Pedro G. (Guardia)</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-primary font-medium">
-                                    Equipo A (Recepción Colegios)
-                                </td>
-                            </tr>
-
-                            <!-- 10:00 - 11:00 -->
-                            <tr class="hover:bg-slate-700/30 transition-colors">
-                                <td class="px-6 py-4 font-mono font-bold text-white">10:00 - 11:00</td>
-                                <td class="px-6 py-4">
-                                    <span class="block text-white font-bold">Talleres Creativos</span>
-                                    <span class="text-xs text-slate-500">ESO</span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-slate-500"></span>
-                                        <span>Marta L. (Plástica)</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 mt-1 opacity-70">
-                                        <span class="w-2 h-2 rounded-full bg-slate-500"></span>
-                                        <span>Javier R. (Lengua)</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-primary font-medium">
-                                    Equipo B (Materiales)
-                                </td>
-                            </tr>
-
-                            <!-- 11:00 - 12:00 -->
-                            <tr class="bg-primary/5 hover:bg-primary/10 transition-colors">
-                                <td class="px-6 py-4 font-mono font-bold text-primary">11:00 - 12:00</td>
-                                <td class="px-6 py-4 border-l-2 border-primary">
-                                    <span class="block text-white font-bold">Mesa Redonda</span>
-                                    <span class="text-xs text-primary">EVENTO CENTRAL</span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-primary"></span>
-                                        <span class="text-white font-bold">Elena R. (Moderadora)</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 mt-1 opacity-70">
-                                        <span class="w-2 h-2 rounded-full bg-slate-500"></span>
-                                        <span>Carlos D. (Jefe Estudios)</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-primary font-bold">
-                                    TODOS (Protocolo + Aforo)
-                                </td>
-                            </tr>
-
-                            <!-- 12:00 - 13:00 -->
-                            <tr class="hover:bg-slate-700/30 transition-colors">
-                                <td class="px-6 py-4 font-mono font-bold text-white">12:00 - 13:00</td>
-                                <td class="px-6 py-4">
-                                    <span class="block text-white font-bold">Escritura Creativa / Escape Room</span>
-                                    <span class="text-xs text-slate-500">2º ESO / 3º ESO</span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-                                        <span>M. Llopis (Escritura)</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 mt-1 opacity-70">
-                                        <span class="w-2 h-2 rounded-full bg-slate-500"></span>
-                                        <span>Ana B. (Tecnología)</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-primary font-medium">
-                                    Equipo C (Logística)
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <!-- Main Content -->
+    <main class="flex-grow p-6 md:p-12 overflow-y-auto">
+        <header class="mb-8 flex justify-between items-end">
+            <div>
+                <h2 class="text-3xl font-black text-white mb-2 tracking-tight">Turnos de Guardia</h2>
+                <p class="text-slate-400">Distribución de profesorado y soporte de alumnos FP.</p>
             </div>
-
-            <div class="mt-8 bg-amber-500/10 border border-amber-500/20 rounded-xl p-6 flex gap-4 items-start">
-                <span class="text-2xl">⚠️</span>
-                <div>
-                    <h4 class="text-amber-500 font-bold mb-1">Nota para el Alumnado de FP</h4>
-                    <p class="text-sm text-amber-200/80">
-                        Los responsables de cada equipo deben reportar cualquier ausencia de profesorado al <strong>Coordinador de Zona (Equipo A)</strong> inmediatamente vía grupo de WhatsApp interno.
-                    </p>
-                </div>
+            <div class="hidden md:block">
+                <span class="px-3 py-1 rounded bg-slate-800 border border-slate-700 text-xs font-mono text-slate-400">Lunes 02/02/2026</span>
             </div>
+        </header>
 
-        </main>
-    </div>
+        <!-- Tabla de Cuadrantes -->
+        <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden shadow-xl">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-slate-900/50 text-slate-400 uppercase text-xs font-bold border-b border-slate-700">
+                        <tr>
+                            <th class="px-6 py-4 w-32">Horario</th>
+                            <th class="px-6 py-4">Zona / Actividad</th>
+                            <th class="px-6 py-4">Profesorado Responsable</th>
+                            <th class="px-6 py-4 text-brand">Soporte FP (Alumnos)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-700/50">
+                        <!-- 09:00 - 10:00 -->
+                        <tr class="hover:bg-slate-700/30 transition-colors">
+                            <td class="px-6 py-4 font-mono font-bold text-white">09:00 - 10:00</td>
+                            <td class="px-6 py-4">
+                                <span class="block text-white font-bold">Cuentacuentos (Oz)</span>
+                                <span class="text-xs text-slate-500">Primaria</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    <span>Laura M. (Narradora)</span>
+                                </div>
+                                <div class="flex items-center gap-2 mt-1 opacity-70">
+                                    <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                                    <span>Pedro G. (Guardia)</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-brand font-medium">
+                                Equipo Alpha (Recepción Colegios)
+                            </td>
+                        </tr>
+
+                        <!-- 10:00 - 11:00 -->
+                        <tr class="hover:bg-slate-700/30 transition-colors">
+                            <td class="px-6 py-4 font-mono font-bold text-white">10:00 - 11:00</td>
+                            <td class="px-6 py-4">
+                                <span class="block text-white font-bold">Talleres Creativos</span>
+                                <span class="text-xs text-slate-500">ESO</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                                    <span>Marta L. (Plástica)</span>
+                                </div>
+                                <div class="flex items-center gap-2 mt-1 opacity-70">
+                                    <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                                    <span>Javier R. (Lengua)</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-brand font-medium">
+                                Equipo Bravo (Materiales)
+                            </td>
+                        </tr>
+
+                        <!-- 11:00 - 12:00 -->
+                        <tr class="bg-brand/5 hover:bg-brand/10 transition-colors">
+                            <td class="px-6 py-4 font-mono font-bold text-brand">11:00 - 12:00</td>
+                            <td class="px-6 py-4 border-l-2 border-brand">
+                                <span class="block text-white font-bold">Mesa Redonda</span>
+                                <span class="text-xs text-brand">EVENTO CENTRAL</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-brand"></span>
+                                    <span class="text-white font-bold">Elena R. (Moderadora)</span>
+                                </div>
+                                <div class="flex items-center gap-2 mt-1 opacity-70">
+                                    <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                                    <span>Carlos D. (Jefe Estudios)</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-brand font-bold">
+                                TODOS (Protocolo + Aforo)
+                            </td>
+                        </tr>
+
+                        <!-- 12:00 - 13:00 -->
+                        <tr class="hover:bg-slate-700/30 transition-colors">
+                            <td class="px-6 py-4 font-mono font-bold text-white">12:00 - 13:00</td>
+                            <td class="px-6 py-4">
+                                <span class="block text-white font-bold">Escritura Creativa / Escape Room</span>
+                                <span class="text-xs text-slate-500">2º ESO / 3º ESO</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                                    <span>M. Llopis (Escritura)</span>
+                                </div>
+                                <div class="flex items-center gap-2 mt-1 opacity-70">
+                                    <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                                    <span>Ana B. (Tecnología)</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-brand font-medium">
+                                Equipo Charlie (Logística)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-amber-500/10 border border-amber-500/20 rounded-xl p-6 flex gap-4 items-start">
+            <span class="text-2xl">⚠️</span>
+            <div>
+                <h4 class="text-amber-500 font-bold mb-1">Nota para el Alumnado de FP</h4>
+                <p class="text-sm text-amber-200/80">
+                    Los responsables de cada equipo deben reportar cualquier ausencia de profesorado al <strong>Coordinador de Zona (Equipo Alpha)</strong> inmediatamente vía grupo de WhatsApp interno.
+                </p>
+            </div>
+        </div>
+
+    </main>
 </body>
 </html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Protocolo Emergencia - Intranet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { 
+                    colors: { 
+                        brand: '#00dc82', 
+                        dark: '#0f172a', 
+                        card: '#1e293b',
+                        accent: '#38bdf8' 
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }</style>
+</head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row text-red-200">
+
+    <!-- Sidebar de Navegación -->
+    <aside class="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+        <div class="p-6 flex items-center gap-3 border-b border-slate-800 text-white">
+            <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center text-slate-900 font-black">FP</div>
+            <div>
+                <h1 class="font-bold text-sm leading-tight">ASISTENCIA A<br>LA DIRECCIÓN</h1>
+                <p class="text-[10px] text-brand uppercase tracking-wider font-bold">Panel de Control v2.0</p>
+            </div>
+        </div>
+
+        <nav class="flex-grow p-4 space-y-2">
+            <p class="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4">Operativa</p>
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>⚡</span> Dashboard
+            </a>
+            <a href="atencion.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>💁‍♂️</span> Atención Visitante
+            </a>
+            <a href="registro.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📝</span> Registro Incidencias
+            </a>
+            <a href="cuadrantes.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📅</span> Cuadrantes Prof.
+            </a>
+            <a href="grupos.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>👥</span> Flujo de Grupos
+            </a>
+            <a href="prestamos.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📖</span> Préstamo Express
+            </a>
+            <a href="manual_stands.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>🏷️</span> Manual de Stands
+            </a>
+            <a href="cierre.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>🏁</span> Checklist de Cierre
+            </a>
+            
+            <p class="px-4 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6">Recursos</p>
+            <a href="../herramientas_apoyo/guion_moderacion.html" class="flex items-center gap-3 px-4 py-3 text-emerald-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors border border-emerald-500/20">
+                <span>🎤</span> Guion Mesa Redonda
+            </a>
+            <a href="../documentacion/emails.html" target="_blank" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>📧</span> Plantillas Email
+            </a>
+            <a href="../webferia/index.html" target="_blank" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl text-sm transition-colors">
+                <span>🌍</span> Ver Web Pública
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-gradient-to-r from-red-600 to-red-900 rounded-xl p-4 text-center">
+                <p class="text-xs text-white/80 font-medium mb-1 uppercase tracking-widest">Protocolo SOS</p>
+                <p class="text-white font-bold text-sm italic">Uso en Emergencias</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-grow p-6 md:p-12 overflow-y-auto bg-red-950/20">
+        <header class="mb-12 border-b border-red-900 pb-8 flex justify-between items-end">
+            <div>
+                <h1 class="text-4xl font-black text-white italic tracking-tighter uppercase">PLAN DE EVACUACIÓN 🚨</h1>
+                <p class="text-red-400 text-[10px] font-bold uppercase tracking-[0.3em] mt-1">Uso Crítico • Control de Masas</p>
+            </div>
+            <div class="bg-red-600 text-white px-4 py-2 rounded-full font-black animate-pulse text-[10px] uppercase tracking-widest shadow-lg shadow-red-600/20">ZONA CRÍTICA: SALÓN ACTOS</div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+            <!-- Plano Esquemático -->
+            <div class="bg-black/40 border-2 border-red-600/50 rounded-[3rem] p-10 relative overflow-hidden aspect-square flex items-center justify-center shadow-2xl">
+                <div class="w-full h-full border-4 border-red-900/30 rounded-2xl relative flex items-center justify-center font-bold text-xs">
+                    <div class="absolute inset-0 bg-red-500/5"></div>
+                    <!-- Salidas -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -mt-4 bg-red-600 px-6 py-2 rounded-full text-white font-black shadow-lg">SALIDA 1 (HACIA PATIO)</div>
+                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 -mb-4 bg-red-600 px-6 py-2 rounded-full text-white font-black shadow-lg">SALIDA 2 (HACIA HALL)</div>
+                    
+                    <!-- Flujos -->
+                    <div class="text-red-500 flex flex-col items-center">
+                        <span class="text-8xl mb-6 filter drop-shadow-2xl">🏠</span>
+                        <p class="text-2xl font-black tracking-tighter text-white uppercase italic">SALÓN DE ACTOS</p>
+                        <p class="text-[10px] text-red-400 font-bold mt-2 uppercase tracking-widest bg-red-900/30 px-3 py-1 rounded-full">(Capacidad: 150 pax)</p>
+                        <div class="mt-12 flex gap-16">
+                            <span class="text-5xl animate-bounce">⬆️</span>
+                            <span class="text-5xl animate-bounce">⬇️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instrucciones -->
+            <div class="space-y-8">
+                <div class="bg-white/5 border border-white/10 p-8 rounded-[2.5rem] shadow-xl">
+                    <h3 class="font-black text-white mb-6 uppercase text-xs tracking-[0.2em] border-b border-white/10 pb-4 flex items-center gap-3">
+                        <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span> 
+                        Algoritmo de Actuación
+                    </h3>
+                    <ul class="space-y-6 text-sm">
+                        <li class="flex gap-5 items-start">
+                            <span class="bg-red-600 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black text-white shrink-0 shadow-lg">01</span>
+                            <div>
+                                <strong class="text-white block mb-1 uppercase tracking-wide">Detección</strong>
+                                <span class="text-red-200/70">Avisar por radio/teléfono inmediatamente a Dirección y Jefatura de Estudios.</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-5 items-start">
+                            <span class="bg-red-600 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black text-white shrink-0 shadow-lg">02</span>
+                            <div>
+                                <strong class="text-white block mb-1 uppercase tracking-wide">Liderazgo</strong>
+                                <span class="text-red-200/70">Mantener la calma. Hablar por megafonía con voz firme, sin gritos, instruyendo la salida ordenada.</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-5 items-start">
+                            <span class="bg-red-600 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black text-white shrink-0 shadow-lg">03</span>
+                            <div>
+                                <strong class="text-white block mb-1 uppercase tracking-wide">Ejecución</strong>
+                                <span class="text-red-200/70">Equipo Alpha despeja puertas; Equipo Bravo guía al exterior; Equipo Charlie asegura el conteo.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-red-600/10 border border-red-600/30 p-8 rounded-[2.5rem] relative overflow-hidden group">
+                    <div class="absolute -right-10 -top-10 text-9xl opacity-5 font-black group-hover:rotate-12 transition-transform">!</div>
+                    <h3 class="font-black text-white mb-3 text-xs uppercase tracking-widest italic">📍 Punto de Encuentro Seguro</h3>
+                    <p class="text-sm leading-relaxed text-red-100/80">Todo el alumnado y personal debe dirigirse al **Córner Sur del Patio** (Zona de Canastas). **NO** detenerse a recoger pertenencias ni mochilas.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-red-900 text-[10px] font-bold uppercase tracking-[0.4em] mt-16 mb-8 opacity-50">
+            Protocolo Crítico de Seguridad • IES Serra Perenxisa
+        </footer>
+    </main>
+</body>
+</html>
