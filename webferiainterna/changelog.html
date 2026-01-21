@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Mejoras - Intranet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { brand: '#00dc82', dark: '#0f172a', surface: '#1e293b' } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }</style>
+</head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row">
+
+    <!-- Sidebar (Consistente) -->
+    <aside class="w-full md:w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+        <div class="p-6 border-b border-slate-800 text-white font-bold text-sm">PANEL OPERATIVO</div>
+        <nav class="flex-grow p-4 space-y-2 text-sm">
+            <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white">Dashboard</a>
+            <a href="changelog.html" class="block px-4 py-2 bg-brand/10 text-brand rounded-lg font-bold">Historial Mejoras</a>
+        </nav>
+    </aside>
+
+    <main class="flex-grow p-8 overflow-y-auto">
+        <header class="mb-12">
+            <h1 class="text-3xl font-black text-white italic tracking-tighter uppercase">Bitácora de Desarrollo 🚀</h1>
+            <p class="text-slate-400">Documentación de herramientas y mejoras estratégicas aplicadas.</p>
+        </header>
+
+        <div class="space-y-8 max-w-4xl">
+            
+            <!-- Bloque 1: Comunicación Pro -->
+            <section class="bg-surface p-8 rounded-3xl border border-slate-700 shadow-xl">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="text-3xl">📧</span>
+                    <h2 class="text-xl font-bold text-white uppercase">Comunicación Institucional 2.0</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-slate-900/50 p-4 rounded-xl">
+                        <strong class="text-brand block mb-1">Gabinete de Prensa</strong>
+                        <p class="text-slate-400">Nota de prensa formal para medios locales.</p>
+                    </div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl">
+                        <strong class="text-brand block mb-1">Panel de Emails</strong>
+                        <p class="text-slate-400">Plantillas dinámicas con botón de copiado rápido.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bloque 2: Herramientas Operativas -->
+            <section class="bg-surface p-8 rounded-3xl border border-slate-700 shadow-xl">
+                <div class="flex items-center gap-4 mb-6 text-indigo-400">
+                    <span class="text-3xl">🛠️</span>
+                    <h2 class="text-xl font-bold text-white uppercase text-indigo-400">Gestión en Tiempo Real</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-white/5">
+                        <strong class="text-indigo-400 block mb-1">Préstamo Express</strong>
+                        <p class="text-slate-400">Software ligero para control de inventario de libros.</p>
+                    </div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl border border-white/5">
+                        <strong class="text-indigo-400 block mb-1">Libro de Incidencias</strong>
+                        <p class="text-slate-400">Registro digital de sucesos para evaluación final.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bloque 3: Gamificación -->
+            <section class="bg-surface p-8 rounded-3xl border border-slate-700 shadow-xl">
+                <div class="flex items-center gap-4 mb-6 text-amber-500">
+                    <span class="text-3xl">🎮</span>
+                    <h2 class="text-xl font-bold text-white uppercase">Engagement y Gamificación</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-slate-900/50 p-4 rounded-xl">
+                        <strong class="text-amber-500 block mb-1">Pasaporte Literario</strong>
+                        <p class="text-slate-400">Sistema de validación por códigos para alumnos.</p>
+                    </div>
+                    <div class="bg-slate-900/50 p-4 rounded-xl">
+                        <strong class="text-amber-500 block mb-1">Búsqueda del Tesoro</strong>
+                        <p class="text-slate-400">Dinámica QR para recorrer todo el recinto.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</body>
+</html>

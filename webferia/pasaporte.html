@@ -13,164 +13,80 @@
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        .stamp-slot { background-image: radial-gradient(#e2e8f0 2px, transparent 2px); background-size: 20px 20px; }
-        .stamped { background-color: #ecfdf5 !important; border-color: #047857 !important; transform: rotate(-5deg); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    </style>
+    <style>.stamped { background-color: #ecfdf5 !important; border-color: #047857 !important; transform: rotate(-3deg); transition: all 0.5s ease; }</style>
 </head>
-<body class="bg-background text-slate-800">
-    <div id="app">
+<body class="bg-background text-slate-800 antialiased">
+    <div id="app" class="flex flex-col min-h-screen">
         <!-- Navbar Estilo Académico -->
         <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center gap-3">
-                        <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
-                        <div class="hidden md:block">
-                            <span class="block font-bold text-slate-900 leading-none">Feria del Libro</span>
-                            <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
-                        </div>
-                    </div>
+                    <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left"><span class="block font-bold text-slate-900 leading-none">Feria del Libro</span><span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
                     <!-- Desktop Menu -->
-                    <div class="hidden lg:flex gap-5 text-[11px] xl:text-[13px] font-bold uppercase tracking-wider items-center">
+                    <div class="hidden lg:flex gap-6 text-[12px] font-bold uppercase tracking-wider items-center">
                         <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
                         <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
-                        <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
-                        <a href="mago-de-oz.html" class="text-slate-500 hover:text-primary transition-colors">Mago Oz</a>
-                        <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
-                        <a href="pasaporte.html" class="text-primary border-b-2 border-primary">Pasaporte</a>
-                        <a href="tesoro.html" class="text-slate-500 hover:text-primary transition-colors">Tesoro</a>
-                        <a href="muro.html" class="text-slate-500 hover:text-primary transition-colors">Muro</a>
+                        
+                        <!-- Dropdown Actividades -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Actividades ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="mesa-redonda.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mesa Redonda</a>
+                                <a href="mago-de-oz.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mago Oz 👠</a>
+                                <a href="ecolibros.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">EcoLibros ♻️</a>
+                                <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Autores</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Participa -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-primary underline decoration-2 underline-offset-8 uppercase font-bold">Participa ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="pasaporte.html" class="block px-4 py-2 text-primary font-bold bg-slate-50">Pasaporte</a>
+                                <a href="tesoro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Tesoro</a>
+                                <a href="muro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Muro ✨</a>
+                                <a href="encuesta.html" class="block px-4 py-2 text-accent hover:bg-slate-50 transition-colors font-bold">Encuesta ⭐</a>
+                            </div>
+                        </div>
+
                         <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
-                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Nosotros</a>
-                        <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
+                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
                     </div>
-                    <!-- Mobile Menu Selector -->
-                    <div class="lg:hidden">
-                        <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
-                            <option value="" disabled selected>Ir a...</option>
-                            <option value="index.html">Inicio</option>
-                            <option value="actividades.html">Agenda</option>
-                            <option value="mesa-redonda.html">Mesa Redonda</option>
-                            <option value="mago-de-oz.html">Mago Oz</option>
-                            <option value="autores.html">Autores</option>
-                            <option value="pasaporte.html">Pasaporte</option>
-                            <option value="tesoro.html">Tesoro</option>
-                            <option value="muro.html">Muro</option>
-                            <option value="stands.html">Mapa</option>
-                            <option value="nosotros.html">Nosotros</option>
-                            <option value="encuesta.html">Encuesta ⭐</option>
-                        </select>
-                    </div>
+                    <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase font-black"><option value="" disabled selected>Menú...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
                 </div>
             </div>
         </nav>
 
-        <div class="max-w-2xl mx-auto py-12 px-4">
-        
-        <!-- Header -->
-        <header class="text-center mb-10">
-            <img src="assets/logo.png" class="h-12 mx-auto mb-4">
-            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Pasaporte Literario Virtual</h1>
-            <p class="text-slate-500 text-sm">Colecciona sellos y consigue premios exclusivos</p>
-        </header>
-
-        <!-- El Pasaporte Card -->
-        <div class="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-slate-200">
-            <div class="bg-primary p-6 text-white flex justify-between items-center">
-                <div>
-                    <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Titular del Pasaporte</p>
-                    <p class="text-xl font-black italic">Explorador/a de Historias</p>
-                </div>
-                <div class="text-right">
-                    <span class="text-4xl">📖</span>
+        <main class="max-w-2xl mx-auto px-4 py-16 flex-grow">
+            <header class="text-center mb-12"><h1 class="text-3xl font-black text-slate-900 mb-2 italic">Pasaporte Literario</h1><p class="text-slate-500 font-medium">Colecciona sellos digitales participando en la feria.</p></header>
+            <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-slate-200">
+                <div class="bg-primary p-8 text-white flex justify-between items-center"><div><p class="text-[10px] font-black uppercase tracking-[0.3em] opacity-70 mb-1">Titular del Pasaporte</p><p class="text-2xl font-black italic tracking-tight leading-none">Explorador/a de Historias</p></div><div class="text-5xl opacity-30 select-none">PASSPORT</div></div>
+                <div class="p-10">
+                    <p class="text-sm text-slate-500 mb-10 leading-relaxed font-medium">Introduce los códigos secretos que te darán los organizadores al finalizar cada actividad.</p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div v-for="(val, key) in stamps" :key="key" :class="{'stamped': val}" class="h-44 border-2 border-dashed border-slate-100 rounded-[2rem] flex flex-col items-center justify-center p-6 text-center shadow-inner transition-all">
+                            <span v-if="!val" class="text-[10px] font-black text-slate-300 uppercase tracking-widest">{{ key.replace('_', ' ') }}</span>
+                            <div v-else class="text-center"><span class="text-5xl mb-2 block">⭐</span><p class="text-[10px] font-black text-primary uppercase tracking-widest">VALIDADO</p></div>
+                        </div>
+                    </div>
+                    <div class="mt-12 pt-10 border-t border-slate-50"><label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 ml-1">Validar actividad (Código secreto)</label><div class="flex gap-3"><input v-model="inputCode" type="text" placeholder="EJ: CODE2026" class="flex-grow bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-primary uppercase font-black tracking-widest text-slate-700 shadow-inner"><button @click="validate" class="bg-dark text-white px-8 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-black transition-colors shadow-lg">Validar</button></div></div>
                 </div>
             </div>
-
-            <div class="p-8">
-                <p class="text-sm text-slate-600 mb-8 leading-relaxed">
-                    Introduce los códigos secretos que te darán los organizadores (alumnos de FP) al finalizar cada actividad para validar tu pasaporte.
-                </p>
-
-                <div class="grid grid-cols-2 gap-6">
-                    <!-- Sello 1: Mesa Redonda -->
-                    <div :class="{'stamped': stamps.mesa}" class="stamp-slot h-40 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center">
-                        <span v-if="!stamps.mesa" class="text-xs font-bold text-slate-400 uppercase">Mesa Redonda</span>
-                        <div v-else class="text-center">
-                            <span class="text-4xl mb-2 block">✔️</span>
-                            <p class="text-[10px] font-black text-primary uppercase">Validado</p>
-                        </div>
-                    </div>
-
-                    <!-- Sello 2: Taller Escritura -->
-                    <div :class="{'stamped': stamps.taller}" class="stamp-slot h-40 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center">
-                        <span v-if="!stamps.taller" class="text-xs font-bold text-slate-400 uppercase">Taller M. Llopis</span>
-                        <div v-else class="text-center">
-                            <span class="text-4xl mb-2 block">✍️</span>
-                            <p class="text-[10px] font-black text-primary uppercase">Validado</p>
-                        </div>
-                    </div>
-
-                    <!-- Sello 3: Escape Room -->
-                    <div :class="{'stamped': stamps.escape}" class="stamp-slot h-40 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center">
-                        <span v-if="!stamps.escape" class="text-xs font-bold text-slate-400 uppercase">Escape Room</span>
-                        <div v-else class="text-center">
-                            <span class="text-4xl mb-2 block">🧩</span>
-                            <p class="text-[10px] font-black text-primary uppercase">Validado</p>
-                        </div>
-                    </div>
-
-                    <!-- Sello 4: Stands -->
-                    <div :class="{'stamped': stamps.stands}" class="stamp-slot h-40 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center">
-                        <span v-if="!stamps.stands" class="text-xs font-bold text-slate-400 uppercase">Visita Stands</span>
-                        <div v-else class="text-center">
-                            <span class="text-4xl mb-2 block">📚</span>
-                            <p class="text-[10px] font-black text-primary uppercase">Validado</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Input de Código -->
-                <div class="mt-10 pt-8 border-t border-slate-100">
-                    <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Validar actividad (Código secreto)</label>
-                    <div class="flex gap-2">
-                        <input v-model="inputCode" type="text" placeholder="Ej: LIBRO2026" class="flex-grow bg-slate-50 border border-slate-200 p-4 rounded-xl outline-none focus:border-primary uppercase font-mono">
-                        <button @click="validate" class="bg-dark text-white px-6 rounded-xl font-bold hover:bg-black transition-colors">Validar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-8 text-center bg-amber-50 p-6 rounded-2xl border border-amber-100">
-            <p class="text-amber-800 text-sm font-bold">🎁 ¡Completa 3 sellos para recibir un marcapáginas de edición limitada en el stand de Información!</p>
-        </div>
+        </main>
+        <footer class="bg-white border-t border-slate-200 py-8 text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">IES Serra Perenxisa • 2026</footer>
     </div>
-
     <script>
         const { createApp, ref } = Vue
         createApp({
             setup() {
-                const stamps = ref({ mesa: false, taller: false, escape: false, stands: false })
+                const stamps = ref({ mesa_redonda: false, taller_escritura: false, escape_room: false, stands_firmas: false })
                 const inputCode = ref('')
-                
-                const codes = {
-                    'DEBATE26': 'mesa',
-                    'ESCRIBE': 'taller',
-                    'ENIGMA': 'escape',
-                    'RELEO': 'stands'
-                }
-
+                const codes = { 'DEBATE26': 'mesa_redonda', 'ESCRIBE': 'taller_escritura', 'ENIGMA': 'escape_room', 'RELEO': 'stands_firmas' }
                 const validate = () => {
                     const code = inputCode.value.toUpperCase().trim()
-                    if (codes[code]) {
-                        stamps.value[codes[code]] = true
-                        inputCode.value = ''
-                        alert('¡Actividad validada con éxito!')
-                    } else {
-                        alert('Código incorrecto. Pídelo a los alumnos de la organización.')
-                    }
+                    if (codes[code]) { stamps.value[codes[code]] = true; inputCode.value = ''; alert('¡Sello añadido con éxito!'); }
+                    else { alert('Código incorrecto.'); }
                 }
-
                 return { stamps, inputCode, validate }
             }
         }).mount('#app')

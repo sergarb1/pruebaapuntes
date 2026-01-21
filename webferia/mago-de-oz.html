@@ -2,151 +2,56 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>El Mago de Oz - II Feria del Libro</title>
+    <title>Mago de Oz - II Feria del Libro</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Fredoka', sans-serif; background-color: #f0fdf4; }
-        .yellow-brick-road { background: repeating-linear-gradient(45deg, #fde047, #fde047 10px, #facc15 10px, #facc15 20px); }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; background-color: #f0fdf4; }.fredoka { font-family: 'Fredoka', sans-serif; }.yellow-brick-road { background: repeating-linear-gradient(45deg, #fde047, #fde047 10px, #facc15 10px, #facc15 20px); }</style>
 </head>
-<body class="text-slate-800">
-    <!-- Navbar -->
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-3">
-                    <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
-                    <div class="hidden md:block">
-                        <span class="block font-bold text-slate-900 leading-none">Feria del Libro</span>
-                        <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
+<body class="text-slate-800 antialiased">
+    <div id="app" class="flex flex-col min-h-screen">
+        <!-- Navbar Estándar -->
+        <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left text-slate-900 leading-none uppercase tracking-tighter"><span class="block font-bold">Feria del Libro</span><span class="text-[10px] text-primary font-black uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden lg:flex gap-5 text-[12px] font-bold uppercase tracking-wider items-center">
+                        <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
+                        <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
+                        
+                        <!-- Dropdown Actividades -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-primary underline decoration-2 underline-offset-8 uppercase font-bold">Actividades ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50 text-left">
+                                <a href="mesa-redonda.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Mesa Redonda</a>
+                                <a href="mago-de-oz.html" class="block px-4 py-2 text-primary font-bold bg-slate-50 text-xs">Mago Oz 👠</a>
+                                <a href="ecolibros.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">EcoLibros ♻️</a>
+                                <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Autores</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Participa -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Participa ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50 text-left">
+                                <a href="pasaporte.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Pasaporte</a>
+                                <a href="tesoro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Tesoro</a>
+                                <a href="muro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Muro ✨</a>
+                                <a href="encuesta.html" class="block px-4 py-2 text-accent hover:bg-slate-50 transition-colors font-bold text-xs">Encuesta ⭐</a>
+                            </div>
+                        </div>
+
+                        <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
+                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
                     </div>
-                </div>
-                <!-- Desktop Menu -->
-                <div class="hidden lg:flex gap-5 text-[11px] xl:text-[13px] font-bold uppercase tracking-wider items-center">
-                    <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
-                    <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
-                    <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
-                    <a href="mago-de-oz.html" class="text-primary border-b-2 border-primary">Mago Oz</a>
-                    <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
-                    <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
-                    <a href="tesoro.html" class="text-slate-500 hover:text-primary transition-colors">Tesoro</a>
-                    <a href="muro.html" class="text-slate-500 hover:text-primary transition-colors">Muro</a>
-                    <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
-                    <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Nosotros</a>
-                    <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
-                </div>
-                <!-- Mobile Menu Selector -->
-                <div class="lg:hidden">
-                    <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
-                        <option value="" disabled selected>Ir a...</option>
-                        <option value="index.html">Inicio</option>
-                        <option value="actividades.html">Agenda</option>
-                        <option value="mesa-redonda.html">Mesa Redonda</option>
-                        <option value="mago-de-oz.html">Mago Oz</option>
-                        <option value="autores.html">Autores</option>
-                        <option value="pasaporte.html">Pasaporte</option>
-                        <option value="tesoro.html">Tesoro</option>
-                        <option value="muro.html">Muro</option>
-                        <option value="stands.html">Mapa</option>
-                        <option value="nosotros.html">Nosotros</option>
-                        <option value="encuesta.html">Encuesta ⭐</option>
-                    </select>
+                    <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase font-black tracking-widest shadow-sm"><option value="" disabled selected>Ir a...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- Hero Mágico -->
-    <header class="relative h-[400px] flex items-center justify-center overflow-hidden">
-        <img src="assets/emerald_city.jpg" class="absolute inset-0 w-full h-full object-cover">
-        <div class="absolute inset-0 bg-emerald-900/40"></div>
-        <div class="relative z-10 text-center text-white p-6">
-            <h1 class="text-5xl md:text-7xl font-bold drop-shadow-lg mb-4">El Mago de Oz 🌪️</h1>
-            <p class="text-xl md:text-2xl font-medium bg-black/20 backdrop-blur-sm inline-block px-6 py-2 rounded-full">
-                ¡Sigue el camino de baldosas amarillas!
-            </p>
-        </div>
-    </header>
-
-    <main class="max-w-5xl mx-auto px-6 py-16">
-        
-        <!-- Introducción -->
-        <div class="text-center max-w-2xl mx-auto mb-20">
-            <h2 class="text-3xl font-bold text-emerald-800 mb-6 italic">¿Estáis listos para la aventura?</h2>
-            <p class="text-lg text-slate-600 leading-relaxed">
-                Acompañaremos a Dorothy y a su perrito Totó en un viaje increíble. En el Salón de Actos, la <strong>Prof. Laura M.</strong> nos contará esta historia llena de magia, amistad y zapatos rojos.
-            </p>
-        </div>
-
-        <!-- Personajes y Valores -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Dorothy -->
-            <div class="bg-white p-6 rounded-3xl shadow-lg border-b-8 border-red-500 text-center hover:-translate-y-2 transition-transform">
-                <div class="text-5xl mb-4">👠</div>
-                <h3 class="text-xl font-bold text-slate-900 mb-2">Dorothy</h3>
-                <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-3">Valor: Hogar</p>
-                <p class="text-sm text-slate-600 italic">"No hay lugar como el hogar".</p>
-            </div>
-            <!-- Espantapájaros -->
-            <div class="bg-white p-6 rounded-3xl shadow-lg border-b-8 border-yellow-400 text-center hover:-translate-y-2 transition-transform">
-                <div class="text-5xl mb-4">🌾</div>
-                <h3 class="text-xl font-bold text-slate-900 mb-2">Espantapájaros</h3>
-                <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-3">Valor: Inteligencia</p>
-                <p class="text-sm text-slate-600 italic">Buscaba un cerebro para pensar mejor.</p>
-            </div>
-            <!-- Hombre de Hojalata -->
-            <div class="bg-white p-6 rounded-3xl shadow-lg border-b-8 border-slate-300 text-center hover:-translate-y-2 transition-transform">
-                <div class="text-5xl mb-4">🪓</div>
-                <h3 class="text-xl font-bold text-slate-900 mb-2">Hombre de Hojalata</h3>
-                <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-3">Valor: Corazón</p>
-                <p class="text-sm text-slate-600 italic">Quería un corazón para poder amar.</p>
-            </div>
-            <!-- León -->
-            <div class="bg-white p-6 rounded-3xl shadow-lg border-b-8 border-orange-400 text-center hover:-translate-y-2 transition-transform">
-                <div class="text-5xl mb-4">🦁</div>
-                <h3 class="text-xl font-bold text-slate-900 mb-2">León Cobarde</h3>
-                <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-3">Valor: Coraje</p>
-                <p class="text-sm text-slate-600 italic">Descubrió que el valor se lleva dentro.</p>
-            </div>
-        </div>
-
-        <!-- El Camino de Baldosas Amarillas (Divisor) -->
-        <div class="yellow-brick-road h-8 my-20 rounded-full shadow-inner"></div>
-
-        <!-- Taller de Pintura -->
-        <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-xl border border-emerald-100 flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1">
-                <span class="bg-amber-400 text-amber-900 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 inline-block">¡A pintar!</span>
-                <h2 class="text-4xl font-black text-slate-900 mb-6">Después del cuento...</h2>
-                <p class="text-lg text-slate-600 leading-relaxed mb-8">
-                    Nuestros alumnos de 2º de FP os ayudarán a pintar vuestro propio personaje de Oz. ¡Podréis llevaros vuestro dibujo a casa de recuerdo!
-                </p>
-                <div class="flex gap-4">
-                    <div class="flex flex-col items-center">
-                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl mb-2">🎨</div>
-                        <span class="text-[10px] font-bold uppercase">Pinturas</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl mb-2">📄</div>
-                        <span class="text-[10px] font-bold uppercase">Papel</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl mb-2">✨</div>
-                        <span class="text-[10px] font-bold uppercase">Purpurina</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex-1 relative">
-                <img src="assets/oz.jpg" class="rounded-3xl shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
-            </div>
-        </div>
-
-    </main>
-
-    <footer class="bg-emerald-900 text-emerald-100 py-12 text-center">
-        <p class="font-bold">II Feria del Libro IES Serra Perenxisa</p>
-        <p class="text-xs opacity-60">Creado con ilusión por el alumnado de Asistencia a la Dirección</p>
-    </footer>
+        <header class="relative h-[400px] flex items-center justify-center overflow-hidden"><img src="assets/emerald_city.jpg" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-emerald-900/40"></div><div class="relative z-10 text-center text-white p-6"><h1 class="fredoka text-5xl md:text-7xl font-bold drop-shadow-lg mb-4 italic tracking-tighter">El Mago de Oz 🌪️</h1><p class="fredoka text-xl md:text-2xl font-medium bg-black/20 backdrop-blur-sm inline-block px-8 py-2 rounded-full border border-white/20 uppercase tracking-widest">¡Sigue el camino amarillo!</p></div></header>
+        <main class="max-w-5xl mx-auto px-6 py-16 flex-grow"><div class="text-center max-w-2xl mx-auto mb-20"><h2 class="fredoka text-3xl font-bold text-emerald-800 mb-6 italic tracking-tight uppercase leading-none">¿Listos para la aventura?</h2><p class="text-lg text-slate-600 leading-relaxed font-medium">En el Salón de Actos, la <strong>Prof. Laura M.</strong> nos contará esta historia llena de magia, amistad y zapatos rojos.</p></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"><div class="bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-red-500 text-center hover:-translate-y-2 transition-transform duration-500 group"><div class="text-6xl mb-6 group-hover:scale-110 transition-transform">👠</div><h3 class="fredoka text-xl font-black text-slate-900 mb-2 uppercase italic tracking-tighter">Dorothy</h3><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Hogar</p></div><div class="bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-yellow-400 text-center hover:-translate-y-2 transition-transform duration-500 group"><div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🌾</div><h3 class="fredoka text-xl font-black text-slate-900 mb-2 uppercase italic tracking-tighter">Espantapájaros</h3><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Inteligencia</p></div><div class="bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-slate-300 text-center hover:-translate-y-2 transition-transform duration-500 group"><div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🪓</div><h3 class="fredoka text-xl font-black text-slate-900 mb-2 uppercase italic tracking-tighter">Hojalata</h3><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Corazón</p></div><div class="bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-orange-400 text-center hover:-translate-y-2 transition-transform duration-500 group"><div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🦁</div><h3 class="fredoka text-xl font-black text-slate-900 mb-2 uppercase italic tracking-tighter">León</h3><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Valor</p></div></div><div class="yellow-brick-road h-10 my-24 rounded-full shadow-2xl animate-pulse"></div></main>
+        <footer class="bg-emerald-900 text-emerald-100/50 py-12 text-center text-[10px] font-black uppercase tracking-[0.5em] italic">II Feria del Libro • Serra Perenxisa</footer>
+    </div>
 </body>
 </html>

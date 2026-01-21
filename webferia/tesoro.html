@@ -2,137 +2,85 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Búsqueda del Tesoro - Feria del Libro</title>
+    <title>Tesoro Oculto - II Feria del Libro</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
-                extend: { colors: { primary: '#047857', accent: '#f59e0b' } }
+                extend: { colors: { primary: '#047857', dark: '#064e3b', accent: '#f59e0b', background: '#0f172a', surface: '#ffffff' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-900 text-white min-h-screen">
-    <div id="app">
-        <!-- Navbar Estilo Académico (White background for clarity) -->
-        <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 text-slate-800">
+<body class="bg-background text-white antialiased min-h-screen">
+    <div id="app" class="flex flex-col min-h-screen">
+        <!-- Navbar Estilo Académico -->
+        <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50 text-slate-800">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center gap-3">
-                        <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
-                        <div class="hidden md:block text-slate-900">
-                            <span class="block font-bold leading-none">Feria del Libro</span>
-                            <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
-                        </div>
-                    </div>
+                    <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left text-slate-900 leading-none"><span class="block font-bold">Feria del Libro</span><span class="text-[10px] text-primary font-black uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
                     <!-- Desktop Menu -->
-                    <div class="hidden lg:flex gap-5 text-[11px] xl:text-[13px] font-bold uppercase tracking-wider items-center">
+                    <div class="hidden lg:flex gap-5 text-[12px] font-bold uppercase tracking-wider items-center">
                         <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
                         <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
-                        <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
-                        <a href="mago-de-oz.html" class="text-slate-500 hover:text-primary transition-colors">Mago Oz</a>
-                        <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
-                        <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
-                        <a href="tesoro.html" class="text-primary border-b-2 border-primary">Tesoro</a>
-                        <a href="muro.html" class="text-slate-500 hover:text-primary transition-colors">Muro</a>
+                        
+                        <!-- Dropdown Actividades -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Actividades ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="mesa-redonda.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mesa Redonda</a>
+                                <a href="mago-de-oz.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mago Oz 👠</a>
+                                <a href="ecolibros.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">EcoLibros ♻️</a>
+                                <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Autores</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Participa -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-primary underline decoration-2 underline-offset-8 uppercase font-bold">Participa ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50 text-left">
+                                <a href="pasaporte.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Pasaporte</a>
+                                <a href="tesoro.html" class="block px-4 py-2 text-primary font-bold bg-slate-50">Tesoro</a>
+                                <a href="muro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Muro ✨</a>
+                                <a href="encuesta.html" class="block px-4 py-2 text-accent hover:bg-slate-50 transition-colors font-bold">Encuesta ⭐</a>
+                            </div>
+                        </div>
+
                         <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
-                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Nosotros</a>
-                        <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
+                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
                     </div>
-                    <!-- Mobile Menu Selector -->
-                    <div class="lg:hidden">
-                        <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
-                            <option value="" disabled selected>Ir a...</option>
-                            <option value="index.html">Inicio</option>
-                            <option value="actividades.html">Agenda</option>
-                            <option value="mesa-redonda.html">Mesa Redonda</option>
-                            <option value="mago-de-oz.html">Mago Oz</option>
-                            <option value="autores.html">Autores</option>
-                            <option value="pasaporte.html">Pasaporte</option>
-                            <option value="tesoro.html">Tesoro</option>
-                            <option value="muro.html">Muro</option>
-                            <option value="stands.html">Mapa</option>
-                            <option value="nosotros.html">Nosotros</option>
-                            <option value="encuesta.html">Encuesta ⭐</option>
-                        </select>
-                    </div>
+                    <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase"><option value="" disabled selected>Menú...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
                 </div>
             </div>
         </nav>
 
-        <div class="max-w-md mx-auto py-12 px-6">
-        
-        <header class="text-center mb-12">
-            <h1 class="text-3xl font-black italic mb-2 tracking-tighter">EL TESORO OCULTO 🏆</h1>
-            <p class="text-slate-400 text-sm">Escanea los 5 libros de oro escondidos por el IES.</p>
-        </header>
-
-        <!-- Progreso -->
-        <div class="grid grid-cols-5 gap-3 mb-12">
-            <div v-for="n in 5" :key="n" 
-                 class="aspect-square rounded-xl border-2 flex items-center justify-center text-2xl shadow-lg transition-all duration-500"
-                 :class="foundItems.includes(n) ? 'bg-amber-400 border-amber-200 scale-110' : 'bg-slate-800 border-slate-700 opacity-30'">
-                {{ foundItems.includes(n) ? '📖' : '❓' }}
+        <main class="max-w-md mx-auto px-6 py-16 flex-grow">
+            <header class="text-center mb-12"><h1 class="text-3xl font-black italic mb-2 tracking-tighter uppercase text-white">El Tesoro Oculto 🏆</h1><p class="text-slate-400 text-sm font-medium leading-relaxed">Escanea los 5 códigos QR de los "Libros de Oro" escondidos por el instituto.</p></header>
+            <div class="grid grid-cols-5 gap-3 mb-12">
+                <div v-for="n in 5" :key="n" class="aspect-square rounded-2xl border-2 flex items-center justify-center text-2xl shadow-2xl transition-all duration-700" :class="foundItems.includes(n) ? 'bg-amber-400 border-amber-200 scale-110' : 'bg-slate-800 border-slate-700 opacity-20'">{{ foundItems.includes(n) ? '📖' : '❓' }}</div>
             </div>
-        </div>
-
-        <div v-if="foundItems.length < 5" class="bg-slate-800 p-8 rounded-[2rem] border border-slate-700 text-center">
-            <div class="animate-bounce text-5xl mb-6">🔍</div>
-            <h2 class="text-xl font-bold mb-4">¿Has encontrado uno?</h2>
-            <p class="text-slate-400 text-sm mb-8 leading-relaxed">Pide al organizador del punto donde estés el <strong>Número Secreto</strong> del libro para desbloquearlo.</p>
-            
-            <div class="flex gap-2">
-                <input v-model="secretCode" type="number" placeholder="Nº" class="w-20 bg-slate-900 border border-slate-600 p-4 rounded-xl text-center font-black text-2xl">
-                <button @click="checkCode" class="flex-grow bg-primary text-white font-black rounded-xl hover:brightness-110 uppercase tracking-widest">Desbloquear</button>
+            <div v-if="foundItems.length < 5" class="bg-slate-800 p-10 rounded-[3rem] border border-slate-700 text-center shadow-2xl relative overflow-hidden">
+                <div class="animate-bounce text-6xl mb-8">🔍</div>
+                <h2 class="text-xl font-black mb-4 uppercase italic">¿Has encontrado uno?</h2>
+                <div class="flex gap-3 mt-8"><input v-model="secretCode" type="number" placeholder="Nº" class="w-24 bg-slate-900 border border-slate-600 p-5 rounded-2xl text-center font-black text-3xl text-white outline-none focus:border-amber-400 transition-colors"><button @click="checkCode" class="flex-grow bg-primary text-white font-black rounded-2xl hover:brightness-110 uppercase tracking-widest shadow-xl text-xs transition-all">Desbloquear</button></div>
             </div>
-        </div>
-
-        <!-- Victoria -->
-        <div v-else class="bg-gradient-to-br from-amber-400 to-orange-600 p-8 rounded-[2rem] text-center shadow-2xl">
-            <div class="text-6xl mb-6">🏆</div>
-            <h2 class="text-3xl font-black text-slate-900 mb-2 leading-tight uppercase">¡MAESTRO/A LECTOR/A!</h2>
-            <p class="text-amber-900 font-bold mb-8 italic">Has encontrado todos los libros ocultos.</p>
-            <div class="bg-white/20 backdrop-blur p-4 rounded-xl border border-white/30 text-slate-900 font-mono text-xs font-bold mb-8 uppercase">
-                Código de Canje:<br>GOLDEN-SERRA-2026
-            </div>
-            <p class="text-sm text-amber-950">Muestra esta pantalla en el stand de 2º FP para recibir tu premio final.</p>
-        </div>
-
+            <div v-else class="bg-gradient-to-br from-amber-400 to-orange-600 p-10 rounded-[3rem] text-center shadow-2xl animate-fade-in"><div class="text-7xl mb-8">🏆</div><h2 class="text-3xl font-black text-slate-900 mb-2 italic uppercase">¡Éxito Total!</h2><div class="bg-black/20 backdrop-blur p-6 rounded-2xl border border-white/30 text-slate-900 font-mono text-[10px] font-black my-8 uppercase tracking-widest leading-relaxed">Código Maestro:<br>GOLDEN-SERRA-2026</div><p class="text-xs text-amber-900 font-black uppercase tracking-tighter">Muestra esta pantalla en el stand de información</p></div>
+        </main>
+        <footer class="py-8 text-center text-[10px] font-black text-slate-600 uppercase tracking-[0.4em] opacity-50 italic">II Feria del Libro • IES Serra Perenxisa</footer>
     </div>
-
     <script>
         const { createApp, ref, onMounted } = Vue
         createApp({
             setup() {
-                const foundItems = ref([])
-                const secretCode = ref('')
-                const validCodes = [101, 242, 389, 415, 500] // Códigos de los 5 QRs
-
+                const foundItems = ref([]); const secretCode = ref(''); const validCodes = [101, 242, 389, 415, 500]
                 const checkCode = () => {
-                    const code = parseInt(secretCode.value)
-                    const index = validCodes.indexOf(code)
-                    if (index !== -1) {
-                        const bookNum = index + 1
-                        if (!foundItems.value.includes(bookNum)) {
-                            foundItems.value.push(bookNum)
-                            localStorage.setItem('feria_tesoro', JSON.stringify(foundItems.value))
-                            alert('¡Libro ' + bookNum + ' encontrado!')
-                        } else {
-                            alert('Ya tenías este libro.')
-                        }
-                    } else {
-                        alert('Código no válido. ¡Sigue buscando!')
-                    }
-                    secretCode.value = ''
+                    const code = parseInt(secretCode.value); const index = validCodes.indexOf(code)
+                    if (index !== -1) { const bNum = index + 1; if (!foundItems.value.includes(bNum)) { foundItems.value.push(bNum); localStorage.setItem('feria_tesoro', JSON.stringify(foundItems.value)); alert('¡Libro ' + bNum + ' desbloqueado!'); } else alert('Ya lo tienes.'); }
+                    else alert('Código inválido.'); secretCode.value = ''
                 }
-
-                onMounted(() => {
-                    const saved = localStorage.getItem('feria_tesoro')
-                    if (saved) foundItems.value = JSON.parse(saved)
-                })
-
+                onMounted(() => { const saved = localStorage.getItem('feria_tesoro'); if (saved) foundItems.value = JSON.parse(saved) })
                 return { foundItems, secretCode, checkCode }
             }
         }).mount('#app')

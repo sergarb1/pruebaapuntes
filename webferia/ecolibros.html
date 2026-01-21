@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>EcoLibros - II Feria del Libro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#047857', dark: '#064e3b', accent: '#f59e0b', surface: '#ffffff', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-background text-slate-800 antialiased">
+    <div id="app" class="flex flex-col min-h-screen">
+        <!-- Navbar -->
+        <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left"><span class="block font-bold text-slate-900 leading-none">Feria del Libro</span><span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden lg:flex gap-6 text-[12px] font-bold uppercase tracking-wider items-center">
+                        <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
+                        <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
+                        
+                        <!-- Dropdown Actividades -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-primary underline decoration-2 underline-offset-8 uppercase">Actividades ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="mesa-redonda.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mesa Redonda</a>
+                                <a href="mago-de-oz.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mago Oz 👠</a>
+                                <a href="ecolibros.html" class="block px-4 py-2 text-primary font-bold bg-slate-50">EcoLibros ♻️</a>
+                                <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Autores</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Participa -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Participa ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="pasaporte.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Pasaporte</a>
+                                <a href="tesoro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Tesoro</a>
+                                <a href="muro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Muro ✨</a>
+                                <a href="encuesta.html" class="block px-4 py-2 text-accent hover:bg-slate-50 transition-colors font-bold">Encuesta ⭐</a>
+                            </div>
+                        </div>
+
+                        <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
+                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
+                    </div>
+                    <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase font-black"><option value="" disabled selected>Menú...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-5xl mx-auto px-4 py-16 flex-grow">
+            <div class="relative rounded-[3rem] overflow-hidden bg-emerald-900 h-80 mb-16 shadow-2xl">
+                <img src="assets/eco.jpg" class="absolute inset-0 w-full h-full object-cover opacity-50">
+                <div class="absolute inset-0 bg-gradient-to-t from-emerald-900 via-transparent to-transparent"></div>
+                <div class="absolute bottom-10 left-10"><span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase mb-4 inline-block tracking-widest">Sostenibilidad Lectoras</span><h1 class="text-5xl font-black text-white italic tracking-tighter leading-none">Programa EcoLibros ♻️</h1></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-black text-slate-900 mb-6 italic">¿Tienes un libro que ya has leído mil veces?</h2>
+                    <p class="text-lg text-slate-600 leading-relaxed mb-8">En la II Feria del Libro creemos en las segundas oportunidades. Trae un libro que esté en buen estado y **intercambialo por otro** de nuestro stand EcoLibros de forma totalmente gratuita.</p>
+                    <div class="bg-emerald-50 border-l-4 border-primary p-8 rounded-r-3xl shadow-sm">
+                        <p class="text-emerald-800 font-extrabold text-2xl mb-2 italic">¡Es tuyo para siempre!</p>
+                        <p class="text-emerald-700 text-sm font-medium leading-relaxed">No es un préstamo ni un alquiler. El libro que elijas pasará a formar parte de tu biblioteca personal.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
+                    <h3 class="font-black text-slate-900 uppercase text-xs tracking-widest mb-10 border-b pb-4">Reglas de Intercambio</h3>
+                    <ul class="space-y-8">
+                        <li class="flex gap-5"><span class="w-10 h-10 bg-emerald-100 text-primary rounded-2xl flex items-center justify-center font-black shrink-0 shadow-sm text-lg">1</span><div><strong class="text-slate-900 block text-sm mb-1 uppercase tracking-wide">Calidad</strong><p class="text-sm text-slate-500">El libro debe estar completo y en buen estado (sin hojas sueltas ni excesivas manchas).</p></div></li>
+                        <li class="flex gap-5"><span class="w-10 h-10 bg-emerald-100 text-primary rounded-2xl flex items-center justify-center font-black shrink-0 shadow-sm text-lg">2</span><div><strong class="text-slate-900 block text-sm mb-1 uppercase tracking-wide">Equidad</strong><p class="text-sm text-slate-500">Entregas uno, te llevas uno. Máximo 2 intercambios por persona durante la jornada.</p></div></li>
+                        <li class="flex gap-5"><span class="w-10 h-10 bg-emerald-100 text-primary rounded-2xl flex items-center justify-center font-black shrink-0 shadow-sm text-lg">3</span><div><strong class="text-slate-900 block text-sm mb-1 uppercase tracking-wide">Libertad</strong><p class="text-sm text-slate-500">Tómate tu tiempo. Puedes ojear todos los libros del stand antes de decidirte.</p></div></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-emerald-900 text-emerald-100 py-12 text-center text-[10px] font-bold uppercase tracking-[0.3em] italic">Fomentando la lectura sostenible • IES Serra Perenxisa</footer>
+    </div>
+</body>
+</html>

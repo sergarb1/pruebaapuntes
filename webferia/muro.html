@@ -2,140 +2,79 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Muro de Recomendaciones - II Feria del Libro</title>
+    <title>Muro de Lectores - II Feria del Libro</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
-                extend: { colors: { primary: '#047857', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
+                extend: { colors: { primary: '#047857', dark: '#064e3b', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
             }
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        .handwritten { font-family: 'Kalam', cursive; }
-        .post-it { transition: all 0.3s ease; }
-        .post-it:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 10; }
-    </style>
+    <style>.handwritten { font-family: 'Kalam', cursive; }.post-it { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }.post-it:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 10; }</style>
 </head>
 <body class="bg-background text-slate-800 antialiased">
     <div id="app" class="flex flex-col min-h-screen">
-        
-        <!-- Navbar Estilo Académico -->
+        <!-- Navbar -->
         <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center gap-3">
-                        <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
-                        <div class="hidden md:block">
-                            <span class="block font-bold text-slate-900 leading-none">Feria del Libro</span>
-                            <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
-                        </div>
-                    </div>
+                    <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left"><span class="block font-bold text-slate-900 leading-none">Feria del Libro</span><span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
                     <!-- Desktop Menu -->
-                    <div class="hidden lg:flex gap-5 text-[11px] xl:text-[13px] font-bold uppercase tracking-wider items-center">
+                    <div class="hidden lg:flex gap-5 text-[12px] font-bold uppercase tracking-wider items-center">
                         <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
                         <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
-                        <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
-                        <a href="mago-de-oz.html" class="text-slate-500 hover:text-primary transition-colors">Mago Oz</a>
-                        <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
-                        <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
-                        <a href="tesoro.html" class="text-slate-500 hover:text-primary transition-colors">Tesoro</a>
-                        <a href="muro.html" class="text-primary border-b-2 border-primary">Muro</a>
+                        
+                        <!-- Dropdown Actividades -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Actividades ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="mesa-redonda.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mesa Redonda</a>
+                                <a href="mago-de-oz.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mago Oz 👠</a>
+                                <a href="ecolibros.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">EcoLibros ♻️</a>
+                                <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Autores</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Participa -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-primary underline decoration-2 underline-offset-8 uppercase font-bold">Participa ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="pasaporte.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Pasaporte</a>
+                                <a href="tesoro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Tesoro</a>
+                                <a href="muro.html" class="block px-4 py-2 text-primary font-bold bg-slate-50">Muro ✨</a>
+                                <a href="encuesta.html" class="block px-4 py-2 text-accent hover:bg-slate-50 transition-colors font-bold">Encuesta ⭐</a>
+                            </div>
+                        </div>
+
                         <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
-                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Nosotros</a>
-                        <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
+                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
                     </div>
-                    <!-- Mobile Menu Selector -->
-                    <div class="lg:hidden">
-                        <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
-                            <option value="" disabled selected>Ir a...</option>
-                            <option value="index.html">Inicio</option>
-                            <option value="actividades.html">Agenda</option>
-                            <option value="mesa-redonda.html">Mesa Redonda</option>
-                            <option value="mago-de-oz.html">Mago Oz</option>
-                            <option value="autores.html">Autores</option>
-                            <option value="pasaporte.html">Pasaporte</option>
-                            <option value="tesoro.html">Tesoro</option>
-                            <option value="muro.html">Muro</option>
-                            <option value="stands.html">Mapa</option>
-                            <option value="nosotros.html">Nosotros</option>
-                            <option value="encuesta.html">Encuesta ⭐</option>
-                        </select>
-                    </div>
+                    <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase font-black"><option value="" disabled selected>Menú...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
                 </div>
             </div>
         </nav>
 
-        <div class="max-w-6xl mx-auto py-12 px-4">
-        
-        <header class="text-center mb-16">
-            <h1 class="text-4xl font-black text-slate-900 mb-4 tracking-tight italic">Muro de Lectores ✨</h1>
-            <p class="text-slate-600">¿Qué libro te ha cambiado la vida? Deja tu recomendación aquí.</p>
-        </header>
-
-        <!-- Formulario (Simulado) -->
-        <div class="mb-16 flex justify-center">
-            <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-200 flex flex-col md:flex-row gap-4 items-end w-full max-w-2xl">
-                <div class="flex-grow space-y-4">
-                    <input v-model="newItem.book" placeholder="Título del libro..." class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl outline-none focus:border-primary">
-                    <textarea v-model="newItem.text" placeholder="¿Por qué lo recomiendas?" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl h-20 outline-none focus:border-primary"></textarea>
-                </div>
-                <button @click="addItem" class="bg-primary text-white font-bold px-8 py-4 rounded-2xl hover:bg-emerald-800 transition-all shadow-lg shadow-emerald-100">
-                    Publicar
-                </button>
-            </div>
-        </div>
-
-        <!-- El Muro -->
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            <div v-for="(item, index) in items" :key="index" 
-                 class="post-it p-6 shadow-lg rounded-sm aspect-square flex flex-col justify-between"
-                 :class="item.color"
-                 :style="{ transform: 'rotate(' + item.rotate + 'deg)' }">
-                
-                <div>
-                    <h3 class="font-bold text-slate-900 leading-tight mb-3">《 {{ item.book }} 》</h3>
-                    <p class="handwritten text-lg text-slate-700 leading-snug">"{{ item.text }}"</p>
-                </div>
-                
-                <div class="flex justify-between items-center border-t border-black/5 pt-4">
-                    <span class="text-[10px] font-bold uppercase tracking-widest opacity-50">{{ item.author }}</span>
-                    <span class="text-xs">❤️</span>
+        <main class="max-w-6xl mx-auto px-4 py-16 flex-grow">
+            <header class="text-center mb-16"><h1 class="text-4xl font-black text-slate-900 mb-4 italic tracking-tight uppercase">Muro de Lectores ✨</h1><p class="text-slate-500 font-medium italic">¿Qué libro te ha cambiado la vida? Comparte tu recomendación con la comunidad.</p></header>
+            <div class="mb-20 flex justify-center"><div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-100 flex flex-col md:flex-row gap-6 items-center w-full max-w-2xl"><div class="flex-grow space-y-4 w-full"><input v-model="newItem.book" placeholder="Título del libro..." class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none focus:border-primary font-bold text-sm shadow-inner"><textarea v-model="newItem.text" placeholder="¿Por qué lo recomiendas?" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl h-24 outline-none focus:border-primary font-medium text-sm shadow-inner resize-none"></textarea></div><button @click="addItem" class="bg-primary text-white font-black px-10 py-6 rounded-3xl hover:brightness-110 transition-all shadow-xl uppercase tracking-widest text-xs shrink-0">Publicar</button></div></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div v-for="(item, index) in items" :key="index" class="post-it p-8 shadow-xl rounded-sm aspect-square flex flex-col justify-between border-t-4" :class="[item.color, 'border-black/5']" :style="{ transform: 'rotate(' + item.rotate + 'deg)' }">
+                    <div><h3 class="font-black text-slate-900 leading-tight mb-4 uppercase tracking-tighter text-sm">《 {{ item.book }} 》</h3><p class="handwritten text-xl text-slate-700 leading-snug">"{{ item.text }}"</p></div>
+                    <div class="flex justify-between items-center border-t border-black/5 pt-4 text-slate-400 font-bold uppercase text-[10px] tracking-widest italic"><span>{{ item.author }}</span><span>❤️</span></div>
                 </div>
             </div>
-        </div>
-
+        </main>
+        <footer class="bg-white border-t border-slate-200 py-8 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] italic">II Feria del Libro • IES Serra Perenxisa</footer>
     </div>
-
     <script>
         const { createApp, ref } = Vue
         createApp({
             setup() {
-                const newItem = ref({ book: '', text: '' })
-                const items = ref([
-                    { book: 'El Quijote', text: 'Me encanta lo loco que está, ¡un clásico!', author: 'Prof. Elena', color: 'bg-yellow-100', rotate: -2 },
-                    { book: 'Invisible', text: 'Imprescindible para entender a los demás.', author: 'Alumno 2º ESO', color: 'bg-blue-100', rotate: 3 },
-                    { book: 'Sombras de Ébano', text: '¡Increíble la charla de Yelena de hoy!', author: 'Lector/a', color: 'bg-emerald-100', rotate: -1 },
-                    { book: 'Harry Potter', text: 'Donde empezó todo mi amor por la lectura.', author: 'Carlos FP', color: 'bg-pink-100', rotate: 2 }
-                ])
-
-                const addItem = () => {
-                    if (newItem.value.book && newItem.value.text) {
-                        const colors = ['bg-yellow-100', 'bg-blue-100', 'bg-emerald-100', 'bg-pink-100', 'bg-orange-100']
-                        items.value.unshift({
-                            book: newItem.value.book,
-                            text: newItem.value.text,
-                            author: 'Visitante',
-                            color: colors[Math.floor(Math.random() * colors.length)],
-                            rotate: (Math.random() * 6) - 3
-                        })
-                        newItem.value = { book: '', text: '' }
-                    }
-                }
-
-                return { items, newItem, addItem }
+                const newItem = ref({ book: '', text: '' }); const items = ref([{ book: 'El Quijote', text: 'Me encanta lo loco que está, ¡un clásico eterno!', author: 'Prof. Elena', color: 'bg-yellow-100', rotate: -2 }, { book: 'Invisible', text: 'Imprescindible para entender a los demás.', author: 'Alumno 2º ESO', color: 'bg-blue-100', rotate: 3 }, { book: 'Harry Potter', text: 'Donde empezó mi gran amor por la fantasía.', author: 'Carlos FP', color: 'bg-pink-100', rotate: 2 }]);
+                const addItem = () => { if (newItem.value.book && newItem.value.text) { const cols = ['bg-yellow-100', 'bg-blue-100', 'bg-emerald-100', 'bg-pink-100', 'bg-orange-100']; items.value.unshift({ book: newItem.value.book, text: newItem.value.text, author: 'Visitante', color: cols[Math.floor(Math.random() * cols.length)], rotate: (Math.random() * 6) - 3 }); newItem.value = { book: '', text: '' }; } }; return { items, newItem, addItem }
             }
         }).mount('#app')
     </script>

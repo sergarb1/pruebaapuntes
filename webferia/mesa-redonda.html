@@ -8,10 +8,7 @@
     <script>
         tailwind.config = {
             theme: {
-                extend: {
-                    colors: { primary: '#047857', secondary: '#34d399', dark: '#064e3b', accent: '#f59e0b', background: '#f8fafc' },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
+                extend: { colors: { primary: '#047857', secondary: '#34d399', dark: '#064e3b', accent: '#f59e0b', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
             }
         }
     </script>
@@ -19,153 +16,71 @@
     <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-background text-slate-800 antialiased">
-    <div id="app">
+    <div id="app" class="flex flex-col min-h-screen">
         <!-- Navbar -->
-        <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center gap-3">
-                        <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
-                        <div class="hidden md:block">
-                            <span class="block font-bold text-slate-900 leading-none">Feria del Libro</span>
-                            <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
-                        </div>
-                    </div>
+                    <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left"><span class="block font-bold text-slate-900 leading-none">Feria del Libro</span><span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
                     <!-- Desktop Menu -->
-                    <div class="hidden lg:flex gap-5 text-[11px] xl:text-[13px] font-bold uppercase tracking-wider items-center">
+                    <div class="hidden lg:flex gap-6 text-[12px] font-bold uppercase tracking-wider items-center">
                         <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
                         <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
-                        <a href="mesa-redonda.html" class="text-primary border-b-2 border-primary">Mesa Redonda</a>
-                        <a href="mago-de-oz.html" class="text-slate-500 hover:text-primary transition-colors">Mago Oz</a>
-                        <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
-                        <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
-                        <a href="tesoro.html" class="text-slate-500 hover:text-primary transition-colors">Tesoro</a>
-                        <a href="muro.html" class="text-slate-500 hover:text-primary transition-colors">Muro</a>
+                        
+                        <!-- Dropdown Actividades -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-primary underline decoration-2 underline-offset-8 uppercase font-bold">Actividades ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="mesa-redonda.html" class="block px-4 py-2 text-primary font-bold bg-slate-50">Mesa Redonda</a>
+                                <a href="mago-de-oz.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mago Oz 👠</a>
+                                <a href="ecolibros.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">EcoLibros ♻️</a>
+                                <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Autores</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Participa -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Participa ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="pasaporte.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Pasaporte</a>
+                                <a href="tesoro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Tesoro</a>
+                                <a href="muro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Muro ✨</a>
+                                <a href="encuesta.html" class="block px-4 py-2 text-accent hover:bg-slate-50 transition-colors font-bold">Encuesta ⭐</a>
+                            </div>
+                        </div>
+
                         <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
                         <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
-                        <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
                     </div>
-                    <!-- Mobile Menu Selector -->
-                    <div class="lg:hidden">
-                        <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
-                            <option value="" disabled selected>Ir a...</option>
-                            <option value="index.html">Inicio</option>
-                            <option value="actividades.html">Agenda</option>
-                            <option value="mesa-redonda.html">Mesa Redonda</option>
-                            <option value="mago-de-oz.html">Mago Oz</option>
-                            <option value="autores.html">Autores</option>
-                            <option value="pasaporte.html">Pasaporte</option>
-                            <option value="tesoro.html">Tesoro</option>
-                            <option value="muro.html">Muro</option>
-                            <option value="stands.html">Mapa</option>
-                            <option value="nosotros.html">Nosotros</option>
-                            <option value="encuesta.html">Encuesta ⭐</option>
-                        </select>
-                    </div>
+                    <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase font-black"><option value="" disabled selected>Menú...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
                 </div>
             </div>
         </nav>
 
-        <main class="max-w-5xl mx-auto px-4 py-16">
-            
-            <!-- Hero de la actividad -->
+        <main class="max-w-5xl mx-auto px-4 py-16 flex-grow">
             <div class="relative rounded-[2.5rem] overflow-hidden bg-slate-900 h-96 mb-16 shadow-2xl">
                 <img src="assets/debate.jpg" class="absolute inset-0 w-full h-full object-cover opacity-60">
                 <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent"></div>
                 <div class="absolute bottom-10 left-10 right-10">
-                    <span class="inline-block px-3 py-1 bg-primary text-white text-xs font-bold rounded-full mb-4 uppercase tracking-widest">Actividad Estrella</span>
-                    <h1 class="text-4xl md:text-6xl font-black text-white mb-2 italic">Vivir de Escribir</h1>
-                    <p class="text-xl text-emerald-300 font-bold">Un diálogo entre autores, alumnos y profesores</p>
+                    <span class="inline-block px-3 py-1 bg-primary text-white text-xs font-bold rounded-full mb-4 uppercase tracking-[0.2em]">Actividad Estrella</span>
+                    <h1 class="text-4xl md:text-6xl font-black text-white mb-2 italic tracking-tighter leading-none">Vivir de Escribir</h1>
+                    <p class="text-xl text-emerald-300 font-bold uppercase tracking-widest">Un diálogo real sobre el oficio literario</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                
-                <!-- Columna Principal -->
                 <div class="lg:col-span-2 space-y-12">
-                    <section>
-                        <h2 class="text-3xl font-black text-slate-900 mb-6">¿De qué trata?</h2>
-                        <p class="text-lg text-slate-600 leading-relaxed mb-6">
-                            Esta mesa redonda es el corazón cultural de nuestra feria. No se trata de una conferencia magistral, sino de un **diálogo horizontal**. Queremos romper la barrera entre el autor "famoso" y el lector joven.
-                        </p>
-                        <p class="text-lg text-slate-600 leading-relaxed">
-                            Moderada por la <strong>Prof. Elena R.</strong>, la mesa contará con la presencia de alumnos de 1º de Bachillerato que han analizado las obras de los invitados para plantear un debate dinámico sobre el futuro de la literatura, el proceso creativo y la vida profesional del escritor.
-                        </p>
-                    </section>
-
-                    <section class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                        <h3 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-2">
-                            <span class="text-primary text-3xl">💬</span> Temas del Debate
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="flex gap-4">
-                                <div class="text-2xl">🧠</div>
-                                <div>
-                                    <h4 class="font-bold text-slate-900">Inspiración vs Trabajo</h4>
-                                    <p class="text-sm text-slate-500 italic">¿Se nace escritor o se aprende a serlo?</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div class="text-2xl">📱</div>
-                                <div>
-                                    <h4 class="font-bold text-slate-900">Literatura Digital</h4>
-                                    <p class="text-sm text-slate-500 italic">Redes sociales, Wattpad y nuevas narrativas.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div class="text-2xl">🖋️</div>
-                                <div>
-                                    <h4 class="font-bold text-slate-900">Oficio de Escritor</h4>
-                                    <p class="text-sm text-slate-500 italic">Cómo publicar tu primer libro hoy en día.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div class="text-2xl">🌍</div>
-                                <div>
-                                    <h4 class="font-bold text-slate-900">Libros y Realidad</h4>
-                                    <p class="text-sm text-slate-500 italic">¿Puede un libro cambiar la sociedad?</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <section><h2 class="text-3xl font-black text-slate-900 mb-6 italic border-b-4 border-emerald-100 inline-block">¿De qué trata?</h2><p class="text-lg text-slate-600 leading-relaxed mb-6">Esta mesa redonda es el corazón cultural de nuestra feria. No se trata de una conferencia magistral, sino de un **diálogo horizontal**. Queremos romper la barrera entre el autor consagrado y el lector joven.</p><p class="text-lg text-slate-600 leading-relaxed italic">Moderada por la <strong>Prof. Elena R.</strong>, la mesa contará con la presencia de alumnos que plantearán un debate dinámico sobre el futuro de la literatura, el proceso creativo y los retos de publicar hoy en día.</p></section>
+                    <section class="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 relative overflow-hidden"><div class="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-full -mr-16 -mt-16"></div><h3 class="text-2xl font-bold text-slate-900 mb-10 flex items-center gap-3"><span class="text-primary text-3xl">💬</span> Temas del Debate</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-10"><div class="flex gap-4"><div class="text-3xl grayscale">🧠</div><div><h4 class="font-bold text-slate-900 uppercase text-xs tracking-widest mb-1">Inspiración vs Trabajo</h4><p class="text-sm text-slate-500 leading-relaxed font-medium">¿Se nace escritor o se aprende a serlo?</p></div></div><div class="flex gap-4"><div class="text-3xl grayscale">📱</div><div><h4 class="font-bold text-slate-900 uppercase text-xs tracking-widest mb-1">Literatura Digital</h4><p class="text-sm text-slate-500 leading-relaxed font-medium">Wattpad, TikTok y las nuevas narrativas.</p></div></div><div class="flex gap-4"><div class="text-3xl grayscale">🖋️</div><div><h4 class="font-bold text-slate-900 uppercase text-xs tracking-widest mb-1">El Oficio hoy</h4><p class="text-sm text-slate-500 leading-relaxed font-medium">Cómo publicar tu primer libro con éxito.</p></div></div><div class="flex gap-4"><div class="text-3xl grayscale">🌍</div><div><h4 class="font-bold text-slate-900 uppercase text-xs tracking-widest mb-1">Impacto Real</h4><p class="text-sm text-slate-500 leading-relaxed font-medium">¿Puede un libro cambiar la sociedad?</p></div></div></div></section>
                 </div>
-
-                <!-- Barra Lateral: Logística Alumnos FP -->
-                <div class="space-y-6">
-                    <div class="bg-emerald-700 rounded-3xl p-8 text-white shadow-xl">
-                        <h3 class="text-xl font-bold mb-4">Gestión por 2º CFGS</h3>
-                        <p class="text-emerald-100 text-sm mb-6 leading-relaxed">
-                            Nuestro equipo de **Asistencia a la Dirección** se encarga de:
-                        </p>
-                        <ul class="space-y-4">
-                            <li class="flex items-center gap-3 text-sm font-medium">
-                                <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">✓</span>
-                                Protocolo de ponentes
-                            </li>
-                            <li class="flex items-center gap-3 text-sm font-medium">
-                                <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">✓</span>
-                                Gestión de micros de sala
-                            </li>
-                            <li class="flex items-center gap-3 text-sm font-medium">
-                                <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">✓</span>
-                                Control de tiempos (Timing)
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-3xl border border-slate-200 text-center">
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Cuándo & Dónde</p>
-                        <p class="text-2xl font-black text-slate-900 mb-1">11:00 H</p>
-                        <p class="text-slate-600 font-bold mb-4">Salón de Actos</p>
-                        <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-black rounded-full uppercase">Aforo Limitado</span>
-                    </div>
+                <div class="space-y-8">
+                    <div class="bg-emerald-700 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden"><div class="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-12 -mt-12"></div><h3 class="text-xl font-bold mb-6 italic tracking-tight">Gestión por 2º CFGS</h3><p class="text-emerald-100 text-sm mb-8 leading-relaxed">Nuestro equipo de **Asistencia a la Dirección** garantiza la excelencia técnica de este evento central.</p><ul class="space-y-5"><li class="flex items-center gap-4 text-xs font-black uppercase tracking-widest"><span class="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-[10px]">✓</span> Protocolo de Ponentes</li><li class="flex items-center gap-4 text-xs font-black uppercase tracking-widest"><span class="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-[10px]">✓</span> Gestión de Sala</li><li class="flex items-center gap-4 text-xs font-black uppercase tracking-widest"><span class="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-[10px]">✓</span> Control de Tiempos</li></ul></div>
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-200 text-center shadow-lg"><p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3">Convocatoria</p><p class="text-4xl font-black text-slate-900 mb-1 leading-none italic">11:00 H</p><p class="text-slate-500 font-bold mb-6 uppercase text-xs">Salón de Actos</p><span class="px-4 py-2 bg-amber-100 text-amber-700 text-[10px] font-black rounded-full uppercase tracking-widest shadow-sm">AFORO LIMITADO</span></div>
                 </div>
             </div>
         </main>
 
-        <footer class="bg-white border-t border-slate-200 py-12 text-center text-sm text-slate-500">
-            &copy; 2026 II Feria del Libro • IES Serra Perenxisa
-        </footer>
+        <footer class="bg-white border-t border-slate-200 py-12 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">II Feria del Libro • IES Serra Perenxisa</footer>
     </div>
 </body>
 </html>

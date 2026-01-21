@@ -2,143 +2,73 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Danos tu opinión - II Feria del Libro</title>
+    <title>Encuesta - II Feria del Libro</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
-                extend: {
-                    colors: { primary: '#047857', background: '#f8fafc' },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
+                extend: { colors: { primary: '#047857', dark: '#064e3b', accent: '#f59e0b', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-background text-slate-800 antialiased">
+<body class="bg-background text-slate-800 antialiased text-[13px]">
     <div id="app" class="flex flex-col min-h-screen">
-        <!-- Navbar Estilo Académico -->
+        <!-- Navbar -->
         <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-slate-800">
                 <div class="flex justify-between h-16 items-center">
-                    <div class="flex items-center gap-3">
-                        <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
-                        <div class="hidden md:block text-slate-900 text-left">
-                            <span class="block font-bold leading-none">Feria del Libro</span>
-                            <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
-                        </div>
-                    </div>
+                    <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left text-slate-900 leading-none uppercase tracking-tighter"><span class="block font-bold">Feria del Libro</span><span class="text-[10px] text-primary font-black uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
                     <!-- Desktop Menu -->
-                    <div class="hidden lg:flex gap-5 text-[11px] xl:text-[13px] font-bold uppercase tracking-wider items-center">
+                    <div class="hidden lg:flex gap-5 text-[12px] font-bold uppercase tracking-wider items-center">
                         <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
                         <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
-                        <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
-                        <a href="mago-de-oz.html" class="text-slate-500 hover:text-primary transition-colors">Mago Oz</a>
-                        <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
-                        <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
-                        <a href="tesoro.html" class="text-slate-500 hover:text-primary transition-colors">Tesoro</a>
-                        <a href="muro.html" class="text-slate-500 hover:text-primary transition-colors">Muro</a>
+                        
+                        <!-- Dropdown Actividades -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Actividades ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="mesa-redonda.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Mesa Redonda</a>
+                                <a href="mago-de-oz.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Mago Oz 👠</a>
+                                <a href="ecolibros.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">EcoLibros ♻️</a>
+                                <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Autores</a>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown Participa -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-primary underline decoration-2 underline-offset-8 uppercase font-bold">Participa ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50 text-left">
+                                <a href="pasaporte.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Pasaporte</a>
+                                <a href="tesoro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Tesoro</a>
+                                <a href="muro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors text-xs">Muro ✨</a>
+                                <a href="encuesta.html" class="block px-4 py-2 text-primary font-bold bg-slate-50 text-xs">Encuesta ⭐</a>
+                            </div>
+                        </div>
+
                         <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
-                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Nosotros</a>
-                        <a href="encuesta.html" class="text-accent border-b-2 border-accent">Encuesta ⭐</a>
+                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
                     </div>
-                    <!-- Mobile Menu Selector -->
-                    <div class="lg:hidden">
-                        <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
-                            <option value="" disabled selected>Ir a...</option>
-                            <option value="index.html">Inicio</option>
-                            <option value="actividades.html">Agenda</option>
-                            <option value="mesa-redonda.html">Mesa Redonda</option>
-                            <option value="mago-de-oz.html">Mago Oz</option>
-                            <option value="autores.html">Autores</option>
-                            <option value="pasaporte.html">Pasaporte</option>
-                            <option value="tesoro.html">Tesoro</option>
-                            <option value="muro.html">Muro</option>
-                            <option value="stands.html">Mapa</option>
-                            <option value="nosotros.html">Nosotros</option>
-                            <option value="encuesta.html">Encuesta ⭐</option>
-                        </select>
-                    </div>
+                    <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase font-black"><option value="" disabled selected>Ir a...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
                 </div>
             </div>
         </nav>
 
-        <div class="max-w-xl mx-auto py-12 px-4">
-        <div v-if="!sent" class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
-            <div class="bg-primary p-8 text-white text-center">
-                <h1 class="text-2xl font-black mb-2">¿Te ha gustado la Feria?</h1>
-                <p class="text-emerald-100 text-sm">Ayúdanos a mejorar. Solo te llevará 1 minuto.</p>
+        <main class="max-w-xl mx-auto px-4 py-16 flex-grow">
+            <div v-if="!sent" class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 animate-fade-in">
+                <div class="bg-primary p-10 text-white text-center"><h1 class="text-3xl font-black mb-2 italic tracking-tighter leading-none">Danos tu opinión</h1><p class="text-emerald-100 text-sm font-medium italic mt-2">Tu valoración es fundamental para el proyecto de FP.</p></div>
+                <form @submit.prevent="submit" class="p-10 space-y-10">
+                    <div><label class="block font-black text-slate-900 mb-6 text-center uppercase text-xs tracking-widest italic">¿Cómo valoras la organización? ⭐</label><div class="flex justify-between items-center gap-2"><button v-for="n in 5" :key="n" type="button" @click="rating = n" :class="rating >= n ? 'bg-amber-400 text-white scale-110 shadow-lg' : 'bg-slate-50 text-slate-300'" class="w-14 h-14 rounded-2xl font-black transition-all text-xl">{{ n }}</button></div></div>
+                    <div><label class="block font-black text-slate-900 mb-4 uppercase text-[10px] tracking-widest ml-1">Actividad Favorita</label><select v-model="favorite" class="w-full bg-slate-50 border border-slate-200 p-5 rounded-2xl outline-none focus:border-primary font-bold text-sm shadow-inner appearance-none transition-colors"><option value="">Selecciona...</option><option>Mesa Redonda</option><option>Cuentacuentos Oz</option><option>Escritura Creativa</option><option>Escape Room</option><option>EcoLibros ♻️</option><option>Visita a Stands</option></select></div>
+                    <button type="submit" :disabled="!rating || !favorite" class="w-full py-5 bg-dark text-white font-black rounded-3xl shadow-xl hover:brightness-110 disabled:opacity-30 disabled:grayscale transition-all uppercase tracking-widest text-xs">Enviar Valoración</button>
+                </form>
             </div>
-            
-            <form @submit.prevent="submit" class="p-8 space-y-8">
-                <!-- Pregunta 1 -->
-                <div>
-                    <label class="block font-bold text-slate-900 mb-4 text-center">¿Cómo valoras la organización? ⭐</label>
-                    <div class="flex justify-between items-center gap-2">
-                        <button v-for="n in 5" :key="n" type="button" 
-                                @click="rating = n"
-                                :class="rating >= n ? 'bg-amber-400 text-white' : 'bg-slate-100 text-slate-400'"
-                                class="w-12 h-12 rounded-xl font-black transition-all">
-                            {{ n }}
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Pregunta 2 -->
-                <div>
-                    <label class="block font-bold text-slate-900 mb-4">Tu actividad favorita fue...</label>
-                    <select v-model="favorite" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl outline-none focus:border-primary">
-                        <option value="">Selecciona una...</option>
-                        <option>Mesa Redonda con Escritores</option>
-                        <option>Cuentacuentos Mago de Oz</option>
-                        <option>Taller de Escritura Creativa</option>
-                        <option>Escape Room Literario</option>
-                        <option>Visita a los Stands</option>
-                    </select>
-                </div>
-
-                <!-- Pregunta 3 -->
-                <div>
-                    <label class="block font-bold text-slate-900 mb-2 text-sm">¿Alguna sugerencia para la III Edición?</label>
-                    <textarea v-model="comment" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl h-24 outline-none focus:border-primary" placeholder="Cuéntanos..."></textarea>
-                </div>
-
-                <button type="submit" 
-                        :disabled="!rating || !favorite"
-                        class="w-full py-4 bg-primary text-white font-bold rounded-2xl shadow-lg hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
-                    Enviar Valoración
-                </button>
-            </form>
-        </div>
-
-        <!-- Mensaje Éxito -->
-        <div v-else class="text-center bg-white p-12 rounded-3xl shadow-xl border border-slate-200">
-            <div class="text-6xl mb-6">🎉</div>
-            <h2 class="text-2xl font-black text-slate-900 mb-2">¡Gracias por participar!</h2>
-            <p class="text-slate-500 mb-8">Tus respuestas nos ayudan a que el alumnado de FP aprenda y mejore como gestores de eventos.</p>
-            <a href="index.html" class="text-primary font-bold hover:underline">Volver a la Web Principal</a>
-        </div>
+            <div v-else class="text-center bg-white p-12 md:p-20 rounded-[4rem] shadow-2xl border border-slate-100 animate-fade-in"><div class="text-8xl mb-8">🎉</div><h2 class="text-3xl font-black text-slate-900 mb-4 italic tracking-tighter uppercase leading-none">¡Muchas gracias!</h2><p class="text-slate-500 mb-12 text-lg font-medium italic">Tu participación ayuda a nuestro crecimiento profesional.</p><a href="index.html" class="inline-block bg-primary text-white font-black px-10 py-4 rounded-2xl hover:scale-105 transition-transform uppercase tracking-widest text-[10px] shadow-lg">Volver al Inicio</a></div>
+        </main>
+        <footer class="bg-white border-t border-slate-200 py-8 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Calidad de Gestión • 2026</footer>
     </div>
-
-    <script>
-        const { createApp, ref } = Vue
-        createApp({
-            setup() {
-                const sent = ref(false)
-                const rating = ref(0)
-                const favorite = ref('')
-                const comment = ref('')
-
-                const submit = () => {
-                    sent.value = true
-                    // Aquí se integraría con un formspree o similar
-                }
-
-                return { sent, rating, favorite, comment, submit }
-            }
-        }).mount('#app')
-    </script>
+    <script>const { createApp, ref } = Vue; createApp({ setup() { const sent = ref(false); const rating = ref(0); const favorite = ref(''); const submit = () => { sent.value = true }; return { sent, rating, favorite, submit } } }).mount('#app')</script>
 </body>
 </html>

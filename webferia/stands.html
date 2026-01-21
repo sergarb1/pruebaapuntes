@@ -7,10 +7,7 @@
     <script>
         tailwind.config = {
             theme: {
-                extend: {
-                    colors: { primary: '#047857', surface: '#ffffff', background: '#f8fafc' },
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
+                extend: { colors: { primary: '#047857', secondary: '#34d399', dark: '#064e3b', accent: '#f59e0b', surface: '#ffffff', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
             }
         }
     </script>
@@ -18,127 +15,74 @@
     <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-background text-slate-800 antialiased">
-    <!-- Navbar -->
-    <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-3">
-                    <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
-                    <div class="hidden md:block">
-                        <span class="block font-bold text-slate-900 leading-none">Feria del Libro</span>
-                        <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
-                    </div>
-                </div>
-                <!-- Desktop Menu -->
-                <div class="hidden lg:flex gap-5 text-[11px] xl:text-[13px] font-bold uppercase tracking-wider items-center">
-                    <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
-                    <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
-                    <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
-                    <a href="mago-de-oz.html" class="text-slate-500 hover:text-primary transition-colors">Mago Oz</a>
-                    <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
-                    <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
-                    <a href="tesoro.html" class="text-slate-500 hover:text-primary transition-colors">Tesoro</a>
-                    <a href="muro.html" class="text-slate-500 hover:text-primary transition-colors">Muro</a>
-                    <a href="stands.html" class="text-primary">Mapa</a>
-                    <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Nosotros</a>
-                    <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
-                </div>
-                <!-- Mobile Menu Selector -->
-                <div class="lg:hidden">
-                    <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
-                        <option value="" disabled selected>Ir a...</option>
-                        <option value="index.html">Inicio</option>
-                        <option value="actividades.html">Agenda</option>
-                        <option value="mesa-redonda.html">Mesa Redonda</option>
-                        <option value="mago-de-oz.html">Mago Oz</option>
-                        <option value="autores.html">Autores</option>
-                        <option value="pasaporte.html">Pasaporte</option>
-                        <option value="tesoro.html">Tesoro</option>
-                        <option value="muro.html">Muro</option>
-                        <option value="stands.html">Mapa</option>
-                        <option value="nosotros.html">Nosotros</option>
-                        <option value="encuesta.html">Encuesta ⭐</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-6xl mx-auto px-4 py-12">
-        <div class="text-center mb-12">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Plano del Salón de Actos</h1>
-            <p class="text-slate-600">Distribución de zonas y actividades</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Columna Mapa -->
-            <div class="lg:col-span-2">
-                <div class="bg-surface p-8 rounded-2xl shadow-sm border border-slate-200">
-                    <!-- Mapa CSS Grid -->
-                    <div class="relative bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-6 aspect-[16/9] grid grid-cols-6 grid-rows-4 gap-4">
+    <div id="app" class="flex flex-col min-h-screen">
+        <!-- Navbar -->
+        <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left"><span class="block font-bold text-slate-900 leading-none">Feria del Libro</span><span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
+                    <!-- Desktop Menu -->
+                    <div class="hidden lg:flex gap-5 text-[12px] font-bold uppercase tracking-wider items-center">
+                        <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
+                        <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
                         
-                        <!-- Escenario -->
-                        <div class="col-span-6 row-span-1 bg-indigo-50 border border-indigo-200 rounded-lg flex items-center justify-center text-indigo-700 font-bold text-sm tracking-wide">
-                            ESCENARIO (Charlas)
+                        <!-- Dropdown Actividades -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Actividades ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="mesa-redonda.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mesa Redonda</a>
+                                <a href="mago-de-oz.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mago Oz 👠</a>
+                                <a href="ecolibros.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">EcoLibros ♻️</a>
+                                <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Autores</a>
+                            </div>
                         </div>
 
-                        <!-- Zona Talleres (Izq) -->
-                        <div class="col-span-2 row-span-3 bg-emerald-50 border border-emerald-200 rounded-lg flex flex-col items-center justify-center p-4 text-center hover:bg-emerald-100 transition-colors cursor-pointer group">
-                            <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">🎨</span>
-                            <span class="text-emerald-800 font-bold text-sm">Talleres Creativos</span>
-                            <span class="text-[10px] text-emerald-600 mt-1">Primaria / Marcapáginas</span>
+                        <!-- Dropdown Participa -->
+                        <div class="relative group py-4">
+                            <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Participa ▾</button>
+                            <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <a href="pasaporte.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Pasaporte</a>
+                                <a href="tesoro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Tesoro</a>
+                                <a href="muro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Muro ✨</a>
+                                <a href="encuesta.html" class="block px-4 py-2 text-accent hover:bg-slate-50 transition-colors font-bold">Encuesta ⭐</a>
+                            </div>
                         </div>
 
-                        <!-- Butacas (Centro) -->
-                        <div class="col-span-2 row-span-2 bg-slate-100 border border-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-xs font-bold">
-                            ZONA PÚBLICO
-                        </div>
+                        <a href="stands.html" class="text-primary underline decoration-2 underline-offset-8">Mapa</a>
+                        <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
+                    </div>
+                    <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase font-black"><option value="" disabled selected>Menú...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
+                </div>
+            </div>
+        </nav>
 
-                        <!-- Firmas (Centro Abajo) -->
-                        <div class="col-span-2 row-span-1 bg-white border border-slate-300 rounded-lg flex items-center justify-center text-slate-700 font-bold text-xs shadow-sm">
-                            ✍️ MESA DE FIRMAS
+        <main class="max-w-6xl mx-auto px-4 py-12 flex-grow">
+            <header class="text-center mb-12"><h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight italic uppercase">Mapa del Salón de Actos</h1><p class="text-slate-600 font-medium">Distribución de zonas, stands y actividades principales.</p></header>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-2">
+                    <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-slate-100 relative">
+                        <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl p-6 aspect-[16/9] grid grid-cols-6 grid-rows-4 gap-4 relative overflow-hidden">
+                            <div class="col-span-6 row-span-1 bg-indigo-600 text-white rounded-xl flex flex-col items-center justify-center shadow-lg border border-indigo-700 font-black italic tracking-tighter">ESCENARIO PRINCIPAL</div>
+                            <div class="col-span-2 row-span-3 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-col items-center justify-center text-center p-4 group hover:bg-emerald-100 transition-colors"><span class="text-3xl mb-2 group-hover:scale-110 transition-transform">🎨</span><span class="text-emerald-800 font-black text-[10px] uppercase tracking-widest">Talleres Creativos</span></div>
+                            <div class="col-span-2 row-span-2 bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-center text-slate-400 text-[10px] font-black uppercase tracking-tighter italic">Público</div>
+                            <div class="col-span-1 row-span-1 bg-white border border-slate-300 rounded-xl flex items-center justify-center text-slate-700 font-black text-[10px] shadow-md uppercase">✒️ Firmas</div>
+                            <div class="col-span-1 row-span-1 bg-emerald-600 text-white rounded-xl flex flex-col items-center justify-center text-[10px] font-black shadow-lg animate-pulse uppercase tracking-tighter italic border border-emerald-700"><span>♻️ ECO</span><span>LIBROS</span></div>
+                            <div class="col-span-2 row-span-3 bg-red-50 border border-red-200 rounded-xl flex flex-col items-center justify-center text-center p-4 group hover:bg-red-100 transition-colors"><span class="text-3xl mb-2 group-hover:scale-110 transition-transform">🧩</span><span class="text-red-800 font-black text-[10px] uppercase tracking-widest">Escape Room</span></div>
                         </div>
-
-                        <!-- Escape Room (Der) -->
-                        <div class="col-span-2 row-span-3 bg-red-50 border border-red-200 rounded-lg flex flex-col items-center justify-center p-4 text-center hover:bg-red-100 transition-colors cursor-pointer group">
-                            <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">🧩</span>
-                            <span class="text-red-800 font-bold text-sm">Escape Room</span>
-                            <span class="text-[10px] text-red-600 mt-1">Solo 3º ESO</span>
-                        </div>
-
+                    </div>
+                </div>
+                <div class="space-y-8">
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-xl">
+                        <h3 class="font-black text-slate-900 mb-8 uppercase text-xs tracking-widest border-b pb-4">Ubicaciones</h3>
+                        <ul class="space-y-6">
+                            <li class="flex gap-4 items-start"><span class="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center font-black shrink-0 text-xs shadow-md">♻️</span><div><strong class="text-slate-900 block text-xs uppercase tracking-wide leading-none">EcoLibros</strong><p class="text-[11px] text-slate-500 leading-relaxed font-medium mt-2">Intercambio sostenible situado en el acceso.</p></div></li>
+                            <li class="flex gap-4 items-start"><span class="w-8 h-8 bg-indigo-600 text-white rounded-lg flex items-center justify-center font-black shrink-0 text-xs shadow-md">✒️</span><div><strong class="text-slate-900 block text-xs uppercase tracking-wide leading-none">Firmas</strong><p class="text-[11px] text-slate-500 leading-relaxed font-medium mt-2">Encuentro personal con autores (09:00-13:00).</p></div></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-
-            <!-- Columna Info -->
-            <div class="lg:col-span-1 space-y-6">
-                <div class="bg-surface p-6 rounded-xl border border-slate-200 shadow-sm">
-                    <h3 class="font-bold text-slate-900 mb-4">Normas de Acceso</h3>
-                    <ul class="space-y-4">
-                        <li class="flex gap-3 text-sm text-slate-600">
-                            <span class="text-primary font-bold">1.</span>
-                            <span>Entrada escalonada por grupos. Esperar turno en el pasillo exterior.</span>
-                        </li>
-                        <li class="flex gap-3 text-sm text-slate-600">
-                            <span class="text-primary font-bold">2.</span>
-                            <span>Prohibido introducir comida o bebida en el Salón de Actos.</span>
-                        </li>
-                        <li class="flex gap-3 text-sm text-slate-600">
-                            <span class="text-primary font-bold">3.</span>
-                            <span>Las mochilas deben permanecer en las aulas o taquillas.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
-                    <h3 class="font-bold text-indigo-900 mb-2">¿Necesitas ayuda?</h3>
-                    <p class="text-sm text-indigo-700 mb-4">Busca a los organizadores identificados con chaleco o acreditación verde.</p>
-                    <button class="w-full py-2 bg-white text-indigo-700 font-bold rounded-lg border border-indigo-200 text-sm hover:bg-indigo-50 transition-colors">
-                        Ver Equipo Organizador
-                    </button>
-                </div>
-            </div>
-        </div>
-    </main>
+        </main>
+        <footer class="bg-white border-t border-slate-200 py-12 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] italic">II Feria del Libro • IES Serra Perenxisa</footer>
+    </div>
 </body>
 </html>

@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Actividades - Feria del Libro</title>
+    <title>Agenda - II Feria del Libro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
-                extend: { colors: { primary: '#047857', secondary: '#34d399', dark: '#064e3b', accent: '#f59e0b', surface: '#ffffff', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
+                extend: { colors: { primary: '#047857', dark: '#064e3b', accent: '#f59e0b', surface: '#ffffff', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
             }
         }
     </script>
@@ -15,227 +15,82 @@
     <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-background text-slate-800 antialiased">
+    <div id="app" class="flex flex-col min-h-screen">
     <!-- Navbar -->
-    <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50 text-[13px]">
+    <nav class="bg-surface border-b border-slate-200 sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-3">
-                    <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
-                    <div class="hidden md:block">
-                        <span class="block font-bold text-slate-900 leading-none">Feria del Libro</span>
-                        <span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span>
-                    </div>
-                </div>
+                <div class="flex items-center gap-3"><img src="assets/logo.png" alt="Logo" class="h-10 w-auto"><div class="hidden md:block text-left"><span class="block font-bold text-slate-900 leading-none">Feria del Libro</span><span class="text-xs text-primary font-bold uppercase tracking-wider">IES Serra Perenxisa</span></div></div>
                 <!-- Desktop Menu -->
-                <div class="hidden lg:flex gap-5 font-bold uppercase tracking-wider items-center">
+                <div class="hidden lg:flex gap-6 text-[12px] font-bold uppercase tracking-wider items-center">
                     <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
-                    <a href="actividades.html" class="text-primary">Agenda</a>
-                    <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
-                    <a href="mago-de-oz.html" class="text-slate-500 hover:text-primary transition-colors">Mago Oz</a>
-                    <a href="autores.html" class="text-slate-500 hover:text-primary transition-colors">Autores</a>
-                    <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
-                    <a href="tesoro.html" class="text-slate-500 hover:text-primary transition-colors">Tesoro</a>
-                    <a href="muro.html" class="text-slate-500 hover:text-primary transition-colors">Muro</a>
+                    <a href="actividades.html" class="text-primary underline decoration-2 underline-offset-8">Agenda</a>
+                    
+                    <!-- Dropdown Actividades -->
+                    <div class="relative group py-4">
+                        <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Actividades ▾</button>
+                        <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                            <a href="mesa-redonda.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mesa Redonda</a>
+                            <a href="mago-de-oz.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Mago Oz 👠</a>
+                            <a href="ecolibros.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">EcoLibros ♻️</a>
+                            <a href="autores.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Autores</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Participa -->
+                    <div class="relative group py-4">
+                        <button class="flex items-center gap-1 text-slate-500 group-hover:text-primary transition-colors uppercase">Participa ▾</button>
+                        <div class="absolute top-full left-0 w-48 bg-white border border-slate-100 shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform translate-y-2 group-hover:translate-y-0 z-50">
+                            <a href="pasaporte.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Pasaporte</a>
+                            <a href="tesoro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Tesoro</a>
+                            <a href="muro.html" class="block px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors">Muro ✨</a>
+                            <a href="encuesta.html" class="block px-4 py-2 text-accent hover:bg-slate-50 transition-colors font-bold">Encuesta ⭐</a>
+                        </div>
+                    </div>
+
                     <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Mapa</a>
                     <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
-                    <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
                 </div>
                 <!-- Mobile Menu Selector -->
-                <div class="lg:hidden">
-                    <select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none focus:border-primary uppercase tracking-tighter">
-                        <option value="" disabled selected>Ir a...</option>
-                        <option value="index.html">Inicio</option>
-                        <option value="actividades.html">Agenda</option>
-                        <option value="mesa-redonda.html">Mesa Redonda</option>
-                        <option value="mago-de-oz.html">Mago Oz</option>
-                        <option value="autores.html">Autores</option>
-                        <option value="pasaporte.html">Pasaporte</option>
-                        <option value="tesoro.html">Tesoro</option>
-                        <option value="muro.html">Muro</option>
-                        <option value="stands.html">Mapa</option>
-                        <option value="nosotros.html">Nosotros</option>
-                        <option value="encuesta.html">Encuesta ⭐</option>
-                    </select>
-                </div>
+                <div class="lg:hidden text-left"><select onchange="window.location.href=this.value" class="bg-slate-50 border border-slate-200 text-[10px] font-bold p-2 rounded-lg outline-none uppercase font-black"><option value="" disabled selected>Menú...</option><option value="index.html">Inicio</option><option value="actividades.html">Agenda</option><option value="ecolibros.html">EcoLibros ♻️</option><option value="mesa-redonda.html">Mesa Redonda</option><option value="mago-de-oz.html">Mago Oz</option><option value="autores.html">Autores</option><option value="pasaporte.html">Pasaporte</option><option value="tesoro.html">Tesoro</option><option value="muro.html">Muro</option><option value="stands.html">Mapa</option><option value="nosotros.html">Nosotros</option><option value="encuesta.html">Encuesta ⭐</option></select></div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-4 py-12">
-        <div class="text-center mb-12">
-            <span class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wide text-primary bg-emerald-50 rounded-full border border-emerald-100">
-                PROYECTO DE ALUMNADO FP
-            </span>
-            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Agenda Cultural</h1>
-            <p class="text-slate-600">Un programa diseñado y gestionado por 2º CFGS Asistencia a la Dirección</p>
-        </div>
-
-        <!-- Autores Grid (Sin cambios) -->
-        <div class="mb-16">
-            <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                <span class="w-2 h-8 bg-primary rounded-full"></span>
-                Escritores Invitados
-            </h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div class="bg-surface p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center gap-2 hover:border-primary transition-colors">
-                    <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl">✒️</div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Manolo Alamo</h3>
-                    </div>
-                </div>
-                <div class="bg-surface p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center gap-2 hover:border-primary transition-colors">
-                    <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl">✒️</div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Julián C. Pastor</h3>
-                    </div>
-                </div>
-                <div class="bg-surface p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center gap-2 hover:border-primary transition-colors">
-                    <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl">✒️</div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Edurne Sáez</h3>
-                    </div>
-                </div>
-                <div class="bg-surface p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center gap-2 hover:border-primary transition-colors">
-                    <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl">✒️</div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Carolina Gremaldos</h3>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase">Yelena Black</p>
-                    </div>
-                </div>
-                <div class="bg-surface p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center gap-2 hover:border-primary transition-colors">
-                    <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl">✒️</div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Patricia Mérida</h3>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase">Cabeza Clave</p>
-                    </div>
-                </div>
-                <div class="bg-surface p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col items-center text-center gap-2 hover:border-primary transition-colors">
-                    <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl">✒️</div>
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-sm">Ana Villanueva</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Timeline Detallado con Nuevas Actividades -->
-        <div class="bg-surface rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-            <div class="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-                <h2 class="text-lg font-bold text-slate-900">Programa Minuto a Minuto</h2>
-                <span class="text-xs font-bold text-slate-400 bg-white px-2 py-1 rounded border border-slate-200">2 FEB 2026</span>
-            </div>
+        <main class="max-w-4xl mx-auto px-4 py-12 flex-grow">
+            <header class="text-center mb-16"><h1 class="text-3xl font-black text-slate-900 mb-2 italic">Agenda del Lunes, 2 de Febrero</h1><p class="text-slate-500 font-medium tracking-wide uppercase text-xs">Un programa gestionado por 2º CFGS Asistencia a la Dirección</p></header>
             
-            <div class="divide-y divide-slate-100">
-                
-                <!-- 09:15 Cuentacuentos -->
-                <div class="p-6 hover:bg-slate-50 transition-colors flex flex-col md:flex-row gap-6 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 opacity-10 pointer-events-none">
-                        <img src="assets/oz.jpg" class="w-full h-full object-cover rounded-bl-3xl">
-                    </div>
-                    <div class="md:w-32 flex-shrink-0 z-10">
-                        <span class="block font-bold text-slate-900">09:15</span>
-                        <span class="text-sm text-slate-500">10:45</span>
-                    </div>
-                    <div class="flex-grow z-10">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="px-2 py-1 rounded text-xs font-bold bg-emerald-100 text-emerald-800">Primaria</span>
-                            <span class="text-xs text-slate-400 font-medium">CEIPs Invitados</span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 mb-1 text-lg">Cuentacuentos: "El Mago de Oz"</h3>
-                        <p class="text-sm text-slate-600 mb-2">Un viaje mágico por el camino de baldosas amarillas narrado por la <strong>Prof. Laura M.</strong></p>
-                        <div class="flex items-center gap-2 text-xs text-slate-500">
-                            <span class="w-2 h-2 bg-primary rounded-full"></span>
-                            <span>Apoyo logístico: Alumnos 2º CFGS</span>
-                        </div>
-                    </div>
+            <div class="space-y-4">
+                <!-- Permanent activities -->
+                <div class="bg-emerald-50 border border-emerald-100 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div><span class="text-[10px] font-black text-emerald-600 uppercase tracking-widest block mb-1">09:00 - 13:00 (Continuo)</span><h3 class="text-xl font-bold text-slate-900">EcoLibros ♻️ & Stands de Firmas ✒️</h3><p class="text-sm text-slate-600">Intercambio de libros y encuentro personal con los autores en el Salón de Actos.</p></div>
+                    <a href="ecolibros.html" class="bg-primary text-white text-xs font-bold px-6 py-2 rounded-full shadow-lg shrink-0">Saber más sobre EcoLibros</a>
                 </div>
 
-                <!-- 11:00 Mesa Redonda -->
-                <div class="p-6 hover:bg-slate-50 transition-colors flex flex-col md:flex-row gap-6 bg-slate-50/30">
-                    <div class="md:w-32 flex-shrink-0">
-                        <span class="block font-bold text-primary">11:00</span>
-                        <span class="text-sm text-slate-500">11:30</span>
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="px-2 py-1 rounded text-xs font-bold bg-primary text-white">Evento Principal</span>
-                            <span class="text-xs text-slate-400 font-medium">4º ESO y 1º Bach</span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 mb-2">Mesa Redonda: "Vivir de escribir"</h3>
-                        <p class="text-sm text-slate-600 mb-4">
-                            Modera: <strong>Prof. Elena R.</strong><br>
-                            Intervienen: Manolo Alamo, Edurne Sáez y alumnos moderadores en mesa.
-                        </p>
-                        
-                        <!-- Acordeón de Preguntas (Visual) -->
-                        <div class="bg-white border border-slate-200 rounded-lg p-4 text-xs text-slate-500">
-                            <strong class="block text-primary mb-2 uppercase tracking-wide">Temas a tratar:</strong>
-                            <ul class="list-disc pl-4 space-y-1">
-                                <li>¿Inspiración o disciplina? El proceso creativo.</li>
-                                <li>El papel de las redes sociales en la literatura juvenil.</li>
-                                <li>Consejos para jóvenes escritores del IES.</li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="bg-white border border-slate-100 p-6 rounded-2xl flex gap-6 hover:shadow-md transition-shadow">
+                    <div class="w-20 text-right shrink-0"><p class="text-lg font-black text-slate-900 leading-none">09:15</p><p class="text-[10px] font-bold text-slate-400">10:45</p></div>
+                    <div><h3 class="font-bold text-slate-900 mb-1">Cuentacuentos: "El Mago de Oz" 👠</h3><p class="text-sm text-slate-600">Para colegios de primaria invitados. Narradora: Prof. Laura M.</p></div>
                 </div>
 
-                <!-- 12:00 Escritura Creativa -->
-                <div class="p-6 hover:bg-slate-50 transition-colors flex flex-col md:flex-row gap-6 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 opacity-10 pointer-events-none">
-                        <img src="assets/escritura.jpg" class="w-full h-full object-cover rounded-bl-3xl">
-                    </div>
-                    <div class="md:w-32 flex-shrink-0 z-10">
-                        <span class="block font-bold text-slate-900">12:00</span>
-                        <span class="text-sm text-slate-500">13:00</span>
-                    </div>
-                    <div class="flex-grow z-10">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="px-2 py-1 rounded text-xs font-bold bg-purple-100 text-purple-800">Creatividad</span>
-                            <span class="text-xs text-slate-400 font-medium">2º ESO</span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 mb-1 text-lg">Taller de Escritura Creativa</h3>
-                        <p class="text-sm text-slate-600 mb-2">Desbloquea tu imaginación y crea historias únicas guiado por la <strong>Prof. M. Llopis</strong>.</p>
-                        <div class="flex items-center gap-2 text-xs text-slate-500">
-                            <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
-                            <span>Soporte: Alumnado 2º CFGS</span>
-                        </div>
-                    </div>
+                <div class="bg-emerald-700 p-6 rounded-2xl flex gap-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute right-0 top-0 p-4 opacity-10 text-6xl italic font-black text-white uppercase">ACTO CENTRAL</div>
+                    <div class="w-20 text-right shrink-0"><p class="text-lg font-black text-white leading-none">11:00</p><p class="text-[10px] font-bold text-emerald-200">11:30</p></div>
+                    <div class="z-10 text-white"><h3 class="font-bold text-xl mb-1">Mesa Redonda: "Vivir de Escribir" 💬</h3><p class="text-sm opacity-90">Diálogo entre autores, profesores y alumnos moderadores.</p></div>
                 </div>
 
-                <!-- Resto de Actividades (Resumidas para no alargar) -->
-                <div class="p-6 hover:bg-slate-50 transition-colors flex flex-col md:flex-row gap-6">
-                    <div class="md:w-32 flex-shrink-0">
-                        <span class="block font-bold text-slate-900">12:00</span>
-                        <span class="text-sm text-slate-500">13:00</span>
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="px-2 py-1 rounded text-xs font-bold bg-red-100 text-red-800">Escape Room</span>
-                            <span class="text-xs text-slate-400 font-medium">3º ESO</span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 mb-1">El Enigma del Bibliotecario</h3>
-                        <p class="text-sm text-slate-600">Actividad gamificada coordinada por el equipo de FP.</p>
-                    </div>
+                <div class="bg-white border border-slate-100 p-6 rounded-2xl flex gap-6 hover:shadow-md transition-shadow">
+                    <div class="w-20 text-right shrink-0"><p class="text-lg font-black text-slate-900 leading-none">12:00</p><p class="text-[10px] font-bold text-slate-400">13:00</p></div>
+                    <div><h3 class="font-bold text-slate-900 mb-1">Taller de Escritura Creativa ✨</h3><p class="text-sm text-slate-600">Sesión práctica con la Prof. M. Llopis para el alumnado de la ESO.</p></div>
                 </div>
 
+                <div class="bg-white border border-slate-100 p-6 rounded-2xl flex gap-6 hover:shadow-md transition-shadow">
+                    <div class="w-20 text-right shrink-0"><p class="text-lg font-black text-slate-900 leading-none">12:00</p><p class="text-[10px] font-bold text-slate-400">13:00</p></div>
+                    <div><h3 class="font-bold text-slate-900 mb-1">Escape Room Literario 🧩</h3><p class="text-sm text-slate-600">Actividad gamificada exclusiva para 3º de ESO en zonas habilitadas.</p></div>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <footer class="bg-white border-t border-slate-200 py-12 mt-12">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="font-bold text-slate-900 mb-4">II Feria del Libro IES Serra Perenxisa</p>
-            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-slate-500 font-medium">
-                <span>Ayuntamiento de Torrent</span>
-                <span class="text-slate-300">|</span>
-                <span>Biblioteca Municipal de Torrent</span>
-                <span class="text-slate-300">|</span>
-                <span>Librería Releo</span>
-                <span class="text-slate-300">|</span>
-                <span>Nova Llibres</span>
-            </div>
-        </div>
-    </footer>
-
+        <footer class="bg-white border-t border-slate-200 py-8 text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">IES Serra Perenxisa • Gestión de Eventos</footer>
+    </div>
 </body>
 </html>

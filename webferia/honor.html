@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Libro de Honor - II Feria del Libro</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#047857', dark: '#064e3b', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>.serif { font-family: 'Libre Baskerville', serif; }</style>
+</head>
+<body class="bg-background text-slate-800">
+    <div id="app">
+        <!-- (Aquí iría la navegación estándar que ya unificamos) -->
+        
+        <main class="max-w-4xl mx-auto px-4 py-20">
+            <header class="text-center mb-20">
+                <img src="assets/logo.png" class="h-16 mx-auto mb-6 opacity-50">
+                <h1 class="serif text-5xl font-bold text-slate-900 mb-4">Libro de Honor</h1>
+                <p class="text-slate-500 italic">Palabras que dejan huella en el IES Serra Perenxisa</p>
+            </header>
+
+            <div class="space-y-16">
+                <!-- Firma 1 -->
+                <div class="relative bg-white p-12 rounded-lg shadow-sm border border-slate-100 flex flex-col items-center text-center">
+                    <span class="text-6xl text-slate-100 absolute top-4 left-4 serif italic">"</span>
+                    <p class="serif text-2xl text-slate-700 leading-relaxed mb-8">
+                        Para todo el alumnado de Asistencia a la Dirección: vuestra organización ha sido impecable. Seguid abriendo puertas a través de los libros. ¡Un placer estar aquí!
+                    </p>
+                    <div class="flex flex-col items-center">
+                        <span class="text-4xl mb-2">✒️</span>
+                        <h3 class="font-bold text-slate-900 text-xl uppercase tracking-widest">Manolo Alamo</h3>
+                        <p class="text-xs text-primary font-bold">FEBRERO 2026</p>
+                    </div>
+                </div>
+
+                <!-- Firma 2 -->
+                <div class="relative bg-white p-12 rounded-lg shadow-sm border border-slate-100 flex flex-col items-center text-center">
+                    <span class="text-6xl text-slate-100 absolute top-4 left-4 serif italic">"</span>
+                    <p class="serif text-2xl text-slate-700 leading-relaxed mb-8">
+                        La literatura es el refugio de los valientes. Gracias por crear este hogar para nuestras historias. ¡Viva la feria!
+                    </p>
+                    <div class="flex flex-col items-center">
+                        <span class="text-4xl mb-2">🖋️</span>
+                        <h3 class="font-bold text-slate-900 text-xl uppercase tracking-widest">Edurne Sáez</h3>
+                        <p class="text-xs text-primary font-bold">FEBRERO 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-20 text-center">
+                <p class="text-sm text-slate-400 uppercase tracking-widest font-bold">Espacio reservado para nuestros invitados especiales</p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
