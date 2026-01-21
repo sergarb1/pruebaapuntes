@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Present Perfect Mastery: The Complete Guide</title>
+
+    <!-- Reveal.js & Plugins -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #14b8a6; /* Teal */
+            --secondary: #fbbf24; /* Gold */
+            --accent: #f43f5e; /* Rose */
+            --dark-bg: #0f172a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body { background-color: var(--dark-bg); }
+        
+        .reveal { font-family: 'Poppins', sans-serif; color: #f1f5f9; }
+        
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        .reveal h1 { color: white; text-shadow: 0 0 30px rgba(20, 184, 166, 0.6); }
+        .reveal h2 { color: var(--primary); border-bottom: 2px solid var(--border); display: inline-block; padding-bottom: 10px; margin-bottom: 30px; }
+        .reveal h3 { color: var(--secondary); }
+        
+        .highlight { color: var(--primary); font-weight: bold; }
+        .gold { color: var(--secondary); }
+        .danger { color: var(--accent); }
+        .white { color: white; }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .small-glass {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.8rem;
+            margin: 0.5rem;
+            font-size: 0.75em;
+        }
+
+        .formula-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.4rem;
+            font-family: 'Montserrat', monospace;
+            background: rgba(0,0,0,0.4);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 8px solid var(--primary);
+            margin-bottom: 2rem;
+            box-shadow: inset 0 0 20px rgba(20, 184, 166, 0.1);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .card {
+            padding: 1.2rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            border-top: 4px solid transparent;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        .card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.06); }
+        .card.left { border-color: var(--primary); }
+        .card.right { border-color: var(--accent); }
+        .card.gold-border { border-color: var(--secondary); }
+
+        .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin: 1.5rem 0;
+            font-size: 2.5rem;
+        }
+
+        .verb-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            text-align: center;
+            font-size: 0.65em;
+        }
+        
+        .verb-item {
+            background: rgba(255,255,255,0.05);
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border);
+            padding: 12px;
+            margin: 8px 0;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8em;
+        }
+        .quiz-option:hover { background: var(--primary); color: #0f172a; font-weight: bold; border-color: var(--primary); }
+        
+        .timeline {
+            position: relative;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            margin: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .time-point {
+            width: 16px;
+            height: 16px;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+
+        .pro-tip {
+            border-left: 4px solid var(--secondary);
+            background: rgba(251, 191, 36, 0.1);
+            padding: 10px 20px;
+            border-radius: 0 10px 10px 0;
+            font-size: 0.7em;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .vs-badge {
+            background: var(--accent);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.5em;
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SLIDE 1: PORTADA -->
+            <section data-background-gradient="radial-gradient(circle at center, #0f172a 0%, #020617 100%)">
+                <div class="glass-panel">
+                    <div style="font-size: 0.8rem; color: var(--secondary); margin-bottom: 1rem; letter-spacing: 5px; text-transform: uppercase; font-weight: 800;">
+                        Ultimate English Mastery
+                    </div>
+                    <h1 style="font-size: 3.2em;">Present <br><span class="highlight">Perfect</span></h1>
+                    <div class="icon-row">
+                        <i class="fas fa-bridge gold"></i>
+                        <i class="fas fa-link highlight"></i>
+                        <i class="fas fa-hourglass-start danger"></i>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 1rem;">Connecting the <strong>Past</strong> with the <strong>Present</strong></p>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: THE PHILOSOPHY -->
+            <section>
+                <h2><i class="fas fa-brain"></i> The Core Logic</h2>
+                <div class="glass-panel">
+                    <p>Think of it as a <span class="highlight">Bridge</span>.</p>
+                    <div class="timeline">
+                        <div class="time-point" style="background: #64748b;"></div>
+                        <div style="flex-grow: 1; border-top: 2px dashed var(--primary); height: 1px;"></div>
+                        <div class="time-point highlight"></div>
+                    </div>
+                    <div class="grid-2" style="font-size: 0.8em;">
+                        <div>
+                            <p class="gold"><strong>THEN</strong></p>
+                            <small>Something happened...</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <p class="highlight"><strong>NOW</strong></p>
+                            <small>...and it matters TODAY.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="pro-tip">
+                    <i class="fas fa-info-circle"></i> <strong>Pro Tip:</strong> If the <em>time</em> is finished (Yesterday), don't use this. Use it when the <em>action</em> has consequences now.
+                </div>
+            </section>
+
+            <!-- SLIDE 3: THE MECHANICS (AFFIRMATIVE) -->
+            <section>
+                <h3><i class="fas fa-tools"></i> Construction Site</h3>
+                <div class="formula-box">
+                    <span class="white">Subject</span> + 
+                    <span class="highlight">HAVE/HAS</span> + 
+                    <span class="danger">V3 (PP)</span>
+                </div>
+                <div class="grid-2">
+                    <div class="card left">
+                        <h4 class="highlight"><i class="fas fa-users"></i> The Standard</h4>
+                        <p style="font-size: 0.7em;"><strong>I / YOU / WE / THEY</strong></p>
+                        <div class="small-glass">"I <strong>have finished</strong> my homework."</div>
+                        <div class="small-glass">"We <strong>have bought</strong> a new car."</div>
+                        <div class="small-glass">"They <strong>have gone</strong> to the beach."</div>
+                    </div>
+                    <div class="card right">
+                        <h4 class="danger"><i class="fas fa-star"></i> The VIPs</h4>
+                        <p style="font-size: 0.7em;"><strong>HE / SHE / IT</strong></p>
+                        <div class="small-glass">"She <strong>has eaten</strong> all the sushi."</div>
+                        <div class="small-glass">"He <strong>has lost</strong> his wallet."</div>
+                        <div class="small-glass">"It <strong>has started</strong> to rain."</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: CONTRACTION HACKING -->
+            <section>
+                <h3><i class="fas fa-bolt highlight"></i> Contraction Hack</h3>
+                <p style="font-size: 0.8em;">Native speakers speak fast. We merge the Subject and the Aux.</p>
+                <div class="glass-panel">
+                    <div class="grid-2" style="font-size: 0.9em;">
+                        <div class="small-glass">I have 👉 <strong>I've</strong> <br><small>"I've done it."</small></div>
+                        <div class="small-glass">You have 👉 <strong>You've</strong> <br><small>"You've grown."</small></div>
+                        <div class="small-glass">We have 👉 <strong>We've</strong> <br><small>"We've arrived."</small></div>
+                        <div class="small-glass">They have 👉 <strong>They've</strong> <br><small>"They've gone."</small></div>
+                    </div>
+                </div>
+                <div class="glass-panel" style="border: 2px solid var(--accent);">
+                    <h4 class="danger"><i class="fas fa-radiation"></i> The " 's " Danger Zone</h4>
+                    <p style="font-size: 0.6em;"><strong>She's</strong> can be <strong>She is</strong> OR <strong>She has</strong>.</p>
+                    <div class="grid-2" style="font-size: 0.7em;">
+                        <div class="small-glass">"She's <strong>happy</strong>."<br><small>(IS + Adjective) -> She is happy</small></div>
+                        <div class="small-glass">"She's <strong>eaten</strong>."<br><small>(HAS + Verb V3) -> She has eaten</small></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: NEGATIVE & QUESTIONS -->
+            <section>
+                <h3><i class="fas fa-toggle-on gold"></i> Flip the Switch</h3>
+                <div class="grid-2">
+                    <div class="card right">
+                        <h4><i class="fas fa-minus-circle"></i> Negative</h4>
+                        <div class="small-glass">Subject + <strong class="danger">HAVEN'T / HASN'T</strong> + V3</div>
+                        <ul style="font-size: 0.6em; list-style: none; padding: 0;">
+                            <li style="margin-bottom: 8px;">❌ I <strong>haven't seen</strong> that movie.</li>
+                            <li style="margin-bottom: 8px;">❌ She <strong>hasn't called</strong> me back.</li>
+                            <li>❌ It <strong>hasn't rained</strong> for weeks.</li>
+                        </ul>
+                    </div>
+                    <div class="card left" style="border-color: var(--secondary);">
+                        <h4><i class="fas fa-question-circle"></i> Question</h4>
+                        <div class="small-glass"><strong class="gold">HAVE / HAS</strong> + Subj + V3?</div>
+                        <ul style="font-size: 0.6em; list-style: none; padding: 0;">
+                            <li style="margin-bottom: 8px;">❓ <strong>Have</strong> you <strong>finished</strong>? <br><span class="highlight">Yes, I have.</span></li>
+                            <li>❓ <strong>Has</strong> he <strong>arrived</strong>? <br><span class="danger">No, he hasn't.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: THE V3 SQUAD (IRREGULAR VERBS) -->
+            <section>
+                <h3><i class="fas fa-skull-crossbones danger"></i> The V3 Squad</h3>
+                <p style="font-size: 0.7em;">Regulars take <strong>-ED</strong>. Irregulars are rebels. Learn them by sound!</p>
+                <div class="verb-grid">
+                    <div class="verb-item" style="border-color: var(--primary);">
+                        <strong class="highlight">The "N" Group</strong><br>
+                        Eat → Eaten<br>
+                        See → Seen<br>
+                        <small style="color: #94a3b8; font-style: italic;">"I have seen it."</small>
+                    </div>
+                    <div class="verb-item" style="border-color: var(--secondary);">
+                        <strong class="gold">The "U" Group</strong><br>
+                        Drink → Drunk<br>
+                        Sing → Sung<br>
+                        <small style="color: #94a3b8; font-style: italic;">"She has sung."</small>
+                    </div>
+                    <div class="verb-item" style="border-color: var(--accent);">
+                        <strong class="danger">The "ID" Change</strong><br>
+                        Buy → Bought<br>
+                        Think → Thought<br>
+                        <small style="color: #94a3b8; font-style: italic;">"We have bought it."</small>
+                    </div>
+                    <div class="verb-item" style="border-color: white;">
+                        <strong class="white">The Lazy Ones</strong><br>
+                        Cut → Cut<br>
+                        Put → Put<br>
+                        <small style="color: #94a3b8; font-style: italic;">"He has put it there."</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7: USAGE 1 - LIFE EXPERIENCE -->
+            <section>
+                <h2>Universe 1: <span class="gold">Life Experience</span></h2>
+                <div class="glass-panel">
+                    <i class="fas fa-globe-americas highlight" style="font-size: 3em; margin-bottom: 20px;"></i>
+                    <p style="font-size: 1.2em;">"I have been to Paris."</p>
+                    <p style="font-size: 0.7em; color: #94a3b8;">(It's in my memory album. When? It doesn't matter.)</p>
+                </div>
+                <div class="grid-2">
+                    <div class="small-glass">
+                        <strong class="highlight">EVER (Questions)</strong><br>
+                        "Have you <strong>ever</strong> eaten sushi?"<br>
+                        "Have you <strong>ever</strong> met a famous person?"
+                    </div>
+                    <div class="small-glass">
+                        <strong class="danger">NEVER (Negatives)</strong><br>
+                        "I have <strong>never</strong> flown in a helicopter."<br>
+                        "She has <strong>never</strong> failed an exam."
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8: USAGE 2 - RESULT NOW -->
+            <section>
+                <h2>Universe 2: <span class="highlight">Result Now</span></h2>
+                <div class="glass-panel">
+                    <div class="grid-2">
+                        <div class="card left">
+                            <i class="fas fa-key gold"></i>
+                            <p style="font-size: 0.6em;">Past Action: <br><strong>"I have lost my keys."</strong></p>
+                        </div>
+                        <div class="card right">
+                            <i class="fas fa-door-closed danger"></i>
+                            <p style="font-size: 0.6em;">Current Result: <br><strong>"I can't enter my house NOW."</strong></p>
+                        </div>
+                    </div>
+                    <hr style="border-color: var(--border); margin: 15px 0;">
+                    <div class="grid-2">
+                        <div class="card left">
+                            <i class="fas fa-car gold"></i>
+                            <p style="font-size: 0.6em;">Past Action: <br><strong>"I have washed the car."</strong></p>
+                        </div>
+                        <div class="card right">
+                            <i class="fas fa-sparkles highlight"></i>
+                            <p style="font-size: 0.6em;">Current Result: <br><strong>"It is clean NOW."</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pro-tip">
+                    <i class="fas fa-ghost"></i> <strong>The Ghost Effect:</strong> The action is past, but the consequence is haunting you right now.
+                </div>
+            </section>
+
+            <!-- SLIDE 9: USAGE 3 - UNFINISHED TIME -->
+            <section>
+                <h2>Universe 3: <span class="danger">Unfinished Time</span></h2>
+                <p style="font-size: 0.7em;">The "Time Window" is still open.</p>
+                <div class="timeline">
+                    <div class="time-point" style="background: gray;"></div>
+                    <div style="background: var(--primary); width: 70%; height: 20px; border-radius: 10px; opacity: 0.3; display: flex; align-items: center; justify-content: center; font-size: 0.5em;">THIS WEEK / THIS YEAR</div>
+                    <div class="time-point highlight"></div>
+                </div>
+                <div class="glass-panel">
+                    <ul style="font-size: 0.8em; text-align: left; padding-left: 20px;">
+                        <li style="margin-bottom: 10px;">✅ "I have drunk 3 coffees <strong class="highlight">today</strong>." <br><small style="color:#94a3b8">(Today is not finished. I might drink more!)</small></li>
+                        <li style="margin-bottom: 10px;">✅ "We have seen him <strong class="highlight">this morning</strong>." <br><small style="color:#94a3b8">(It is 11:00 AM. Still morning.)</small></li>
+                        <li>❌ "I saw him <strong class="danger">yesterday</strong>." <br><small style="color:#94a3b8">(Yesterday is dead. Use Past Simple.)</small></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SLIDE 10: SIGNAL WORDS DETECTOR -->
+            <section>
+                <h3><i class="fas fa-radar highlight"></i> Signal Word Radar</h3>
+                <div class="grid-2" style="font-size: 0.7em;">
+                    <div class="card left">
+                        <strong class="highlight">JUST:</strong> A moment ago. <br><small>"I've <strong>just</strong> eaten breakfast."</small>
+                    </div>
+                    <div class="card left">
+                        <strong class="highlight">ALREADY:</strong> Sooner than expected. <br><small>"Wow, you've <strong>already</strong> finished!"</small>
+                    </div>
+                    <div class="card right">
+                        <strong class="danger">YET:</strong> Not until now (Neg/Quest). <br><small>"Has the postman arrived <strong>yet</strong>?"</small>
+                    </div>
+                    <div class="card right">
+                        <strong class="danger">STILL:</strong> Surprising continuation. <br><small>"I <strong>still</strong> haven't found it."</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 11: FOR VS SINCE -->
+            <section>
+                <h3><i class="fas fa-hourglass-half gold"></i> For vs Since</h3>
+                <div class="grid-2">
+                    <div class="card gold-border">
+                        <h4 class="gold"><i class="fas fa-clock"></i> FOR</h4>
+                        <p style="font-size: 0.6em;"><strong>Duration</strong> (A period of time)</p>
+                        <div class="small-glass">"I have lived here <strong>for 10 years</strong>."</div>
+                        <ul style="font-size: 0.5em;">
+                            <li>For 2 hours</li>
+                            <li>For a long time</li>
+                        </ul>
+                    </div>
+                    <div class="card left">
+                        <h4 class="highlight"><i class="fas fa-calendar-alt"></i> SINCE</h4>
+                        <p style="font-size: 0.6em;"><strong>Starting Point</strong> (A specific date)</p>
+                        <div class="small-glass">"I have lived here <strong>since 2013</strong>."</div>
+                        <ul style="font-size: 0.5em;">
+                            <li>Since Monday</li>
+                            <li>Since I was born</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 12: BEEN TO VS GONE TO -->
+            <section>
+                <h3><i class="fas fa-plane-arrival highlight"></i> Been <span class="vs-badge">VS</span> Gone</h3>
+                <div class="grid-2">
+                    <div class="glass-panel">
+                        <h4 class="highlight">BEEN TO</h4>
+                        <i class="fas fa-undo-alt" style="font-size: 2em;"></i>
+                        <p style="font-size: 0.6em;">Round trip. <br><strong>You are back!</strong></p>
+                        <small style="font-size: 0.4em;">"He has been to Italy." (He is here now)</small>
+                    </div>
+                    <div class="glass-panel" style="border-color: var(--accent);">
+                        <h4 class="danger">GONE TO</h4>
+                        <i class="fas fa-plane-departure" style="font-size: 2em;"></i>
+                        <p style="font-size: 0.6em;">One way. <br><strong>You are still there!</strong></p>
+                        <small style="font-size: 0.4em;">"He has gone to Italy." (He is in Italy)</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 13: THE ULTIMATE BATTLE -->
+            <section>
+                <h3><i class="fas fa-fist-raised danger"></i> The Battle</h3>
+                <p style="font-size: 0.8em;">Past Simple <span class="vs-badge">VS</span> Present Perfect</p>
+                <div class="grid-2" style="font-size: 0.6em;">
+                    <div class="card" style="border-color: #64748b;">
+                        <h4 style="color: #64748b;">Past Simple</h4>
+                        <ul style="list-style: none; text-align: left;">
+                            <li><i class="fas fa-times-circle"></i> Time is DEAD.</li>
+                            <li><i class="fas fa-arrow-right"></i> "I <strong>lived</strong> in London in 2010." <br><small>(I moved away. I don't live there now).</small></li>
+                        </ul>
+                    </div>
+                    <div class="card left">
+                        <h4 class="highlight">Present Perfect</h4>
+                        <ul style="list-style: none; text-align: left;">
+                            <li><i class="fas fa-check-circle"></i> Time is ALIVE.</li>
+                            <li><i class="fas fa-arrow-right"></i> "I <strong>have lived</strong> in London since 2010." <br><small>(I still live there!).</small></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FINAL SLIDE -->
+            <section data-background-gradient="linear-gradient(to top, #14b8a6, #0f172a)">
+                <h1 class="white">Mastery!</h1>
+                <p>You have successfully crossed the bridge.</p>
+                <div class="icon-row">
+                    <i class="fas fa-graduation-cap gold"></i>
+                    <i class="fas fa-trophy gold"></i>
+                    <i class="fas fa-rocket gold"></i>
+                </div>
+                <small>Educational Content by Gemini AI Agents</small>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide', // linear feel
+            backgroundTransition: 'fade',
+            width: 1100,
+            height: 750,
+            margin: 0.1,
+            minScale: 0.2,
+            maxScale: 2.0,
+            center: true,
+            display: 'block'
+        });
+    </script>
+</body>
+</html>
