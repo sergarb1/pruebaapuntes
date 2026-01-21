@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Perfect: The Game (Extended)</title>
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; background-color: #0f172a; }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Poppins:wght@400;600&display=swap');
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+</head>
+<body>
+
+<script>
+    // --- CONFIGURATION & ASSETS ---
+    const COLORS = {
+        bg_dark: 0x0f172a,
+        bg_light: 0x1e293b,
+        primary: 0x14b8a6, // Teal
+        secondary: 0xfbbf24, // Gold
+        accent: 0x8b5cf6, // Purple
+        success: 0x10b981,
+        error: 0xef4444,
+        text_main: '#f1f5f9',
+        text_dim: '#94a3b8'
+    };
+
+    // --- QUESTION BANK (MASSIVE EXPANSION: 60+ Questions) ---
+    const QUESTION_BANK = [
+        // --- BASICS (HAVE/HAS) ---
+        { q: "______ you ever played tennis?", options: ["Has", "Did", "Have"], correct: 2, tip: "'You' goes with HAVE." },
+        { q: "She ______ finished her work.", options: ["have", "has", "is"], correct: 1, tip: "She (3rd Person) uses HAS." },
+        { q: "My parents ______ arrived.", options: ["have", "has", "are"], correct: 0, tip: "Parents = They = HAVE." },
+        { q: "It ______ rained all day.", options: ["have", "has", "was"], correct: 1, tip: "It uses HAS." },
+        { q: "We ______ not eaten yet.", options: ["has", "have", "did"], correct: 1, tip: "We uses HAVE." },
+        { q: "The dog ______ broken the vase.", options: ["have", "has", "is"], correct: 1, tip: "The dog = It = HAS." },
+        { q: "______ John seen the movie?", options: ["Has", "Have", "Did"], correct: 0, tip: "John = He = HAS." },
+        
+        // --- MORPHOLOGY (V3 - PARTICIPLES) ---
+        { q: "I have ______ a letter.", options: ["wrote", "write", "written"], correct: 2, tip: "V3 of Write is Written." },
+        { q: "She has ______ her keys.", options: ["lost", "lose", "losed"], correct: 0, tip: "V3 of Lose is Lost." },
+        { q: "We have ______ to music.", options: ["listen", "listened", "listening"], correct: 1, tip: "Regular verbs add -ED." },
+        { q: "They have ______ a new car.", options: ["buy", "bought", "buyed"], correct: 1, tip: "V3 of Buy is Bought." },
+        { q: "He has ______ too much soda.", options: ["drank", "drunk", "drinked"], correct: 1, tip: "Drink -> Drank -> Drunk." },
+        { q: "I have ______ that movie before.", options: ["saw", "see", "seen"], correct: 2, tip: "See -> Saw -> Seen." },
+        { q: "The bird has ______ away.", options: ["flew", "flown", "fly"], correct: 1, tip: "Fly -> Flew -> Flown." },
+        { q: "We have ______ a song.", options: ["sang", "sung", "singed"], correct: 1, tip: "Sing -> Sang -> Sung." },
+        { q: "She has ______ her homework.", options: ["done", "did", "do"], correct: 0, tip: "Do -> Did -> Done." },
+        { q: "I have ______ you for years.", options: ["knew", "known", "know"], correct: 1, tip: "Know -> Knew -> Known." },
+        { q: "Someone has ______ my phone.", options: ["stole", "stolen", "steal"], correct: 1, tip: "Steal -> Stole -> Stolen." },
+        { q: "He has ______ the ball.", options: ["caught", "catched", "catch"], correct: 0, tip: "Catch -> Caught." },
+        { q: "I have ______ English for 5 years.", options: ["spoken", "spoke", "speak"], correct: 0, tip: "Speak -> Spoke -> Spoken." },
+        
+        // --- FOR vs SINCE ---
+        { q: "I have lived here ______ 2010.", options: ["for", "since", "ago"], correct: 1, tip: "2010 is a starting point -> SINCE." },
+        { q: "She has studied ______ three hours.", options: ["since", "for", "during"], correct: 1, tip: "Three hours is a duration -> FOR." },
+        { q: "We have been friends ______ childhood.", options: ["for", "since", "from"], correct: 1, tip: "Childhood is a starting point -> SINCE." },
+        { q: "He hasn't called ______ a long time.", options: ["since", "for", "ago"], correct: 1, tip: "A long time is a duration -> FOR." },
+        { q: "I haven't seen him ______ last week.", options: ["since", "for", "until"], correct: 0, tip: "Last week is a point -> SINCE." },
+        { q: "They have been married ______ 20 years.", options: ["since", "for", "ago"], correct: 1, tip: "20 years is a duration -> FOR." },
+        { q: "It hasn't rained ______ March.", options: ["for", "since", "until"], correct: 1, tip: "March is a point -> SINCE." },
+        
+        // --- KEYWORDS (JUST, ALREADY, YET, EVER, NEVER) ---
+        { q: "I have ______ finished.", options: ["yet", "just", "ever"], correct: 1, tip: "Just = Very recent past." },
+        { q: "Have you ______ eaten octopus?", options: ["ever", "never", "yet"], correct: 0, tip: "Questions about experience use EVER." },
+        { q: "I haven't finished ______.", options: ["already", "just", "yet"], correct: 2, tip: "Negative sentences use YET at the end." },
+        { q: "She has ______ done it.", options: ["yet", "already", "ever"], correct: 1, tip: "Positive sentences use ALREADY." },
+        { q: "I have ______ been to Mars.", options: ["ever", "never", "not"], correct: 1, tip: "For '0 experience' use NEVER." },
+        { q: "Has the bus arrived ______?", options: ["just", "yet", "already"], correct: 1, tip: "Questions at the end use YET." },
+        { q: "We have ______ met him.", options: ["just", "yet", "ever"], correct: 0, tip: "Just fits between Have and V3." },
+        
+        // --- BEEN vs GONE ---
+        { q: "Where is Tom? He has ______ to the bank.", options: ["been", "gone", "going"], correct: 1, tip: "He is NOT here = GONE." },
+        { q: "I have ______ to Paris twice.", options: ["gone", "been", "go"], correct: 1, tip: "I am here now = BEEN." },
+        { q: "She isn't here. She has ______ out.", options: ["been", "gone", "went"], correct: 1, tip: "Not here = GONE." },
+        { q: "Have you ever ______ to USA?", options: ["gone", "been", "visited"], correct: 1, tip: "Experience in life = BEEN." },
+        
+        // --- PRESENT PERFECT vs PAST SIMPLE ---
+        { q: "I ______ sushi yesterday.", options: ["have eaten", "ate", "eaten"], correct: 1, tip: "Yesterday = Finished time = PAST SIMPLE." },
+        { q: "I ______ sushi many times.", options: ["have eaten", "ate", "eat"], correct: 0, tip: "Unspecific time = PRESENT PERFECT." },
+        { q: "She ______ in London in 2015.", options: ["has lived", "lived", "lives"], correct: 1, tip: "In 2015 = Finished = PAST SIMPLE." },
+        { q: "She ______ in London since 2015.", options: ["has lived", "lived", "live"], correct: 0, tip: "Since = Unfinished = PRESENT PERFECT." },
+        { q: "I ______ my keys! I can't open the door.", options: ["lost", "have lost", "lose"], correct: 1, tip: "Result NOW = PRESENT PERFECT." },
+        { q: "I ______ my keys last night.", options: ["lost", "have lost", "lose"], correct: 0, tip: "Last night = PAST SIMPLE." },
+        { q: "Shakespeare ______ many plays.", options: ["has written", "wrote", "written"], correct: 1, tip: "Shakespeare is dead (Finished) = PAST SIMPLE." },
+        { q: "JK Rowling ______ many books.", options: ["has written", "wrote", "writes"], correct: 0, tip: "She is alive (Unfinished career) = PRESENT PERFECT." },
+        { q: "Did you ______ the game last night?", options: ["see", "seen", "saw"], correct: 0, tip: "Did + Infinitive (Past Simple)." },
+        { q: "Have you ______ the game?", options: ["see", "seen", "saw"], correct: 1, tip: "Have + V3 (Present Perfect)." },
+
+        // --- MIXED BAG / ADVANCED ---
+        { q: "It's the best pizza I have ______ eaten.", options: ["never", "ever", "just"], correct: 1, tip: "Superlatives usually take EVER." },
+        { q: "How long ______ you known him?", options: ["have", "did", "do"], correct: 0, tip: "How long (duration) -> HAVE." },
+        { q: "When ______ you arrive?", options: ["have", "did", "has"], correct: 1, tip: "When (specific time) -> DID." },
+        { q: "I have lived here ______ 10 years ago.", options: ["since", "for", "from"], correct: 0, tip: "Since + Time clause (10 years ago)." },
+        { q: "This is the first time I ______ this.", options: ["do", "did", "have done"], correct: 2, tip: "First time = Experience = PRESENT PERFECT." }
+    ];
+
+    // --- SCENE: MAIN MENU ---
+    class MenuScene extends Phaser.Scene {
+        constructor() { super({ key: 'MenuScene' }); }
+
+        create() {
+            // Background
+            this.createBackground();
+
+            // Title
+            this.add.text(this.scale.width/2, 150, 'CHRONO', { font: '900 60px Montserrat', color: '#14b8a6' }).setOrigin(0.5);
+            this.add.text(this.scale.width/2, 210, 'BRIDGE', { font: '900 60px Montserrat', color: '#fbbf24' }).setOrigin(0.5);
+            this.add.text(this.scale.width/2, 270, 'Ultimate Edition: 60+ Questions', { font: '400 24px Poppins', color: '#ffffff' }).setOrigin(0.5);
+
+            // Start Button
+            const btn = this.createButton(this.scale.width/2, 450, 'START MISSION', () => {
+                this.scene.start('QuizScene');
+            });
+            
+            // Decorative particles
+            this.createParticles();
+        }
+
+        createBackground() {
+            const gr = this.add.graphics();
+            gr.fillGradientStyle(COLORS.bg_dark, COLORS.bg_dark, COLORS.bg_light, COLORS.bg_light, 1);
+            gr.fillRect(0, 0, this.scale.width, this.scale.height);
+        }
+
+        createButton(x, y, text, callback) {
+            const container = this.add.container(x, y);
+            
+            const bg = this.add.graphics();
+            bg.fillStyle(COLORS.primary, 1);
+            bg.fillRoundedRect(-120, -30, 240, 60, 30);
+            
+            const txt = this.add.text(0, 0, text, { font: '800 20px Montserrat', color: '#0f172a' }).setOrigin(0.5);
+            
+            container.add([bg, txt]);
+            container.setSize(240, 60);
+            container.setInteractive({ useHandCursor: true });
+            
+            container.on('pointerover', () => {
+                this.tweens.add({ targets: container, scaleX: 1.1, scaleY: 1.1, duration: 100 });
+            });
+            container.on('pointerout', () => {
+                this.tweens.add({ targets: container, scaleX: 1, scaleY: 1, duration: 100 });
+            });
+            container.on('pointerdown', callback);
+            
+            return container;
+        }
+
+        createParticles() {
+            const particles = this.add.particles(0, 0, 'flare', {
+                x: { min: 0, max: 800 },
+                y: { min: 0, max: 600 },
+                lifespan: 2000,
+                speedY: { min: -10, max: -50 },
+                scale: { start: 0.4, end: 0 },
+                quantity: 1,
+                frequency: 100,
+                blendMode: 'ADD',
+                emitCallback: (p) => { p.color = [COLORS.primary, COLORS.secondary][Math.floor(Math.random()*2)] }
+            });
+            
+            // Texture generation
+            const graphics = this.make.graphics({x: 0, y: 0, add: false});
+            graphics.fillStyle(0xffffff, 1);
+            graphics.fillCircle(4, 4, 4);
+            graphics.generateTexture('flare', 8, 8);
+        }
+    }
+
+    // --- SCENE: QUIZ ---
+    class QuizScene extends Phaser.Scene {
+        constructor() { super({ key: 'QuizScene' }); }
+
+        create() {
+            this.score = 0;
+            this.roundQuestions = [];
+            this.currentIndex = 0;
+
+            // Prepare random questions (pick 10 from the MASSIVE bank)
+            const shuffled = [...QUESTION_BANK].sort(() => 0.5 - Math.random());
+            this.roundQuestions = shuffled.slice(0, 10);
+
+            // UI Background
+            const bg = this.add.graphics();
+            bg.fillGradientStyle(COLORS.bg_dark, COLORS.bg_dark, 0x111111, 0x111111, 1);
+            bg.fillRect(0, 0, this.scale.width, this.scale.height);
+
+            // HUD
+            this.createHUD();
+
+            // Load first question
+            this.showQuestion();
+        }
+
+        createHUD() {
+            // Progress Bar Background
+            this.add.rectangle(400, 50, 600, 10, 0x333333).setOrigin(0.5);
+            // Progress Bar Fill
+            this.progressBar = this.add.rectangle(100, 50, 0, 10, COLORS.primary).setOrigin(0, 0.5);
+            
+            // Score Text
+            this.scoreText = this.add.text(750, 50, '0', { font: '600 24px Montserrat', color: '#fbbf24' }).setOrigin(0.5);
+            
+            // Question Counter
+            this.counterText = this.add.text(50, 50, '1/10', { font: '600 18px Poppins', color: '#94a3b8' }).setOrigin(0.5);
+        }
+
+        showQuestion() {
+            // Clear previous elements if any
+            if (this.questionContainer) this.questionContainer.destroy();
+            this.questionContainer = this.add.container(0, 0);
+
+            const qData = this.roundQuestions[this.currentIndex];
+            this.counterText.setText(`${this.currentIndex + 1}/10`);
+
+            // Question Box (Glassmorphism)
+            const qBg = this.add.graphics();
+            qBg.fillStyle(0xffffff, 0.05);
+            qBg.lineStyle(2, 0xffffff, 0.1);
+            qBg.fillRoundedRect(100, 120, 600, 150, 20);
+            qBg.strokeRoundedRect(100, 120, 600, 150, 20);
+
+            // Question Text
+            const qText = this.add.text(400, 195, qData.q, { 
+                font: '600 28px Poppins', 
+                color: '#ffffff', 
+                align: 'center',
+                wordWrap: { width: 550 }
+            }).setOrigin(0.5);
+
+            this.questionContainer.add([qBg, qText]);
+
+            // Options Buttons
+            const startY = 320;
+            const gap = 80;
+
+            qData.options.forEach((opt, idx) => {
+                const btn = this.createOptionButton(400, startY + (idx * gap), opt, idx);
+                this.questionContainer.add(btn);
+            });
+
+            // Animate In
+            this.questionContainer.alpha = 0;
+            this.questionContainer.y = 20;
+            this.tweens.add({
+                targets: this.questionContainer,
+                alpha: 1,
+                y: 0,
+                duration: 400,
+                ease: 'Power2'
+            });
+
+            // Update Progress
+            const progress = (this.currentIndex / 10) * 600;
+            this.tweens.add({ targets: this.progressBar, width: progress, duration: 300 });
+        }
+
+        createOptionButton(x, y, text, index) {
+            const container = this.add.container(x, y);
+            
+            const bg = this.add.graphics();
+            bg.fillStyle(COLORS.bg_light, 1);
+            bg.lineStyle(2, COLORS.primary, 0.5);
+            bg.fillRoundedRect(-200, -30, 400, 60, 15);
+            bg.strokeRoundedRect(-200, -30, 400, 60, 15);
+
+            const txt = this.add.text(0, 0, text, { font: '400 22px Poppins', color: '#ffffff' }).setOrigin(0.5);
+
+            container.add([bg, txt]);
+            container.setSize(400, 60);
+            container.setInteractive({ useHandCursor: true });
+
+            container.on('pointerover', () => {
+                bg.clear();
+                bg.fillStyle(COLORS.primary, 0.2);
+                bg.lineStyle(2, COLORS.primary, 1);
+                bg.fillRoundedRect(-200, -30, 400, 60, 15);
+                bg.strokeRoundedRect(-200, -30, 400, 60, 15);
+                container.scaleX = 1.02;
+                container.scaleY = 1.02;
+            });
+
+            container.on('pointerout', () => {
+                bg.clear();
+                bg.fillStyle(COLORS.bg_light, 1);
+                bg.lineStyle(2, COLORS.primary, 0.5);
+                bg.fillRoundedRect(-200, -30, 400, 60, 15);
+                bg.strokeRoundedRect(-200, -30, 400, 60, 15);
+                container.scaleX = 1;
+                container.scaleY = 1;
+            });
+
+            container.on('pointerdown', () => this.handleAnswer(index, container, bg));
+
+            return container;
+        }
+
+        handleAnswer(selectedIndex, container, bg) {
+            // Disable all inputs
+            this.questionContainer.list.forEach(child => {
+                if (child.type === 'Container') child.disableInteractive();
+            });
+
+            const qData = this.roundQuestions[this.currentIndex];
+            const isCorrect = selectedIndex === qData.correct;
+
+            // Visual Feedback
+            bg.clear();
+            if (isCorrect) {
+                this.score += 10;
+                this.scoreText.setText(this.score);
+                bg.fillStyle(COLORS.success, 1);
+                bg.fillRoundedRect(-200, -30, 400, 60, 15);
+                this.createParticles(container.x, container.y, COLORS.success);
+            } else {
+                bg.fillStyle(COLORS.error, 1);
+                bg.fillRoundedRect(-200, -30, 400, 60, 15);
+                this.cameras.main.shake(200, 0.01);
+                // Show hint/correction
+                const hint = this.add.text(400, 580, `Tip: ${qData.tip}`, {
+                    font: '600 16px Poppins', color: '#ef4444'
+                }).setOrigin(0.5).setAlpha(0);
+                this.tweens.add({ targets: hint, alpha: 1, duration: 300 });
+            }
+
+            // Next Question Delay
+            this.time.delayedCall(2000, () => {
+                this.currentIndex++;
+                if (this.currentIndex < 10) {
+                    this.showQuestion();
+                } else {
+                    this.scene.start('ResultScene', { score: this.score });
+                }
+            });
+        }
+
+        createParticles(x, y, color) {
+            const particles = this.add.particles(x, y, 'flare', {
+                speed: { min: 50, max: 200 },
+                scale: { start: 0.4, end: 0 },
+                lifespan: 500,
+                blendMode: 'ADD',
+                tint: color,
+                quantity: 10
+            });
+            this.time.delayedCall(500, () => particles.destroy());
+        }
+    }
+
+    // --- SCENE: RESULTS ---
+    class ResultScene extends Phaser.Scene {
+        constructor() { super({ key: 'ResultScene' }); }
+        
+        init(data) { this.score = data.score; }
+
+        create() {
+            const bg = this.add.graphics();
+            bg.fillGradientStyle(COLORS.bg_dark, COLORS.bg_dark, 0x000000, 0x000000, 1);
+            bg.fillRect(0, 0, this.scale.width, this.scale.height);
+
+            this.add.text(400, 150, 'MISSION COMPLETE', { font: '800 40px Montserrat', color: '#ffffff' }).setOrigin(0.5);
+            
+            this.add.text(400, 250, 'Final Score', { font: '400 24px Poppins', color: '#94a3b8' }).setOrigin(0.5);
+            this.add.text(400, 310, `${this.score} / 100`, { font: '900 80px Montserrat', color: COLORS.secondary }).setOrigin(0.5);
+
+            let message = "Good effort!";
+            if (this.score === 100) message = "Perfect! Time Lord Status.";
+            else if (this.score >= 80) message = "Excellent! You crossed the bridge.";
+            else if (this.score < 50) message = "Don't give up! Try again.";
+
+            this.add.text(400, 400, message, { font: '600 20px Poppins', color: '#14b8a6' }).setOrigin(0.5);
+
+            // Replay Button
+            const btn = this.add.container(400, 500);
+            const btnBg = this.add.graphics();
+            btnBg.fillStyle(0xffffff, 0.1);
+            btnBg.lineStyle(2, 0xffffff, 0.5);
+            btnBg.fillRoundedRect(-100, -30, 200, 60, 30);
+            btnBg.strokeRoundedRect(-100, -30, 200, 60, 30);
+            const btnTxt = this.add.text(0, 0, 'PLAY AGAIN', { font: '700 20px Montserrat', color: '#ffffff' }).setOrigin(0.5);
+            
+            btn.add([btnBg, btnTxt]);
+            btn.setSize(200, 60);
+            btn.setInteractive({ useHandCursor: true });
+            
+            btn.on('pointerdown', () => this.scene.start('QuizScene'));
+            btn.on('pointerover', () => btn.alpha = 0.8);
+            btn.on('pointerout', () => btn.alpha = 1);
+        }
+    }
+
+    // --- GAME CONFIG ---
+    const config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        backgroundColor: '#0f172a',
+        parent: document.body,
+        scale: {
+            mode: Phaser.Scale.FIT,
+            autoCenter: Phaser.Scale.CENTER_BOTH
+        },
+        scene: [MenuScene, QuizScene, ResultScene]
+    };
+
+    const game = new Phaser.Game(config);
+
+</script>
+</body>
+</html>

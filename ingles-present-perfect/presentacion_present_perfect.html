@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Present Perfect: The Ultimate Guide</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/theme/black.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Theme for "Premium" Look -->
+    <style>
+        :root {
+            --primary: #14b8a6; /* Teal */
+            --secondary: #fbbf24; /* Gold */
+            --accent: #f43f5e; /* Rose */
+            --dark-bg: #0f172a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body { background-color: var(--dark-bg); }
+        
+        .reveal { font-family: 'Poppins', sans-serif; }
+        
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .reveal h1 { color: white; text-shadow: 0 0 30px rgba(20, 184, 166, 0.6); }
+        .reveal h2 { color: var(--secondary); border-bottom: 2px solid var(--border); display: inline-block; padding-bottom: 10px; }
+        
+        .highlight { color: var(--primary); font-weight: bold; }
+        .gold { color: var(--secondary); }
+        .danger { color: var(--accent); }
+        .white { color: white; }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .small-glass {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem;
+            font-size: 0.8em;
+        }
+
+        .formula-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-family: monospace;
+            background: rgba(0,0,0,0.4);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .vs-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .card {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            border-top: 4px solid transparent;
+            transition: transform 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card.left { border-color: var(--primary); }
+        .card.right { border-color: var(--accent); }
+
+        .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        .verb-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+            font-size: 0.7em;
+        }
+        
+        .verb-item {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 15px;
+            margin: 10px 0;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quiz-option:hover { background: var(--primary); color: black; font-weight: bold; }
+        
+        .timeline {
+            position: relative;
+            height: 4px;
+            background: white;
+            margin: 50px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .time-point {
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SECCIÓN 1: INTRODUCCIÓN -->
+            <section data-background-gradient="radial-gradient(circle at center, #0f172a 0%, #020617 100%)">
+                <div class="glass-panel">
+                    <div style="font-size: 1rem; color: var(--secondary); margin-bottom: 1rem; letter-spacing: 6px; text-transform: uppercase;">
+                        The English Time Machine
+                    </div>
+                    <h1 style="font-size: 3.5em;">Present <br><span class="highlight">Perfect</span></h1>
+                    <div class="icon-row">
+                        <i class="fas fa-bridge gold"></i>
+                        <i class="fas fa-clock highlight"></i>
+                        <i class="fas fa-camera danger"></i>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 1.2rem;">The connection between <strong>Then</strong> and <strong>Now</strong></p>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: LA MECÁNICA (GRAMÁTICA PURA) -->
+            <section>
+                <section>
+                    <h2><i class="fas fa-cogs"></i> The Mechanics</h2>
+                    <p>Before understanding the <em>meaning</em>, we must master the <em>machine</em>.</p>
+                </section>
+
+                <!-- AFFIRMATIVE -->
+                <section>
+                    <h3><i class="fas fa-plus-circle highlight"></i> Affirmative</h3>
+                    <div class="formula-box">
+                        <span class="white">Subject</span> + 
+                        <span class="highlight">HAVE / HAS</span> + 
+                        <span class="danger">VERB (V3)</span>
+                    </div>
+                    <div class="vs-container">
+                        <div class="card left">
+                            <h4>The "Have" Team</h4>
+                            <p class="highlight">I, You, We, They</p>
+                            <hr>
+                            <p style="font-size: 0.8em">"We <strong>have</strong> finished."</p>
+                        </div>
+                        <div class="card right">
+                            <h4>The "Has" VIPs</h4>
+                            <p class="danger">He, She, It</p>
+                            <hr>
+                            <p style="font-size: 0.8em">"She <strong>has</strong> finished."</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CONTRACTIONS TRAP -->
+                <section>
+                    <h3><i class="fas fa-compress-arrows-alt gold"></i> Contraction Hacking</h3>
+                    <p>Native speakers rarely say "I have". They say "I've".</p>
+                    <div class="glass-panel">
+                        <div style="display: flex; justify-content: space-around; align-items: center;">
+                            <div>I have 👉 <strong class="highlight">I've</strong></div>
+                            <div>We have 👉 <strong class="highlight">We've</strong></div>
+                            <div>They have 👉 <strong class="highlight">They've</strong></div>
+                        </div>
+                    </div>
+                    <div class="glass-panel fragment border-red-500">
+                        <h4 class="danger"><i class="fas fa-exclamation-triangle"></i> The "She's" Trap</h4>
+                        <div class="vs-container">
+                            <div class="small-glass">
+                                <strong>She's happy</strong><br>
+                                <span style="font-size:0.7em; color:#999">She IS happy</span>
+                            </div>
+                            <div class="small-glass">
+                                <strong>She's eaten</strong><br>
+                                <span style="font-size:0.7em; color:#999">She HAS eaten</span>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.6em; margin-top:10px">Rule: If the next word is a Verb (V3), "She's" means "She has".</p>
+                    </div>
+                </section>
+
+                <!-- NEGATIVE -->
+                <section>
+                    <h3><i class="fas fa-minus-circle danger"></i> Negative</h3>
+                    <div class="formula-box">
+                        <span class="white">Subject</span> + 
+                        <span class="danger">HAVEN'T / HASN'T</span> + 
+                        <span class="white">VERB (V3)</span>
+                    </div>
+                    <div class="glass-panel">
+                        <ul>
+                            <li class="fragment">I <strong>haven't</strong> seen that movie.</li>
+                            <li class="fragment">He <strong>hasn't</strong> called me.</li>
+                            <li class="fragment">They <strong>haven't</strong> arrived yet.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- QUESTION -->
+                <section>
+                    <h3><i class="fas fa-question-circle gold"></i> Interrogative</h3>
+                    <p>Flip the switch! <i class="fas fa-exchange-alt"></i></p>
+                    <div class="formula-box" style="border-left-color: var(--secondary);">
+                        <span class="gold">HAVE / HAS</span> + 
+                        <span class="white">Subject</span> + 
+                        <span class="white">VERB (V3)</span> ?
+                    </div>
+                    <div class="glass-panel">
+                        <p class="fragment"><i class="fas fa-check highlight"></i> <strong>Have</strong> you eaten?</p>
+                        <p class="fragment"><i class="fas fa-check highlight"></i> <strong>Has</strong> she started?</p>
+                        <hr class="fragment">
+                        <p class="fragment" style="font-size: 0.8em; color: #aaa">Short Answers:</p>
+                        <div class="fragment" style="display:flex; justify-content:center; gap:20px;">
+                            <span class="highlight">Yes, I have.</span>
+                            <span class="danger">No, I haven't.</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- SECCIÓN 3: IRREGULAR VERBS -->
+            <section>
+                <h3><i class="fas fa-book-dead"></i> The V3 Squad</h3>
+                <p>Regular verbs take <strong>-ED</strong>. But Irregular verbs are rebels.</p>
+                <div class="verb-grid fragment">
+                    <div class="verb-item" style="border: 1px solid var(--primary);">
+                        <strong class="highlight">The "N" Group</strong><br>
+                        Give → Given<br>
+                        Eat → Eaten<br>
+                        See → Seen
+                    </div>
+                    <div class="verb-item" style="border: 1px solid var(--secondary);">
+                        <strong class="gold">The "U" Group</strong><br>
+                        Drink → Drunk<br>
+                        Sing → Sung<br>
+                        Swim → Swum
+                    </div>
+                    <div class="verb-item" style="border: 1px solid var(--accent);">
+                        <strong class="danger">The Chameleon</strong><br>
+                        Cut → Cut<br>
+                        Put → Put<br>
+                        Read → Read (Red)
+                    </div>
+                </div>
+                <div class="glass-panel fragment" style="margin-top:20px;">
+                    <i class="fas fa-brain"></i> <strong>Teacher's Hack:</strong> Don't learn them alphabetically. Learn them by sound!
+                </div>
+            </section>
+
+            <!-- SECCIÓN 4: USOS EN PROFUNDIDAD -->
+            <section>
+                <section>
+                    <h2><i class="fas fa-map-signs"></i> The 3 Universes of Usage</h2>
+                    <p>Swipe down for detailed examples 👇</p>
+                </section>
+
+                <!-- USAGE 1: LIFE EXPERIENCE -->
+                <section>
+                    <h3>1. Life Experience</h3>
+                    <div class="glass-panel">
+                        <i class="fas fa-globe-americas big-icon gold" style="font-size: 4em; display:block; margin: 0 auto 20px auto;"></i>
+                        <p>"I have been to China."</p>
+                    </div>
+                    <ul class="glass-panel" style="font-size: 0.8em;">
+                        <li>We don't say <strong>WHEN</strong>.</li>
+                        <li>It's like an achievement unlocked 🏆 in a game.</li>
+                        <li>Key words: <span class="highlight">EVER</span> & <span class="danger">NEVER</span>.</li>
+                    </ul>
+                    <div class="fragment small-glass">
+                        🗣 "Have you <strong>ever</strong> eaten octopus?" <br>
+                        🗣 "No, I have <strong>never</strong> eaten it."
+                    </div>
+                </section>
+
+                <!-- USAGE 2: CHANGE OVER TIME -->
+                <section>
+                    <h3>2. Change / Result Now</h3>
+                    <div class="vs-container">
+                        <div class="card left">
+                            <i class="fas fa-seedling highlight" style="font-size: 3em;"></i>
+                            <h4>Past Action</h4>
+                            <p style="font-size:0.7em">You planted a tree 5 years ago.</p>
+                        </div>
+                        <div class="card right">
+                            <i class="fas fa-tree gold" style="font-size: 3em;"></i>
+                            <h4>Present Result</h4>
+                            <p style="font-size:0.7em">"The tree <strong>has grown</strong>."</p>
+                        </div>
+                    </div>
+                    <div class="glass-panel fragment mt-4">
+                        <i class="fas fa-key danger"></i> <strong>Lost Keys Example:</strong><br>
+                        "I have lost my keys" = I don't have them <strong>NOW</strong>.
+                    </div>
+                </section>
+
+                 <!-- USAGE 3: UNFINISHED TIME -->
+                 <section>
+                    <h3>3. Unfinished Time</h3>
+                    <p>The time window is still open.</p>
+                    <div class="timeline">
+                        <div class="time-point" style="background:gray"></div>
+                        <div style="background: rgba(255,255,255,0.2); width: 80%; height: 20px; border-radius: 10px; position:relative;">
+                            <span style="position:absolute; top: -30px; left: 50%; transform: translateX(-50%); font-size: 0.6em;">THIS WEEK</span>
+                        </div>
+                        <div class="time-point highlight"></div>
+                    </div>
+                    <div class="glass-panel">
+                        <p><i class="fas fa-check highlight"></i> I have worked hard <strong>this week</strong>.</p>
+                        <p class="fragment fade-in"><i class="fas fa-times danger"></i> I have worked hard <strong>last week</strong>.</p>
+                    </div>
+                    <p style="font-size: 0.7em">Words: Today, This month, This year, This morning (if it's still morning).</p>
+                </section>
+            </section>
+
+            <!-- SECCIÓN 5: LA BATALLA (PS vs PP) -->
+            <section>
+                <h2><i class="fas fa-fist-raised"></i> The Battle</h2>
+                <h3>Past Simple vs. Present Perfect</h3>
+                <div class="vs-container">
+                    <div class="card left" style="border-color: gray;">
+                        <h4 style="color: gray">Past Simple</h4>
+                        <p style="font-size: 0.6em">FINISHED TIME</p>
+                        <ul style="font-size: 0.6em; text-align: left;">
+                            <li>Yesterday</li>
+                            <li>Last year</li>
+                            <li>In 1999</li>
+                            <li>When I was a child</li>
+                        </ul>
+                        <hr>
+                        <p class="fragment" style="font-size: 0.8em; color: gray">"I <strong>lived</strong> in London in 2010."</p>
+                        <small class="fragment">(I don't live there now)</small>
+                    </div>
+                    <div class="card right" style="border-color: var(--primary);">
+                        <h4 class="highlight">Present Perfect</h4>
+                        <p style="font-size: 0.6em">UNFINISHED / RELEVANT</p>
+                        <ul style="font-size: 0.6em; text-align: left;">
+                            <li>Since 2010</li>
+                            <li>For 5 years</li>
+                            <li>Lately / Recently</li>
+                            <li>Just / Yet</li>
+                        </ul>
+                        <hr>
+                        <p class="fragment" style="font-size: 0.8em;" class="highlight">"I <strong>have lived</strong> in London since 2010."</p>
+                        <small class="fragment">(I still live there!)</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 6: SIGNAL WORDS -->
+            <section>
+                <h3><i class="fas fa-traffic-light"></i> Signal Words</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="small-glass fragment">
+                        <strong class="highlight">JUST</strong><br>
+                        Very recent.<br>
+                        <em>"I've just arrived."</em>
+                    </div>
+                    <div class="small-glass fragment">
+                        <strong class="gold">ALREADY</strong><br>
+                        Before expected.<br>
+                        <em>"I've already finished."</em>
+                    </div>
+                    <div class="small-glass fragment">
+                        <strong class="danger">YET</strong><br>
+                        Not until now (Negative/Question).<br>
+                        <em>"Have you finished yet?"</em>
+                    </div>
+                    <div class="small-glass fragment">
+                        <strong class="white">SINCE</strong><br>
+                        Start point.<br>
+                        <em>"Since 9:00 AM."</em>
+                    </div>
+                </div>
+            </section>
+
+             <!-- SECCIÓN 7: BEEN VS GONE (VISUAL) -->
+             <section>
+                <h3><i class="fas fa-plane-departure"></i> The Trap: Been vs Gone</h3>
+                <div class="r-stack">
+                    <div class="glass-panel fragment fade-in-then-out">
+                        <h4 class="highlight">BEEN</h4>
+                        <div style="font-size: 3em; margin: 20px;">
+                            <i class="fas fa-home"></i> ⬅️ <i class="fas fa-plane"></i> ⬅️ <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <p>Round trip. You are back.</p>
+                        <p><em>"She has been to Paris."</em> (She is here)</p>
+                    </div>
+                    <div class="glass-panel fragment fade-in">
+                        <h4 class="danger">GONE</h4>
+                        <div style="font-size: 3em; margin: 20px;">
+                            <i class="fas fa-home"></i> ➡️ <i class="fas fa-plane"></i> ➡️ <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <p>One way. Not back yet.</p>
+                        <p><em>"She has gone to Paris."</em> (Bye bye!)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 8: QUIZ -->
+            <section>
+                <h2><i class="fas fa-gamepad"></i> Quick Quiz</h2>
+                <p>Test your skills!</p>
+                
+                <section>
+                    <p>1. I ______ sushi twice in my life.</p>
+                    <button class="quiz-option" onclick="alert('Wrong! Used for specific past time.')">A) ate</button>
+                    <button class="quiz-option" onclick="alert('Correct! Life experience.')">B) have eaten</button>
+                    <button class="quiz-option" onclick="alert('Wrong! Needs HAVE/HAS')">C) eaten</button>
+                </section>
+
+                <section>
+                    <p>2. She ______ her homework YET.</p>
+                    <button class="quiz-option" onclick="alert('Wrong! Yet requires Negative.')">A) has finished</button>
+                    <button class="quiz-option" onclick="alert('Correct! Negative + Yet.')">B) hasn't finished</button>
+                    <button class="quiz-option" onclick="alert('Wrong! Wrong tense.')">C) didn't finish</button>
+                </section>
+
+                <section>
+                    <p>3. Where is Mike? He has ______ to the shops.</p>
+                    <button class="quiz-option" onclick="alert('Wrong! If he is here, he HAS BEEN.')">A) been</button>
+                    <button class="quiz-option" onclick="alert('Correct! He is not here now.')">B) gone</button>
+                </section>
+            </section>
+
+            <!-- END -->
+            <section data-background-gradient="linear-gradient(to top, #14b8a6, #0f172a)">
+                <h1>Great Job!</h1>
+                <p>You have mastered the time bridge.</p>
+                <div class="icon-row">
+                    <i class="fas fa-star gold spin"></i>
+                    <i class="fas fa-star gold spin"></i>
+                    <i class="fas fa-star gold spin"></i>
+                </div>
+                <small>Presentación generada por Gemini AI Agents</small>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.0.4/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'convex', // none/fade/slide/convex/concave/zoom
+            backgroundTransition: 'zoom',
+            display: 'block'
+        });
+    </script>
+</body>
+</html>

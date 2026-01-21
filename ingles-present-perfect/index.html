@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control: Present Perfect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            dark: '#030712',
+                            panel: '#0f172a',
+                            teal: '#14b8a6',
+                            gold: '#fbbf24',
+                            purple: '#8b5cf6',
+                            red: '#ef4444'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
+        
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(20, 184, 166, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(20, 184, 166, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 0 8px 20px -6px rgba(0,0,0,0.5);
+        }
+        
+        .glass-panel:hover {
+            border-color: rgba(20, 184, 166, 0.3);
+            box-shadow: 0 0 30px -10px rgba(20, 184, 166, 0.15);
+        }
+
+        .nav-pill {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-pill:hover {
+            background: rgba(20, 184, 166, 0.1);
+            color: #2dd4bf;
+            transform: translateY(-2px);
+        }
+
+        .btn-cyber {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .btn-cyber::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn-cyber:hover::before { left: 100%; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(20, 184, 166, 0.3);
+            opacity: 0.3;
+            animation: scan 4s linear infinite;
+            position: absolute;
+            pointer-events: none;
+            z-index: 50;
+        }
+        @keyframes scan {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+    <div class="scanline"></div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-7xl mx-auto px-6 py-12 relative z-10">
+
+        <!-- TOP BAR: STATUS -->
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-slate-800 pb-8">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="inline-flex h-2 w-2 rounded-full bg-teal-500 animate-pulse"></span>
+                    <span class="font-mono text-xs text-teal-500 tracking-widest uppercase">System Online</span>
+                </div>
+                <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tight text-white mb-2">
+                    PROJECT <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">CHRONOS</span>
+                </h1>
+                <p class="text-slate-400 font-mono text-sm tracking-widest uppercase">Educational Module: Present Perfect Tense // v5.0</p>
+            </div>
+            
+            <div class="flex gap-4 mt-6 md:mt-0">
+                <div class="text-right">
+                    <p class="text-[10px] uppercase text-slate-500 font-bold mb-1">Current Date</p>
+                    <p class="font-mono text-white">2026.01.21</p>
+                </div>
+                <div class="text-right border-l border-slate-800 pl-4">
+                    <p class="text-[10px] uppercase text-slate-500 font-bold mb-1">Clearance</p>
+                    <p class="font-mono text-gold-400">LEVEL 4</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- LEFT COLUMN: NAVIGATION & BRIEF -->
+            <aside class="lg:col-span-3 space-y-8">
+                <!-- BRIEFING CARD -->
+                <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-teal-500 transition-all duration-300 group-hover:h-full h-0 opacity-50"></div>
+                    <h3 class="font-display text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-terminal text-teal-400"></i> MISSION BRIEF
+                    </h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                        We have detected a temporal anomaly. Students are confusing past events with present consequences. 
+                        <br><br>
+                        <strong>Objective:</strong> Master the "Time Bridge" concept to stabilize the timeline.
+                    </p>
+                    <div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden">
+                        <div class="bg-teal-500 h-full w-3/4"></div>
+                    </div>
+                    <div class="flex justify-between text-[10px] font-mono mt-1 text-slate-500">
+                        <span>Progress</span>
+                        <span>75%</span>
+                    </div>
+                </div>
+
+                <!-- QUICK LINKS -->
+                <nav class="space-y-2">
+                    <a href="infografia_present_perfect.html" target="_blank" class="nav-pill block p-4 rounded-xl border border-slate-800 bg-slate-900/50 flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-blue-500/20 text-blue-400 p-2 rounded-lg group-hover:bg-blue-500 group-hover:text-white transition"><i class="fas fa-eye"></i></span>
+                            <span class="font-bold text-sm">Visual Data</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-xs text-slate-600 group-hover:text-blue-400"></i>
+                    </a>
+                    <a href="presentacion_present_perfect.html" target="_blank" class="nav-pill block p-4 rounded-xl border border-slate-800 bg-slate-900/50 flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-purple-500/20 text-purple-400 p-2 rounded-lg group-hover:bg-purple-500 group-hover:text-white transition"><i class="fas fa-chalkboard-teacher"></i></span>
+                            <span class="font-bold text-sm">Classroom Deck</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-xs text-slate-600 group-hover:text-purple-400"></i>
+                    </a>
+                    <a href="game_present_perfect.html" target="_blank" class="nav-pill block p-4 rounded-xl border border-slate-800 bg-slate-900/50 flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-teal-500/20 text-teal-400 p-2 rounded-lg group-hover:bg-teal-500 group-hover:text-white transition"><i class="fas fa-gamepad"></i></span>
+                            <span class="font-bold text-sm">Simulation</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-xs text-slate-600 group-hover:text-teal-400"></i>
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- CENTER COLUMN: MAIN CONTENT -->
+            <main class="lg:col-span-6 space-y-8">
+                
+                <!-- HERO CARD -->
+                <div class="glass-panel rounded-3xl p-8 relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-teal-900/20 animate-float">
+                    <div class="absolute -right-10 -top-10 text-9xl text-white opacity-5 rotate-12 pointer-events-none">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    
+                    <span class="inline-block px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 text-[10px] font-bold tracking-widest uppercase mb-4 border border-teal-500/20">
+                        Priority Alpha
+                    </span>
+                    <h2 class="font-display text-4xl font-bold text-white mb-4">Start Here</h2>
+                    <p class="text-slate-400 mb-8 max-w-md">
+                        Begin your training sequence. Review the intel, listen to the briefing, and test your skills in the simulator.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="presentacion_present_perfect.html" target="_blank" class="btn-cyber bg-teal-500 text-slate-900 font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-teal-400">
+                            <i class="fas fa-play"></i> Launch Presentation
+                        </a>
+                        <a href="game_present_perfect.html" target="_blank" class="btn-cyber bg-slate-800 text-white font-bold px-6 py-3 rounded-xl border border-slate-700 hover:border-teal-500 flex items-center gap-2">
+                            <i class="fas fa-trophy"></i> Start Challenge
+                        </a>
+                    </div>
+                </div>
+
+                <!-- AUDIO PLAYER WIDGET -->
+                <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-purple-500">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white">
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Audio Uplink</h4>
+                                <p class="text-xs text-purple-400">Extended Podcast (US/UK)</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono text-slate-500">02:45 MIN</span>
+                    </div>
+                    
+                    <audio controls class="w-full h-8 mb-4 rounded opacity-80" style="filter: invert(0.9) hue-rotate(180deg);">
+                        <source src="podcast_present_perfect_english.mp3" type="audio/mpeg">
+                    </audio>
+
+                    <div class="flex justify-end">
+                        <a href="podcast_present_perfect_english.mp3" download class="text-[10px] uppercase font-bold text-slate-500 hover:text-white flex items-center gap-2 transition">
+                            <i class="fas fa-download"></i> Download Secure Frequency
+                        </a>
+                    </div>
+                </div>
+
+            </main>
+
+            <!-- RIGHT COLUMN: INTEL & PROTOCOLS -->
+            <aside class="lg:col-span-3 space-y-8">
+                
+                <!-- SURVIVAL PROTOCOL -->
+                <div class="glass-panel rounded-2xl p-6 bg-red-900/5 border-red-500/20">
+                    <h3 class="font-display text-sm font-bold text-red-400 mb-4 uppercase flex items-center gap-2">
+                        <i class="fas fa-exclamation-triangle"></i> Critical Errors
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 items-start">
+                            <span class="font-mono text-red-500 text-xs mt-1">01</span>
+                            <p class="text-xs text-slate-400">
+                                <strong class="text-slate-200 block mb-1">Specific Time Trap</strong>
+                                Never use Present Perfect with "Yesterday" or "In 1999".
+                            </p>
+                        </li>
+                        <li class="flex gap-3 items-start">
+                            <span class="font-mono text-red-500 text-xs mt-1">02</span>
+                            <p class="text-xs text-slate-400">
+                                <strong class="text-slate-200 block mb-1">The "Has" Failure</strong>
+                                He/She/It ALWAYS requires HAS. No exceptions.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- KEYWORDS TAG CLOUD -->
+                <div class="glass-panel rounded-2xl p-6">
+                    <h3 class="font-display text-sm font-bold text-gold-400 mb-4 uppercase">
+                        <i class="fas fa-key"></i> Access Codes
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-mono">JUST</span>
+                        <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-mono">YET</span>
+                        <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-mono">ALREADY</span>
+                        <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-mono">SINCE</span>
+                        <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-mono">FOR</span>
+                        <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-mono">EVER</span>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-20 border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-slate-600">
+            <div class="flex items-center gap-4 mb-4 md:mb-0">
+                <i class="fas fa-robot text-teal-900 text-xl"></i>
+                <span>Generated by AI Agents Network</span>
+            </div>
+            <div class="flex gap-6">
+                <span>Visual Artist</span>
+                <span>SME Consultant</span>
+                <span>Phaser Dev</span>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
