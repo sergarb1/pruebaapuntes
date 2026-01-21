@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Danos tu opinión - II Feria del Libro</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#047857', background: '#f8fafc' },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-slate-800 antialiased p-4">
+    <div id="app" class="max-w-xl mx-auto py-12">
+        <div v-if="!sent" class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
+            <div class="bg-primary p-8 text-white text-center">
+                <h1 class="text-2xl font-black mb-2">¿Te ha gustado la Feria?</h1>
+                <p class="text-emerald-100 text-sm">Ayúdanos a mejorar. Solo te llevará 1 minuto.</p>
+            </div>
+            
+            <form @submit.prevent="submit" class="p-8 space-y-8">
+                <!-- Pregunta 1 -->
+                <div>
+                    <label class="block font-bold text-slate-900 mb-4 text-center">¿Cómo valoras la organización? ⭐</label>
+                    <div class="flex justify-between items-center gap-2">
+                        <button v-for="n in 5" :key="n" type="button" 
+                                @click="rating = n"
+                                :class="rating >= n ? 'bg-amber-400 text-white' : 'bg-slate-100 text-slate-400'"
+                                class="w-12 h-12 rounded-xl font-black transition-all">
+                            {{ n }}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div>
+                    <label class="block font-bold text-slate-900 mb-4">Tu actividad favorita fue...</label>
+                    <select v-model="favorite" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl outline-none focus:border-primary">
+                        <option value="">Selecciona una...</option>
+                        <option>Mesa Redonda con Escritores</option>
+                        <option>Cuentacuentos Mago de Oz</option>
+                        <option>Taller de Escritura Creativa</option>
+                        <option>Escape Room Literario</option>
+                        <option>Visita a los Stands</option>
+                    </select>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div>
+                    <label class="block font-bold text-slate-900 mb-2 text-sm">¿Alguna sugerencia para la III Edición?</label>
+                    <textarea v-model="comment" class="w-full bg-slate-50 border border-slate-200 p-4 rounded-xl h-24 outline-none focus:border-primary" placeholder="Cuéntanos..."></textarea>
+                </div>
+
+                <button type="submit" 
+                        :disabled="!rating || !favorite"
+                        class="w-full py-4 bg-primary text-white font-bold rounded-2xl shadow-lg hover:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                    Enviar Valoración
+                </button>
+            </form>
+        </div>
+
+        <!-- Mensaje Éxito -->
+        <div v-else class="text-center bg-white p-12 rounded-3xl shadow-xl border border-slate-200">
+            <div class="text-6xl mb-6">🎉</div>
+            <h2 class="text-2xl font-black text-slate-900 mb-2">¡Gracias por participar!</h2>
+            <p class="text-slate-500 mb-8">Tus respuestas nos ayudan a que el alumnado de FP aprenda y mejore como gestores de eventos.</p>
+            <a href="index.html" class="text-primary font-bold hover:underline">Volver a la Web Principal</a>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+        createApp({
+            setup() {
+                const sent = ref(false)
+                const rating = ref(0)
+                const favorite = ref('')
+                const comment = ref('')
+
+                const submit = () => {
+                    sent.value = true
+                    // Aquí se integraría con un formspree o similar
+                }
+
+                return { sent, rating, favorite, comment, submit }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

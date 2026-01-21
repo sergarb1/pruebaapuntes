@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>El Mago de Oz - II Feria del Libro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Fredoka', sans-serif; background-color: #f0fdf4; }
+        .yellow-brick-road { background: repeating-linear-gradient(45deg, #fde047, #fde047 10px, #facc15 10px, #facc15 20px); }
+    </style>
+</head>
+<body class="text-slate-800">
+    <!-- Navbar Infantil -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b-4 border-emerald-500">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <span class="text-2xl">🏠</span>
+                <span class="font-bold text-emerald-700">Volver a la Feria</span>
+            </a>
+            <div class="bg-emerald-100 px-4 py-1 rounded-full text-emerald-700 font-bold text-sm">
+                📍 Salón de Actos • 09:30 H
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Mágico -->
+    <header class="relative h-[400px] flex items-center justify-center overflow-hidden">
+        <img src="assets/emerald_city.jpg" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-emerald-900/40"></div>
+        <div class="relative z-10 text-center text-white p-6">
+            <h1 class="text-5xl md:text-7xl font-bold drop-shadow-lg mb-4">El Mago de Oz 🌪️</h1>
+            <p class="text-xl md:text-2xl font-medium bg-black/20 backdrop-blur-sm inline-block px-6 py-2 rounded-full">
+                ¡Sigue el camino de baldosas amarillas!
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-16">
+        
+        <!-- Introducción -->
+        <div class="text-center max-w-2xl mx-auto mb-20">
+            <h2 class="text-3xl font-bold text-emerald-800 mb-6 italic">¿Estáis listos para la aventura?</h2>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                Acompañaremos a Dorothy y a su perrito Totó en un viaje increíble. En el Salón de Actos, la <strong>Prof. Laura M.</strong> nos contará esta historia llena de magia, amistad y zapatos rojos.
+            </p>
+        </div>
+
+        <!-- Personajes y Valores -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Dorothy -->
+            <div class="bg-white p-6 rounded-3xl shadow-lg border-b-8 border-red-500 text-center hover:-translate-y-2 transition-transform">
+                <div class="text-5xl mb-4">👠</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Dorothy</h3>
+                <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-3">Valor: Hogar</p>
+                <p class="text-sm text-slate-600 italic">"No hay lugar como el hogar".</p>
+            </div>
+            <!-- Espantapájaros -->
+            <div class="bg-white p-6 rounded-3xl shadow-lg border-b-8 border-yellow-400 text-center hover:-translate-y-2 transition-transform">
+                <div class="text-5xl mb-4">🌾</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Espantapájaros</h3>
+                <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-3">Valor: Inteligencia</p>
+                <p class="text-sm text-slate-600 italic">Buscaba un cerebro para pensar mejor.</p>
+            </div>
+            <!-- Hombre de Hojalata -->
+            <div class="bg-white p-6 rounded-3xl shadow-lg border-b-8 border-slate-300 text-center hover:-translate-y-2 transition-transform">
+                <div class="text-5xl mb-4">🪓</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">Hombre de Hojalata</h3>
+                <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-3">Valor: Corazón</p>
+                <p class="text-sm text-slate-600 italic">Quería un corazón para poder amar.</p>
+            </div>
+            <!-- León -->
+            <div class="bg-white p-6 rounded-3xl shadow-lg border-b-8 border-orange-400 text-center hover:-translate-y-2 transition-transform">
+                <div class="text-5xl mb-4">🦁</div>
+                <h3 class="text-xl font-bold text-slate-900 mb-2">León Cobarde</h3>
+                <p class="text-xs text-slate-500 uppercase font-bold tracking-widest mb-3">Valor: Coraje</p>
+                <p class="text-sm text-slate-600 italic">Descubrió que el valor se lleva dentro.</p>
+            </div>
+        </div>
+
+        <!-- El Camino de Baldosas Amarillas (Divisor) -->
+        <div class="yellow-brick-road h-8 my-20 rounded-full shadow-inner"></div>
+
+        <!-- Taller de Pintura -->
+        <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-xl border border-emerald-100 flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1">
+                <span class="bg-amber-400 text-amber-900 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 inline-block">¡A pintar!</span>
+                <h2 class="text-4xl font-black text-slate-900 mb-6">Después del cuento...</h2>
+                <p class="text-lg text-slate-600 leading-relaxed mb-8">
+                    Nuestros alumnos de 2º de FP os ayudarán a pintar vuestro propio personaje de Oz. ¡Podréis llevaros vuestro dibujo a casa de recuerdo!
+                </p>
+                <div class="flex gap-4">
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl mb-2">🎨</div>
+                        <span class="text-[10px] font-bold uppercase">Pinturas</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl mb-2">📄</div>
+                        <span class="text-[10px] font-bold uppercase">Papel</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl mb-2">✨</div>
+                        <span class="text-[10px] font-bold uppercase">Purpurina</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 relative">
+                <img src="assets/oz.jpg" class="rounded-3xl shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-emerald-900 text-emerald-100 py-12 text-center">
+        <p class="font-bold">II Feria del Libro IES Serra Perenxisa</p>
+        <p class="text-xs opacity-60">Creado con ilusión por el alumnado de Asistencia a la Dirección</p>
+    </footer>
+</body>
+</html>

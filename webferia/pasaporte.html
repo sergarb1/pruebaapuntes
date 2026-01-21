@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pasaporte Literario - II Feria del Libro</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#047857', dark: '#064e3b', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        .stamp-slot { background-image: radial-gradient(#e2e8f0 2px, transparent 2px); background-size: 20px 20px; }
+        .stamped { background-color: #ecfdf5 !important; border-color: #047857 !important; transform: rotate(-5deg); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    </style>
+</head>
+<body class="bg-background text-slate-800 p-4">
+    <div id="app" class="max-w-2xl mx-auto py-8">
+        
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <img src="assets/logo.png" class="h-12 mx-auto mb-4">
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Pasaporte Literario Virtual</h1>
+            <p class="text-slate-500 text-sm">Colecciona sellos y consigue premios exclusivos</p>
+        </header>
+
+        <!-- El Pasaporte Card -->
+        <div class="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-slate-200">
+            <div class="bg-primary p-6 text-white flex justify-between items-center">
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-widest opacity-80">Titular del Pasaporte</p>
+                    <p class="text-xl font-black italic">Explorador/a de Historias</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-4xl">📖</span>
+                </div>
+            </div>
+
+            <div class="p-8">
+                <p class="text-sm text-slate-600 mb-8 leading-relaxed">
+                    Introduce los códigos secretos que te darán los organizadores (alumnos de FP) al finalizar cada actividad para validar tu pasaporte.
+                </p>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Sello 1: Mesa Redonda -->
+                    <div :class="{'stamped': stamps.mesa}" class="stamp-slot h-40 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center">
+                        <span v-if="!stamps.mesa" class="text-xs font-bold text-slate-400 uppercase">Mesa Redonda</span>
+                        <div v-else class="text-center">
+                            <span class="text-4xl mb-2 block">✔️</span>
+                            <p class="text-[10px] font-black text-primary uppercase">Validado</p>
+                        </div>
+                    </div>
+
+                    <!-- Sello 2: Taller Escritura -->
+                    <div :class="{'stamped': stamps.taller}" class="stamp-slot h-40 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center">
+                        <span v-if="!stamps.taller" class="text-xs font-bold text-slate-400 uppercase">Taller M. Llopis</span>
+                        <div v-else class="text-center">
+                            <span class="text-4xl mb-2 block">✍️</span>
+                            <p class="text-[10px] font-black text-primary uppercase">Validado</p>
+                        </div>
+                    </div>
+
+                    <!-- Sello 3: Escape Room -->
+                    <div :class="{'stamped': stamps.escape}" class="stamp-slot h-40 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center">
+                        <span v-if="!stamps.escape" class="text-xs font-bold text-slate-400 uppercase">Escape Room</span>
+                        <div v-else class="text-center">
+                            <span class="text-4xl mb-2 block">🧩</span>
+                            <p class="text-[10px] font-black text-primary uppercase">Validado</p>
+                        </div>
+                    </div>
+
+                    <!-- Sello 4: Stands -->
+                    <div :class="{'stamped': stamps.stands}" class="stamp-slot h-40 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-4 text-center">
+                        <span v-if="!stamps.stands" class="text-xs font-bold text-slate-400 uppercase">Visita Stands</span>
+                        <div v-else class="text-center">
+                            <span class="text-4xl mb-2 block">📚</span>
+                            <p class="text-[10px] font-black text-primary uppercase">Validado</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input de Código -->
+                <div class="mt-10 pt-8 border-t border-slate-100">
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Validar actividad (Código secreto)</label>
+                    <div class="flex gap-2">
+                        <input v-model="inputCode" type="text" placeholder="Ej: LIBRO2026" class="flex-grow bg-slate-50 border border-slate-200 p-4 rounded-xl outline-none focus:border-primary uppercase font-mono">
+                        <button @click="validate" class="bg-dark text-white px-6 rounded-xl font-bold hover:bg-black transition-colors">Validar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center bg-amber-50 p-6 rounded-2xl border border-amber-100">
+            <p class="text-amber-800 text-sm font-bold">🎁 ¡Completa 3 sellos para recibir un marcapáginas de edición limitada en el stand de Información!</p>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+        createApp({
+            setup() {
+                const stamps = ref({ mesa: false, taller: false, escape: false, stands: false })
+                const inputCode = ref('')
+                
+                const codes = {
+                    'DEBATE26': 'mesa',
+                    'ESCRIBE': 'taller',
+                    'ENIGMA': 'escape',
+                    'RELEO': 'stands'
+                }
+
+                const validate = () => {
+                    const code = inputCode.value.toUpperCase().trim()
+                    if (codes[code]) {
+                        stamps.value[codes[code]] = true
+                        inputCode.value = ''
+                        alert('¡Actividad validada con éxito!')
+                    } else {
+                        alert('Código incorrecto. Pídelo a los alumnos de la organización.')
+                    }
+                }
+
+                return { stamps, inputCode, validate }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

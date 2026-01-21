@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Muro de Recomendaciones - II Feria del Libro</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#047857', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .handwritten { font-family: 'Kalam', cursive; }
+        .post-it { transition: all 0.3s ease; }
+        .post-it:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 10; }
+    </style>
+</head>
+<body class="bg-background text-slate-800 antialiased p-4">
+    <div id="app" class="max-w-6xl mx-auto py-12">
+        
+        <header class="text-center mb-16">
+            <h1 class="text-4xl font-black text-slate-900 mb-4 tracking-tight italic">Muro de Lectores ✨</h1>
+            <p class="text-slate-600">¿Qué libro te ha cambiado la vida? Deja tu recomendación aquí.</p>
+        </header>
+
+        <!-- Formulario (Simulado) -->
+        <div class="mb-16 flex justify-center">
+            <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-200 flex flex-col md:flex-row gap-4 items-end w-full max-w-2xl">
+                <div class="flex-grow space-y-4">
+                    <input v-model="newItem.book" placeholder="Título del libro..." class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl outline-none focus:border-primary">
+                    <textarea v-model="newItem.text" placeholder="¿Por qué lo recomiendas?" class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl h-20 outline-none focus:border-primary"></textarea>
+                </div>
+                <button @click="addItem" class="bg-primary text-white font-bold px-8 py-4 rounded-2xl hover:bg-emerald-800 transition-all shadow-lg shadow-emerald-100">
+                    Publicar
+                </button>
+            </div>
+        </div>
+
+        <!-- El Muro -->
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div v-for="(item, index) in items" :key="index" 
+                 class="post-it p-6 shadow-lg rounded-sm aspect-square flex flex-col justify-between"
+                 :class="item.color"
+                 :style="{ transform: 'rotate(' + item.rotate + 'deg)' }">
+                
+                <div>
+                    <h3 class="font-bold text-slate-900 leading-tight mb-3">《 {{ item.book }} 》</h3>
+                    <p class="handwritten text-lg text-slate-700 leading-snug">"{{ item.text }}"</p>
+                </div>
+                
+                <div class="flex justify-between items-center border-t border-black/5 pt-4">
+                    <span class="text-[10px] font-bold uppercase tracking-widest opacity-50">{{ item.author }}</span>
+                    <span class="text-xs">❤️</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+        createApp({
+            setup() {
+                const newItem = ref({ book: '', text: '' })
+                const items = ref([
+                    { book: 'El Quijote', text: 'Me encanta lo loco que está, ¡un clásico!', author: 'Prof. Elena', color: 'bg-yellow-100', rotate: -2 },
+                    { book: 'Invisible', text: 'Imprescindible para entender a los demás.', author: 'Alumno 2º ESO', color: 'bg-blue-100', rotate: 3 },
+                    { book: 'Sombras de Ébano', text: '¡Increíble la charla de Yelena de hoy!', author: 'Lector/a', color: 'bg-emerald-100', rotate: -1 },
+                    { book: 'Harry Potter', text: 'Donde empezó todo mi amor por la lectura.', author: 'Carlos FP', color: 'bg-pink-100', rotate: 2 }
+                ])
+
+                const addItem = () => {
+                    if (newItem.value.book && newItem.value.text) {
+                        const colors = ['bg-yellow-100', 'bg-blue-100', 'bg-emerald-100', 'bg-pink-100', 'bg-orange-100']
+                        items.value.unshift({
+                            book: newItem.value.book,
+                            text: newItem.value.text,
+                            author: 'Visitante',
+                            color: colors[Math.floor(Math.random() * colors.length)],
+                            rotate: (Math.random() * 6) - 3
+                        })
+                        newItem.value = { book: '', text: '' }
+                    }
+                }
+
+                return { items, newItem, addItem }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

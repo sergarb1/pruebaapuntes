@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuestros Autores - II Feria del Libro</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#047857', dark: '#064e3b', background: '#f8fafc' }, fontFamily: { sans: ['Inter', 'sans-serif'] } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-background text-slate-800">
+    <div id="app">
+        <!-- Navbar -->
+        <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <img src="assets/logo.png" alt="Logo" class="h-10 w-auto">
+                    <span class="font-bold text-slate-900">Feria del Libro</span>
+                </div>
+                <div class="flex gap-5 text-[13px] font-bold uppercase tracking-wider">
+                    <a href="index.html" class="text-slate-500 hover:text-primary transition-colors">Inicio</a>
+                    <a href="actividades.html" class="text-slate-500 hover:text-primary transition-colors">Agenda</a>
+                    <a href="mesa-redonda.html" class="text-slate-500 hover:text-primary transition-colors">Mesa Redonda</a>
+                    <a href="autores.html" class="text-primary border-b-2 border-primary">Autores</a>
+                    <a href="pasaporte.html" class="text-slate-500 hover:text-primary transition-colors">Pasaporte</a>
+                    <a href="stands.html" class="text-slate-500 hover:text-primary transition-colors">Espacios</a>
+                    <a href="nosotros.html" class="text-slate-500 hover:text-primary transition-colors">Equipo</a>
+                    <a href="encuesta.html" class="text-accent hover:text-primary transition-colors">Encuesta ⭐</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-6xl mx-auto px-4 py-16">
+            <header class="text-center mb-16">
+                <h1 class="text-4xl font-black text-slate-900 mb-4 tracking-tight">Voces que nos visitan</h1>
+                <p class="text-slate-600 max-w-2xl mx-auto italic">"Un libro es un regalo que puedes abrir una y otra vez". Conoce a los escritores que compartirán su talento con nosotros.</p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div v-for="author in authors" :key="author.name" class="bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all overflow-hidden group">
+                    <div class="h-48 bg-slate-100 relative">
+                        <img src="assets/bio.jpg" class="w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-40 transition-all">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-6xl group-hover:scale-110 transition-transform">🖋️</span>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-black text-slate-900 mb-1 leading-tight">{{ author.name }}</h3>
+                        <p class="text-primary font-bold text-xs uppercase tracking-widest mb-4">{{ author.title }}</p>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-6">{{ author.bio }}</p>
+                        <div class="border-t border-slate-100 pt-4">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase mb-2 tracking-tighter">Obra destacada</p>
+                            <p class="text-sm font-bold text-slate-700 italic">{{ author.work }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const { createApp } = Vue
+        createApp({
+            setup() {
+                const authors = [
+                    { name: 'Manolo Alamo', title: 'Novela & Relato', work: 'El susurro del viento', bio: 'Referente local con una prosa limpia que explora los sentimientos humanos en entornos cotidianos.' },
+                    { name: 'Edurne Sáez', title: 'Poesía Moderna', work: 'Versos de ceniza', bio: 'Su poesía conecta con el público joven a través de temas de identidad y superación personal.' },
+                    { name: 'Julián Carlos Pastor', title: 'Novela Histórica', work: 'La Senyera de Torrent', bio: 'Especialista en rescatar leyendas y hechos históricos de nuestra comarca para convertirlos en ficción vibrante.' },
+                    { name: 'Carolina Gremaldos', title: 'Fantasía YA (Yelena Black)', work: 'Sombras de Ébano', bio: 'Bajo su seudónimo Yelena Black, ha conquistado plataformas digitales con sagas de fantasía urbana.' },
+                    { name: 'Patricia Mérida', title: 'Ensayo Literario', work: 'Cabeza Clave', bio: 'Analista de la comunicación y la literatura, experta en desgranar el mensaje detrás de las palabras.' },
+                    { name: 'Ana Villanueva', title: 'Narrativa Juvenil', work: 'El aula del olvido', bio: 'Escritora que sitúa sus tramas en entornos educativos, tratando los retos de la adolescencia actual.' }
+                ]
+                return { authors }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

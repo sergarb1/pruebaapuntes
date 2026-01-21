@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Flujo de Grupos - Intranet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { colors: { primary: '#00dc82', dark: '#0f172a', surface: '#1e293b' } }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }</style>
+</head>
+<body class="antialiased flex min-h-screen">
+
+    <!-- Sidebar (Consistente con index) -->
+    <aside class="w-64 bg-slate-900 border-r border-slate-800 hidden md:flex flex-col">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="font-bold text-white text-sm uppercase tracking-widest">Panel Interno</h1>
+        </div>
+        <nav class="flex-grow p-4 space-y-2">
+            <a href="index.html" class="block px-4 py-2 text-slate-400 hover:text-white text-sm">Dashboard</a>
+            <a href="cuadrantes.html" class="block px-4 py-2 text-slate-400 hover:text-white text-sm">Cuadrantes Prof.</a>
+            <a href="grupos.html" class="block px-4 py-2 bg-primary text-slate-900 rounded-lg font-bold text-sm">Flujo de Grupos</a>
+        </nav>
+    </aside>
+
+    <main class="flex-grow p-8">
+        <header class="mb-8">
+            <h2 class="text-3xl font-black text-white italic">Tráfico de Alumnado</h2>
+            <p class="text-slate-400">Control de entradas y salidas del Salón de Actos.</p>
+        </header>
+
+        <div class="grid grid-cols-1 gap-6">
+            <div class="bg-surface rounded-2xl border border-slate-700 overflow-hidden">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-900 text-slate-400 uppercase text-xs">
+                        <tr>
+                            <th class="px-6 py-4">Tramo</th>
+                            <th class="px-6 py-4">Grupo</th>
+                            <th class="px-6 py-4">Actividad</th>
+                            <th class="px-6 py-4">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-700">
+                        <tr>
+                            <td class="px-6 py-4 font-mono">09:15-10:45</td>
+                            <td class="px-6 py-4 text-white">CEIP San Juan y Lope de Vega</td>
+                            <td class="px-6 py-4">Cuentacuentos Oz + Pintura</td>
+                            <td class="px-6 py-4"><span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs font-bold uppercase">En Espera</span></td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-primary">11:00-11:30</td>
+                            <td class="px-6 py-4 text-white font-bold">4º ESO y 1º Bachillerato</td>
+                            <td class="px-6 py-4">Mesa Redonda</td>
+                            <td class="px-6 py-4"><span class="bg-emerald-500/20 text-primary px-2 py-1 rounded text-xs font-bold uppercase tracking-widest">Acceso Masivo</span></td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono">12:00-13:00</td>
+                            <td class="px-6 py-4 text-white">3º ESO (Todos los grupos)</td>
+                            <td class="px-6 py-4">Escape Room / Taller Escritura</td>
+                            <td class="px-6 py-4"><span class="bg-amber-500/20 text-amber-400 px-2 py-1 rounded text-xs font-bold uppercase">Rotación Grupos</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bg-emerald-500/10 border border-primary/20 p-6 rounded-2xl">
+                <h3 class="text-primary font-bold mb-2">💡 Instrucciones para Equipo Alpha (Accesos)</h3>
+                <ul class="text-sm text-slate-300 space-y-2">
+                    <li>• Los grupos deben esperar en el hall hasta que el equipo de limpieza confirme que el salón está listo.</li>
+                    <li>• Al entrar, llenar primero las filas delanteras.</li>
+                    <li>• Verificar con el profesor del grupo que todos llevan su acreditación (si aplica).</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
